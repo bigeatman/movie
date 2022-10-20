@@ -381,6 +381,7 @@ nav a {
 	<script>
 		function createDialog(title, kind) {
 			var dialog = document.querySelector('#dialog');
+			clearChilds(dialog);
 			
 			createTitle(dialog, title);
 			createScoreElements(dialog, kind);
@@ -406,8 +407,8 @@ nav a {
 			okButton.style.setProperty('margin-left', '2%', '');
 			okButton.setAttribute('data-dismiss', 'modal');
 			okButton.addEventListener('click', function() {
+				createNewReview(dialog);
 				clearChilds(dialog);
-				$('#reportModal').modal('hide');
 			});
 			
 			cancelButton.innerHTML += '취소';
@@ -415,7 +416,6 @@ nav a {
 			cancelButton.style.setProperty('margin-right', '2%', '');
 			cancelButton.addEventListener('click', function() {
 				clearChilds(dialog);
-				$('#reportModal').modal('hide');
 			});
 			
 			buttonArea.append(cancelButton);
@@ -444,33 +444,67 @@ nav a {
 		}
 		
 		function createScore(dialog) {
-		/*
-			dialog.innerHTML += '&nbsp;&nbsp;';
+			var scoreSpan = document.createElement('span');
+			scoreSpan.setAttribute('id', 'scoreSpan');
+			
 			for(i = 0; i < 5; i++) {
-				dialog.innerHTML += '<i class="fa fa-star" style="font-size:12px"></i>';
+				scoreSpan.innerHTML += '<i class="fa fa-star" style="font-size:12px"></i>';
 			}
-			dialog.innerHTML += '&nbsp;';
-		*/
+			
+			dialog.innerHTML += '&nbsp;&nbsp;';
+			dialog.appendChild(scoreSpan);
 		}
 		
 		function createComboBox(dialog) {
-		
 			var comboBoxNode = document.createElement('select');
+			var isNum = true;
 			
 			for(i = 5; i >= 0; i -= 0.5) {
 				var optionNode = document.createElement('option');
 				optionNode.innerHTML = i;
 				
+				if(isNum) {
+					optionNode.innerHTML += '.0';
+					isNum = false;
+				} else {
+					isNum = true;
+				}
+				
 				comboBoxNode.appendChild(optionNode);
-			
 			}
 			comboBoxNode.style.setProperty('font-size', '12px', '');
-			comboBoxNode.style.setProperty('width', '30px', '');
+			comboBoxNode.style.setProperty('width', '40px', '');
 			comboBoxNode.style.setProperty('margin-right', '2px', '');
 			comboBoxNode.style.setProperty('border', '0px solid gray', '');
 			comboBoxNode.style.setProperty('background-color', 'rgb(237, 237, 237)', '');
 			
+			comboBoxNode.setAttribute('id', 'scoreBox');
+			comboBoxNode.setAttribute('onchange', 'changeScoreSpan()');
+			
 			dialog.appendChild(comboBoxNode);
+		}
+		
+		function changeScoreSpan() {
+			var comboBox = document.querySelector("#scoreBox");
+			var selected = comboBox.options[comboBox.selectedIndex].value;
+			var numValue = parseInt(selected);
+			var floatValue = selected - numValue;
+			
+			var scoreSpan = document.querySelector("#scoreSpan");
+			scoreSpan.innerHTML = '';
+			
+			for (i = 0; i < numValue; i++) {
+				scoreSpan.innerHTML += '<i class="fa fa-star" style="font-size:12px"></i>';
+			}
+			
+			if (floatValue != 0) {
+				scoreSpan.innerHTML += '<i class="fa fa-star-half-o" style="font-size:12px"></i>';
+				numValue++;
+			}
+			
+			for(i = 0; i < 5 - numValue; i++) {
+				scoreSpan.innerHTML += '<i class="fa fa-star-o" style="font-size:12px"></i>';
+			}
 		}
 		
 		function createTitle(dialog, title) {
@@ -483,6 +517,7 @@ nav a {
 		
 		function clearChilds(dialog) {
 			dialog.innerHTML = '';
+			$('#reportModal').modal('hide');
 		}
 		
 		function createReivewDialog() {
