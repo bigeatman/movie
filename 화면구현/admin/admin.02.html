@@ -10,14 +10,119 @@
 <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css' />
 </head>
 
-<style>
-    button{
-        border: 0rem;
-        background-color: transparent;
-        height: 32px;
-    
+<script>
+const users = []
+let user = 0
 
+function isVal(field){
+    let isGood = false
+    let errMsg
+    
+    if (!field.length) errMsg = '유저를 선택하세요.'
+    
+    if (!isGood) {
+        $('#modalMsg').text(errMsg)
+        $('#noBtn').text('확인')
+        $('#yesBtn').hide()
+        $('#modal').modal()
     }
+
+    return isGood
+}
+
+function init(){
+    // 닉네임 수정
+    $('#fixBtn').click(() => {
+   //     if(isVal($('#no:checked'))){
+            $('#modalMsg').text('닉네임 [뿡뿡이] 을/를')
+            $('#modalMsg').append(`<br><h4>[]으로 수정하시겠습니까?</h4>`)
+            $('#noBtn').text('취소')
+            $('#yesBtn').show()
+            $('#modal').modal()
+            console($('#no:checked').val())
+    //    }
+    })
+
+    //수정 확인
+    $('#yesBtn').click(() => {
+        if(isVal($('#no:checked')) &&isVal($('#id'))){
+            $.each(users, (i, user) =>{
+                if(user.no == $('#no:checked').val()) {
+                    no.nickname= $('#fixNickname').val()
+                    return false
+                }
+            })
+        listUsers()
+        }
+    })
+
+    //노동자 삭제
+    $('#delBtn').click(() => {
+        if($('#no:checked')){
+            $('#modalMsg').text('해당 회원을 삭제하시겠습니까?')
+            $('#yesBtn').show()
+            $('#yesBtn').attr('class', 'col btn btn-block btn-danger')
+            $('#yesBtn').attr('id', 'yesDelBtn')
+            $('#yesBtn').removeAttr()
+
+            $('#modal').modal()
+        }
+    })
+
+    //삭제 확인
+
+//    <button type='button' class='col btn btn-block btn-primary' data-dismiss='modal'
+//                            id='yesBtn'>확인</button>
+
+    $('#yesDelBtn').click(() => {
+        $.each(users, (i, user) =>{
+            if(user.no == $('#no:checked').val()) {
+                users.splice(i,1)
+                return false
+            }
+        })
+
+        $('#modal').modal('hide')
+        listusers()
+    })
+
+    $('#users').on({
+        change(){
+            $('#fixNickname').val($(this).parent().next().next().next().next().text())
+        }
+    }, '#laborerId')
+}
+
+$(init)
+</script>
+
+<style>
+button{
+    border: 0rem;
+    background-color: transparent;
+    height: 32px;
+}
+
+body{
+    min-height: 100%;
+    position: relative;
+    padding-bottom: 80px;
+}
+
+footer{
+    position: absolute;
+    height: 60px;
+    width: 100%;
+    bottom: 0;
+}
+
+#yesBtn,#noBtn{
+    margin: auto;
+    width: 100%;
+    max-width: 10rem;
+    height: 100%;
+}
+
 </style>
 
 <div class='container'>
@@ -33,116 +138,94 @@
     <hr><br>
     <div class='row'>
         <div class='col d-flex'>
-            <h5><b>| 회원 목록</b></h5>
-            <input type='text' placeholder='검색' id='search'>
-            <label><button><i class="bi bi-search"></i></button></label>
-            &nbsp;
+            <h5 class='col-9'><b>| 회원 목록</b></h5>
+
+            <div class='col-4 d-flex align-items-center'>
+                <input type='text'placeholder='검색' id='search'>
+                <button><i class="bi bi-search"></i></button>
+            </div>
         </div>
     </div>
+        &nbsp;
         <div class='row'>
             <div class='col'>
                 <table class='table'>
                     <thead style='text-align: center'>
                         <tr class="bg-light">
-                            <th></th><th>No</th><th>종류</th><th>작성자ID</th><th>내용</th><th>대상 영화</th><th>상세 신고내용</th><th>처리결과</th>
+                            <th></th><th>No</th><th>ID</th><th>비밀번호</th><th>닉네임</th><th>연락처</th><th>이메일</th><th>가입일</th>
                         </tr>
                     </thead>
                     <tbody style='text-align: center'>
                         <tr>
-                            <td><input type='radio' name='select'></td>
-                            <td>1</td>
-                            <td>사용자 평</td>
-                            <td>즐거운 무지<br>(mooji_kin)</td>
-                            <td>끝도 없이 달려 절망의 땅에서 ....</td>
-                            <td>공조2</td>
-                            <td type='page-link' style="cursor: pointer;" 
-                                data-toggle='modal' data-target='#reportModal'><i><u>128건 상세보기</u></i></td>
-                            <td>미처리</td>
+                            <td><input type='radio' name='no' id='no' value='3'></td>
+                            <td id='no' value='3'>3</td>
+                            <td id='id'>id123</td>
+                            <td id='pw'>qs123456</td>
+                            <td id='nickname'>뿡뿡일</td>
+                            <td id='tel'>01012345678</td>
+                            <td id='email'>xxxx123@naver.com</td>
+                            <td id='joinDate'>2022-10-13</td>
                         </tr>
                         <tr>
-                            <td><input type='radio' name='select'></td>
-                            <td>2</td>
-                            <td>사용자 평 댓글</td>
-                            <td>마약한 어피치<br>(apache)</td>
-                            <td>안끝나는줄</td>
-                            <td>공조2</td>
-                            <td type='page-link' style="cursor: pointer;"
-                                data-toggle='modal' data-target='#reportModal'><i><u>78건 상세보기</u></i></td>
-                            <td>미처리</td>
+                            <td><input type='radio' name='no' id='no' value='2'></td>
+                            <td id='no' value='2'>2</td>
+                            <td id='id'>id23121</td>
+                            <td id='pw'>qs12dwd</td>
+                            <td id='nickname'>뿡뿡이</td>
+                            <td id='tel'>01012348765</td>
+                            <td id='email'>xxxx123@daum.net</td>
+                            <td id='joinDate'>2022-10-13</td>
                         </tr>
                         <tr>
-                            <td><input type='radio' name='select'></td>
-                            <td>3</td>
-                            <td>영화평</td>
-                            <td>스포하는 춘식이<br>(spo_choonsic)</td>
-                            <td>아이언맨 죽어요</td>
-                            <td>어벤져스2:엔드게임</td>
-                            <td type='page-link' style="cursor: pointer;"
-                                data-toggle='modal' data-target='#reportModal'><i><u>2788건 상세보기</u></i></td>
-                            <td>삭제완료<br>(2022.09.27)</td>
+                            <td><input type='radio' name='no' id='no' value='1'></td>
+                            <td id='no' value='1'>1</td>
+                            <td id='id'>id1124123</td>
+                            <td id='pw'>qs123456</td>
+                            <td id='nickname'>뿡뿡삼</td>
+                            <td id='tel'>01012341234</td>
+                            <td id='email'>xxxx123@gmail.net</td>
+                            <td id='joinDate'>2022-10-15</td>
                         </tr>
-                        <tr>
-                            <td><input type='radio' name='select'></td>
-                            <td>4</td>
-                            <td>영화평 댓글</td>
-                            <td>올라프 형씨<br>(Bro_Olaf)</td>
-                            <td>니 **다!</td>
-                            <td>LOL Cinematic Movie</td>
-                            <td type='page-link' style="cursor: pointer;"
-                                data-toggle='modal' data-target='#reportModal'><i><u>22건 상세보기</u></i></td>
-                            <td>신고반려<br>(2022.09.25)</td>
-                        </tr>
-                    </tbody>
-                </table><hr>
-                <nav aria-label="Page navigation example">		
-                    <ul id="paging" class="pagination" style="justify-content: center;">
-                      <li class="page-item"><a class="page-link" href="#"></a></li>
-                      <li class="page-item"><a class="page-link" href="#">1</a></li>	    
-                      <li class="page-item"><a class="page-link" href="#">></a></li>
-                    </ul>
-                  </nav>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class='modal fade' tabindex='-1' id='reportModal'>
-    <div class='modal-dialog modal-lg'>
-        <div class='modal-content'>
-            <div class='modal-body'><br>
-                <h3><b>신고 사유 상세</b></h3>
-                <p style='text-align: end; cursor: pointer;' data-dismiss='modal'><u><i>신고된 컨텐츠로 이동</i></u></p>
-                <div style='width:100%; height:400px; overflow:auto'>
-                <table class='table' width='100%' cellspacing='0' cellpadding='0'>
-                    <thead style='text-align: center'>
-                        <tr class="bg-light">
-                            <th width="5%">No.</th><th>신고자ID</th><th width="50%">신고사유</th>
-                        </tr>
-                    </thead>
-                    <tbody style='text-align: center'>
-                        <tr>
-                            <td>1</td>
-                            <td>개빡친 무지(angry_mo***)</td>
-                            <td>재수없어요ㅠㅠ</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>체념한 제이지(jag***)</td>
-                            <td>아...스포당함..</td>
-                        </tr>
-                        <tr><td>3</td><td>...</td><td>...</td></tr>
-                        <tr><td>4</td><td>...</td><td>...</td></tr>
-                        <tr><td>5</td><td>...</td><td>...</td></tr>
-                        <tr><td>6</td><td>...</td><td>...</td></tr>
-                        <tr><td>7</td><td>...</td><td>...</td></tr>
-                        <tr><td>8</td><td>...</td><td>...</td></tr>
-                    </tbody>
+                    </tbody>          
                 </table>
             </div>
         </div>
-            <div class='modal-footer'>
-                <button type='button' class='btn btn-secondary' data-dismiss='modal'>신고 반려</button>
-                <button id='delbtn' type='button' class='btn btn-warning' data-dismiss='modal'>컨텐츠 삭제</button>
+        <hr>
+        <div class='row'>
+            <div class='col d-flex align-items-center justify-content-end'>
+                <input type='text'placeholder='수정할 닉네임' id='fixNickname'>
+                <input type='button' value='회원 수정' id='fixBtn' class='mx-3'
+                    data-toggle='modal' data-target='#modal'>
+                <input type='button' value='회원 삭제' id='delBtn'>
+            </div>
+        </div>
+</div>
+
+<footer>
+    <div class='container'>
+        <div class='row'>
+            <nav id='nav' aria-label="Page navigation example" style='width: 100%;'>		
+                <ul id="paging" class="pagination" style="justify-content: center;">
+                    <li class="page-item"><a class="page-link" href="#"><</a></li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>	    
+                    <li class="page-item"><a class="page-link" href="#">></a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</footer>
+
+<div class='modal fade' tabindex='-1' id='modal'>
+    <div class='modal-dialog modal-dialog-centered'>
+        <div class='modal-content'>
+            <div class='modal-body' style='text-align: center;'>
+                <h4 id='modalMsg'></h4>
+                <div class='row'>
+                        <button type='button' class='col btn btn-block btn-secondary' data-dismiss='modal'
+                            id='noBtn'>취소</button>
+                        <button type='button' class='col btn btn-block btn-primary' data-dismiss='modal'
+                            id='yesBtn'>확인</button>
+                </div>
             </div>
         </div>
     </div>
