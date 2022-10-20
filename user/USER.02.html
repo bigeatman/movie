@@ -1,0 +1,114 @@
+<title>로그인</title>
+<meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<script src='https://code.jquery.com/jquery-3.6.0.min.js'></script>
+<script src='https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js'></script>
+<script src='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js'></script>
+<link rel='stylesheet' href='http://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css'/>
+<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css'/>
+
+<script>
+let email = 'xxx0000@naver.com'
+let tel = '01012345678'
+
+/*
+function textClear(field){
+    return field.val('')
+}  안없애는게 더 나은듯
+*/
+
+function init(){
+    // 1. 이메일 틀림
+    // 2. 전화번호 틀림 // 이후 이메일과 같은 전화번호인가?
+    // 3. 성공
+    $('#yesBtn').on('click', ()=>{
+        $('#errEmail').empty()
+        $('#errTel').empty()
+
+        if(email != ($('#inputEmail').val())) {
+            $('#errEmail').append('존재하지 않는 이메일입니다.')
+        } else if(tel != ($('#inputTel').val())){
+            $('#errTel').append('회원님의 정보와 일치하는 아이디가 없습니다.')
+        } else return location.href='USER.03.html'
+
+    //클리어 시키지 않는게 사용하기가 더 편할듯    textClear($('#inputEmail'))
+    //    textClear($('#inputTel'))
+    })
+
+    $('#noBtn').on('click', ()=>{
+        return location.href='USER.01.html'
+    })
+}
+
+$(init)
+</script>
+
+<style>
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+hr {
+    background:gray;
+    height:1px;
+    border:0;
+}
+
+#inputBox{
+    margin-left: 2rem;
+    margin-right: 2rem;    
+}
+
+.btn {
+    text-align: center;
+}
+
+#yesBtn, #noBtn{
+    margin: auto;
+}
+
+
+</style>
+
+<head>
+</head>
+
+<body>
+<div class='container'>
+    <div class='row'>
+        <div class='col'>
+            <header class='p-2'>
+                <h1 class='text-center'>아이디 찾기</h1>
+                <hr class='col-7 color-black'>
+            </header>
+        </div>
+    </div>
+    <form>
+        <div class='row d-flex'>
+            <div class='col' id='inputBox'>
+                <input id='inputEmail' name='inputEmail' type='email' class='form-control' placeholder='이메일을 입력하세요.'>
+                <p id='errEmail' style='font-size: 8px; color: red; height: 8px;'></p>
+                <input id='inputTel' name='inputTel' type='tel' class='form-control' placeholder='연락처를 입력하세요. (-없이)'
+                    maxlength='11' onKeyup="this.value=this.value.replace(/[^0-9]/g,'');">
+                <p id='errTel' style='font-size: 8px; color: red; height: 8px;'></p>
+            </div>
+        </div>
+    
+        
+        <div class='row'>
+            <div class='col d-flex'>
+                <input id='noBtn' type='button' class='btn btn-block btn-secondary mr-3' value='취소'
+                    style='max-width: 7rem;'>
+                <input id='yesBtn' type='button' class='btn btn-block btn-primary' value='확인'
+                    style='max-width: 7rem;'>    
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+
+<footer>
+
+</footer>
