@@ -173,7 +173,7 @@ nav a {
 	border : 1px solid gray;
 }
 
-#rectangle {
+.rectangle {
 	width : 330px;
 	height : 50px;
 	border : 1px solid gray;
@@ -300,8 +300,8 @@ nav a {
 			</div>
 			<div class="write-review"><button type="button" data-toggle="modal" data-target='#reportModal' id="writeReivewBtn" style="border:1px solid gray">평 작성하기</button></div>
 		</div>
-		<div class="container center">
-			<div id="rectangle">
+		<div class="container center" id="reviewContainer">
+			<div class="rectangle" id="10">
 				<div class="row container" style="margin:0px; padding:0px;">
 					<div class="review-id">즐거운 무지(mooji***)</div>
 					<div class="like-unlike-panel">
@@ -317,7 +317,7 @@ nav a {
 					<button class="comment-panel">댓글 22</button>
 				</div>
 			</div>
-			<div id="rectangle">
+			<div class="rectangle" id="11">
 				<div class="row container" style="margin:0px; padding:0px;">
 					<div class="review-id">개빡친 제이지 (jage***)</div>
 					<div class="like-unlike-panel">
@@ -333,7 +333,7 @@ nav a {
 					<button class="comment-panel">댓글 9</button>
 				</div>
 			</div>
-			<div id="rectangle" style="height:50px; font-size:13px; text-align:center;">
+			<div class="rectangle" style="height:50px; font-size:13px; text-align:center;">
 				더보기
 			</div>
 		</div>
@@ -387,6 +387,8 @@ nav a {
 			createScoreElements(dialog, kind);
 			createInputElements(dialog, kind);
 			createSubmitButtons(dialog, kind);
+			
+			return dialog;
 		}
 		
 		function createSubmitButtons(dialog, kind) {
@@ -406,10 +408,7 @@ nav a {
 			okButton.classList.add('dialog-button');
 			okButton.style.setProperty('margin-left', '2%', '');
 			okButton.setAttribute('data-dismiss', 'modal');
-			okButton.addEventListener('click', function() {
-				createNewReview(dialog);
-				clearChilds(dialog);
-			});
+			okButton.setAttribute('id', 'okButton');
 			
 			cancelButton.innerHTML += '취소';
 			cancelButton.classList.add('dialog-button');
@@ -424,10 +423,37 @@ nav a {
 			dialog.appendChild(buttonArea);
 		}
 		
+		function createNewReview() {
+			var reviewContent = document.querySelector('#reviewContent');
+			console.log(reviewContent);
+			var reviewContainer = document.querySelector('#reviewContainer');
+			reviewContainer.innerHTML = createReviewElement(reviewContent.value) + reviewContainer.innerHTML;
+		}
+		
+		var reviewIdIndex = 0;
+		
+		function createReviewElement(content) {
+			var elem = '';
+			
+			elem += '<div class="rectangle" id="review_' + reviewIdIndex + '"><div class="row container" style="margin:0px; padding:0px;"><div class="review-id">임시 사용자(temp***)</div>';
+			elem += '<div class="like-unlike-panel"><button id="like-button"><i class="fa">&#xf087;</i></button><span id="like-button">&nbsp0&nbsp&nbsp</span>';
+			elem += '<button id="like-button"><span class="fa fa-thumbs-down"></span></button><span id="like-button">&nbspUnlike&nbsp</span>';
+			elem += '<button id="like-button" onclick="removeReview(' + reviewIdIndex++ + ')"><i class="fa-solid fa-trash"></i></button></div></div>';
+			elem += '<div class="row container" style="margin:0px; padding:0px;"><span class="review-content">';
+			elem += content;
+			elem += '</span><button class="comment-panel">댓글 0</button></div></div>';
+			
+			return elem;
+		}
+		
 		function createInputElements(dialog, kind) {
+			if ((kind & 0x02) == 0) {
+				return;
+			}
 			var inputArea = document.createElement('div');
 			var inputText = document.createElement('textarea');
 			
+			inputText.setAttribute('id', 'reviewContent');
 			inputText.classList.add('input-text');
 			inputArea.appendChild(inputText);
 			
@@ -521,10 +547,32 @@ nav a {
 		}
 		
 		function createReivewDialog() {
-			createDialog('사용자 평 추가', 0x11);
+			var dialog = createDialog('사용자 평 추가', 0x13);
+			var okButton = document.querySelector("#okButton");
+			
+			okButton.addEventListener('click', function() {
+				createNewReview();
+				clearChilds(dialog);
+			});
 		}
 		
-		document.querySelector("#writeReivewBtn").addEventListener('click', createReivewDialog);
+		function createRemoveReviewDialog(reviewID) {
+			// var dialog = createDialog('사용자 평 삭제', 0x10);
+			var dialog = createDialog('사용자 평 추가', 0x13);
+			var okButton = document.querySelector("#okButton");
+			
+			okButton.addEventListener('click', function() {
+				var review = document.querySelector("#review_" + reviewID);
+				review.remove();
+				clearChilds();
+			});
+		}
+		
+		function removeReview(reviewID) {
+			console.log("TEST");
+			createRemoveReviewDialog(reviewID);
+		}
+		
 		document.querySelector("#writeReivewBtn").addEventListener('click', createReivewDialog);
 	</script>
 </body>
