@@ -181,7 +181,7 @@ nav a {
 	margin-bottom : 5px;
 }
 
-#like-button {
+.like-button {
 	border : 0px solid gray;
 	background : white;
 	font-size : 12px;
@@ -298,18 +298,18 @@ nav a {
 				<!-- <i class="fa fa-star-o" style="font-size:14px"></i> !-->
 				<span style="font-size:14px">4.7</span>
 			</div>
-			<div class="write-review"><button type="button" data-toggle="modal" data-target='#reportModal' id="writeReivewBtn" style="border:1px solid gray">평 작성하기</button></div>
+			<div class="write-review"><button type="button" data-toggle="modal" data-target='#dialogModal' id="writeReivewBtn" style="border:1px solid gray">평 작성하기</button></div>
 		</div>
 		<div class="container center" id="reviewContainer">
 			<div class="rectangle" id="10">
 				<div class="row container" style="margin:0px; padding:0px;">
 					<div class="review-id">즐거운 무지(mooji***)</div>
 					<div class="like-unlike-panel">
-						<button id="like-button"><i class="fa">&#xf087;</i></button>
-						<span id="like-button">128&nbsp&nbsp</span>
-						<button id="like-button"><span class="fa fa-thumbs-down"></span></button>
-						<span id="like-button">Unlike</span>
-						<button id="like-button"><i class="fa-solid fa-triangle-exclamation"></i></button>
+						<button class="like-button"><i class="fa">&#xf087;</i></button>
+						<span class="like-button">128&nbsp&nbsp</span>
+						<button class="like-button"><span class="fa fa-thumbs-down"></span></button>
+						<span class="like-button">Unlike</span>
+						<button class="like-button" type="button" data-toggle="modal" data-target='#dialogModal' onclick="reportReview(10)"><i class="fa-solid fa-triangle-exclamation"></i></button>
 					</div>
 				</div>
 				<div class="row container" style="margin:0px; padding:0px;">
@@ -321,11 +321,11 @@ nav a {
 				<div class="row container" style="margin:0px; padding:0px;">
 					<div class="review-id">개빡친 제이지 (jage***)</div>
 					<div class="like-unlike-panel">
-						<button id="like-button"><i class="fa">&#xf087;</i></button>
-						<span id="like-button">78&nbsp&nbsp</span>
-						<button id="like-button"><span class="fa fa-thumbs-down"></span></button>
-						<span id="like-button">Unlike</span>
-						<button id="like-button"><i class="fa-solid fa-triangle-exclamation"></i></button>
+						<button class="like-button"><i class="fa">&#xf087;</i></button>
+						<span class="like-button">78&nbsp&nbsp</span>
+						<button class="like-button"><span class="fa fa-thumbs-down"></span></button>
+						<span class="like-button">Unlike</span>
+						<button class="like-button" type="button" data-toggle="modal" data-target='#dialogModal' onclick="reportReview(11)"><i class="fa-solid fa-triangle-exclamation"></i></button>
 					</div>
 				</div>
 				<div class="row container" style="margin:0px; padding:0px;">
@@ -369,7 +369,7 @@ nav a {
 		</nav>
 	</div>
 	
-	<div class='modal fade' tabindex='-1' id='reportModal'>
+	<div class='modal fade' tabindex='-1' id='dialogModal'>
 		<div class='modal-dialog modal-lg'>
 			<div style="height:290px"></div>
 			<div class="modal-content">
@@ -383,7 +383,7 @@ nav a {
 			var dialog = document.querySelector('#dialog');
 			clearChilds(dialog);
 			
-			createTitle(dialog, title);
+			createTitle(dialog, title, kind);
 			createScoreElements(dialog, kind);
 			createInputElements(dialog, kind);
 			createSubmitButtons(dialog, kind);
@@ -413,6 +413,7 @@ nav a {
 			cancelButton.innerHTML += '취소';
 			cancelButton.classList.add('dialog-button');
 			cancelButton.style.setProperty('margin-right', '2%', '');
+			cancelButton.setAttribute('id', 'cancelButton');
 			cancelButton.addEventListener('click', function() {
 				clearChilds(dialog);
 			});
@@ -436,9 +437,9 @@ nav a {
 			var elem = '';
 			
 			elem += '<div class="rectangle" id="review_' + reviewIdIndex + '"><div class="row container" style="margin:0px; padding:0px;"><div class="review-id">임시 사용자(temp***)</div>';
-			elem += '<div class="like-unlike-panel"><button id="like-button"><i class="fa">&#xf087;</i></button><span id="like-button">&nbsp0&nbsp&nbsp</span>';
-			elem += '<button id="like-button"><span class="fa fa-thumbs-down"></span></button><span id="like-button">&nbspUnlike&nbsp</span>';
-			elem += '<button id="like-button" onclick="removeReview(' + reviewIdIndex++ + ')"><i class="fa-solid fa-trash"></i></button></div></div>';
+			elem += '<div class="like-unlike-panel"><button class="like-button"><i class="fa">&#xf087;</i></button><span class="like-button">&nbsp0&nbsp&nbsp</span>';
+			elem += '<button class="like-button"><span class="fa fa-thumbs-down"></span></button><span class="like-button">&nbspUnlike&nbsp</span>';
+			elem += '<button class="like-button" type="button" data-toggle="modal" data-target="#dialogModal" onclick="removeReview(' + reviewIdIndex++ + ')"><i class="fa-solid fa-trash"></i></button></div></div>';
 			elem += '<div class="row container" style="margin:0px; padding:0px;"><span class="review-content">';
 			elem += content;
 			elem += '</span><button class="comment-panel">댓글 0</button></div></div>';
@@ -447,16 +448,25 @@ nav a {
 		}
 		
 		function createInputElements(dialog, kind) {
-			if ((kind & 0x02) == 0) {
-				return;
-			}
 			var inputArea = document.createElement('div');
-			var inputText = document.createElement('textarea');
+			var inputText;
+			
+			if ((kind & 0x02) == 0) {
+				inputText = document.createElement('div');
+				inputText.innerHTML += '작성한 내용을 삭제하시겠습니까?';
+			} else {
+				inputText = document.createElement('textarea');
+			}
 			
 			inputText.setAttribute('id', 'reviewContent');
 			inputText.classList.add('input-text');
+			
+			inputArea.setAttribute('id', 'dialogContent');
 			inputArea.appendChild(inputText);
 			
+			if ((kind & 0x04) != 0) {
+				inputText.style.setProperty('height', '40px', '');
+			}
 			dialog.appendChild(inputArea);
 		}
 		
@@ -533,17 +543,25 @@ nav a {
 			}
 		}
 		
-		function createTitle(dialog, title) {
+		function createTitle(dialog, title, kind) {
 			var titleEle = document.createElement('span');
 			titleEle.innerHTML = title;
 			titleEle.classList.add('dialog-menu');
 			
 			dialog.appendChild(titleEle);
+			
+			if((kind & 0x04) != 0) {
+				var reportDoc = document.createElement('div');
+				reportDoc.innerHTML += '신고 사유를 입력해 주세요.';
+				reportDoc.style.setProperty('font-size', '12px', '');
+				reportDoc.setAttribute('id', 'reportDoc');
+				dialog.appendChild(reportDoc);
+			}
 		}
 		
 		function clearChilds(dialog) {
 			dialog.innerHTML = '';
-			$('#reportModal').modal('hide');
+			$('#dialogModal').modal('hide');
 		}
 		
 		function createReivewDialog() {
@@ -557,20 +575,52 @@ nav a {
 		}
 		
 		function createRemoveReviewDialog(reviewID) {
-			// var dialog = createDialog('사용자 평 삭제', 0x10);
-			var dialog = createDialog('사용자 평 추가', 0x13);
+			var dialog = createDialog('사용자 평 삭제', 0x10);
 			var okButton = document.querySelector("#okButton");
 			
 			okButton.addEventListener('click', function() {
 				var review = document.querySelector("#review_" + reviewID);
 				review.remove();
-				clearChilds();
+				clearChilds(dialog);
 			});
 		}
 		
+		function createReportReviewDialog(reviewID) {
+			var dialog = createDialog('사용자 평 신고', 0x16);
+			var okButton = document.querySelector("#okButton");
+			
+			okButton.removeAttribute('data-dismiss');
+			okButton.addEventListener('click', function() {
+				createReportDoneDialog(dialog);
+			});
+		}
+		
+		function createReportDoneDialog(dialog) {
+			var dialogContent = document.querySelector("#dialogContent");
+			var doneButton = document.createElement('button');
+			
+			dialogContent.classList.add('input-text');
+			dialogContent.style.setProperty('font-size', '12px', '');
+			dialogContent.style.setProperty('height', '64px', '');
+			dialogContent.innerHTML = '신고해 주셔서 감사합니다. 신고된 내용은 내부 검토를 통해 삭제 여부를 확인해 보도록 하겠습니다.';
+			
+			document.querySelector('#reportDoc').remove();
+			document.querySelector('#cancelButton').remove();
+			document.querySelector('#okButton').remove();
+			
+			doneButton.innerHTML += '확인';
+			doneButton.classList.add('dialog-button');
+			doneButton.setAttribute('data-dismiss', 'modal');
+			doneButton.style.setProperty('width', '100%');
+			dialog.appendChild(doneButton);
+		}
+		
 		function removeReview(reviewID) {
-			console.log("TEST");
 			createRemoveReviewDialog(reviewID);
+		}
+		
+		function reportReview(reviewID) {
+			createReportReviewDialog(reviewID);
 		}
 		
 		document.querySelector("#writeReivewBtn").addEventListener('click', createReivewDialog);
