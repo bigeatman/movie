@@ -16,9 +16,13 @@ nav {
 	background-color: black;
 }
 
-.fa-compass, .fa-user, .fa-house, .fa-comments {
+.fa-house, .fa-comments, .fa-compass, .fa-user {
 	color:rgb(221, 221, 221);
 	font-size:28px;
+}
+
+.fa-comments, .fa-compass, .fa-user {
+	margin-left: -5px;
 }
 
 .iconfont {
@@ -149,26 +153,26 @@ nav a {
 		<nav class='row fixed-bottom p-1'>
 			<div class='col m-2 text-center'>
 				<a id='goHome' href='#' class='ml-1'>
-					<i class='fa-solid fa-house fa-xl'></i>
-					<span class='iconfont'>&nbsp;홈</span>
+					<i class='fa-solid fa-house fa-xl' style='margin-left: -3px;'></i><br>
+					<span class='iconfont'>홈</span>
 				</a>
 			</div>
 			<div class='col m-2 text-center'>
 				<a id='blind' href='' class='ml-1'>
-					<i class='fa-regular fa-comments fa-xl'></i>
+					<i class='fa-regular fa-comments fa-xl'></i><br>
 					<span class='iconfont'>커뮤니티</span>
 				</a>
 			</div>
 			<div class='col m-2 text-center'>
 				<a id='chat' href='' class='ml-1'>
-					<i class='fa-solid fa-compass fa-xl'></i>
-					<span class='iconfont'>&nbsp;&nbsp;탐색</span>
+					<i class='fa-solid fa-compass fa-xl'></i><br>
+					<span class='iconfont'>탐색</span>
 				</a>
 			</div>
 			<div class='col m-2 text-center'>
 				<a id='user' href='user/01.html' class='ml-1'>
-					<i class='fa-regular fa-user fa-xl'></i>
-					<span class='iconfont'>&nbsp;&nbsp;&nbsp;로그인</span>
+					<i class='fa-regular fa-user fa-xl'></i><br>
+					<span class='iconfont'>로그인</span>
 				</a>
 			</div>
 		</nav>
