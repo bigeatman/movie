@@ -15,8 +15,7 @@ function textClear(field){
 }
 */
 function init(){
-    //이메일
-    
+    // 이메일 선택    
     $("#domainList").change(function(){
         if(!$(this).length){
             return this.val('')
@@ -29,12 +28,20 @@ function init(){
     $('#yesBtn').on('click', ()=>{
         $('#errId').empty()
         $('#errEmail').empty()
+        $('#inputId').removeClass().attr('class', 'form-control')
+        $('#inputEmail').removeClass().attr('class', 'form-control')
+        $('#domainTxt').removeClass().attr('class', 'form-control')
+
+
         let inputEmail = $('#inputEmail').val() + '@' + $('#domainTxt').val() 
         
         if(id != ($('#inputId').val())) {
             $('#errId').append('존재하지 않는 아이디입니다.')
+            $('#inputId').addClass('err')
         } else if(email != inputEmail){
             $('#errEmail').append('회원님의 정보와 일치하는 아이디가 없습니다.')
+            $('#inputEmail').addClass('err')
+            $('#domainTxt').addClass('err')
         } else { return location.href='05.html' }
 /*
         textClear($('#inputId'))
@@ -70,6 +77,11 @@ hr {
 #yesBtn, #noBtn, #inputBox{
     margin: auto;
 }
+
+.err{
+    border: 0.1rem solid;
+    border-color: red;
+}
 </style>
 
 <body>
@@ -88,8 +100,6 @@ hr {
             <div class='col' id='inputBox'>
                 <input id='inputId' name='inputId' type='text' class='form-control' placeholder='아이디를 입력하세요.'>
                 <p id='errId' style='font-size: 8px; color: red; height: 8px;'></p>
-                
-                <!--input id='inputEmail' name='inputEmail' type='email' class='form-control' placeholder='이메일을 입력하세요.'-->
 
                 <div class='d-flex align-items-center'>
                     <input id='inputEmail' name='inputEmail' type='text' class='form-control' placeholder='이메일을 입력하세요.' required/>
