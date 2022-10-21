@@ -14,72 +14,6 @@
 
 
 <script>
-    function renderPagination(currentPage) {
-  if (_totalCount <= 20) return; 
-
-  var totalPage = Math.ceil(_totalCount / 20);
-  var pageGroup = Math.ceil(currentPage / 10);
-
-  var last = pageGroup * 10;
-  if (last > totalPage) last = totalPage;
-  var first = last - (10 - 1) <= 0 ? 1 : last - (10 - 1);
-  var next = last + 1;
-  var prev = first - 1;
-
-  const fragmentPage = document.createDocumentFragment();
-  if (prev > 0) {
-    var allpreli = document.createElement('li');
-    allpreli.insertAdjacentHTML("beforeend", `<a href='#js-bottom' id='allprev'>&lt;&lt;</a>`);
-
-    var preli = document.createElement('li');
-      preli.insertAdjacentHTML("beforeend", `<a href='#js-bottom' id='prev'>&lt;</a>`);
-
-      fragmentPage.appendChild(allpreli);
-      fragmentPage.appendChild(preli);
-  }
-	
-  for (var i = first; i <= last; i++) {
-    const li = document.createElement("li");
-    li.insertAdjacentHTML("beforeend", `<a href='#js-bottom' id='page-${i}' data-num='${i}'>${i}</a>`);
-    fragmentPage.appendChild(li);
-  }
-
-  if (last < totalPage) {
-    var allendli = document.createElement('li');
-    allendli.insertAdjacentHTML("beforeend", `<a href='#js-bottom'  id='allnext'>&gt;&gt;</a>`);
-
-    var endli = document.createElement('li');
-    endli.insertAdjacentHTML("beforeend", `<a  href='#js-program-detail-bottom'  id='next'>&gt;</a>`);
-
-    fragmentPage.appendChild(endli);
-    fragmentPage.appendChild(allendli);
-  }
-
-  document.getElementById('js-pagination').appendChild(fragmentPage);
-  // 페이지 목록 생성
-
-  $(`#js-pagination a`).removeClass("active");
-  $(`#js-pagination a#page-${currentPage}`).addClass("active");
-
-  $("#js-pagination a").click(function (e) {
-    e.preventDefault();
-    var $item = $(this);
-    var $id = $item.attr("id");
-    var selectedPage = $item.text();
-
-    if ($id == "next") selectedPage = next;
-    if ($id == "prev") selectedPage = prev;
-    if ($id == "allprev") selectedPage = 1;
-    if ($id == "allnext") selectedPage = totalPage;
-
-    list.renderPagination(selectedPage);//페이지네이션 그리는 함수
-    list.search(selectedPage);//페이지 그리는 함수
-  });
-};
-
-
-
-
 const users = []
 let user = 0
 
@@ -135,8 +69,15 @@ function init(){
         $('#yesDelBtn').attr('id', 'yesBtn')
 
         if(isVal($('#no:checked'))){
-            $('#modalMsg').text('닉네임 [뿡뿡이] 을/를')
-            $('#modalMsg').append(`<br><h4>[]으로 수정하시겠습니까?</h4>`)
+
+            console.log($('#no:checked').val())
+            console.log($('#no:checked').parent().next().val())
+
+
+            $('#modalMsg').append('닉네임 [' ,$('#no:checked').parent('#nickname').val(),
+                                    ']<br><h4>[', $('#fixNickname').val(), ']으로 수정하시겠습니까?</h4>')
+            $('#modalMsg').append($('#fixNickname').val())
+
             $('#noBtn').text('취소')
             $('#yesBtn').show()
             $('#yesBtn').attr('class', 'col btn btn-block btn-warning')
@@ -201,7 +142,7 @@ body{
     padding-bottom: 80px;
 }
 
-footer{
+.footer{
     position: relative;
     height: 60px;
     width: 100%;
@@ -297,22 +238,17 @@ footer{
             <input type='button' value='회원 삭제' id='delBtn' class='btn btn-danger'>
         </div>
     </div>
+    <div class='row footer'>
+        <nav id='nav' aria-label="Page navigation example" style='width: 100%;'>		
+            <ul id="paging" class="pagination" style="justify-content: center;">
+                <li class="page-item"><a class="page-link" href="#"><</a></li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>	    
+                <li class="page-item"><a class="page-link" href="#">></a></li>
+            </ul>
+        </nav>
+    </div>
 </div>
 </body>
-
-<footer>
-    <div class='container'>
-        <div class='row'>
-            <nav id='nav' aria-label="Page navigation example" style='width: 100%;'>		
-                <ul id="paging" class="pagination" style="justify-content: center;">
-                    <li class="page-item"><a class="page-link" href="#"><</a></li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>	    
-                    <li class="page-item"><a class="page-link" href="#">></a></li>
-                </ul>
-            </nav>
-        </div>
-    </div>
-</footer>
 
 <div class='modal fade' tabindex='-1' id='modal'>
     <div class='modal-dialog modal-dialog-centered'>
