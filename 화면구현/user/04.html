@@ -15,16 +15,25 @@ function textClear(field){
 }
 */
 function init(){
+    //이메일
+    
+    $("#domainList").change(function(){
+        if(!$(this).length){
+            return this.val('')
+        } else $('#domainTxt').val(($(this).val())); //value값 가져오기
+    });
+
     // 1. 아이디 틀림
     // 2. 이메일 틀림 // 이후 이메일과 같은 전화번호인가?
     // 3. 성공
     $('#yesBtn').on('click', ()=>{
         $('#errId').empty()
         $('#errEmail').empty()
-
+        let inputEmail = $('#inputEmail').val() + '@' + $('#domainTxt').val() 
+        
         if(id != ($('#inputId').val())) {
             $('#errId').append('존재하지 않는 아이디입니다.')
-        } else if(email != ($('#inputEmail').val())){
+        } else if(email != inputEmail){
             $('#errEmail').append('회원님의 정보와 일치하는 아이디가 없습니다.')
         } else { return location.href='05.html' }
 /*
@@ -54,16 +63,11 @@ hr {
     border:0;
 }
 
-#inputBox{
-    margin-left: 2rem;
-    margin-right: 2rem;    
-}
-
 .btn {
     text-align: center;
 }
 
-#yesBtn, #noBtn{
+#yesBtn, #noBtn, #inputBox{
     margin: auto;
 }
 </style>
@@ -84,7 +88,23 @@ hr {
             <div class='col' id='inputBox'>
                 <input id='inputId' name='inputId' type='text' class='form-control' placeholder='아이디를 입력하세요.'>
                 <p id='errId' style='font-size: 8px; color: red; height: 8px;'></p>
-                <input id='inputEmail' name='inputEmail' type='email' class='form-control' placeholder='이메일을 입력하세요.'>
+                
+                <!--input id='inputEmail' name='inputEmail' type='email' class='form-control' placeholder='이메일을 입력하세요.'-->
+
+                <div class='d-flex align-items-center'>
+                    <input id='inputEmail' name='inputEmail' type='text' class='form-control' placeholder='이메일을 입력하세요.' required/>
+                        &nbsp;@&nbsp;
+                    <input id='domainTxt' type='text' class='form-control'/>
+                        &nbsp;
+                    <select  id='domainList' class='form-control'>
+                        <option value=''>직접 입력</option>
+                        <option value='naver.com'>naver.com</option>
+                        <option value='gmail.com'>gmail.com</option>
+                        <option value='daum.net'>daum.net</option>
+                        <option value='nate.com'>nate.com</option>
+                        <option value='kakao.com'>kakao.com</option>
+                    </select>
+                </div>
                 <p id='errEmail' style='font-size: 8px; color: red; height: 8px;'></p>
             </div>
         </div>
