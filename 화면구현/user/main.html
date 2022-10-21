@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<title>메인</title>
+<meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<link rel='stylesheet' href='http://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css'/>
+<script src='https://code.jquery.com/jquery-3.6.0.min.js'></script>
+<script src='https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js'></script>
+<script src='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js'></script>
+<script src="https://kit.fontawesome.com/449f39a7b2.js" crossorigin="anonymous"></script>
+<script>
+
+</script>
+<style>
+nav {
+	background-color: rgb(19, 19, 29);
+}
+
+.fa-compass, .fa-user, .fa-house, .fa-comments {
+	color:rgb(221, 221, 221);
+	font-size:28px;
+}
+
+.iconfont {
+	font-size:12px;
+}
+
+nav a {
+	text-decoration: none;
+	color: white;
+}
+
+table {
+	width: auto;
+	text-align: center;
+}
+
+[id*='movieImg']{
+   width: 120px;
+   height: 90px;
+   border: 2px solid lightgrey;
+   text-align: center;
+   margin: 0 auto;
+}
+
+[id*='Carousel']{
+   width: 170px;
+   height: 125px;
+   margin: 0 auto;
+}
+</style>
+</head>
+<body>
+	<header class='container-fulid'>
+        <form class='row m-2'>
+            <div class='p-0 border justify-content-center rounded'>
+				<a href='#'>로고이미지</a>
+			</div>
+			<div class='col form-group d-flex justify-content-center align-items-center'>
+				<input  class='form-control w-75' type='text' placeholder='검색'/>
+				<button class=" btn ml-3 border">
+					<i class='fa-solid fa-magnifying-glass'></i>
+					<sapn class='ml-2 d-none d-md-inline'>검색</sapn>
+				</button>
+			</div>
+		</form>
+	</header>
+
+	<div class='container'>
+		<hr>
+		<div class='ml-2 font-weight-bold'>영화 TOP 5</div>
+		<div class='row'>
+			<div class='col'>
+					<div id='topCarousel' class='carousel slide' data-ride='carousel'>
+						<div class='carousel-inner'>
+							<table class = 'table table-borderless' id='topMv'>
+								<tbody>
+									   <tr>
+									  <th>
+										  <div class='carousel-item active'>
+											  <div id='movieImg1'><a href='#'>영화이미지</a></div>
+											  <div id='topMovie'>블랙 아담</div>
+										  </div>
+										  <div class='carousel-item'>
+											  <div id='movieImg2'><a href='#'>영화이미지</a></div>
+											  <div id='topMovie'>공조2: 인터내셔날</div>
+										  </div>
+										  <div class='carousel-item'>
+											  <div id='movieImg3'><a href='#'>영화이미지</a></div>
+											  <div id='topMovie'>인생은 아름다워</div>
+										  </div>
+									  </th>
+								   </tr>
+								</tbody>
+							</table>
+						</div>
+						<a href='#topCarousel' class='carousel-control-prev' data-slide='prev'>
+							&nbsp;<i class='fa fa-chevron-left' style='color:#000000'></i>
+						</a>
+						<a href='#topCarousel' class='carousel-control-next' data-slide='next'>
+							&nbsp;<i class='fa fa-chevron-right' style='color:#000000'></i>
+						</a>
+					</div>
+				</div>
+			</div>
+			<div class='ml-2 mt-2 font-weight-bold'>오늘의 추천 영화</div>
+			<div class='col'>
+				<div id='daysCarousel' class='carousel slide' data-ride='carousel'>
+					<div class='carousel-inner'>
+						<table class = 'table table-borderless' id='daysMv'>
+							<tbody>
+								   <tr>
+								  <th>
+									  <div class='carousel-item active'>
+										  <div id='movieImg4'><a href='#'>영화이미지</a></div>
+										  <div id='daysMovie'>오펀:천사의 탄생</div>
+									  </div>
+									  <div class='carousel-item'>
+										  <div id='movieImg5'><a href='#'>영화이미지</a></div>
+										  <div id='daysMovie'>정직한 후보2</div>
+									  </div>
+									  <div class='carousel-item'>
+										  <div id='movieImg6'><a href='#'>영화이미지</a></div>
+										  <div id='daysMovie'>귀못</div>
+									  </div>
+								  </th>
+							   </tr>
+							</tbody>
+						</table>
+					</div>
+					<a href='#daysCarousel' class='carousel-control-prev' data-slide='prev'>
+						&nbsp;<i class='fa fa-chevron-left' style='color:#000000'></i>
+					</a>
+					<a href='#daysCarousel' class='carousel-control-next' data-slide='next'>
+						&nbsp;<i class='fa fa-chevron-right' style='color:#000000'></i>
+					</a>
+				</div>
+			</div>
+			<div class='ml-2 mt-1 font-weight-bold'>오늘의 영화</div>
+			<div class='col'>
+				<div id='todayCarousel' class='carousel slide' data-ride='carousel'>
+					<div class='carousel-inner'>
+						<table class = 'table table-borderless' id='todayMv'>
+							<tbody>
+								   <tr>
+								  <th>
+									  <div class='carousel-item active'>
+										  <div id='movieImg7'><a href='#'>영화이미지</a></div>
+										  <div id='todayMovie'>리멤버</div>
+									  </div>
+									  <div class='carousel-item'>
+										  <div id='movieImg8'><a href='#'>영화이미지</a></div>
+										  <div id='todayMovie'>스마일</div>
+									  </div>
+									  <div class='carousel-item'>
+										  <div id='movieImg9'><a href='#'>영화이미지</a></div>
+										  <div id='todayMovie'>미혹</div>
+									  </div>
+								  </th>
+							   </tr>
+							</tbody>
+						</table>
+					</div>
+					<a href='#todayCarousel' class='carousel-control-prev' data-slide='prev'>
+						&nbsp;<i class='fa fa-chevron-left' style='color:#000000'></i>
+					</a>
+					<a href='#todayCarousel' class='carousel-control-next' data-slide='next'>
+						&nbsp;<i class='fa fa-chevron-right' style='color:#000000'></i>
+					</a>
+				</div>
+			</div>
+		</div>
+		
+	<div id='navBar' class='container-fulid'>
+		<nav class='row fixed-bottom p-1'>
+			<div class='col m-2 text-center'>
+				<a id='goHome' href='#' class='ml-1'>
+					<i class='fa-solid fa-house fa-xl'></i>
+					<span class='iconfont'>&nbsp;홈</span>
+				</a>
+			</div>
+			<div class='col m-2 text-center'>
+				<a id='community' href='' class='ml-1'>
+					<i class='fa-regular fa-comments fa-xl'></i>
+					<span class='iconfont'>커뮤니티</span>
+				</a>
+			</div>
+			<div class='col m-2 text-center'>
+				<a id='search' href='movie/01.html' class='ml-1'>
+					<i class='fa-solid fa-compass fa-xl'></i>
+					<span class='iconfont'>&nbsp;탐색</span>
+				</a>
+			</div>
+			<div class='col m-2 text-center'>
+				<a id='user' href='user/01.html' class='ml-1'>
+					<i class='fa-regular fa-user fa-xl'></i>
+					<span class='iconfont'>&nbsp;&nbsp;로그인</span>
+				</a>
+			</div>
+		</nav>
+	</div>
+</body>
+</html>
