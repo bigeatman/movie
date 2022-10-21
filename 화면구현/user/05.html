@@ -44,7 +44,7 @@ function init(){
             code.substr(1,1) == $('#codeBox').next().val() &&
             code.substr(2,1) == $('#codeBox').next().next().val() &&
             code.substr(3,1) == $('#codeBox').next().next().next().val())) {
-                $('#msg').append(`<p style='color: red';>코드를 다시 입력하세요.</p>`)
+                $('#msg').append(`<p id='errMsg' style='color: red';>코드를 다시 입력하세요.</p>`)
                 $('#codeBoxRow').children().css({
                     'border-color': 'red'
                 })
@@ -99,6 +99,12 @@ hr {
 #yesBtn, #noBtn{
     margin: auto;
 }
+
+#errMsg{
+    font-size: 1.5rem;
+    font-weight: bolder;
+    color: gray;
+}
 </style>
 
 <body>
@@ -127,7 +133,7 @@ hr {
         </div>
 
         <div class='row col mb-4' id='msg'>
-            <p>코드를 입력하세요.</p>
+            <p id='errMsg'>코드 번호를 입력하세요.</p>
         </div>
     
         

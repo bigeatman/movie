@@ -38,7 +38,7 @@ function init(){
         let inputEmail = $('#inputEmail').val() + '@' + $('#domainTxt').val() 
 
         if(email != inputEmail){
-            $('#errEmail').append('회원님의 정보와 일치하는 아이디가 없습니다.')
+            $('#errEmail').append('존재하지 않는 이메일입니다.')
             $('#inputEmail').addClass('err')
             $('#domainTxt').addClass('err')
         } else if(tel != ($('#inputTel').val())){
