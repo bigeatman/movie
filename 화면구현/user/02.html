@@ -29,14 +29,14 @@ function init(){
             $('#errEmail').append('존재하지 않는 이메일입니다.')
         } else if(tel != ($('#inputTel').val())){
             $('#errTel').append('회원님의 정보와 일치하는 아이디가 없습니다.')
-        } else return location.href='USER.03.html'
+        } else return location.href='03.html'
 
     //클리어 시키지 않는게 사용하기가 더 편할듯    textClear($('#inputEmail'))
     //    textClear($('#inputTel'))
     })
 
     $('#noBtn').on('click', ()=>{
-        return location.href='USER.01.html'
+        return location.href='01.html'
     })
 }
 
