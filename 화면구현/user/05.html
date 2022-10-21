@@ -39,14 +39,15 @@ function init(){
     // 2. 코드 맞음 -> 페이지 넘어가기
     $('#yesBtn').on('click', ()=>{
         $('#msg').empty()
-        $('#codeBox').removeClass().attr('class', 'form-control')
 
         if(!(code.substr(0,1) == $('#codeBox').val() &&
             code.substr(1,1) == $('#codeBox').next().val() &&
             code.substr(2,1) == $('#codeBox').next().next().val() &&
             code.substr(3,1) == $('#codeBox').next().next().next().val())) {
                 $('#msg').append(`<p style='color: red';>코드를 다시 입력하세요.</p>`)
-                $('#codeBox').addClass('err');
+                $('#codeBoxRow').children().css({
+                    'border-color': 'red'
+                })
         } else { return location.href='06.html' }
         textClear($('#codeBoxRow'))
         textClear($('#inputEmail'))
@@ -85,7 +86,7 @@ hr {
     height: 5rem;
     margin: auto;
     background-color: gainsboro;
-    border: 0ch;
+    border: 0.1rem solid;
     font-size:40pt; 
     font-weight: bold;
     text-align: center;
@@ -97,16 +98,6 @@ hr {
 
 #yesBtn, #noBtn{
     margin: auto;
-}
-
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-}
-
-.err{
-    border: 0.1rem solid;
-    border-color: red;
 }
 </style>
 
