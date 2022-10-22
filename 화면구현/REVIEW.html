@@ -382,8 +382,10 @@ nav a {
 	</div>
 	
 	<script>
-		function viewComments(commentId) {
-			var review = document.querySelector('#review_' + commentId);
+		var commentIdIdex = 0;
+		
+		function viewComments(reviewId) {
+			var review = document.querySelector('#review_' + reviewId);
 			var isCommentOpened = review.getAttribute('isCommentOpened');
 			
 			if(isCommentOpened == 'true') {
@@ -393,26 +395,26 @@ nav a {
 			} else if(isCommentOpened = 'false') {
 				review.style.setProperty('height', '220px', '');
 				review.setAttribute('isCommentOpened', 'true');
-				createComments(review, commentId);
+				createComments(review, reviewId);
 			}
 		}
 		
-		function createComments(review, commentId) {
+		function createComments(review, reviewId) {
 			var commentArea = document.createElement('div');
 			commentArea.setAttribute('id', 'commentArea');
 			commentArea.style.setProperty('padding', '5px', '');
 			commentArea.style.setProperty('margin-top', '5px');
 			commentArea.style.setProperty('font-size', '11px', '');
 			commentArea.style.setProperty('align-items', 'center', '');
-			createComment(commentArea, "마약한 어피치(ap***)", "안끝나는줄", "12");
-			createComment(commentArea, "외발이 프로도(prod***)", "솔직히 예상했다 근데", "3");
-			createComment(commentArea, "싸움꾼 춘식(cho***)", "끝이 어딨어 그냥 뛰기만 하드만", "77");
-			createAddCommentButton(commentArea, commentId);
+			createComment(commentArea, "마약한 어피치(ap***)", "안끝나는줄", "12", null, reviewId);
+			createComment(commentArea, "외발이 프로도(prod***)", "솔직히 예상했다 근데", "3", null, reviewId);
+			createComment(commentArea, "싸움꾼 춘식(cho***)", "끝이 어딨어 그냥 뛰기만 하드만", "77", null, reviewId);
+			createAddCommentButton(commentArea, reviewId);
 			
 			review.appendChild(commentArea);
 		}
 		
-		function createAddCommentButton(commentArea, commentId) {
+		function createAddCommentButton(commentArea, reviewId) {
 			var addCommentBtn = document.createElement('button');
 			addCommentBtn.innerHTML = "댓글 추가";
 			addCommentBtn.classList.add('rectangle');
@@ -422,16 +424,16 @@ nav a {
 			addCommentBtn.setAttribute('type', 'button');
 			addCommentBtn.setAttribute('data-toggle', 'modal');
 			addCommentBtn.setAttribute('data-target', '#dialogModal');
-			addCommentBtn.setAttribute('onclick', 'addComment(' + commentId + ')');
+			addCommentBtn.setAttribute('onclick', 'addComment(' + reviewId + ')');
 			commentArea.appendChild(addCommentBtn);
 		}
 		
-		function createComment(commentArea, userId, comment, likeCount, isInsert, review) {
+		function createComment(commentArea, userId, comment, likeCount, isInsert, reviewId) {
 			var commentPanel = document.createElement('div');
 			commentPanel.style.setProperty('display', 'flex');
-			
+			commentPanel.setAttribute('id', 'review_' + reviewId + '_comment_' + commentIdIdex);
 			var commentArrow = createCommentArrow(commentPanel);
-			var commentInfoArea = createCommentInfoArea(userId, likeCount, comment, isInsert);
+			var commentInfoArea = createCommentInfoArea(userId, likeCount, comment, isInsert, reviewId);
 			
 			commentPanel.appendChild(commentArrow);
 			commentPanel.appendChild(commentInfoArea);
@@ -441,19 +443,22 @@ nav a {
 			} else if (isInsert == true) {
 				commentArea.appendChild(commentPanel);
 				commentArea.insertBefore(commentPanel, commentArea.childNodes[0]);
-				changeCssTextHeight(review, 50);
+				changeCssTextHeight(reviewId, 50);
 			}
 		}
 		
-		function changeCssTextHeight(target, change) {
+		function changeCssTextHeight(reviewId, change) {
+			var target = document.querySelector('#review_' + reviewId);
+			console.log(target);
 			var origin = target.style.cssText;
 			var originSize = Number(origin.replace(' ', '').replace('height:', '').replace('px;', ''));
 			var changeSize = originSize + change;
 			target.style.cssText = 'height: ' + changeSize + 'px;';
 		}
 		
+		var commentIdIndex = 0;
 		
-		function createCommentInfoArea(userId, likeCount, comment, isInsert) {
+		function createCommentInfoArea(userId, likeCount, comment, isInsert, reviewId) {
 			var commentArea = createBlackComment();
 			
 			var commentInfoArea = document.createElement('div');
@@ -474,8 +479,9 @@ nav a {
 			
 			if(isInsert == null) {
 				likePanel.innerHTML += '<button class="like-button comment-like"><i class="fa-solid fa-triangle-exclamation"></i></button>';
+				commentIdIdex++;
 			} else {
-				likePanel.innerHTML += '<button class="like-button comment-like"><i class="fa-solid fa-trash"></i></button>';
+				likePanel.innerHTML += '<button type="button" data-toggle="modal" data-target="#dialogModal" class="like-button comment-like" onclick="removeComment(' + commentIdIdex++ +', ' + reviewId + ')"><i class="fa-solid fa-trash"></i></button>';
 			}
 			
 			commentInfoArea.appendChild(likePanel);
@@ -489,12 +495,23 @@ nav a {
 			return commentArea;
 		}
 		
+		function removeComment(commentId, reviewId) {
+			var dialog = createDialog('댓글 삭제', 0x10);
+			var okButton = document.querySelector("#okButton");
+			
+			okButton.addEventListener('click', function() {
+				document.querySelector('#review_' + reviewId + '_comment_' + commentId).remove();
+				changeCssTextHeight(reviewId, -50);
+			});	
+		}
+		
 		function createBlackComment() {
 			var comment = document.createElement('div');
 			comment.classList.add('rectangle');
 			comment.style.setProperty('width', '90%', '');
 			comment.style.setProperty('height', '40px', '');
 			comment.style.setProperty('background-color', 'rgb(245, 245, 245)');
+			
 			return comment;
 		}
 		
@@ -705,7 +722,7 @@ nav a {
 			var commentText = document.querySelector('#reviewContent').value;
 			var reviewContainer = document.querySelector('#review_' + reviewID);
 			var commentContainer = reviewContainer.childNodes[5];
-			createComment(commentContainer, '임시 사용자(temp***)', commentText, 0, true, reviewContainer); 
+			createComment(commentContainer, '임시 사용자(temp***)', commentText, 0, true, reviewID); 
 		}
 		
 		
@@ -756,6 +773,7 @@ nav a {
 			
 			okButton.addEventListener('click', function() {
 				createNewComment(dialog, reviewID);
+				clearChilds(dialog);
 			});
 		}
 		
