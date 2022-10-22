@@ -186,6 +186,11 @@ nav a {
 	background : white;
 	font-size : 12px;
 	padding : 0px;
+	background-color : rgba(0, 0, 0, 0);
+}
+
+.comment-like {
+	font-size : 11px;
 }
 
 #dialog {
@@ -301,7 +306,7 @@ nav a {
 			<div class="write-review"><button type="button" data-toggle="modal" data-target='#dialogModal' id="writeReivewBtn" style="border:1px solid gray">평 작성하기</button></div>
 		</div>
 		<div class="container center" id="reviewContainer">
-			<div class="rectangle" id="10">
+			<div class="rectangle" id="review_10" isCommentOpened="false">
 				<div class="row container" style="margin:0px; padding:0px;">
 					<div class="review-id">즐거운 무지(mooji***)</div>
 					<div class="like-unlike-panel">
@@ -314,10 +319,10 @@ nav a {
 				</div>
 				<div class="row container" style="margin:0px; padding:0px;">
 					<span class="review-content">끝도 없이 달려 절망의 땅에서 찾는 구원</span>
-					<button class="comment-panel">댓글 22</button>
+					<button class="comment-panel" onclick="viewComments(10)">댓글 22</button>
 				</div>
 			</div>
-			<div class="rectangle" id="11">
+			<div class="rectangle" id="review_11" isCommentOpened="false">
 				<div class="row container" style="margin:0px; padding:0px;">
 					<div class="review-id">개빡친 제이지 (jage***)</div>
 					<div class="like-unlike-panel">
@@ -330,12 +335,10 @@ nav a {
 				</div>
 				<div class="row container" style="margin:0px; padding:0px;">
 					<span class="review-content">언니 돔황챠!!</span>
-					<button class="comment-panel">댓글 9</button>
+					<button class="comment-panel" onclick="viewComments(11)">댓글 9</button>
 				</div>
 			</div>
-			<div class="rectangle" style="height:50px; font-size:13px; text-align:center;">
-				더보기
-			</div>
+			<div class="rectangle" style="height:20px; font-size:13px; text-align:center;"> 더보기 </div>
 		</div>
 	</div>
 	
@@ -379,6 +382,156 @@ nav a {
 	</div>
 	
 	<script>
+		var commentIdIdex = 0;
+		
+		function viewComments(reviewId) {
+			var review = document.querySelector('#review_' + reviewId);
+			var isCommentOpened = review.getAttribute('isCommentOpened');
+			
+			if(isCommentOpened == 'true') {
+				review.style.setProperty('height', '50px', '');
+				review.setAttribute('isCommentOpened', 'false');
+				document.querySelector('#commentArea').remove()
+			} else if(isCommentOpened = 'false') {
+				review.style.setProperty('height', '220px', '');
+				review.setAttribute('isCommentOpened', 'true');
+				createComments(review, reviewId);
+			}
+		}
+		
+		function createComments(review, reviewId) {
+			var commentArea = document.createElement('div');
+			commentArea.setAttribute('id', 'commentArea');
+			commentArea.style.setProperty('padding', '5px', '');
+			commentArea.style.setProperty('margin-top', '5px');
+			commentArea.style.setProperty('font-size', '11px', '');
+			commentArea.style.setProperty('align-items', 'center', '');
+			createComment(commentArea, "마약한 어피치(ap***)", "안끝나는줄", "12", null, reviewId);
+			createComment(commentArea, "외발이 프로도(prod***)", "솔직히 예상했다 근데", "3", null, reviewId);
+			createComment(commentArea, "싸움꾼 춘식(cho***)", "끝이 어딨어 그냥 뛰기만 하드만", "77", null, reviewId);
+			createAddCommentButton(commentArea, reviewId);
+			
+			review.appendChild(commentArea);
+		}
+		
+		function createAddCommentButton(commentArea, reviewId) {
+			var addCommentBtn = document.createElement('button');
+			addCommentBtn.innerHTML = "댓글 추가";
+			addCommentBtn.classList.add('rectangle');
+			addCommentBtn.style.setProperty('margin-left', '76%');
+			addCommentBtn.style.setProperty('width', '20%');
+			addCommentBtn.style.setProperty('height', '20px');
+			addCommentBtn.setAttribute('type', 'button');
+			addCommentBtn.setAttribute('data-toggle', 'modal');
+			addCommentBtn.setAttribute('data-target', '#dialogModal');
+			addCommentBtn.setAttribute('onclick', 'addComment(' + reviewId + ')');
+			commentArea.appendChild(addCommentBtn);
+		}
+		
+		function createComment(commentArea, userId, comment, likeCount, isInsert, reviewId) {
+			var commentPanel = document.createElement('div');
+			commentPanel.style.setProperty('display', 'flex');
+			commentPanel.setAttribute('id', 'review_' + reviewId + '_comment_' + commentIdIdex);
+			var commentArrow = createCommentArrow(commentPanel);
+			var commentInfoArea = createCommentInfoArea(userId, likeCount, comment, isInsert, reviewId);
+			
+			commentPanel.appendChild(commentArrow);
+			commentPanel.appendChild(commentInfoArea);
+			
+			if(isInsert == null) {
+				commentArea.appendChild(commentPanel);
+			} else if (isInsert == true) {
+				commentArea.appendChild(commentPanel);
+				commentArea.insertBefore(commentPanel, commentArea.childNodes[0]);
+				changeCssTextHeight(reviewId, 50);
+			}
+		}
+		
+		function changeCssTextHeight(reviewId, change) {
+			var target = document.querySelector('#review_' + reviewId);
+			console.log(target);
+			var origin = target.style.cssText;
+			var originSize = Number(origin.replace(' ', '').replace('height:', '').replace('px;', ''));
+			var changeSize = originSize + change;
+			target.style.cssText = 'height: ' + changeSize + 'px;';
+		}
+		
+		function createCommentInfoArea(userId, likeCount, comment, isInsert, reviewId) {
+			var commentArea = createBlackComment();
+			
+			var commentInfoArea = document.createElement('div');
+			commentInfoArea.style.setProperty('display', 'flex');
+			
+			var userIdArea = document.createElement('div');
+			userIdArea.classList.add('review-id');
+			userIdArea.style.setProperty('font-size', '12px');
+			userIdArea.style.setProperty('width', '180px');
+			userIdArea.innerHTML = userId;
+			commentInfoArea.appendChild(userIdArea);
+			
+			var likePanel = document.createElement('div');
+			likePanel.style.setProperty('font-size', '11px');
+			likePanel.style.setProperty('text-align', 'right');
+			likePanel.innerHTML += '<button class="like-button comment-like"><i class="fa">&#xf087;</i></button><span class="like-button comment-like">' + likeCount +'&nbsp&nbsp</span>';
+			likePanel.innerHTML += '<button class="like-button comment-like"><span class="fa fa-thumbs-down"></span></button><span class="like-button comment-like">&nbspUnlike&nbsp&nbsp</span>';
+			
+			if(isInsert == null) {
+				likePanel.innerHTML += '<button type="button" data-toggle="modal" data-target="#dialogModal" class="like-button comment-like" onClick="reportComment(' + commentIdIdex++ +', ' + reviewId + ')"><i class="fa-solid fa-triangle-exclamation"></i></button>';
+			} else {
+				likePanel.innerHTML += '<button type="button" data-toggle="modal" data-target="#dialogModal" class="like-button comment-like" onclick="removeComment(' + commentIdIdex++ +', ' + reviewId + ')"><i class="fa-solid fa-trash"></i></button>';
+			}
+			
+			commentInfoArea.appendChild(likePanel);
+			
+			var commentContentArea = document.createElement('div');
+			commentContentArea.innerText = comment;
+			
+			commentArea.appendChild(commentInfoArea);
+			commentArea.appendChild(commentContentArea);
+			
+			return commentArea;
+		}
+		
+		function removeComment(commentId, reviewId) {
+			var dialog = createDialog('댓글 삭제', 0x10);
+			var okButton = document.querySelector("#okButton");
+			
+			okButton.addEventListener('click', function() {
+				document.querySelector('#review_' + reviewId + '_comment_' + commentId).remove();
+				changeCssTextHeight(reviewId, -50);
+			});	
+		}
+		
+		function reportComment(commentId, reviewId) {
+			var dialog = createDialog('댓글 신고', 0x16);
+			var okButton = document.querySelector("#okButton");
+			
+			okButton.removeAttribute('data-dismiss');
+			okButton.addEventListener('click', function() {
+				createReportDoneDialog(dialog);
+			});
+		}
+		
+		function createBlackComment() {
+			var comment = document.createElement('div');
+			comment.classList.add('rectangle');
+			comment.style.setProperty('width', '90%', '');
+			comment.style.setProperty('height', '40px', '');
+			comment.style.setProperty('background-color', 'rgb(245, 245, 245)');
+			
+			return comment;
+		}
+		
+		function createCommentArrow() {
+			var arrow = document.createElement('div');
+			arrow.innerHTML = "<span>&#10551;</span>";
+			arrow.style.setProperty('font-size', '16px');
+			arrow.style.setProperty('margin-right', '8px');
+			arrow.style.setProperty('margin-bottom', '8px');
+			
+			return arrow;
+		}
+		
 		function createDialog(title, kind) {
 			var dialog = document.querySelector('#dialog');
 			clearChilds(dialog);
@@ -574,6 +727,14 @@ nav a {
 			});
 		}
 		
+		function createNewComment(dialog, reviewID) {
+			var commentText = document.querySelector('#reviewContent').value;
+			var reviewContainer = document.querySelector('#review_' + reviewID);
+			var commentContainer = reviewContainer.childNodes[5];
+			createComment(commentContainer, '임시 사용자(temp***)', commentText, 0, true, reviewID); 
+		}
+		
+		
 		function createRemoveReviewDialog(reviewID) {
 			var dialog = createDialog('사용자 평 삭제', 0x10);
 			var okButton = document.querySelector("#okButton");
@@ -615,12 +776,26 @@ nav a {
 			dialog.appendChild(doneButton);
 		}
 		
+		function createAddCommentDialog(reviewID) {
+			var dialog = createDialog('댓글 추가', 0x12);
+			var okButton = document.querySelector("#okButton");
+			
+			okButton.addEventListener('click', function() {
+				createNewComment(dialog, reviewID);
+				clearChilds(dialog);
+			});
+		}
+		
 		function removeReview(reviewID) {
 			createRemoveReviewDialog(reviewID);
 		}
 		
 		function reportReview(reviewID) {
 			createReportReviewDialog(reviewID);
+		}
+		
+		function addComment(reviewID) {
+			createAddCommentDialog(reviewID);
 		}
 		
 		document.querySelector("#writeReivewBtn").addEventListener('click', createReivewDialog);
