@@ -456,8 +456,6 @@ nav a {
 			target.style.cssText = 'height: ' + changeSize + 'px;';
 		}
 		
-		var commentIdIndex = 0;
-		
 		function createCommentInfoArea(userId, likeCount, comment, isInsert, reviewId) {
 			var commentArea = createBlackComment();
 			
@@ -478,8 +476,7 @@ nav a {
 			likePanel.innerHTML += '<button class="like-button comment-like"><span class="fa fa-thumbs-down"></span></button><span class="like-button comment-like">&nbspUnlike&nbsp&nbsp</span>';
 			
 			if(isInsert == null) {
-				likePanel.innerHTML += '<button class="like-button comment-like"><i class="fa-solid fa-triangle-exclamation"></i></button>';
-				commentIdIdex++;
+				likePanel.innerHTML += '<button type="button" data-toggle="modal" data-target="#dialogModal" class="like-button comment-like" onClick="reportComment(' + commentIdIdex++ +', ' + reviewId + ')"><i class="fa-solid fa-triangle-exclamation"></i></button>';
 			} else {
 				likePanel.innerHTML += '<button type="button" data-toggle="modal" data-target="#dialogModal" class="like-button comment-like" onclick="removeComment(' + commentIdIdex++ +', ' + reviewId + ')"><i class="fa-solid fa-trash"></i></button>';
 			}
@@ -503,6 +500,16 @@ nav a {
 				document.querySelector('#review_' + reviewId + '_comment_' + commentId).remove();
 				changeCssTextHeight(reviewId, -50);
 			});	
+		}
+		
+		function reportComment(commentId, reviewId) {
+			var dialog = createDialog('댓글 신고', 0x16);
+			var okButton = document.querySelector("#okButton");
+			
+			okButton.removeAttribute('data-dismiss');
+			okButton.addEventListener('click', function() {
+				createReportDoneDialog(dialog);
+			});
 		}
 		
 		function createBlackComment() {
@@ -576,6 +583,8 @@ nav a {
 			var reviewContainer = document.querySelector('#reviewContainer');
 			reviewContainer.innerHTML = createReviewElement(reviewContent.value) + reviewContainer.innerHTML;
 		}
+		
+		var reviewIdIndex = 0;
 		
 		function createReviewElement(content) {
 			var elem = '';
