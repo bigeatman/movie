@@ -21,6 +21,8 @@ let user = 0
 function isVal(field){
     let isGood = false
     let errMsg
+    $('#modalMsg').text('')
+
     
     if (!field.length) errMsg = '유저를 선택하세요.'
     else isGood = true
@@ -31,6 +33,8 @@ function isVal(field){
         $('#yesBtn').hide()
         $('#modal').modal()
     }
+
+
 
     return isGood
 }
@@ -67,17 +71,14 @@ function init(){
     // 닉네임 수정
     $('#fixBtn').click(() => {
         $('#yesDelBtn').attr('id', 'yesBtn')
-
+        $('#fixMsg').remove()
+        
         if(isVal($('#no:checked'))){
 
             console.log($('#no:checked').val())
             console.log($('#no:checked').parent().next().val())
 
-
-            $('#modalMsg').append('닉네임 [' ,$('#no:checked').parent('#nickname').val(),
-                                    ']<br><h4>[', $('#fixNickname').val(), ']으로 수정하시겠습니까?</h4>')
-            $('#modalMsg').append($('#fixNickname').val())
-
+            $('#modalMsg').append('<h4 id="fixMag">닉네임 [뿡뿡이] 을/를 ','[', $('#fixNickname').val(), ']으로 수정하시겠습니까?</h4>')
             $('#noBtn').text('취소')
             $('#yesBtn').show()
             $('#yesBtn').attr('class', 'col btn btn-block btn-warning')
