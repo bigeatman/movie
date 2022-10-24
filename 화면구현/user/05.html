@@ -7,22 +7,20 @@
 <link rel='stylesheet' href='http://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css'/>
 <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css'/>
 <script>
-    
 function init(){
     $('#yesBtn').on('click', ()=>{
-       return location.href='06.html'
+        location.href='06.html'
+
     })
 
     $('#noBtn').on('click', ()=>{
-        return location.href='01.html'
+        location.href='01.html'
     })
 }
 
 $(init)
 
 </script>
-
-
 <style>
 body{
     display: flex;
@@ -36,34 +34,17 @@ hr {
     border:0;
 }
 
-#inputBox{
-    margin-left: 2rem;
-    margin-right: 2rem;    
-}
-
-#codeBox{
-    width: 5rem;
-    height: 5rem;
-    margin: auto;
-    background-color: gainsboro;
-    border: 0.1rem solid;
-    font-size:40pt; 
-    font-weight: bold;
-    text-align: center;
-}
-
 .btn {
     text-align: center;
 }
 
-#yesBtn, #noBtn{
+#yesBtn, #noBtn, #inputBox{
     margin: auto;
 }
 
-#errMsg{
-    font-size: 1.5rem;
-    font-weight: bolder;
-    color: gray;
+.err{
+    border: 0.1rem solid;
+    border-color: red;
 }
 </style>
 
@@ -78,24 +59,30 @@ hr {
         </div>
     </div>
 
-    <div class='row'>
-        <div class='col'>
-            <h4>xxxx000@naver.com으로 메일을 보냈습니다!</h4>
-        </div>
-    </div>
-
     </form>
-        <div class='row' id='codeBoxRow'>
-            <input type='tel' id='codeBox' maxlength='1' min='0' max='9' onlyNumber>
-            <input type='tel' id='codeBox' maxlength='1' min='0' max='9' onlyNumber>
-            <input type='tel' id='codeBox' maxlength='1' min='0' max='9' onlyNumber>
-            <input type='tel' id='codeBox' maxlength='1' min='0' max='9' onlyNumber>
+        <div class='row d-flex'>
+            <div class='col' id='inputBox'>
+                <input id='inputId' name='inputId' type='id' class='form-control' placeholder='아이디를 입력하세요.'>
+                <p id='errId' style='font-size: 8px; color: red; height: 8px;'></p>
+                
+                <div class='d-flex align-items-center'>
+                    <input id='inputEmail' name='inputEmail' type='text' class='form-control' placeholder='이메일 ID' required/>
+                        &nbsp;@&nbsp;
+                    <input id='domainTxt' type='text' class='form-control'/>
+                        &nbsp;
+                    <select  id='domainList' class='form-control'>
+                        <option value=''>직접 입력</option>
+                        <option value='naver.com'>naver.com</option>
+                        <option value='gmail.com'>gmail.com</option>
+                        <option value='daum.net'>daum.net</option>
+                        <option value='nate.com'>nate.com</option>
+                        <option value='kakao.com'>kakao.com</option>
+                    </select>
+                </div>
+                <p id='errEmail' style='font-size: 8px; color: red; height: 8px;'></p>
+            </div>
         </div>
 
-        <div class='row col mb-4' id='msg'>
-            <p id='errMsg'>코드 번호를 입력하세요.</p>
-        </div>
-        
         <div class='row'>
             <div class='col d-flex'>
                 <input id='noBtn' type="button" class='btn btn-block btn-secondary mr-3' value='취소'
@@ -106,11 +93,4 @@ hr {
         </div>
     </form>
 </div>
-
 </body>
-
-
-
-<footer>
-
-</footer>
