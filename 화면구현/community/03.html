@@ -153,7 +153,6 @@ label {
 }
 
 .board-box {
-    width: 330px;
     height: 250px;
     margin-bottom: 20px;
     padding: 50px;
@@ -170,6 +169,11 @@ label {
     border: 0px;
 }
 
+#boardMenu {
+    color:black;
+    background-color: rgb(209, 208, 208);
+    border: 0px;
+}
 .container{
     font-size: 14px;
 }
@@ -191,7 +195,9 @@ label {
 #modalBodyMsg{
     text-align: center;
 }
-
+#boardModalBodyMsg{
+    text-align: center;
+}
 </style>
 
 <body>
@@ -200,18 +206,19 @@ label {
 
     <hr style="border: double 1px black;">
     <h3><em><u><center>영화평</center></u></em></h3>
-    <!-- <i class="fa-solid fa-gear"> -->
+
     <table border="1">
         <tr>
             <td width=1500>&nbsp;[스포주의] 마녀2 후기!!</td>
             <td width=200>
                 <div class='row border'>
-                    <div class='col d-flex justify-content-center align-items-center'></div>
+                    <div class='col d-flex justify-content-center align-items-center'>
                         <div class='btn-group btn-block'>
                             <button type='button' class='btn btnBack' data-toggle='dropdown'>
                                 <i class="fa-solid fa-ellipsis-vertical fa-lg"></i>
                             </button>
-                            <div class='dropdown-menu w-50'>
+
+                            <div class='dropdown-menu ml-0'>
                                 <a class='dropdown-item' id='delBoardBtn'>삭제</a>
                                 <div class='dropdown-divider'></div>
                                 <a class='dropdown-item' id='inspectionBoardBtn'>신고</a>
@@ -219,8 +226,8 @@ label {
                         </div>
                     </div>
                 </div>
-            </td> 
-        </tr> 
+            </td>
+        </tr>
     </table>
 
     <div class= "board-box" style="background-color: #dbe8fb; border: #79a5e4 1px solid; padding: 10px;">
@@ -263,7 +270,7 @@ label {
         </a>
       </div>
       <div class='col m-2 text-center'>
-        <a id='chat' href='' class='ml-1'>
+        <a id='chat' href='../movie/01.html' class='ml-1'>
           <i class='fa-solid fa-compass fa-xl'></i>
           <span class='iconfont'>&nbsp;&nbsp;탐색</span>
         </a>
