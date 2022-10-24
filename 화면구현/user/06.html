@@ -1,4 +1,4 @@
-<title>로그인</title>
+<title>비밀번호 재설정</title>
 <meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'>
 <script src='https://code.jquery.com/jquery-3.6.0.min.js'></script>
@@ -10,31 +10,15 @@
 <script>
 
 function init(){
-    // 1. 새 비밀번호 양식 틀림
-    // 2. 새 비밀번호 != 비밀번호 확인
-    // 3. 성공 = 모달보여주기
-
-
     $('#yesBtn').on('click', ()=>{
-        $('#errPw').empty()
-        $('#errCheckPw').empty()
-        $('#yesBtn').attr('data-target', '');
-        //$('#modal').modal('hide') 가 안먹힘
-
-        if(!(2 <= ($('#pw').val().length) && ($('#pw').val().length <= 10 ))) {
-            $('#errPw').append('2~10자의 영문,숫자로 입력하세요.')
-        } else if(($('#checkPw').val()) != ($('#pw').val())){
-            $('#errCheckPw').append('비밀번호가 일치하지 않습니다.')
-        } else $('#yesBtn').attr('data-target', '#modal');
-            // $('#modal').modal('show') 안먹힘..
     })
 
     $('#yesFix').on('click', ()=>{
-        return location.href='USER.01.html'
+        return location.href='01.html'
     })
 
     $('#noBtn').on('click', ()=>{
-        return location.href='USER.01.html'
+        return location.href='01.html'
     })
 }
 
@@ -89,20 +73,17 @@ body{
                 <input id='pw' name='pw' type='password' class='form-control' placeholder='새 비밀번호'
                     maxlength='10'>
                 <p id='errPw' style='font-size: 8px; color: red; height: 8px;'></p>
-
                 <input id='checkPw' name='checkPw' type='password' class='form-control' placeholder='비밀번호 확인'
                     maxlength='10'>
                 <p id='errCheckPw' style='font-size: 8px; color: red; height: 8px;'></p>
-
             </div>
         </div>
     
-        
         <div class='row'>
             <div class='col d-flex'>
-                <input id='noBtn' type="button" class='btn-block mr-3' value='취소'
-                    style='max-width: 7rem;' onclick="location.href='../main.html'">
-                <input id='yesBtn' type="submit" class='btn-block' value='확인'
+                <input id='noBtn' type="button" class='btn btn-block btn-secondary mr-3' value='취소'
+                    style='max-width: 7rem;'>
+                <input id='yesBtn' type="submit" class='btn btn-block btn-primary' value='확인'
                     data-toggle='modal' data-target='#modal' style='max-width: 7rem;'>
             </div>
         </div>
