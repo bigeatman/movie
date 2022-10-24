@@ -18,23 +18,14 @@ function myPage() {
 
     $('#delUserBtn').click(() => { // 회원탈퇴 버튼
         $('#modalMsg').text('탈퇴 하시겠습니까?')
-        $('#delUserCheckBtn').hide()
         $('#delUserNoBtn').show()
         $('#delUserYesBtn').show()
         $('#myPageModal').modal()
     })
 
     $('#delUserOkBtn').click(() => { // 회원탈퇴 확인 버튼
-        $('#modalMsg').text('탈퇴가 완료되었습니다.')
-        $('#delUserNoBtn').hide()
-        $('#delUserYesBtn').hide()
-        $('#delUserCheckBtn').show()
-        $('#myPageModal').modal()
-    })
-
-    $('#delUserCheckOkBtn').click(() => { // 회원탈퇴 완료 확인 버튼
         $('#myPageModal').modal('hide')
-        $(location).attr('href', '../main.html')
+        $(location).attr('href', '10.html')
     })
 
     $('#logoutBtn').click(() => { // 로그아웃 버튼
@@ -166,9 +157,6 @@ $(myPage)
                 </div>
                 <div class='col' id='delUserYesBtn'>
                     <button type='button' class='btn btn-primary btn-block' id='delUserOkBtn'>확인</button>
-                </div>
-                <div class='col' id='delUserCheckBtn'>
-                    <button type='button' class='btn btn-primary btn-block' id='delUserCheckOkBtn'>확인</button>
                 </div>
             </div>
         </div>
