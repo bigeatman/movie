@@ -42,7 +42,11 @@ hr {
 
 #inputBox{
     margin-left: 2rem;
-    margin-right: 2rem;    
+    margin-right: 2rem;
+}
+
+#inputEmail, #domainTxt, #domainList {
+    font-size: 11px;
 }
 
 .btn {
@@ -78,7 +82,7 @@ hr {
         <div class='row d-flex'>
             <div class='col' id='inputBox'>
                 <div class='d-flex align-items-center'>
-                    <input id='inputEmail' name='inputEmail' type='text' class='form-control' placeholder='이메일을 입력하세요.' required/>
+                    <input id='inputEmail' name='inputEmail' type='text' class='form-control' placeholder='이메일ID' required/>
                         &nbsp;@&nbsp;
                     <input id='domainTxt' type='text' class='form-control'/>
                         &nbsp;
@@ -97,13 +101,13 @@ hr {
                 <p id='errTel' class='mt-1' style='font-size: 8px; color: red; height: 8px;'></p>
             </div>
         </div>
-    
+
         <div class='row'>
             <div class='col d-flex'>
                 <input id='noBtn' type='button' class='btn btn-block btn-secondary mr-3' value='취소'
                     style='max-width: 7rem;'>
                 <input id='yesBtn' type='button' class='btn btn-block btn-primary' value='확인'
-                    style='max-width: 7rem;'>    
+                    style='max-width: 7rem;'>
             </div>
         </div>
     </form>
