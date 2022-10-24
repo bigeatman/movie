@@ -14,118 +14,33 @@
 
 
 <script>
-const users = []
-let user = 0
-
-//에러 처리
-function isVal(field){
-    let isGood = false
-    let errMsg
-    $('#modalMsg').text('')
-
-    
-    if (!field.length) errMsg = '유저를 선택하세요.'
-    else isGood = true
-
-    if (!isGood) {
-        $('#modalMsg').text(errMsg)
-        $('#noBtn').text('확인')
-        $('#yesBtn').hide()
-        $('#modal').modal()
-    }
-
-
-
-    return isGood
-}
-
-//유저 리스트
-function listUsers(){
-/*
-    $('input').not(':radio').val('') // not(':radio') 라디오가 아닌것
-    $('#laborers').empty()
-    
-    if(laborers.length){
-        const laborerArr = []
-
-        $.each(laborers, (i, laborer) => {
-            laborerArr.unshift( // push는 [ 1 , 2 ,3 ,...] 순서 // unshift는 [... ,3 ,2 ,1 ]
-                `<tr>
-                    <td><input type='radio' name='laborerId' id='laborerId'
-                        value='${laborer.laborerId}'/></td>
-                    <td>${laborer.laborerId}</td>
-                    <td>${laborer.name}</td>
-                    <td>${laborer.hireDate}</td>
-                </tr>`
-            )
-        })
-    
-        $('#laborers').append(laborerArr.join(''))
-    } else $('#laborers').append(
-        '<tr><td colspan=4 class=text-center>노동자가 없습니다.</td></tr>'
-    )
-*/
-}
-
 function init(){
     $('#fixBtn').click(() => {
         $('#yesDelBtn').attr('id', 'yesBtn')
-        $('#fixMsg').remove()
-        
-        if(isVal($('#no:checked'))){
-
-            console.log($('#no:checked').val())
-            console.log($('#no:checked').parent().next().val())
-
-            $('#modalMsg').append('<h4 id="fixMag">닉네임 [뿡뿡이] 을/를 ','[', $('#fixNickname').val(), ']으로 수정하시겠습니까?</h4>')
-            $('#noBtn').text('취소')
-            $('#yesBtn').show()
-            $('#yesBtn').attr('class', 'col btn btn-block btn-warning')
-            $('#modal').modal()
-        }
+        $('#modalMsg').text('닉네임 [뿡뿡이] 을/를 ')
+        $('#modalMsg').append(`<br><h4>[수정할 닉네임]으로 수정하시겠습니까?</h4>`)
+        $('#noBtn').text('취소')
+        $('#yesBtn').show()
+        $('#yesBtn').attr('class', 'col btn btn-block btn-primary')
+        $('#modal').modal()
     })
 
     $('#yesBtn').click(() => {
-        $.each(users, (i, user) =>{
-            if(user.no == $('#no:checked').val()) {
-                no.nickname= $('#fixNickname').val()
-                return false
-            }
-        })
-        
-        listUsers()
+    
     })
 
     $('#delBtn').click(() => {
-        if(isVal($('#no:checked'))){
             $('#modalMsg').text(`해당 회원을 삭제하시겠습니까?`)
             $('#yesBtn').attr('id', 'yesDelBtn')
             $('#yesDelBtn').show()
-            $('#yesDelBtn').attr('class', 'col btn btn-block btn-danger')
+            $('#yesDelBtn').attr('class', 'col btn btn-block btn-primary')
             $('#noBtn').text('취소')
             $('#modal').modal()
-        }
     })
 
     $('#yesDelBtn').click(() => {
-        $.each(users, (i, user) =>{
-            if(user.no == $('#no:checked').val()) {
-                users.splice(i,1)
-                return false
-            }
-        })
-
-      //  $('#modal').modal('hide')
-        listusers()
+       
     })
-
-    /* 수정할 아이디 칸에 자동입력
-    $('#no').on({
-        change(){
-            $('#fixNickname').val($(this).parent().next().next().next().next().text())
-        }
-    }, '#no')
-    */
 }
 
 $(init)
@@ -172,9 +87,9 @@ body{
 					    <div class='col-12 text-center'>
 						    <div class='btn-group btn-block'>
                                 <button type='button' class='btn btn-secondary' onclick='location.href="../main.html" '>홈</button>
-							    <button type='button' class='btn btn-secondary' onclick='location.href="#" '>회 원</button>
-							    <button type='button' class='btn btn-secondary' onclick='location.href="#" '>영 화</button>
-							    <button type='button' class='btn btn-secondary' onclick='location.href="#" '>신고 조회</button>
+							    <button type='button' class='btn btn-secondary' onclick='location.href="02.html" '>회 원</button>
+							    <button type='button' class='btn btn-secondary' onclick='location.href="03.html" '>영 화</button>
+							    <button type='button' class='btn btn-secondary' onclick='location.href="04.html" '>신고 조회</button>
 						    </div>
 					    </div>
 				    </div>
@@ -230,9 +145,9 @@ body{
     <div class='row'>
         <div class='col d-flex align-items-center justify-content-end'>
             <input type='text' placeholder='수정할 닉네임' id='fixNickname'>
-            <input type='button' value='회원 수정' id='fixBtn' class='mx-3 btn btn-warning'
+            <input type='button' value='회원 수정' id='fixBtn' class='mx-3 btn btn-primary'
                 data-toggle='modal' data-target='#modal'>
-            <input type='button' value='회원 삭제' id='delBtn' class='btn btn-danger'>
+            <input type='button' value='회원 삭제' id='delBtn' class='btn btn-warning'>
         </div>
     </div>
     <div class='row footer'>
@@ -255,7 +170,7 @@ body{
                 <div class='row'>
                     <button type='button' class='col btn btn-block btn-secondary' data-dismiss='modal'
                         id='noBtn'>취소</button>
-                    <button type='button' data-dismiss='modal' id='yesBtn'>확인</button>
+                    <button type='button' data-dismiss='modal' id='yesBtn' >확인</button>
                 </div>
             </div>
         </div>
