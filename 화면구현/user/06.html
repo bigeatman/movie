@@ -1,4 +1,4 @@
-<title>비밀번호 재설정</title>
+<title>비밀번호 찾기</title>
 <meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'>
 <script src='https://code.jquery.com/jquery-3.6.0.min.js'></script>
@@ -6,15 +6,11 @@
 <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js'></script>
 <link rel='stylesheet' href='http://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css'/>
 <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css'/>
-
 <script>
-
+    
 function init(){
     $('#yesBtn').on('click', ()=>{
-    })
-
-    $('#yesFix').on('click', ()=>{
-        return location.href='01.html'
+       return location.href='07.html'
     })
 
     $('#noBtn').on('click', ()=>{
@@ -23,9 +19,17 @@ function init(){
 }
 
 $(init)
+
 </script>
 
+
 <style>
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 hr {
     background:gray;
     height:1px;
@@ -37,22 +41,29 @@ hr {
     margin-right: 2rem;    
 }
 
+#codeBox{
+    width: 5rem;
+    height: 5rem;
+    margin: auto;
+    background-color: gainsboro;
+    border: 0.1rem solid;
+    font-size:40pt; 
+    font-weight: bold;
+    text-align: center;
+}
+
 .btn {
     text-align: center;
 }
 
-#yesBtn,#noBtn,#yesFix{
+#yesBtn, #noBtn{
     margin: auto;
 }
 
-#yesFix{
-    width: 50%;
-}
-
-body{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+#errMsg{
+    font-size: 1.5rem;
+    font-weight: bolder;
+    color: gray;
 }
 </style>
 
@@ -61,43 +72,45 @@ body{
     <div class='row'>
         <div class='col'>
             <header class='p-2'>
-                <h1 class='text-center'>비밀번호 재설정</h1>
+                <h1 class='text-center'>비밀번호 찾기</h1>
                 <hr class='col-7 color-black'>
             </header>
         </div>
     </div>
 
-    </form>
-        <div class='row d-flex'>
-            <div class='col' id='inputBox'>
-                <input id='pw' name='pw' type='password' class='form-control' placeholder='새 비밀번호'
-                    maxlength='10'>
-                <p id='errPw' style='font-size: 8px; color: red; height: 8px;'></p>
-                <input id='checkPw' name='checkPw' type='password' class='form-control' placeholder='비밀번호 확인'
-                    maxlength='10'>
-                <p id='errCheckPw' style='font-size: 8px; color: red; height: 8px;'></p>
-            </div>
+    <div class='row'>
+        <div class='col'>
+            <h4>user@daum.net으로 메일을 보냈습니다!</h4>
         </div>
-    
+    </div>
+
+    </form>
+        <div class='row' id='codeBoxRow'>
+            <input type='tel' id='codeBox' maxlength='1' min='0' max='9' onlyNumber>
+            <input type='tel' id='codeBox' maxlength='1' min='0' max='9' onlyNumber>
+            <input type='tel' id='codeBox' maxlength='1' min='0' max='9' onlyNumber>
+            <input type='tel' id='codeBox' maxlength='1' min='0' max='9' onlyNumber>
+        </div>
+
+        <div class='row col mb-4' id='msg'>
+            <p id='errMsg'>코드 번호를 입력하세요.</p>
+        </div>
+        
         <div class='row'>
             <div class='col d-flex'>
                 <input id='noBtn' type="button" class='btn btn-block btn-secondary mr-3' value='취소'
                     style='max-width: 7rem;'>
                 <input id='yesBtn' type="submit" class='btn btn-block btn-primary' value='확인'
-                    data-toggle='modal' data-target='#modal' style='max-width: 7rem;'>
+                    style='max-width: 7rem;'>
             </div>
         </div>
     </form>
 </div>
+
 </body>
 
-<div class='modal fade' tabindex='-1' id='modal'>
-    <div class='modal-dialog modal-dialog-centered'>
-        <div class='modal-content'>
-            <div class='modal-body'>
-                <p align='center'>비밀번호가 수정되었습니다. &nbsp;</p>
-                <button id='yesFix' type='button' class='btn btn-block btn-primary'>확인</button>
-            </div>
-        </div>
-    </div>
-</div>
+
+
+<footer>
+
+</footer>

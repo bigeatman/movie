@@ -9,9 +9,7 @@
 <script src='https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js'></script>
 <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js'></script>
 <script src="https://kit.fontawesome.com/449f39a7b2.js" crossorigin="anonymous"></script>
-<script>
-	
-</script>
+
 <style>
 nav {
 	background-color: rgb(19, 19, 29);
@@ -79,17 +77,25 @@ table {
 									   <tr>
 									  <th>
 										  <div class='carousel-item active'>
-											  <div id='movieImg1'><a href='movie_detail.html'>영화이미지</a></div>
+											  <div id='movieImg1'><a href='review/01.html'>영화이미지</a></div>
 											  <div id='topMovie'>블랙 아담</div>
 										  </div>
 										  <div class='carousel-item'>
-											  <div id='movieImg2'><a href='movie_detail.html'>영화이미지</a></div>
+											  <div id='movieImg2'><a href='review/01.html'>영화이미지</a></div>
 											  <div id='topMovie'>공조2: 인터내셔날</div>
 										  </div>
 										  <div class='carousel-item'>
-											  <div id='movieImg3'><a href='movie_detail.html'>영화이미지</a></div>
+											  <div id='movieImg3'><a href='review/01.html'>영화이미지</a></div>
 											  <div id='topMovie'>인생은 아름다워</div>
 										  </div>
+										  <div class='carousel-item'>
+											<div id='movieImg4'><a href='review/01.html'>영화이미지</a></div>
+											<div id='topMovie'>스파이더맨</div>
+										</div>
+										<div class='carousel-item'>
+											<div id='movieImg5'><a href='review/01.html'>영화이미지</a></div>
+											<div id='topMovie'>어벤저스</div>
+										</div>
 									  </th>
 								   </tr>
 								</tbody>
@@ -113,15 +119,15 @@ table {
 								   <tr>
 								  <th>
 									  <div class='carousel-item active'>
-										  <div id='movieImg4'><a href='movie_detail.html'>영화이미지</a></div>
+										  <div id='movieImg4'><a href='review/01.html'>영화이미지</a></div>
 										  <div id='daysMovie'>오펀:천사의 탄생</div>
 									  </div>
 									  <div class='carousel-item'>
-										  <div id='movieImg5'><a href='movie_detail.html'>영화이미지</a></div>
+										  <div id='movieImg5'><a href='review/01.html'>영화이미지</a></div>
 										  <div id='daysMovie'>정직한 후보2</div>
 									  </div>
 									  <div class='carousel-item'>
-										  <div id='movieImg6'><a href='movie_detail.html'>영화이미지</a></div>
+										  <div id='movieImg6'><a href='review/01.html'>영화이미지</a></div>
 										  <div id='daysMovie'>귀못</div>
 									  </div>
 								  </th>
@@ -146,15 +152,15 @@ table {
 								   <tr>
 								  <th>
 									  <div class='carousel-item active'>
-										  <div id='movieImg7'><a href='movie_detail.html'>영화이미지</a></div>
+										  <div id='movieImg7'><a href='review/01.html'>영화이미지</a></div>
 										  <div id='todayMovie'>리멤버</div>
 									  </div>
 									  <div class='carousel-item'>
-										  <div id='movieImg8'><a href='movie_detail.html'>영화이미지</a></div>
+										  <div id='movieImg8'><a href='review/01.html'>영화이미지</a></div>
 										  <div id='todayMovie'>스마일</div>
 									  </div>
 									  <div class='carousel-item'>
-										  <div id='movieImg9'><a href='movie_detail.html'>영화이미지</a></div>
+										  <div id='movieImg9'><a href='review/01.html'>영화이미지</a></div>
 										  <div id='todayMovie'>미혹</div>
 									  </div>
 								  </th>
@@ -171,7 +177,7 @@ table {
 				</div>
 			</div>
 		</div>
-		
+
 	<div id='navBar' class='container-fulid'>
 		<nav class='row fixed-bottom p-1'>
 			<div class='col m-2 text-center'>
@@ -181,7 +187,7 @@ table {
 				</a>
 			</div>
 			<div class='col m-2 text-center'>
-				<a id='community' href='' class='ml-1'>
+				<a id='community' href='community/01.html' class='ml-1'>
 					<i class='fa-regular fa-comments fa-xl'></i>
 					<span class='iconfont'>커뮤니티</span>
 				</a>
@@ -202,10 +208,8 @@ table {
 	</div>
 </body>
 <script>
-	var isLogined = localStorage.getItem("isLogined");
-	console.log(isLogined);
-	
-	
+	let isLogined = localStorage.getItem("isLogined");
+
 	if(isLogined == 'true'){
 		document.querySelector('#loginStatus').innerHTML = '&nbsp;&nbsp;프로필';
 		document.querySelector('#user').setAttribute('href', 'user/mypage.html');
