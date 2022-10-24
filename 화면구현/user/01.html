@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<title>login</title>
+<meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<link rel='stylesheet' href='http://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css'/>
+<script src='https://code.jquery.com/jquery-3.6.0.min.js'></script>
+<script src='https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js'></script>
+<script src='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js'></script>
+<script src="https://kit.fontawesome.com/449f39a7b2.js" crossorigin="anonymous"></script>
+<script>
+function join() {
+	$('#joinBtn').click(() => {
+		$(location).attr('href', '07.html')
+	})
+}
+$(join)
+</script>
+<style>
+
+.fa-compass, .fa-user, .fa-house, .fa-comments {
+	color:rgb(221, 221, 221);
+	font-size:28px;
+}
+
+.iconfont {
+	font-size:12px;
+}
+
+nav {
+	background-color: rgb(19, 19, 29);
+}
+
+nav a {
+	text-decoration: none;
+	color: lightgray;
+}
+
+</style>
+</head>
+<body>
+	<header class='container-fulid'>
+		<div class='row m-1 p-1 justify-content-between align-items-center'>
+			<h5 class='col mt-2 mb-0'>
+				 로그인
+			</h5>
+
+		</div>
+	</header><hr>
+		<div class='col'>
+			<form class='m-4'>
+				<div class='row m-1 mb-3'>
+					<div name='logo' class='col-sm-1 d-flex justify-content-center align-items-center'>
+						<div class='p-0 border justify-content-center'>로고이미지</div>
+					</div>
+				</div>
+				<div class='form-group'>
+				<label for='userId'>아이디 </label>
+				<input id='userId' type='text' class='form-control' placeholder='아이디를 입력하세요.'/>
+				</div>
+
+				<div class='form-group'>
+					<label for='userPw'>비밀번호 </label>
+					<input id='userPw' type='password' class='form-control mb-2'  placeholder='••••'/>
+				</div>
+				<div class='d-flex justify-content-center'>
+					<div class=''>
+						<input id='saveId' type='checkbox'/>
+						<label for='saveId'>아이디저장</label>
+					</div>
+				</div>
+				<div class='d-flex justify-content-center mb-2'><a href='03.html' id='foundId'>아이디 찾기</a>&nbsp;/&nbsp;<a href='05.html' id='foundPw'>비밀번호 찾기</a></div>
+				<div class='form-group'>
+					<button id='loginBtn' type='button' onclick='tryLogin()' class='btn border btn-block bg-success'>
+						<span class='h5'>로 그 인</span>
+					</button>
+					<button id='joinBtn' type='button' onclick='location.href="07.html"' class='btn border btn-block mt-3 bg-primary'>
+						<span class='h5'>회원가입</span>
+					</button>
+				</div>
+			</form>
+		</div>
+</body>
+<script>
+	function tryLogin() {
+		localStorage.setItem('isLogined', true);
+		window.location.href='../main.html';
+	}
+</script>
+</html>

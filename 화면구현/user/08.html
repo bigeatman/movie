@@ -1,0 +1,53 @@
+<title>회원수정</title>
+<meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<script src='https://code.jquery.com/jquery-3.6.0.min.js'></script>
+<script src='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js'></script>
+<link rel='stylesheet' href='http://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css'/>
+
+<script>
+function fixUser() {
+    $('#cancelBtn').click(() => {
+        $(location).attr('href', 'MYPAGE.html')
+    })
+
+    $('#okBtn').click(() => {
+        $(location).attr('href', '09.html')
+    })
+}
+$(fixUser)
+</script>
+
+<style>
+hr {
+    background:gray;
+    height: 1px;
+    border: 0;
+}
+</style>
+
+<div class='container'>
+    <div class='row' style='margin-top: 100px'>
+        <div class='col'>
+            <h1 class='text-center'>회원수정</h1>
+            <hr class='col-8'>
+        </div>
+    </div>
+
+    <div class='row' style='margin-top: 100px'>
+        <div class='col'>
+            <input id='pw' type='password' class='form-control' placeholder='비밀번호를 입력하세요.' required/>
+        </div>
+    </div>
+
+    <div class='row' style='margin-top: 150px'>
+        <div class='col'>
+            <button id='cancelBtn' type='button' class='btn btn-secondary' style='width: 90px; margin-left: 45px; margin-right: 30px;'>
+                <span class='h6'>취소</span>
+            </button>
+            <button id='okBtn' type='button' class='btn btn-primary' style='width: 90px; margin-left: 30px;'>
+                <span class='h6'>확인</span>
+            </button>
+        </div>
+    </div>
+</div>
