@@ -9,19 +9,18 @@
 <script>
 let code = '1234'
  
-
 function textClear(field){
     return field.children().val('')
 }
 
 $(function(){
     $(document).on("keydown", "input[onlyNumber]", function(e){
-        if(/[a-z|ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/g.test(this.value)){ 
+        if(/[a-z|ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/g.test(this.value)){ //한글 막기
             e.preventDefault();
             this.value = "";
         }else if (e.which != 8 && e.which != 0 //영문 e막기
             && e.which < 48 || e.which > 57    //숫자키만 받기
-            && e.which < 96 || e.which > 105){ //텐키 받기
+            && e.which < 96 || e.which > 105){ //숫자키패드 받기
             e.preventDefault();
             this.value = "";
         }else if (this.value.length >= this.maxLength){ //1자리 이상 입력되면 다음 input으로 이동시키기
@@ -40,19 +39,22 @@ function init(){
     // 2. 코드 맞음 -> 페이지 넘어가기
     $('#yesBtn').on('click', ()=>{
         $('#msg').empty()
- 
+
         if(!(code.substr(0,1) == $('#codeBox').val() &&
             code.substr(1,1) == $('#codeBox').next().val() &&
             code.substr(2,1) == $('#codeBox').next().next().val() &&
             code.substr(3,1) == $('#codeBox').next().next().next().val())) {
-                $('#msg').append(`<p style='color: red';>코드를 다시 입력하세요.</p>`)
-        } else { return location.href='USER.06.html' }
+                $('#msg').append(`<p id='errMsg' style='color: red';>코드를 다시 입력하세요.</p>`)
+                $('#codeBoxRow').children().css({
+                    'border-color': 'red'
+                })
+        } else { return location.href='06.html' }
         textClear($('#codeBoxRow'))
         textClear($('#inputEmail'))
     })
 
     $('#noBtn').on('click', ()=>{
-        return location.href='USER.01.html'
+        return location.href='01.html'
     })
 }
 
@@ -84,7 +86,7 @@ hr {
     height: 5rem;
     margin: auto;
     background-color: gainsboro;
-    border: 0ch;
+    border: 0.1rem solid;
     font-size:40pt; 
     font-weight: bold;
     text-align: center;
@@ -98,9 +100,10 @@ hr {
     margin: auto;
 }
 
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
+#errMsg{
+    font-size: 1.5rem;
+    font-weight: bolder;
+    color: gray;
 }
 </style>
 
@@ -130,7 +133,7 @@ input::-webkit-inner-spin-button {
         </div>
 
         <div class='row col mb-4' id='msg'>
-            <p>코드를 입력하세요.</p>
+            <p id='errMsg'>코드 번호를 입력하세요.</p>
         </div>
     
         
