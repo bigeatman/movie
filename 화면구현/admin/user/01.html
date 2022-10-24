@@ -1,176 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
 <head>
-<title>회원</title>
+<title>login</title>
 <meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'>
+<link rel='stylesheet' href='http://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css'/>
 <script src='https://code.jquery.com/jquery-3.6.0.min.js'></script>
 <script src='https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js'></script>
 <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js'></script>
-<link rel='stylesheet' href='http://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css'/>
-<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.6.3/css/all.css'/>
-<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css' />
-</head>
-
-
+<script src="https://kit.fontawesome.com/449f39a7b2.js" crossorigin="anonymous"></script>
 <script>
-function init(){
-    $('#fixBtn').click(() => {
-        $('#yesDelBtn').attr('id', 'yesBtn')
-        $('#modalMsg').text('닉네임 [user] 을/를 ')
-        $('#modalMsg').append(`<br><h4>[수정할 닉네임]으로 수정하시겠습니까?</h4>`)
-        $('#noBtn').text('취소')
-        $('#yesBtn').show()
-        $('#yesBtn').attr('class', 'col btn btn-block btn-primary')
-        $('#modal').modal()
-    })
-
-    $('#yesBtn').click(() => {
-    
-    })
-
-    $('#delBtn').click(() => {
-            $('#modalMsg').text(`해당 회원을 삭제하시겠습니까?`)
-            $('#yesBtn').attr('id', 'yesDelBtn')
-            $('#yesDelBtn').show()
-            $('#yesDelBtn').attr('class', 'col btn btn-block btn-primary')
-            $('#noBtn').text('취소')
-            $('#modal').modal()
-    })
-
-    $('#yesDelBtn').click(() => {
-       
-    })
+function tryLogin() {
+		localStorage.setItem('isLogined', true);
+		window.location.href='../main.html';
 }
 
-$(init)
+function join() {
+	$('#loginBtn').click(() => {
+        location.href='../main.html'
+	})
+}
+
+$(join)
 </script>
 
 <style>
 body{
-    width: 100%;
-    min-height: 100%;
-    position: relative;
-    padding-bottom: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-
-.footer{
-    position: relative;
-    height: 60px;
-    width: 100%;
-    bottom: 0;
-}
-
-#yesBtn, #noBtn, #yesDelBtn{
-    margin: auto;
-    width: 100%;
-    max-width: 10rem;
-    height: 100%;
-}
-
 </style>
+</head>
 
 <body>
-<div class='container'>
-    <div class='container-fluid'>
-		<div class='header'>
-            <div class='float-left mt-3'><h5>| 회원</h5></div>
-			<div id='btn_group' class='float-right mt-3'>
-			    <label style='font-size:13'>관리자님</label>&emsp;
-                <span style='font-size:12'>(08:23)</span>&emsp;
-				<a href='#'><button style='font-size:13'>로그아웃</button></a>
-			</div><br>
-		<div class='row mt-5'>
-			<div class='col'>
-			    <div class='container'>
-				    <div class='row'>
-					    <div class='col-12 text-center'>
-						    <div class='btn-group btn-block'>
-                                <button type='button' class='btn btn-secondary' onclick='location.href="../main.html" '>홈</button>
-							    <button type='button' class='btn btn-secondary' onclick='location.href="02.html" '>회 원</button>
-							    <button type='button' class='btn btn-secondary' onclick='location.href="03.html" '>영 화</button>
-							    <button type='button' class='btn btn-secondary' onclick='location.href="04.html" '>신고 조회</button>
-						    </div>
-					    </div>
-				    </div>
-			    </div>
-			</div>
-		 </div>
-    </div><hr>
-        &nbsp;
-    <div class='row'>
-        <div class='col'>
-            <table class='table'>
-                <thead style='text-align: center'>
-                    <tr class="bg-light">
-                        <th></th><th>No</th><th>ID</th><th>비밀번호</th><th>닉네임</th><th>연락처</th><th>이메일</th><th>가입일</th>
-                    </tr>
-                </thead>
-                <tbody style='text-align: center'>
-                    <tr>
-                        <td><input type='radio' name='no' id='no' value='3'></td>
-                        <td id='no' value='3'>3</td>
-                        <td id='id'>id123</td>
-                        <td id='pw'>qs123456</td>
-                        <td id='nickname'>user</td>
-                        <td id='tel'>01012345678</td>
-                        <td id='email'>xxxx123@naver.com</td>
-                        <td id='joinDate'>2022-10-13</td>
-                    </tr>
-                    <tr>
-                        <td><input type='radio' name='no' id='no' value='2'></td>
-                        <td id='no' value='2'>2</td>
-                        <td id='id'>id23121</td>
-                        <td id='pw'>qs12dwd</td>
-                        <td id='nickname'>user2</td>
-                        <td id='tel'>01012348765</td>
-                        <td id='email'>xxxx123@daum.net</td>
-                        <td id='joinDate'>2022-10-13</td>
-                    </tr>
-                    <tr>
-                        <td><input type='radio' name='no' id='no' value='1'></td>
-                        <td id='no' value='1'>1</td>
-                        <td id='id'>id1124123</td>
-                        <td id='pw'>qs123456</td>
-                        <td id='nickname'>user5</td>
-                        <td id='tel'>01012341234</td>
-                        <td id='email'>xxxx123@gmail.net</td>
-                        <td id='joinDate'>2022-10-15</td>
-                    </tr>
-                </tbody>          
-            </table>
-        </div>
-    </div>
-    <hr>
-    <div class='row'>
-        <div class='col d-flex align-items-center justify-content-end'>
-            <input type='text' placeholder='수정할 닉네임' id='fixNickname'>
-            <input type='button' value='회원 수정' id='fixBtn' class='mx-3 btn btn-primary'
-                data-toggle='modal' data-target='#modal'>
-            <input type='button' value='회원 삭제' id='delBtn' class='btn btn-warning'>
-        </div>
-    </div>
-    <div class='row footer'>
-        <nav id='nav' aria-label="Page navigation example" style='width: 100%;'>		
-            <ul id="paging" class="pagination" style="justify-content: center;">
-                <li class="page-item"><a class="page-link" href="#"><</a></li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>	    
-                <li class="page-item"><a class="page-link" href="#">></a></li>
-            </ul>
-        </nav>
-    </div>
-</div>
-</body>
+	<div class='container'>
+		<div class='col'>
+			<form class='m-4'>
+				<div class='form-group'>
+				<label for='userId'>아이디 </label>
+				<input id='userId' type='text' class='form-control' placeholder='아이디를 입력하세요.'/>
+				</div>
 
-<div class='modal fade' tabindex='-1' id='modal'>
-    <div class='modal-dialog modal-dialog-centered'>
-        <div class='modal-content'>
-            <div class='modal-body' style='text-align: center;'>
-                <h4 id='modalMsg'></h4>
-                <div class='row'>
-                    <button type='button' class='col btn btn-block btn-secondary' data-dismiss='modal'
-                        id='noBtn'>취소</button>
-                    <button type='button' data-dismiss='modal' id='yesBtn' >확인</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+				<div class='form-group'>
+					<label for='userPw'>비밀번호 </label>
+					<input id='userPw' type='password' class='form-control mb-2'  placeholder='••••'/>
+				</div>
+				
+				<div class='form'>
+					<button id='loginBtn' type='button' onclick='tryLogin()' class='btn border btn-block bg-success'>
+						<span class='h5'>로 그 인</span>
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+</html>
