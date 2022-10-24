@@ -22,8 +22,8 @@ function init(){
     $("#domainList").change(function(){
         if(!$(this).length){
             return this.val('')
-        } else $('#domainTxt').val(($(this).val()));
-    });
+        } else $('#domainTxt').val(($(this).val()))
+    })
 
     // 1. 이메일 틀림
     // 2. 전화번호 틀림 // 이후 이메일과 같은 전화번호인가?
@@ -129,7 +129,6 @@ hr {
             </div>
         </div>
     
-        
         <div class='row'>
             <div class='col d-flex'>
                 <input id='noBtn' type='button' class='btn btn-block btn-secondary mr-3' value='취소'
