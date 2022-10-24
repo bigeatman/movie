@@ -8,46 +8,14 @@
 <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css'/>
 
 <script>
-let email = 'xxx0000@naver.com'
-let tel = '01012345678'
-
-/*
-function textClear(field){
-    return field.val('')
-}  안없애는게 더 나은듯
-*/
-
 function init(){
-    //이메일 리스트
     $("#domainList").change(function(){
         if(!$(this).length){
             return this.val('')
         } else $('#domainTxt').val(($(this).val()))
     })
 
-    // 1. 이메일 틀림
-    // 2. 전화번호 틀림 // 이후 이메일과 같은 전화번호인가?
-    // 3. 성공
     $('#yesBtn').on('click', ()=>{
-        $('#errId').empty()
-        $('#errEmail').empty()
-        $('#inputId').removeClass().attr('class', 'form-control')
-        $('#inputEmail').removeClass().attr('class', 'form-control')
-        $('#domainTxt').removeClass().attr('class', 'form-control')
-
-        let inputEmail = $('#inputEmail').val() + '@' + $('#domainTxt').val() 
-
-        if(email != inputEmail){
-            $('#errEmail').append('존재하지 않는 이메일입니다.')
-            $('#inputEmail').addClass('err')
-            $('#domainTxt').addClass('err')
-        } else if(tel != ($('#inputTel').val())){
-            $('#errTel').append('회원님의 정보와 일치하는 아이디가 없습니다.')
-            $('#inputTel').addClass('err')
-        } else return location.href='03.html'
-
-    //클리어 시키지 않는게 사용하기가 더 편할듯    textClear($('#inputEmail'))
-    //    textClear($('#inputTel'))
     })
 
     $('#noBtn').on('click', ()=>{
