@@ -1,4 +1,4 @@
-<title>아이디 찾기</title>
+<title>로그인</title>
 <meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'>
 <script src='https://code.jquery.com/jquery-3.6.0.min.js'></script>
@@ -6,9 +6,20 @@
 <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js'></script>
 <link rel='stylesheet' href='http://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css'/>
 <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css'/>
+
 <script>
 function init(){
+    $("#domainList").change(function(){
+        if(!$(this).length){
+            return this.val('')
+        } else $('#domainTxt').val(($(this).val()))
+    })
+
     $('#yesBtn').on('click', ()=>{
+        return location.href='04.html'
+    })
+
+    $('#noBtn').on('click', ()=>{
         return location.href='01.html'
     })
 }
@@ -29,49 +40,80 @@ hr {
     border:0;
 }
 
-#userId{
-    color: rgb(114, 114, 114);
-    text-align: center;
-    border-width: 0.1rem;
-    border-radius: 0.5rem;
+#inputBox{
+    margin-left: 2rem;
+    margin-right: 2rem;
+}
+
+#inputEmail, #domainTxt, #domainList {
+    font-size: 11px;
 }
 
 .btn {
     text-align: center;
-    margin:auto;
 }
 
-#font {
-    font-size: 15px;
+#yesBtn, #noBtn{
+    margin: auto;
 }
+
+.err{
+    border: 0.1rem solid;
+    border-color: red;
+}
+
 
 </style>
 
+<head>
+</head>
+
 <body>
-    <div class='container'>
-        <div class='row'>
-            <div class='col'>
-                <header class='p-2'>
-                    <h1 class='text-center'>아이디 찾기</h1>
-                    <hr class='col-7 color-black'>
-                </header>
-            </div>
+<div class='container'>
+    <div class='row'>
+        <div class='col'>
+            <header class='p-2'>
+                <h1 class='text-center'>아이디 찾기</h1>
+                <hr class='col-7 color-black'>
+            </header>
         </div>
-
-        <div class='row'>
-            <div class='col'>
-                <span id='font'><b>입력하신 내용과 일치하는 아이디를 찾았습니다.</b></span>
-                <h3 id='userId' class='border mt-1'>xxx0000</h4>
-            </div>
-        </div>
-
-        </form>
-            <div class='row'>
-                <div class='col mt-3'>
-                    <input id='yesBtn' type="submit" class='btn btn-block btn-primary'
-                        value='확인' style='width: 50%;'>
-                </div>
-            </div>
-        </form>
     </div>
+    <form>
+        <div class='row d-flex'>
+            <div class='col' id='inputBox'>
+                <div class='d-flex align-items-center'>
+                    <input id='inputEmail' name='inputEmail' type='text' class='form-control' placeholder='이메일 ID' required/>
+                        &nbsp;@&nbsp;
+                    <input id='domainTxt' type='text' class='form-control'/>
+                        &nbsp;
+                    <select  id='domainList' class='form-control'>
+                        <option value=''>직접 입력</option>
+                        <option value='naver.com'>naver.com</option>
+                        <option value='gmail.com'>gmail.com</option>
+                        <option value='daum.net'>daum.net</option>
+                        <option value='nate.com'>nate.com</option>
+                        <option value='kakao.com'>kakao.com</option>
+                    </select>
+                </div>
+                <p id='errEmail' class='mt-1' style='font-size: 8px; color: red; height: 8px;'></p>
+                <input id='inputTel' name='inputTel' type='tel' class='form-control' placeholder='연락처를 입력하세요. (-없이)'
+                    maxlength='11' onKeyup="this.value=this.value.replace(/[^0-9]/g,'');">
+                <p id='errTel' class='mt-1' style='font-size: 8px; color: red; height: 8px;'></p>
+            </div>
+        </div>
+
+        <div class='row'>
+            <div class='col d-flex'>
+                <input id='noBtn' type='button' class='btn btn-block btn-secondary mr-3' value='취소'
+                    style='max-width: 7rem;'>
+                <input id='yesBtn' type='button' class='btn btn-block btn-primary' value='확인'
+                    style='max-width: 7rem;'>
+            </div>
+        </div>
+    </form>
+</div>
 </body>
+
+<footer>
+
+</footer>
