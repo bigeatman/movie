@@ -10,10 +10,7 @@
 <script>
 
 function init(){
-    $('#yesBtn').on('click', ()=>{
-    })
-
-    $('#yesFix').on('click', ()=>{
+    $('#yesFixBtn').on('click', ()=>{
         return location.href='01.html'
     })
 
@@ -34,7 +31,7 @@ hr {
 
 #inputBox{
     margin-left: 2rem;
-    margin-right: 2rem;    
+    margin-right: 2rem;
 }
 
 .btn {
@@ -73,12 +70,12 @@ body{
                 <input id='pw' name='pw' type='password' class='form-control' placeholder='새 비밀번호'
                     maxlength='10'>
                 <p id='errPw' style='font-size: 8px; color: red; height: 8px;'></p>
-                <input id='checkPw' name='checkPw' type='password' class='form-control' placeholder='비밀번호 확인'
+                <input id='checkPw' name='checkPw' type='password' class='form-control' placeholder='새 비밀번호 확인'
                     maxlength='10'>
                 <p id='errCheckPw' style='font-size: 8px; color: red; height: 8px;'></p>
             </div>
         </div>
-    
+
         <div class='row'>
             <div class='col d-flex'>
                 <input id='noBtn' type="button" class='btn btn-block btn-secondary mr-3' value='취소'
@@ -96,7 +93,7 @@ body{
         <div class='modal-content'>
             <div class='modal-body'>
                 <p align='center'>비밀번호가 수정되었습니다. &nbsp;</p>
-                <button id='yesFix' type='button' class='btn btn-block btn-primary'>확인</button>
+                <button id='yesFixBtn' type='button' class='btn btn-block btn-primary'>확인</button>
             </div>
         </div>
     </div>
