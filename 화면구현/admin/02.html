@@ -68,7 +68,6 @@ function listUsers(){
 }
 
 function init(){
-    // 닉네임 수정
     $('#fixBtn').click(() => {
         $('#yesDelBtn').attr('id', 'yesBtn')
         $('#fixMsg').remove()
@@ -86,7 +85,6 @@ function init(){
         }
     })
 
-    //수정 확인
     $('#yesBtn').click(() => {
         $.each(users, (i, user) =>{
             if(user.no == $('#no:checked').val()) {
@@ -98,7 +96,6 @@ function init(){
         listUsers()
     })
 
-    //노동자 삭제
     $('#delBtn').click(() => {
         if(isVal($('#no:checked'))){
             $('#modalMsg').text(`해당 회원을 삭제하시겠습니까?`)
@@ -110,7 +107,6 @@ function init(){
         }
     })
 
-    //삭제 확인
     $('#yesDelBtn').click(() => {
         $.each(users, (i, user) =>{
             if(user.no == $('#no:checked').val()) {
