@@ -9,19 +9,6 @@
 <script src='https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js'></script>
 <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js'></script>
 <script src="https://kit.fontawesome.com/449f39a7b2.js" crossorigin="anonymous"></script>
-<script>
-	var isLogined = localStorage.getItem("isLogined");
-	console.log(isLogined);
-	
-	
-	if(isLogined == 'true'){
-		document.querySelector('#loginStatus').innerHTML = '&nbsp;&nbsp;프로필';
-		document.querySelector('#user').setAttribute('href', 'user/mypage.html');
-	} else {
-		document.querySelector('#loginStatus').innerHTML = '&nbsp;&nbsp;로그인';
-		document.querySelector('#user').setAttribute('href', 'user/01.html');
-	}
-</script>
 <style>
 nav {
 	background-color: rgb(19, 19, 29);
@@ -210,10 +197,22 @@ table {
 			<div class='col m-2 text-center'>
 				<a id='user' href='user/01.html' class='ml-1'>
 					<i class='fa-regular fa-user fa-xl'></i>
-					<span class='iconfont'>&nbsp;&nbsp;로그인</span>
+					<span id="loginStatus" class='iconfont'>&nbsp;&nbsp;로그인</span>
 				</a>
 			</div>
 		</nav>
 	</div>
 </body>
+<script>
+	var isLogined = localStorage.getItem("isLogined");
+	console.log(document.querySelector('#loginStatus'));
+	
+	if(isLogined == 'true'){
+		document.querySelector('#loginStatus').innerHTML = '&nbsp;&nbsp;프로필';
+		document.querySelector('#user').setAttribute('href', 'user/mypage.html');
+	} else {
+		document.querySelector('#loginStatus').innerHTML = '&nbsp;&nbsp;로그인';
+		document.querySelector('#user').setAttribute('href', 'user/01.html');
+	}
+</script>
 </html>
