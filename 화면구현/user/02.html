@@ -5,13 +5,18 @@
 <script src='https://code.jquery.com/jquery-3.6.0.min.js'></script>
 <script src='https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js'></script>
 <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js'></script>
-
 <script>
 function join() {
     $('#joinBtn').click(() => {
         $('#modalMsg').text('회원가입이 완료되었습니다.')
         $('#joinCheckBtn').show()
         $('#joinModal').modal()
+    })
+
+    $("#domainList").change(function(){
+        if(!$(this).length){
+            return this.val('')
+        } else $('#domainTxt').val(($(this).val()))
     })
 
     $('#joinOkBtn').click(() => {
@@ -25,7 +30,6 @@ function join() {
 }
 $(join)
 </script>
-
 <style>
 label {
     font-size: 13px;
@@ -53,7 +57,6 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 </style>
-
 <h5><br><b>&nbsp;&nbsp;&nbsp;&nbsp;| 회원가입</b></h5>
 <hr>
 <div class="container-fulid">
@@ -61,41 +64,31 @@ input::-webkit-inner-spin-button {
         <form>
             <div class='form-group'>
                 <label for='userId'>아이디*
-                    <small class='form-text m-3 d-inline msg'>
-
-                    </small>
+                    <small class='form-text m-3 d-inline msg'></small>
                 </label>
-                <input id='userId' type='text' class='form-control' placeholder='영문, 숫자 최소 5자' required/>
+                <input id='userId' type='text' class='form-control' placeholder='영문, 숫자 최소 4자' required/>
             </div>
             <div class='form-group'>
                 <label for='pw'>비밀번호*
-                    <small class='form-text m-3 d-inline msg'>
-
-                    </small>
+                    <small class='form-text m-3 d-inline msg'></small>
                 </label>
                 <input id='pw' type='password' class='form-control' placeholder='영문, 숫자 최소 2자' required/>
             </div>
             <div class='form-group'>
                 <label for='nickName'>닉네임*
-                    <small class='form-text m-3 d-inline msg'>
-
-                    </small>
+                    <small class='form-text m-3 d-inline msg'></small>
                 </label>
                 <input id='nickName' type='text' class='form-control' placeholder='한글, 영문, 숫자 최소 4자' required/>
             </div>
             <div class='form-group'>
                 <label for='phoneNum'>연락처*
-                    <small class='form-text m-3 d-inline msg'>
-
-                    </small>
+                    <small class='form-text m-3 d-inline msg'></small>
                 </label>
                 <input id='phoneNum' type='number' class='form-control' placeholder='-를 빼고 입력하세요.' required/>
             </div>
             <div class='form-group'>
                 <label for='email'>이메일*
-                    <small class='form-text m-3 d-inline msg'>
-
-                    </small>
+                    <small class='form-text m-3 d-inline msg'></small>
                 </label>
                 <div class='row' style='padding-left: 15px'>
                     <input id='email' type='text' class='form-control' placeholder='영문, 숫자 2자' required/>
@@ -103,7 +96,7 @@ input::-webkit-inner-spin-button {
                     <input id='domainTxt' type='text' class='form-control'/>
                     &nbsp;
                     <select  id='domainList' class='form-control'>
-                        <option value='type'>직접 입력</option>
+                        <option value=''>직접 입력</option>
                         <option value='naver.com'>naver.com</option>
                         <option value='gmail.com'>gmail.com</option>
                         <option value='daum.net'>daum.net</option>
@@ -117,58 +110,58 @@ input::-webkit-inner-spin-button {
                 <div class='row' style='padding-left: 15px'>
                     <div class='row' style='padding-left: 15px; margin-left: 5px;'>
                         <div id='cw'>
-                            <input type='checkbox' name='genre' value=''/> <label for='genre'>액션</label>
+                            <input type='checkbox' name='genre' value='' checked/> <label for='genre'>액션</label>
                         </div>
                         <div id='cw'>
                             <input type='checkbox' name='genre' value=''/> <label for='genre'>범죄</label>
                         </div>
                         <div id='cw'>
-                            <input type='checkbox' name='genre' value=''/> <label for='genre'>SF</label>
+                            <input type='checkbox' name='genre' value='' checked/> <label for='genre'>SF</label>
                         </div>
                         <div id='cw'>
-                            <input type='checkbox' name='genre' value=''/> <label for='genre'>스릴러</label>
+                            <input type='checkbox' name='genre' value='' checked/> <label for='genre'>스릴러</label>
                         </div>
                     </div>
                     <div class='row' style='padding-left: 15px; margin-left: 5px;'>
                         <div id='cw'>
-                            <input type='checkbox' name='genre' value=''/> <label for='genre'>공포</label>
+                            <input type='checkbox' name='genre' value='' checked/> <label for='genre'>공포</label>
                         </div>
                         <div id='cw'>
                             <input type='checkbox' name='genre' value=''/> <label for='genre'>전쟁</label>
                         </div>
                         <div id='cw'>
-                            <input type='checkbox' name='genre' value=''/> <label for='genre'>미스터리</label>
+                            <input type='checkbox' name='genre' value='' checked/> <label for='genre'>미스터리</label>
                         </div>
                         <div id='cw'>
-                            <input type='checkbox' name='genre' value=''/> <label for='genre'>판타지</label>
+                            <input type='checkbox' name='genre' value='' checked/> <label for='genre'>판타지</label>
                         </div>
                     </div>
                     <div class='row' style='padding-left: 15px; margin-left: 5px;'>
                         <div id='cw'>
-                            <input type='checkbox' name='genre' value=''/> <label for='genre'>코미디</label>
+                            <input type='checkbox' name='genre' value='' checked/> <label for='genre'>코미디</label>
                         </div>
                         <div id='cw'>
                             <input type='checkbox' name='genre' value=''/> <label for='genre'>로맨스</label>
                         </div>
                         <div id='cw'>
-                            <input type='checkbox' name='genre' value=''/> <label for='genre'>멜로</label>
+                            <input type='checkbox' name='genre' value='' checked/> <label for='genre'>멜로</label>
                         </div>
                         <div id='cw'>
-                            <input type='checkbox' name='genre' value=''/> <label for='genre'>드라마</label>
+                            <input type='checkbox' name='genre' value='' checked/> <label for='genre'>드라마</label>
                         </div>
                     </div>
                     <div class='row' style='padding-left: 15px; margin-left: 5px;'>
                         <div id='cw'>
-                            <input type='checkbox' name='genre' value=''/> <label for='genre'>뮤지컬</label>
+                            <input type='checkbox' name='genre' value='' checked/> <label for='genre'>뮤지컬</label>
                         </div>
                         <div id='cw'>
                             <input type='checkbox' name='genre' value=''/> <label for='genre'>음악</label>
                         </div>
                         <div id='cw'>
-                            <input type='checkbox' name='genre' value=''/> <label for='genre'>스포츠</label>
+                            <input type='checkbox' name='genre' value='' checked/> <label for='genre'>스포츠</label>
                         </div>
                         <div id='cw'>
-                            <input type='checkbox' name='genre' value=''/> <label for='genre'>애니</label>
+                            <input type='checkbox' name='genre' value='' checked/> <label for='genre'>애니</label>
                         </div>
                     </div>
                 </div>
@@ -184,7 +177,6 @@ input::-webkit-inner-spin-button {
         </form>
     </div>
 </div>
-
 <div class='modal fade' tabindex='-1' id='joinModal'>
     <div class='modal-dialog modal-dialog-centered'>
         <div class='modal-content'>
