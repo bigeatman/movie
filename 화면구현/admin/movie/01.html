@@ -23,13 +23,13 @@
     }
 </style>
 <body>
-	<div class='container-fluid'>
+	<div class='container'>
 		<div class='header'>
             <div class='float-left mt-3'><h5>| 영화</h5></div>
 			 <div id='btn_group' class='float-right mt-3'>
-				  <label style='font-size:13'>관리자님</label>&emsp;
+				  <label style='font-size:13'>admin님</label>&emsp;
                   <span style='font-size:12'>(08:23)</span>&emsp;
-				  <a href='#'><button style='font-size:13'>로그아웃</button></a>
+				  <a href='../main.html'><button style='font-size:13'>로그아웃</button></a>
 			  </div><br>
 		  <div class='row mt-5'>
 			  <div class='col'>
@@ -38,17 +38,16 @@
 						 <div class='col-12 text-center'>
 							 <div class='btn-group btn-block'>
                                 <button type='button' class='btn btn-secondary' onclick='location.href="../main.html" '>홈</button>
-								 <button type='button' class='btn btn-secondary' onclick='location.href="#" '>회 원</button>
-								 <button type='button' class='btn btn-secondary' onclick='location.href="#" '>영 화</button>
-								 <button type='button' class='btn btn-secondary' onclick='location.href="#" '>신고 조회</button>
+								 <button type='button' class='btn btn-secondary' onclick='location.href="../user/02.html" '>회 원</button>
+								 <button type='button' class='btn btn-secondary'>영 화</button>
+								 <button type='button' class='btn btn-secondary' onclick='location.href="../inspection/01.html" '>신고 조회</button>
 							 </div>
 						 </div>
 					 </div>
 				 </div>
 			  </div>
 		 </div>
-   </div><hr>
-
+    </div><hr>
         <div class='row mt-5'>
             <div class='col'>
                 <form>
@@ -127,17 +126,15 @@
         </div>
     </div>
 </body>
-
-<nav aria-label="Page navigation example">		
+<nav aria-label="Page navigation example">
     <ul id="paging" class="pagination" style="justify-content: center;">
       <li class="page-item"><a class="page-link" href="#">＜</a></li>
       <li class="page-item"><a class="page-link" href="#">1</a></li>
       <li class="page-item"><a class="page-link" href="#">＞</a></li>
     </ul>
 </nav>
-
 <div id='delMovieModal' class='modal fade' tabindex='-1'>
-	<div class='modal-dialog'>
+	<div class='modal-dialog modal-dialog-centered'>
 		<div class='modal-content'>
 			<div class='modal-header'>
 				<button type='button' class='close' data-dismiss='modal'>

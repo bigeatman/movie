@@ -9,12 +9,14 @@
 <script src='https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js'></script>
 <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js'></script>
 <script src="https://kit.fontawesome.com/449f39a7b2.js" crossorigin="anonymous"></script>
-<script>
-</script>
 <style>
-
 nav {
 	background-color: rgb(19, 19, 29);
+}
+
+nav a {
+	text-decoration: none;
+	color: lightgray;
 }
 
 .fa-compass, .fa-user, .fa-house, .fa-comments {
@@ -26,11 +28,6 @@ nav {
 	font-size:12px;
 }
 
-nav a {
-	text-decoration: none;
-	color: white;
-}
-
 .fa-tv {
 	text-decoration: none;
 	color: black;
@@ -40,15 +37,12 @@ label {
     font-size:12px;
     width: 1px;
 }
-
 </style>
 </head>
 <div class="container">
     <h2><strong><br><center>커뮤니티</center></strong></h2>
-
     <hr style="border: double 1px black;">
     <h3><em><u><center>영화평</center></u></em></h3>
-    
     <div class='justify-content-center'>
         <ul class='list-unstyled border-top'>
             <li class='border-bottom pt-3 pb-3'>
@@ -89,20 +83,18 @@ label {
                         <span class='col-8'>범죄도시2ㅋㅋㅋㅋㅋㅋㅋ</span>
                         <span class='col-3'>장첸</span>
                 </a>
-            </li>    
-                </li>    
-            </li>    
+            </li>
+                </li>
+            </li>
             </li>
         </ul>
     </div>
-    <td><button type="submit" onclick='location.href="../community/02.html"' style="width: 245pt; HEIGHT: 25pt" class="btn btn-primary">글쓰기</button></td>
-
-<!-- < 1,2,3,4,5 > -->
+    <td><button type="submit" onclick='location.href="02.html"' style="width: 250pt; HEIGHT: 25pt" class="btn btn-primary">글쓰기</button></td>
     <div class='row mt-5 justify-content-center'>
         <span class='col'>
             <i class="fa-solid fa-angle-left"></i>
         </span>
-        <span class='col'>1</span>
+        <a class='col' href='01.html'>1</a>
         <span class='col'>2</span>
         <span class='col'>3</span>
         <span class='col'>4</span>
@@ -111,8 +103,6 @@ label {
             <i class="fa-solid fa-angle-right"></i>
         </span><br><br>
     </div>
-    
-<!-- 네비게이션 바 -->
   <div id='navBar' class='container-fulid'>
     <nav class='row fixed-bottom p-1'>
       <div class='col m-2 text-center'>
@@ -134,7 +124,7 @@ label {
         </a>
       </div>
       <div class='col m-2 text-center'>
-        <a id='user' href='user/mypage.html' class='ml-1'>
+        <a id='user' href='../user/mypage.html' class='ml-1'>
           <i class='fa-regular fa-user fa-xl'></i>
           <span class='iconfont'>&nbsp;&nbsp;&nbsp;로그인</span>
         </a>
@@ -143,8 +133,6 @@ label {
   </div>
 </form>
 </div>
-
-<!-- 검색 -->
 <div class="container">
     <div class="row">
         <form method="post" name="search" action="">
@@ -157,22 +145,20 @@ label {
                     </select></td>
                     <td><input type="text" class="form-control"
                         placeholder="검색어 입력" name="searchText" maxlength="50"></td>
-                    <td><button type="submit" onclick='location.href="../community/01.html"' style="width: 50pt; HEIGHT: 25pt" class="btn btn-primary">검색</button></td>
+                    <td><button type="submit" onclick='location.href="01.html"' style="width: 50pt; HEIGHT: 25pt" class="btn btn-primary">검색</button></td>
                 </tr>
             </table>
         </form>
     </div>
-</div>    
+</div>
     <hr style="border: double 1px grey;">
 </div>
 </body>
 </html></html>
-
-<!-- 하단내비바에 안깔리게 하려고 넣어둔 거 -->
 <footer class='container-fulid border mt-5 p-3 '>
     <div class='row m-3'>
         <div class='col-sm-3 border d-flex justify-content-center align-items-center'>
             <div></div>
         </div>
     </div>
-</footer>   
+</footer>

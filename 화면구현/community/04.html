@@ -11,11 +11,10 @@
 <link rel='stylesheet' href='http://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css'/>
 <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css'/>
 <script>
-
 function repleInit() {
     $('#delRepleBtn').click(() => {
         $('#modalHeadMsg').text('댓글 삭제')
-        
+
         $('#modalBodyMsg').text('해당 댓글을 삭제하시겠습니까?')
         $('#inpectionReasonInput').hide()
 
@@ -47,7 +46,7 @@ function repleInit() {
 
         $('#delRepleYesBtn').hide()
         $('#delRepleNoBtn').hide()
-        $('#delRepleOkBtn').hide()        
+        $('#delRepleOkBtn').hide()
         $('#inpectionCancelBtn').show()
         $('#inpectionCheckBtn').show()
         $('#inpectionOkBtn').hide()
@@ -59,7 +58,7 @@ function repleInit() {
 
         $('#modalBodyMsg').text('신고해주셔서 감사합니다. 신고된 내용은 내부 검토를 통해 삭제여부를 확인해보도록 하겠습니다.');
         $('#inpectionReasonInput').hide()
-        
+
         $('#inpectionCancelBtn').hide()
         $('#inpectionCheckBtn').hide()
         $('#inpectionOkBtn').show()
@@ -67,13 +66,16 @@ function repleInit() {
         $('#inspectionModal').modal()
     })
 }
-
 $(repleInit)
 </script>
-
 <style>
     nav {
-        background-color: rgb(19, 19, 29);
+	    background-color: rgb(19, 19, 29);
+    }
+
+    nav a {
+        text-decoration: none;
+        color: lightgray;
     }
 
     .fa-compass, .fa-user, .fa-house, .fa-comments {
@@ -83,11 +85,6 @@ $(repleInit)
 
     .iconfont {
         font-size:12px;
-    }
-
-    nav a {
-        text-decoration: none;
-        color: white;
     }
 
     .fa-tv {
@@ -104,7 +101,7 @@ $(repleInit)
         background-color: rgb(209, 208, 208);
         border:0px;
     }
-    
+
     #repleContainer{
         font-size: 14px;
         padding-bottom: 80px;
@@ -123,13 +120,12 @@ $(repleInit)
     #repleOkBtn {
         width: 113.5%;
     }
-    
+
     #delModal{
         text-align: center;
     }
-</style> 
+</style>
 </head>
-
 <body>
     <div class='container' id='repleContainer'>
         <div class='row mb-3 mt-3'>
@@ -140,15 +136,14 @@ $(repleInit)
                 </li>
             </div>
         </div>
-    
         <div class='row'>
             <div class='col mb-1'>
                 <li id='repleBg' class='list-group-item d-flex justify-content-between'>
                     <div>
-                        Ok_Man dkanro123  <!-- 작성자의 닉네임 id -->
+                        ㅎㅇ movie1415  <!-- 작성자의 닉네임 id -->
                     </div>
                     <div>
-                        2022-10-17  <!-- 해당 댓글의 작성일 -->
+                        2022-10-12  <!-- 해당 댓글의 작성일 -->
                         <button class='ml-0' id='repleMenu' data-toggle='dropdown'><i class="bi bi-gear-fill"></i></button>
                         <div class='dropdown-menu'>
                             <a class='dropdown-item' id='delRepleBtn'>삭제</a>
@@ -156,31 +151,28 @@ $(repleInit)
                             <a class='dropdown-item' id='inpectionRepleBtn'>신고</a>
                         </div>
                     </div>
-                </li>                    
+                </li>
                 <li id='repleBg' class='list-group-item'>
                     <div class='col mb-3'>
-                        너무 기대 되요<br> <!-- 해당 댓글의 내용-->
-                        그다음은 어떤내용이 이어질지<br>
-                        주인공은 어떻게 될지<br>
-                        궁금한거 투성이에요.
+                        다음작품 벌써부터 기다려져요<br> <!-- 해당 댓글의 내용-->
+                        현기증난단 말이에요<br>
                     </div>
                     <div>
                         <a href='04.html'> <i id='empathy' class="bi bi-hand-thumbs-up-fill"></i></a>
-                        3   <!-- 공감표시 수 -->
+                        2   <!-- 공감표시 수 -->
                         <a href='04.html'> <i id='nonEmpathy' class="bi bi-hand-thumbs-down-fill"></i></a>
                     </div>
-                </li>   
+                </li>
             </div>
         </div>
-    
         <div class='row'>
             <div class='col mb-1'>
                 <li id='repleBg' class='list-group-item d-flex justify-content-between'>
                     <div>
-                        No_Man qnwjddl456  <!-- 작성자의 닉네임 id -->
+                        negative 01false11  <!-- 작성자의 닉네임 id -->
                     </div>
                     <div>
-                        2022-10-16  <!-- 해당 댓글의 작성일 -->
+                        2022-10-12  <!-- 해당 댓글의 작성일 -->
                         <button class='ml-0' id='repleMenu' data-toggle='dropdown'><i class="bi bi-gear-fill"></i></button>
                         <div class='dropdown-menu'>
                             <a class='dropdown-item' id='delRepleBtn'>삭제</a>
@@ -188,59 +180,56 @@ $(repleInit)
                             <a class='dropdown-item' id='inpectionRepleBtn'>신고</a>
                         </div>
                     </div>
-                </li>                    
+                </li>
                 <li id='repleBg' class='list-group-item'>
                     <div class='col mb-3'>
-                        전작에 비해서 스토리가 구려진듯<br> <!-- 해당 댓글의 내용-->
-                        돈주고 보기 아까운데...
-                    </div>
-                    <div>
-                        <a href='04.html'> <i id='empathy' class="bi bi-hand-thumbs-up-fill"></i></a>
-                        1   <!-- 공감표시 수 -->
-                        <a href='04.html'> <i id='nonEmpathy' class="bi bi-hand-thumbs-down-fill"></i></a>
-                    </div>
-                </li>   
-            </div>
-        </div>
-    
-        <div class='row'>
-            <div class='col mb-1'>
-                <li id='repleBg' class='list-group-item d-flex justify-content-between'>
-                    <div>
-                        Spoiler_Man qkqhajdcjd426  <!-- 작성자의 닉네임 id -->
-                    </div>
-                    <div>
-                        2022-10-16  <!-- 해당 댓글의 작성일 -->
-                        <button class='ml-0' id='repleMenu' data-toggle='dropdown'><i class="bi bi-gear-fill"></i></button>
-                        <div class='dropdown-menu'>
-                            <a class='dropdown-item' id='delRepleBtn'>삭제</a>
-                            <div class='dropdown-divider'></div>
-                            <a class='dropdown-item' id='inpectionRepleBtn'>신고</a>
-                        </div>
-                    </div>
-                </li>                    
-                <li id='repleBg' class='list-group-item'>
-                    <div class='col mb-3'>
-                        그래서 이거 내용이 ... 맞죠?<br> <!-- 해당 댓글의 내용-->
-                        이걸 알아야 가서 재밌게 본다고요
+                        아 결말 아무래도 좀 별로네요.<br> <!-- 해당 댓글의 내용-->
+                        감독이 센스없는듯
                     </div>
                     <div>
                         <a href='04.html'> <i id='empathy' class="bi bi-hand-thumbs-up-fill"></i></a>
                         0   <!-- 공감표시 수 -->
                         <a href='04.html'> <i id='nonEmpathy' class="bi bi-hand-thumbs-down-fill"></i></a>
                     </div>
-                </li>   
+                </li>
             </div>
         </div>
-                    
+        <div class='row'>
+            <div class='col mb-1'>
+                <li id='repleBg' class='list-group-item d-flex justify-content-between'>
+                    <div>
+                        잘까먹어 forget101  <!-- 작성자의 닉네임 id -->
+                    </div>
+                    <div>
+                        2022-10-12  <!-- 해당 댓글의 작성일 -->
+                        <button class='ml-0' id='repleMenu' data-toggle='dropdown'><i class="bi bi-gear-fill"></i></button>
+                        <div class='dropdown-menu'>
+                            <a class='dropdown-item' id='delRepleBtn'>삭제</a>
+                            <div class='dropdown-divider'></div>
+                            <a class='dropdown-item' id='inpectionRepleBtn'>신고</a>
+                        </div>
+                    </div>
+                </li>
+                <li id='repleBg' class='list-group-item'>
+                    <div class='col mb-3'>
+                        이전 편의 내용이 뭐였더라...<br> <!-- 해당 댓글의 내용-->
+                    </div>
+                    <div>
+                        <a href='04.html'> <i id='empathy' class="bi bi-hand-thumbs-up-fill"></i></a>
+                        0   <!-- 공감표시 수 -->
+                        <a href='04.html'> <i id='nonEmpathy' class="bi bi-hand-thumbs-down-fill"></i></a>
+                    </div>
+                </li>
+            </div>
+        </div>
         <div class='row mt-2'>
             <div class='col d-flex'>
                 <textarea class='form-control col-10' rows='1' placeholder='댓글을 작성해주세요.'></textarea>
                 <a href='03.html'>
-                    <button id='repleOkBtn' type="button" class="btn btn-primary" id='regRepleBtn'>등록</button>
-                </a>                
+                    <button id='repleOkBtn' type="button" class="btn btn-primary" id='regRepleBtn'>추가</button>
+                </a>
             </div>
-        </div>    
+        </div>
     </div>
     <div class='container-fluid' id='navBar' >
 		<nav class='row fixed-bottom p-1'>
@@ -271,10 +260,7 @@ $(repleInit)
         </nav>
 	</div>
 </div>
-
 </body>
-
-<!-- 댓글 modal(하나를 같이 쓰려면 db가 추가되어야함)-->
 <div class='modal fade' tabindex='-1' id='inspectionModal'>
     <div class='modal-dialog modal-dialog-centered'>
         <div class='modal-content'>
@@ -291,7 +277,7 @@ $(repleInit)
                 </div>
                 <div class='col' id='delRepleYesBtn'>
                     <button type='button' id='delYesBtn' class='btn btn-primary btn-block'>확인</button>
-                </div>                
+                </div>
                 <div class='col' id='delRepleOkBtn'>
                     <button type='button' class='btn btn-primary btn-block' data-dismiss='modal'>확인</button>
                 </div>
@@ -300,11 +286,10 @@ $(repleInit)
                 </div>
                 <div class='col' id='inpectionCheckBtn'>
                     <button type='button' id='inpectionYesBtn' class='btn btn-primary btn-block'>확인</button>
-                </div>      
+                </div>
                 <div class='col' id='inpectionOkBtn'>
                     <button type='button' class='btn btn-primary btn-block' data-dismiss='modal'>확인</button>
-
-                </div>   
+                </div>
             </div>
         </div>
     </div>

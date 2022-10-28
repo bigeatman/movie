@@ -10,22 +10,22 @@
 <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js'></script>
 <script src="https://kit.fontawesome.com/449f39a7b2.js" crossorigin="anonymous"></script>
 <style>
+.fa-compass, .fa-user, .fa-house, .fa-comments {
+	color:rgb(221, 221, 221);
+	font-size:20px;
+}
+
+.iconfont {
+	font-size: 1px;
+}
+
 nav {
 	background-color: rgb(19, 19, 29);
 }
 
-.fa-compass, .fa-user, .fa-house, .fa-comments {
-	color:rgb(221, 221, 221);
-	font-size:28px;
-}
-
-.iconfont {
-	font-size:12px;
-}
-
 nav a {
 	text-decoration: none;
-	color: white;
+	color: lightgray;
 }
 
 table {
@@ -46,6 +46,10 @@ table {
    height: 125px;
    margin: 0 auto;
 }
+
+a {
+	color: black;
+}
 </style>
 </head>
 <body>
@@ -60,7 +64,6 @@ table {
 			</div>
 		</form>
 	</header>
-
 	<div class='container'>
 		<hr>
 		<div class='ml-2 font-weight-bold'>영화 TOP 5</div>
@@ -173,46 +176,39 @@ table {
 				</div>
 			</div>
 		</div>
-		
 	<div id='navBar' class='container-fulid'>
-		<nav class='row fixed-bottom p-1'>
-			<div class='col m-2 text-center'>
-				<a id='goHome' href='#' class='ml-1'>
-					<i class='fa-solid fa-house fa-xl'></i>
-					<span class='iconfont'>&nbsp;홈</span>
-				</a>
-			</div>
-			<div class='col m-2 text-center'>
-				<a id='community' href='community/01.html' class='ml-1'>
-					<i class='fa-regular fa-comments fa-xl'></i>
-					<span class='iconfont'>커뮤니티</span>
-				</a>
-			</div>
-			<div class='col m-2 text-center'>
-				<a id='search' href='movie/01.html' class='ml-1'>
-					<i class='fa-solid fa-compass fa-xl'></i>
-					<span class='iconfont'>&nbsp;탐색</span>
-				</a>
-			</div>
-			<div class='col m-2 text-center'>
-				<a id='user' href='user/01.html' class='ml-1'>
-					<i class='fa-regular fa-user fa-xl'></i>
-					<span id="loginStatus" class='iconfont'>&nbsp;&nbsp;로그인</span>
-				</a>
-			</div>
-		</nav>
-	</div>
+      <nav class='row fixed-bottom'>
+         <div class='col text-center'>
+            <a id='goHome' href='#' class='ml-1'>
+               <i class='fa-solid fa-house fa-xl'></i><br>
+               <span class='iconfont'>홈</span>
+            </a>
+         </div>
+         <div class='col text-center'>
+            <a id='community' href='community/01.html' class='ml-1'>
+               <i class='fa-regular fa-comments fa-xl'></i><br>
+               <span class='iconfont'>커뮤니티</span>
+            </a>
+         </div>
+         <div class='col text-center'>
+            <a id='search' href='movie/01.html' class='ml-1'>
+               <i class='fa-solid fa-compass fa-xl'></i><br>
+               <span class='iconfont'>탐색</span>
+            </a>
+         </div>
+         <div class='col text-center'>
+            <a id='user' href='user/01.html' class='ml-1'>
+               <i class='fa-regular fa-user fa-xl'></i><br>
+               <span class='iconfont'>로그인</span>
+            </a>
+         </div>
+         <div class='col text-center'>
+            <a id='user' href='user/mypage.html' class='ml-1'>
+               <i class='fa-regular fa-user fa-xl'></i><br>
+               <span class='iconfont'>프로필</span>
+            </a>
+         </div>
+      </nav>
+   </div>
 </body>
-<script>
-	var isLogined = localStorage.getItem("isLogined");
-	console.log(document.querySelector('#loginStatus'));
-	
-	if(isLogined == 'true'){
-		document.querySelector('#loginStatus').innerHTML = '&nbsp;&nbsp;프로필';
-		document.querySelector('#user').setAttribute('href', 'user/mypage.html');
-	} else {
-		document.querySelector('#loginStatus').innerHTML = '&nbsp;&nbsp;로그인';
-		document.querySelector('#user').setAttribute('href', 'user/01.html');
-	}
-</script>
 </html>
