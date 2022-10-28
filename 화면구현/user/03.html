@@ -7,6 +7,9 @@
 <link rel='stylesheet' href='http://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css'/>
 <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css'/>
 <script>
+let email = 'asd123@naver.com'
+let tel = '00000000000'
+
 function init(){
     $("#domainList").change(function(){
         if(!$(this).length){
@@ -15,13 +18,29 @@ function init(){
     })
 
     $('#yesBtn').on('click', ()=>{
-        return location.href='04.html'
+        $('#errId').empty()
+        $('#errEmail').empty()
+        $('#inputId').removeClass().attr('class', 'form-control')
+        $('#inputEmail').removeClass().attr('class', 'form-control')
+        $('#domainTxt').removeClass().attr('class', 'form-control')
+
+        let inputEmail = $('#inputEmail').val() + '@' + $('#domainTxt').val() 
+
+        if(email != inputEmail){
+            $('#errEmail').append('존재하지 않는 이메일입니다.')
+            $('#inputEmail').addClass('err')
+            $('#domainTxt').addClass('err')
+        } else if(tel != ($('#inputTel').val())){
+            $('#errTel').append('회원님의 정보와 일치하는 아이디가 없습니다.')
+            $('#inputTel').addClass('err')
+        } else return location.href='04.html'
     })
 
     $('#noBtn').on('click', ()=>{
         return location.href='01.html'
     })
 }
+
 $(init)
 </script>
 <style>
