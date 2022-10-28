@@ -11,17 +11,81 @@
     <script src="https://kit.fontawesome.com/449f39a7b2.js" crossorigin="anonymous"></script>
 </head>
 <script>
+const users =[]
+let user = 0
+
+function isVal(field){
+    let isGood = false
+    let errMsg
+    $('#modalMsg').text('')
+
+    if (!field.length) errMsg = '유저를 선택하세요.'
+    else isGood = true
+
+    if (!isGood) {
+        $('#modalMsg').text(errMsg)
+        $('#noBtn').text('확인')
+        $('#yesBtn').hide()
+        $('#modal').modal()
+    }
+
+    return isGood
+}
+
+function listUsers(){
+/*
+    $('input').not(':radio').val('') // not(':radio') 라디오가 아닌것
+    $('#laborers').empty()
+    
+    if(laborers.length){
+        const laborerArr = []
+
+        $.each(laborers, (i, laborer) => {
+            laborerArr.unshift( // push는 [ 1 , 2 ,3 ,...] 순서 // unshift는 [... ,3 ,2 ,1 ]
+                `<tr>
+                    <td><input type='radio' name='laborerId' id='laborerId'
+                        value='${laborer.laborerId}'/></td>
+                    <td>${laborer.laborerId}</td>
+                    <td>${laborer.name}</td>
+                    <td>${laborer.hireDate}</td>
+                </tr>`
+            )
+        })
+    
+        $('#laborers').append(laborerArr.join(''))
+    } else $('#laborers').append(
+        '<tr><td colspan=4 class=text-center>노동자가 없습니다.</td></tr>'
+    )
+*/
+}
+// 유저 닉네임 수정
     function init() {
         $('#fixBtn').click(() => {
             $('#yesDelBtn').attr('id', 'yesBtn')
-            $('#modalMsg').text('닉네임 [뿡뿡이] 을/를 ')
-            $('#modalMsg').append(`<br>[변경할 닉네임]으로 수정하시겠습니까?`)
-            $('#noBtn').text('취소')
-            $('#yesBtn').show()
-            $('#yesBtn').attr('class', 'col btn btn-block btn-primary')
-            $('#modal').modal()
+            $('#fixMag').remove()
+
+            if(isVal($('#no:checked'))){
+                $('#modalMsg').append('<h4 id="fixMag">수정해야함[',$('#nickname:checked').text(),'] 을/를 ','[', $('#fixNickname').val(), ']으로 수정하시겠습니까?</h4>')
+                $('#noBtn').text('취소')
+                $('#yesBtn').show()
+                $('#yesBtn').attr('class', 'col btn btn-block btn-primary')
+                $('#modal').modal() 
+            }
+        })
+    
+//수정 확인
+        $('#yesBtn').click(() => {
+            $.each(users, (i, user) =>{
+                if(user.no == $('#no:checked').val()) {
+                    no.nickname= $('#fixNickname').val()
+                    return false
+                }
+            })
+            
+            listUsers()
         })
 
+    // 유저 삭제
         $('#delBtn').click(() => {
             $('#modalMsg').text(`해당 회원을 삭제하시겠습니까?`)
             $('#yesBtn').attr('id', 'yesDelBtn')
@@ -30,24 +94,33 @@
             $('#noBtn').text('취소')
             $('#modal').modal()
         })
-    }
+
+
+    //삭제 확인
+        $('#yesDelBtn').click(() => {
+            $.each(users, (i, user) =>{
+                if(user.no == $('#no:checked').val()) {
+                    users.splice(i,1)
+                    return false
+                }
+            })
+
+        //  $('#modal').modal('hide')
+            listusers()
+        })
+
+/* 수정할 아이디 칸에 자동입력
+        $('#no').on({
+            change(){
+                $('#fixNickname').val($(this).parent().next().next().next().next().text())
+          }      
+        }, '#no')
+*/
+}
+
     $(init)
 </script>
 <style>
-    body {
-        width: 100%;
-        min-height: 100%;
-        position: relative;
-        padding-bottom: 80px;
-    }
-
-    .footer {
-        position: relative;
-        height: 60px;
-        width: 100%;
-        bottom: 0;
-    }
-
     #yesBtn,
     #noBtn,
     #yesDelBtn {
@@ -56,10 +129,14 @@
         max-width: 10rem;
         height: 100%;
     }
+
+    table{
+        table-layout:fixed; 
+        word-break:break-all;
+    }
 </style>
 <body>
     <div class='container'>
-        <div class='container-fluid'>
             <div class='header'>
                 <div class='float-left mt-3'>
                     <h5>| 회원</h5>
@@ -116,44 +193,14 @@
                         </thead>
                         <tbody style='text-align: center'>
                             <tr>
-                                <td><input type='radio' name='no' id='no' value='3'></td>
-                                <td id='no' value='3'>1</td>
+                                <td><input type='radio' name='no' id='no'></td>
+                                <td id='no'>1</td>
                                 <td id='id'>id123</td>
                                 <td id='pw'>qs123456</td>
                                 <td id='nickname'>뿡뿡이</td>
                                 <td id='tel'>01039158928</td>
                                 <td id='email'>xxxx123@naver.com</td>
                                 <td id='joinDate'>2022-10-13</td>
-                            </tr>
-                            <tr>
-                                <td><input type='radio' name='no' id='no' value='2'></td>
-                                <td id='no' value='2'>...</td>
-                                <td id='id'></td>
-                                <td id='pw'></td>
-                                <td id='nickname'></td>
-                                <td id='tel'></td>
-                                <td id='email'></td>
-                                <td id='joinDate'></td>
-                            </tr>
-                            <tr>
-                                <td><input type='radio' name='no' id='no' value='1'></td>
-                                <td id='no' value='1'>...</td>
-                                <td id='id'></td>
-                                <td id='pw'></td>
-                                <td id='nickname'></td>
-                                <td id='tel'></td>
-                                <td id='email'></td>
-                                <td id='joinDate'></td>
-                            </tr>
-                            <tr>
-                                <td><input type='radio' name='no' id='no' value='1'></td>
-                                <td id='no' value='1'>...</td>
-                                <td id='id'></td>
-                                <td id='pw'></td>
-                                <td id='nickname'></td>
-                                <td id='tel'></td>
-                                <td id='email'></td>
-                                <td id='joinDate'></td>
                             </tr>
                         </tbody>
                     </table>
@@ -177,7 +224,6 @@
                     </ul>
                 </nav>
             </div>
-        </div>
     </div>
 </body>
 <div class='modal fade' tabindex='-1' id='modal'>
