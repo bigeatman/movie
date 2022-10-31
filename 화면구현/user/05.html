@@ -7,16 +7,46 @@
 <link rel='stylesheet' href='http://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css'/>
 <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css'/>
 <script>
+    //DB에서 emial id값 가져오기
+let email = 'xxx0000@naver.com'
+let id = 'xxx0000'
+
 function init(){
+    $("#domainList").change(function(){
+        if(!$(this).length){
+            return this.val('')
+        } else $('#domainTxt').val(($(this).val())); //value값 가져오기
+    });
+    
     $('#yesBtn').on('click', ()=>{
-        location.href='06.html'
+        $('#errId').empty()
+        $('#errEmail').empty()
+        $('#inputId').removeClass().attr('class', 'form-control')
+        $('#inputEmail').removeClass().attr('class', 'form-control')
+        $('#domainTxt').removeClass().attr('class', 'form-control')
+
+        let inputEmail = $('#inputEmail').val() + '@' + $('#domainTxt').val() 
+        
+        if(id != ($('#inputId').val())) {
+            $('#errId').append('존재하지 않는 아이디입니다.')
+            $('#inputId').addClass('err')
+        } else if(email != inputEmail){
+            $('#errEmail').append('회원님의 정보와 일치하는 아이디가 없습니다.')
+            $('#inputEmail').addClass('err')
+            $('#domainTxt').addClass('err')
+        } else { return 1} //location.href='06.html' }
+
+        //이메일
+        const mail = $('#inputEmail').val() + '@' + $('#domainTxt').val()
+        console.log(mail)
 
     })
 
     $('#noBtn').on('click', ()=>{
-        location.href='01.html'
+    //    location.href='01.html'
     })
 }
+
 $(init)
 </script>
 <style>
