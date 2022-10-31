@@ -8,6 +8,24 @@
 <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css'/>
 <script>
 function init(){
+    // 1. 새 비밀번호 양식 틀림
+    // 2. 새 비밀번호 != 비밀번호 확인
+    // 3. 성공 = 모달보여주기
+
+    $('#yesBtn').on('click', ()=>{
+        $('#errPw').empty()
+        $('#errCheckPw').empty()
+        $('#yesBtn').attr('data-target', '');
+        //$('#modal').modal('hide') 가 안먹힘
+
+        if(!(2 <= ($('#pw').val().length) && ($('#pw').val().length <= 10 ))) {
+            $('#errPw').append('2~10자의 영문,숫자로 입력하세요.')
+        } else if(($('#checkPw').val()) != ($('#pw').val())){
+            $('#errCheckPw').append('비밀번호가 일치하지 않습니다.')
+        } else $('#yesBtn').attr('data-target', '#modal');
+            // $('#modal').modal('show') 안먹힘..
+    })
+
     $('#yesFixBtn').on('click', ()=>{
         return location.href='01.html'
     })
@@ -16,6 +34,7 @@ function init(){
         return location.href='01.html'
     })
 }
+
 $(init)
 </script>
 <style>
@@ -34,11 +53,11 @@ hr {
     text-align: center;
 }
 
-#yesBtn,#noBtn,#yesFix{
+#yesBtn,#noBtn,#yesFixBtn{
     margin: auto;
 }
 
-#yesFix{
+#yesFixBtn{
     width: 50%;
 }
 
