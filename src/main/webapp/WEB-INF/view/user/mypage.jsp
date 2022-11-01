@@ -7,7 +7,15 @@
 <script src='https://code.jquery.com/jquery-3.6.0.min.js'></script>
 <script src='https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js'></script>
 <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js'></script>
-
+<script>
+function logout() {
+	$('#logoutBtn').click(() => {
+		<% session.invalidate();%>
+		location.href = "/"
+	})
+}
+$(logout)
+</script>
 <style>
     label {
         font-size: 13px;
@@ -109,16 +117,13 @@
                 <button id='delUserBtn' type='button' class='btn btn-warning' style='width: 90px; margin-left: 45px; margin-right: 30px;'>
                     <span class='h6'>회원탈퇴</span>
                 </button>
-                <a href='logout'>
-	                <button id='logoutBtn' type='button' class='btn btn-secondary' style='width: 90px; margin-left: 30px;'>
-	                    <span class='h6'>로그아웃</span>
-	                </button>
-                </a>
+                <button id='logoutBtn' type='button' class='btn btn-secondary' style='width: 90px; margin-left: 30px;'>
+                    <span class='h6'>로그아웃</span>
+                </button>
             </div>
         </form>
     </div>
 </div>
-
 <div class='modal fade' tabindex='-1' id='myPageModal'>
     <div class='modal-dialog modal-dialog-centered'>
         <div class='modal-content'>
