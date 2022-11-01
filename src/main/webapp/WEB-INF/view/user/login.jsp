@@ -42,7 +42,7 @@ function login() {
 				   	$('input').val('')
 				   	$('#userId').focus()
 			   	} else {
-				  	location.href="../main"
+				  	location.href="/"
 			   	}
 		   })
 		}	
@@ -50,7 +50,6 @@ function login() {
 }
 $(login)
 </script>
-
 <style>
 .fa-compass, .fa-user, .fa-house, .fa-comments {
 	color:rgb(221, 221, 221);

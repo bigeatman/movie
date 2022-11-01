@@ -5,6 +5,6 @@
 	<select id='selectUser' resultType='user'>
 		select user_id, pw
 		from users
-		where user_id = #{userId} and pw = #{pw}
+		where user_id = #{userId, jdbcType=VARCHAR} and pw = #{pw, jdbcType=VARCHAR}
 	</select>
 </mapper>
