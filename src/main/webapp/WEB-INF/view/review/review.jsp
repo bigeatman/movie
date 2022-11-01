@@ -1,0 +1,785 @@
+<%@ page language='java' contentType='text/html; charset=utf-8' pageEncoding='utf-8'%>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<title>메인</title>
+<meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<link rel='stylesheet' href='http://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css'/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src='https://code.jquery.com/jquery-3.6.0.min.js'></script>
+<script src='https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js'></script>
+<script src='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js'></script>
+<script src="https://kit.fontawesome.com/449f39a7b2.js" crossorigin="anonymous"></script>
+<style>
+nav {
+	background-color: rgb(19, 19, 29);
+}
+
+nav a {
+	text-decoration: none;
+	color: lightgray;
+}
+
+.fa-compass, .fa-user, .fa-house, .fa-comments {
+	color:rgb(221, 221, 221);
+	font-size:28px;
+}
+
+.iconfont {
+	font-size:12px;
+}
+
+.center {
+	display: flex;
+	flex-wrap: wrap;
+	margin-bottom : 10px;
+}
+
+.poster {
+	width: 100px;
+	height: 125px;
+	border: 1px solid #dee2e6;
+	margin-right: 5px;
+}
+
+.movieinfo-all {
+	width : 225px;
+	height : 120px;
+}
+
+.movieinfo-line {
+	width : 225px;
+	height : 25px;
+	margin : 0px;
+}
+
+.movieinfo-contents {
+	width : 130px;
+	height : 125px;
+	margin : 0px;
+}
+
+.movieinfo-contents-detail {
+	font-size : 12px;
+	text-align : justify;
+	margin-right : 10px;
+}
+
+.movieinfo-contents-more {
+	font-style: italic;
+	text-decoration: underline;
+}
+
+.movieinfo-actors {
+	width : 200px;
+	height : 125px;
+	margin : 0px;
+	padding : 0px;
+}
+
+.movieinfo-actor {
+	width : 50px;
+	height : 100px;
+	padding : 5px;
+	margin-top : 10px;
+}
+
+.movieinfo-actor-name {
+	text-align : center;
+	font-size : 13px;
+	margin-top : 10px;
+}
+
+.movieinfo-actor-more {
+	text-align : center;
+	font-size: 25px;
+	padding-left : 2px;
+}
+
+.menu {
+	font-size : 18px;
+	font-weight : bold;
+	width: 225px;
+	height: 25px;
+	margin-bottom:5px;
+}
+
+.submenu {
+	font-size : 13px;
+	font-weight : bold;
+	width : 60px;
+	height : 25px;
+}
+
+.submenu-content {
+	font-size : 13px;
+	width : 165px;
+	text-align : right;
+}
+
+.write-review {
+	font-size : 12px;
+	width : 105px;
+	text-align : right;
+	margin-top : 4px;
+}
+
+.like-unlike-panel {
+	width : 120px;
+	text-align : right;
+	padding-right : 5px;
+}
+
+.review-id {
+	width : 203px;
+	margin : 0px;
+	padding : 0px;
+	font-size : 13px;
+	font-weight : bold;
+}
+
+.review-content {
+	font-size : 11px;
+	width: 260px;
+}
+
+.comment-panel {
+	font-size : 11px;
+	width : 60px;
+	border : 1px solid gray;
+	height : 20px;
+}
+
+.dialog-margin-top {
+	height : 290px;
+}
+
+.dialog-menu {
+	font-size : 18px;
+	font-weight : bold;
+}
+
+#circle {
+	width: 40px;
+	height: 40px;
+	-webkit-border-radius: 25px;
+	-moz-border-radius: 25px;
+	border-radius: 25px;
+	border : 1px solid gray;
+}
+
+.rectangle {
+	width : 330px;
+	height : 50px;
+	border : 1px solid gray;
+	padding-left : 5px;
+	margin-bottom : 5px;
+}
+
+.like-button {
+	border : 0px solid gray;
+	background : white;
+	font-size : 12px;
+	padding : 0px;
+	background-color : rgba(0, 0, 0, 0);
+}
+
+.comment-like {
+	font-size : 11px;
+}
+
+#dialog {
+	height : 150px;
+	background-color : rgb(237, 237, 237);
+	border-radius: 5px;
+}
+
+.input-text {
+	width : 100%;
+	height : 60px;
+	margin-top : 5px;
+	border-radius: 5px;
+}
+
+.dialog-button {
+	width : 48%;
+	border : 0px solid gray;
+	border-radius: 5px;
+}
+</style>
+</head>
+<body>
+	<!-- HEADER !-->
+	<form class='mt-3'>
+		 <div class='col form-group d-flex justify-content-center align-items-center'>
+			<input  class='form-control w-75' type='text' placeholder='검색'/>
+			<button type='button' class=" btn ml-3 border" onclick='location.href="../movie/01.html"'>
+			   <i class='fa-solid fa-magnifying-glass'></i>
+			   <span class='ml-2 d-none d-md-inline'>검색</sapn>
+			</button>
+		 </div>
+	  </form>
+	<!-- MAIN CONTENT !-->
+	<div class="container"><hr></div>
+	<div style="overflow:scroll; height:464px; overflow-x:hidden;">
+		<div class="container center">
+			<div class="poster">영화포스터</div>
+			<div class="movieinfo">
+				<div class="menu">영화 제목</div>
+				<div class="row movieinfo-line">
+					<div class="submenu">개요</div>
+					<div class="form-group submenu-content">액션, 코미디 | 대한민국</div>
+				</div>
+				<div class="row movieinfo-line">
+					<div class="submenu">상영시간</div>
+					<div class="submenu-content">129분</div>
+				</div>
+				<div class="row movieinfo-line">
+					<div class="submenu">개봉</div>
+					<div class="submenu-content">2022.09.07.</div>
+				</div>
+				<div class="row movieinfo-line">
+					<div class="submenu">누적 관객</div>
+					<div class="submenu-content">622만</div>
+				</div>
+			</div>
+		</div>
+		<!-- MOVIE INFO CONTENTS AND ACTORS !-->
+		<div class="container center">
+			<div class="movieinfo-contents">
+				<div class="menu"><a href='#'>줄거리</a></div>
+				<div class="movieinfo-contents-detail ">
+					공조 이즈 백! 이번엔 삼각 공조다! 남한으로 숨어든 글로벌 범죄 조직을 잡기 위해 새로운 공조 수사에 ...
+					<span class="movieinfo-contents-more" style="color:#007bff"><a href='#'>자세히</a></span>
+				</div>
+			</div>
+			<div class="movieinfo-actors">
+				<div class="menu">출연진</div>
+				<div class="container row movieinfo-actors">
+					<div class="movieinfo-actor">
+						<div id="circle" style="font-size:8px; padding-top:5px; text-align:center">감독이미지</div>
+						<div class="movieinfo-actor-name">감독</div>
+					</div>
+					<div class="movieinfo-actor">
+						<div id="circle" style="font-size:8px; padding-top:5px; text-align:center">주연이미지</div>
+						<div class="movieinfo-actor-name">주연</div>
+					</div>
+					<div class="movieinfo-actor">
+						<div id="circle" style="font-size:8px; padding-top:5px; text-align:center">주연이미지</div>
+						<div class="movieinfo-actor-name">주연</div>
+					</div>
+					<div class="movieinfo-actor">
+						<div id="circle" class="movieinfo-actor-more"><span>&#10097;&#10097;</span></div>
+						<div class="movieinfo-actor-name movieinfo-contents-more" style="color:#007bff;"><a href='#'>더보기</a></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- REVIEW AND REVIEW COMMENTS !-->
+		<div class="container center" style="margin-bottom:0px;">
+			<div class="menu">
+				사용자 평 &nbsp;
+				<i class="fa fa-star" style="font-size:14px; color:#FF7F00"></i>
+				<i class="fa fa-star" style="font-size:14px; color:#FF7F00"></i>
+				<i class="fa fa-star" style="font-size:14px; color:#FF7F00"></i>
+				<i class="fa fa-star" style="font-size:14px; color:#FF7F00"></i>
+				<i class="fa fa-star-half-full" style="font-size:14px; color:#FF7F00""></i>
+				<!-- <i class="fa fa-star-o" style="font-size:14px"></i> !-->
+				<span style="font-size:14px; color:#FF7F00"">4.7</span>
+			</div>
+			<div class="write-review"><button class="btn-secondary" type="button" data-toggle="modal" data-target='#dialogModal' id="writeReivewBtn" style="border:1px solid gray">평 작성하기</button></div>
+		</div>
+		<div class="container center" id="reviewContainer">
+			<div class="rectangle" id="review_10" isCommentOpened="false">
+				<div class="row container" style="margin:0px; padding:0px;">
+					<div class="review-id">즐거운 무지(mooji***)</div>
+					<div class="like-unlike-panel">
+						<button class="like-button"><i class="fa">&#xf087;</i></button>
+						<span class="like-button">128&nbsp&nbsp</span>
+						<button class="like-button"><span class="fa fa-thumbs-down"></span></button>
+						<span class="like-button">Unlike</span>
+						<button class="like-button" type="button" data-toggle="modal" data-target='#dialogModal' onclick="reportReview(10)"><i class="fa-solid fa-triangle-exclamation"></i></button>
+					</div>
+				</div>
+				<div class="row container" style="margin:0px; padding:0px;">
+					<span class="review-content">끝도 없이 달려 절망의 땅에서 찾는 구원</span>
+					<button class="comment-panel btn-secondary">댓글 22</button>
+				</div>
+			</div>
+			<div class="rectangle" id="review_11" isCommentOpened="false">
+				<div class="row container" style="margin:0px; padding:0px;">
+					<div class="review-id">개빡친 제이지 (jage***)</div>
+					<div class="like-unlike-panel">
+						<button class="like-button"><i class="fa">&#xf087;</i></button>
+						<span class="like-button">78&nbsp&nbsp</span>
+						<button class="like-button"><span class="fa fa-thumbs-down"></span></button>
+						<span class="like-button">Unlike</span>
+						<button class="like-button" type="button" data-toggle="modal" data-target='#dialogModal' onclick="reportReview(11)"><i class="fa-solid fa-triangle-exclamation"></i></button>
+					</div>
+				</div>
+				<div class="row container" style="margin:0px; padding:0px;">
+					<span class="review-content">언니 돔황챠!!</span>
+					<button class="comment-panel btn-secondary">댓글 9</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- NAVGATION BAR !-->
+	<div id='navBar' class='container-fulid'>
+		<nav class='row fixed-bottom p-1'>
+			<div class='col m-2 text-center'>
+				<a id='goHome' href='../main.html' class='ml-1'>
+					<i class='fa-solid fa-house fa-xl'></i>
+					<span class='iconfont'>&nbsp;홈</span>
+				</a>
+			</div>
+			<div class='col m-2 text-center'>
+				<a id='blind' href='../community/01.html' class='ml-1'>
+					<i class='fa-regular fa-comments fa-xl'></i>
+					<span class='iconfont'>커뮤니티</span>
+				</a>
+			</div>
+			<div class='col m-2 text-center'>
+				<a id='chat' href='../movie/01.html' class='ml-1'>
+					<i class='fa-solid fa-compass fa-xl'></i>
+					<span class='iconfont'>&nbsp;&nbsp;탐색</span>
+				</a>
+			</div>
+			<div class='col m-2 text-center'>
+				<a id='user' href='../user/01.html' class='ml-1'>
+					<i class='fa-regular fa-user fa-xl'></i>
+					<span class='iconfont'>&nbsp;&nbsp;&nbsp;로그인</span>
+				</a>
+			</div>
+		</nav>
+	</div>
+	<div class='modal fade' tabindex='-1' id='dialogModal'>
+		<div class='modal-dialog modal-lg'>
+			<div style="height:290px"></div>
+			<div class="modal-content">
+				<div id='dialog' style="padding:15px"></div>
+			</div>
+		</div>
+	</div>
+<script>
+	var commentIdIdex = 0;
+
+	function viewComments(reviewId) {
+		var review = document.querySelector('#review_' + reviewId);
+		var isCommentOpened = review.getAttribute('isCommentOpened');
+
+		if(isCommentOpened == 'true') {
+			review.style.setProperty('height', '50px', '');
+			review.setAttribute('isCommentOpened', 'false');
+			document.querySelector('#commentArea').remove()
+		} else if(isCommentOpened = 'false') {
+			review.style.setProperty('height', '220px', '');
+			review.setAttribute('isCommentOpened', 'true');
+			createComments(review, reviewId);
+		}
+	}
+
+	function createComments(review, reviewId) {
+		var commentArea = document.createElement('div');
+		commentArea.setAttribute('id', 'commentArea');
+		commentArea.style.setProperty('padding', '5px', '');
+		commentArea.style.setProperty('margin-top', '5px');
+		commentArea.style.setProperty('font-size', '11px', '');
+		commentArea.style.setProperty('align-items', 'center', '');
+		createComment(commentArea, "마약한 어피치(ap***)", "안끝나는줄", "12", null, reviewId);
+		createComment(commentArea, "외발이 프로도(prod***)", "솔직히 예상했다 근데", "3", null, reviewId);
+		createComment(commentArea, "싸움꾼 춘식(cho***)", "끝이 어딨어 그냥 뛰기만 하드만", "77", null, reviewId);
+		createAddCommentButton(commentArea, reviewId);
+
+		review.appendChild(commentArea);
+	}
+
+	function createAddCommentButton(commentArea, reviewId) {
+		var addCommentBtn = document.createElement('button');
+		addCommentBtn.innerHTML = "댓글 추가";
+		addCommentBtn.classList.add('rectangle');
+		addCommentBtn.classList.add('btn-secondary');
+		addCommentBtn.style.setProperty('margin-left', '76%');
+		addCommentBtn.style.setProperty('width', '20%');
+		addCommentBtn.style.setProperty('height', '20px');
+		addCommentBtn.setAttribute('type', 'button');
+		addCommentBtn.setAttribute('data-toggle', 'modal');
+		addCommentBtn.setAttribute('data-target', '#dialogModal');
+		addCommentBtn.setAttribute('onclick', 'addComment(' + reviewId + ')');
+		commentArea.appendChild(addCommentBtn);
+	}
+
+	function createComment(commentArea, userId, comment, likeCount, isInsert, reviewId) {
+		var commentPanel = document.createElement('div');
+		commentPanel.style.setProperty('display', 'flex');
+		commentPanel.setAttribute('id', 'review_' + reviewId + '_comment_' + commentIdIdex);
+		var commentArrow = createCommentArrow(commentPanel);
+		var commentInfoArea = createCommentInfoArea(userId, likeCount, comment, isInsert, reviewId);
+
+		commentPanel.appendChild(commentArrow);
+		commentPanel.appendChild(commentInfoArea);
+
+		if(isInsert == null) {
+			commentArea.appendChild(commentPanel);
+		} else if (isInsert == true) {
+			commentArea.appendChild(commentPanel);
+			commentArea.insertBefore(commentPanel, commentArea.childNodes[0]);
+			changeCssTextHeight(reviewId, 50);
+		}
+	}
+
+	function changeCssTextHeight(reviewId, change) {
+		var target = document.querySelector('#review_' + reviewId);
+		console.log(target);
+		var origin = target.style.cssText;
+		var originSize = Number(origin.replace(' ', '').replace('height:', '').replace('px;', ''));
+		var changeSize = originSize + change;
+		target.style.cssText = 'height: ' + changeSize + 'px;';
+	}
+
+	function createCommentInfoArea(userId, likeCount, comment, isInsert, reviewId) {
+		var commentArea = createBlackComment();
+
+		var commentInfoArea = document.createElement('div');
+		commentInfoArea.style.setProperty('display', 'flex');
+
+		var userIdArea = document.createElement('div');
+		userIdArea.classList.add('review-id');
+		userIdArea.style.setProperty('font-size', '12px');
+		userIdArea.style.setProperty('width', '180px');
+		userIdArea.innerHTML = userId;
+		commentInfoArea.appendChild(userIdArea);
+
+		var likePanel = document.createElement('div');
+		likePanel.style.setProperty('font-size', '11px');
+		likePanel.style.setProperty('text-align', 'right');
+		likePanel.innerHTML += '<button class="like-button comment-like"><i class="fa">&#xf087;</i></button><span class="like-button comment-like">' + likeCount +'&nbsp&nbsp</span>';
+		likePanel.innerHTML += '<button class="like-button comment-like"><span class="fa fa-thumbs-down"></span></button><span class="like-button comment-like">&nbspUnlike&nbsp&nbsp</span>';
+
+		if(isInsert == null) {
+			likePanel.innerHTML += '<button type="button" data-toggle="modal" data-target="#dialogModal" class="like-button comment-like" onClick="reportComment(' + commentIdIdex++ +', ' + reviewId + ')"><i class="fa-solid fa-triangle-exclamation"></i></button>';
+		} else {
+			likePanel.innerHTML += '<button type="button" data-toggle="modal" data-target="#dialogModal" class="like-button comment-like" onclick="removeComment(' + commentIdIdex++ +', ' + reviewId + ')"><i class="fa-solid fa-trash"></i></button>';
+		}
+
+		commentInfoArea.appendChild(likePanel);
+
+		var commentContentArea = document.createElement('div');
+		commentContentArea.innerText = comment;
+
+		commentArea.appendChild(commentInfoArea);
+		commentArea.appendChild(commentContentArea);
+
+		return commentArea;
+	}
+
+	function removeComment(commentId, reviewId) {
+		var dialog = createDialog('댓글 삭제', 0x10);
+		var okButton = document.querySelector("#okButton");
+
+		okButton.addEventListener('click', function() {
+			document.querySelector('#review_' + reviewId + '_comment_' + commentId).remove();
+			changeCssTextHeight(reviewId, -50);
+		});
+	}
+
+	function reportComment(commentId, reviewId) {
+		var dialog = createDialog('댓글 신고', 0x16);
+		var okButton = document.querySelector("#okButton");
+
+		okButton.removeAttribute('data-dismiss');
+		okButton.addEventListener('click', function() {
+			createReportDoneDialog(dialog);
+		});
+	}
+
+	function createBlackComment() {
+		var comment = document.createElement('div');
+		comment.classList.add('rectangle');
+		comment.style.setProperty('width', '90%', '');
+		comment.style.setProperty('height', '40px', '');
+		comment.style.setProperty('background-color', 'rgb(245, 245, 245)');
+
+		return comment;
+	}
+
+	function createCommentArrow() {
+		var arrow = document.createElement('div');
+		arrow.innerHTML = "<span>&#10551;</span>";
+		arrow.style.setProperty('font-size', '16px');
+		arrow.style.setProperty('margin-right', '8px');
+		arrow.style.setProperty('margin-bottom', '8px');
+
+		return arrow;
+	}
+
+	function createDialog(title, kind) {
+		var dialog = document.querySelector('#dialog');
+		clearChilds(dialog);
+
+		createTitle(dialog, title, kind);
+		createScoreElements(dialog, kind);
+		createInputElements(dialog, kind);
+		createSubmitButtons(dialog, kind);
+
+		return dialog;
+	}
+
+	function createSubmitButtons(dialog, kind) {
+		if ((kind & 0x10) != 0) {
+			createOkCancelButtons(dialog);
+		} else if ((kind & 0x20) != 0) {
+			createConfirmButton(dialog);
+		}
+	}
+
+	function createOkCancelButtons(dialog) {
+		var buttonArea = document.createElement('div');
+		var okButton = document.createElement('button');
+		var cancelButton = document.createElement('button');
+
+		okButton.innerHTML += '확인';
+		okButton.classList.add('dialog-button');
+		okButton.classList.add('btn-primary');
+		okButton.style.setProperty('margin-left', '2%', '');
+		okButton.setAttribute('data-dismiss', 'modal');
+		okButton.setAttribute('id', 'okButton');
+
+		cancelButton.innerHTML += '취소';
+		cancelButton.classList.add('dialog-button');
+		cancelButton.classList.add('btn-secondary');
+		cancelButton.style.setProperty('margin-right', '2%', '');
+		cancelButton.setAttribute('id', 'cancelButton');
+		cancelButton.addEventListener('click', function() {
+			clearChilds(dialog);
+		});
+
+		buttonArea.append(cancelButton);
+		buttonArea.append(okButton);
+
+		dialog.appendChild(buttonArea);
+	}
+
+	function createNewReview() {
+		var reviewContent = document.querySelector('#reviewContent');
+		console.log(reviewContent);
+		var reviewContainer = document.querySelector('#reviewContainer');
+		reviewContainer.innerHTML = createReviewElement(reviewContent.value) + reviewContainer.innerHTML;
+	}
+
+	var reviewIdIndex = 0;
+
+	function createReviewElement(content) {
+		var elem = '';
+
+		elem += '<div class="rectangle" id="review_' + reviewIdIndex + '"><div class="row container" style="margin:0px; padding:0px;"><div class="review-id">임시 사용자(temp***)</div>';
+		elem += '<div class="like-unlike-panel"><button class="like-button"><i class="fa">&#xf087;</i></button><span class="like-button">&nbsp0&nbsp&nbsp</span>';
+		elem += '<button class="like-button"><span class="fa fa-thumbs-down"></span></button><span class="like-button">&nbspUnlike&nbsp</span>';
+		elem += '<button class="like-button" type="button" data-toggle="modal" data-target="#dialogModal" onclick="removeReview(' + reviewIdIndex++ + ')"><i class="fa-solid fa-trash"></i></button></div></div>';
+		elem += '<div class="row container" style="margin:0px; padding:0px;"><span class="review-content">';
+		elem += content;
+		elem += '</span><button class="comment-panel">댓글 0</button></div></div>';
+	}
+
+	function createInputElements(dialog, kind) {
+		var inputArea = document.createElement('div');
+		var inputText;
+
+		if ((kind & 0x02) == 0) {
+			inputText = document.createElement('div');
+			inputText.innerHTML += '작성한 내용을 삭제하시겠습니까?';
+		} else {
+			inputText = document.createElement('textarea');
+		}
+
+		inputText.setAttribute('id', 'reviewContent');
+		inputText.classList.add('input-text');
+
+		inputArea.setAttribute('id', 'dialogContent');
+		inputArea.appendChild(inputText);
+
+		if ((kind & 0x04) != 0) {
+			inputText.style.setProperty('height', '40px', '');
+		}
+		dialog.appendChild(inputArea);
+	}
+
+	function createScoreElements(dialog, kind) {
+		if((kind & 0x01) != 1) {
+			return;
+		}
+
+		createScore(dialog);
+		createComboBox(dialog);
+	}
+
+	function createScore(dialog) {
+		var scoreSpan = document.createElement('span');
+		scoreSpan.setAttribute('id', 'scoreSpan');
+
+		for(i = 0; i < 5; i++) {
+			scoreSpan.innerHTML += '<i class="fa fa-star" style="font-size:12px"></i>';
+		}
+
+		dialog.innerHTML += '&nbsp;&nbsp;';
+		dialog.appendChild(scoreSpan);
+	}
+
+	function createComboBox(dialog) {
+		var comboBoxNode = document.createElement('select');
+		var isNum = true;
+
+		for(i = 5; i >= 0; i -= 0.5) {
+			var optionNode = document.createElement('option');
+			optionNode.innerHTML = i;
+
+			if(isNum) {
+				optionNode.innerHTML += '.0';
+				isNum = false;
+			} else {
+				isNum = true;
+			}
+
+			comboBoxNode.appendChild(optionNode);
+		}
+		comboBoxNode.style.setProperty('font-size', '12px', '');
+		comboBoxNode.style.setProperty('width', '40px', '');
+		comboBoxNode.style.setProperty('margin-right', '2px', '');
+		comboBoxNode.style.setProperty('border', '0px solid gray', '');
+		comboBoxNode.style.setProperty('background-color', 'rgb(237, 237, 237)', '');
+
+		comboBoxNode.setAttribute('id', 'scoreBox');
+		comboBoxNode.setAttribute('onchange', 'changeScoreSpan()');
+
+		dialog.appendChild(comboBoxNode);
+	}
+
+	function changeScoreSpan() {
+		var comboBox = document.querySelector("#scoreBox");
+		var selected = comboBox.options[comboBox.selectedIndex].value;
+		var numValue = parseInt(selected);
+		var floatValue = selected - numValue;
+
+		var scoreSpan = document.querySelector("#scoreSpan");
+		scoreSpan.innerHTML = '';
+
+		for (i = 0; i < numValue; i++) {
+			scoreSpan.innerHTML += '<i class="fa fa-star" style="font-size:12px"></i>';
+		}
+
+		if (floatValue != 0) {
+			scoreSpan.innerHTML += '<i class="fa fa-star-half-o" style="font-size:12px"></i>';
+			numValue++;
+		}
+
+		for(i = 0; i < 5 - numValue; i++) {
+			scoreSpan.innerHTML += '<i class="fa fa-star-o" style="font-size:12px"></i>';
+		}
+	}
+
+	function createTitle(dialog, title, kind) {
+		var titleEle = document.createElement('span');
+		titleEle.innerHTML = title;
+		titleEle.classList.add('dialog-menu');
+
+		dialog.appendChild(titleEle);
+
+		if((kind & 0x04) != 0) {
+			var reportDoc = document.createElement('div');
+			reportDoc.innerHTML += '신고 사유를 입력해 주세요.';
+			reportDoc.style.setProperty('font-size', '12px', '');
+			reportDoc.setAttribute('id', 'reportDoc');
+			dialog.appendChild(reportDoc);
+		}
+	}
+
+	function clearChilds(dialog) {
+		dialog.innerHTML = '';
+		$('#dialogModal').modal('hide');
+	}
+
+	function createReivewDialog() {
+		var dialog = createDialog('사용자 평 추가', 0x13);
+		var okButton = document.querySelector("#okButton");
+
+		okButton.addEventListener('click', function() {
+			clearChilds(dialog);
+		});
+	}
+
+	function createNewComment(dialog, reviewID) {
+		var commentText = document.querySelector('#reviewContent').value;
+		var reviewContainer = document.querySelector('#review_' + reviewID);
+		var commentContainer = reviewContainer.childNodes[5];
+	}
+
+	function createRemoveReviewDialog(reviewID) {
+		var dialog = createDialog('사용자 평 삭제', 0x10);
+		var okButton = document.querySelector("#okButton");
+
+		okButton.addEventListener('click', function() {
+			var review = document.querySelector("#review_" + reviewID);
+			review.remove();
+			clearChilds(dialog);
+		});
+	}
+
+	function createReportReviewDialog(reviewID) {
+		var dialog = createDialog('사용자 평 신고', 0x16);
+		var okButton = document.querySelector("#okButton");
+
+		okButton.removeAttribute('data-dismiss');
+		okButton.addEventListener('click', function() {
+			createReportDoneDialog(dialog);
+		});
+	}
+
+	function createReportDoneDialog(dialog) {
+		var dialogContent = document.querySelector("#dialogContent");
+		var doneButton = document.createElement('button');
+
+		dialogContent.classList.add('input-text');
+		dialogContent.style.setProperty('font-size', '12px', '');
+		dialogContent.style.setProperty('height', '64px', '');
+		dialogContent.innerHTML = '신고해 주셔서 감사합니다. 신고된 내용은 내부 검토를 통해 삭제 여부를 확인해 보도록 하겠습니다.';
+
+		document.querySelector('#reportDoc').remove();
+		document.querySelector('#cancelButton').remove();
+		document.querySelector('#okButton').remove();
+
+		doneButton.innerHTML += '확인';
+		doneButton.classList.add('dialog-button');
+		doneButton.classList.add('btn-primary');
+		doneButton.setAttribute('data-dismiss', 'modal');
+		doneButton.style.setProperty('width', '100%');
+		dialog.appendChild(doneButton);
+	}
+
+	function createAddCommentDialog(reviewID) {
+		var dialog = createDialog('댓글 추가', 0x12);
+		var okButton = document.querySelector("#okButton");
+
+		okButton.addEventListener('click', function() {
+			clearChilds(dialog);
+		});
+	}
+
+	function removeReview(reviewID) {
+		createRemoveReviewDialog(reviewID);
+	}
+
+	function reportReview(reviewID) {
+		createReportReviewDialog(reviewID);
+	}
+
+	function addComment(reviewID) {
+		createAddCommentDialog(reviewID);
+	}
+
+	document.querySelector("#writeReivewBtn").addEventListener('click', createReivewDialog);
+	viewComments(10);
+	viewComments(11);
+</script>
+</body>
+</html>
