@@ -14,7 +14,10 @@ public class Movie {
 	private int movieRunningtime;
 	private String movieCountry;
 	private int cumulativeAudience;
+<<<<<<< HEAD
 	private String movieStory;
+=======
+>>>>>>> 9105c89 (movie 정리)
 	
 //	private MultipartFile movieImgfile;
 }

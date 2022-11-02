@@ -14,9 +14,12 @@
 
 </script>
 <style>
+<<<<<<< HEAD
     .btn:hover{
         background-color: rgb(134, 136, 243);
     }
+=======
+>>>>>>> 9105c89 (movie 정리)
 
 	td {
 		height: 30px;

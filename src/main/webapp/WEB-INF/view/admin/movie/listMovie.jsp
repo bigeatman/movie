@@ -12,12 +12,79 @@
 <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js'></script>
 <script src="https://kit.fontawesome.com/449f39a7b2.js" crossorigin="anonymous"></script>
 <script>
+<<<<<<< HEAD
 
 </script>
 <style>
     .btn:hover{
         background-color: rgb(134, 136, 243);
     }
+=======
+function listMovies() {
+	$('#movies').empty()
+	
+	$.ajax({
+		method: 'post',
+		url: "<%=request.getContextPath() %>/admin/movie/listMovie"
+	}).done(movies => {
+		if(movies.length) {
+			const movieArr = []
+	
+			$.each(movies, (i, movie) => {
+				movieArr.unshift(
+					`<tr>
+						<td> 
+							<input type='checkbox' value='\${movie.movieNum}' name='movieNum' id='movieNum'/>
+						</td>
+						<td>\${movie.movieNum}</td>
+						<td>\${movie.movieName}</td>
+						<td>\${genre.genreName}</td>
+						<td>\${movie.movieReleasedate}</td>
+						<td>\${director.directorName}</td>
+						<td>\${actor.actorName}</td>
+					</tr>`
+				);
+			})
+	
+			$('#movies').append(movieArr.join(''))
+		} else {
+			$('#movies').append('<tr><td colspan=6 class=text-center>등록한 영화가 없습니다.</td></tr>')
+		}
+	})
+}
+
+function init() {
+	$(listMovies)
+	$('#delMovieBtn').click(() => {
+		if($('#movieNum:checked').val()) {
+			$('#modalMsg').empty();
+			$('#modalMsg').text('영화를 삭제하시겠습니까?');
+			$('#confirmModal').modal();
+			$('#okBtn').hide();
+			$('#noBtn').show();
+			$('#yesBtn').show();
+		} else {
+			$('#modalMsg').empty();
+			$('#modalMsg').text('영화를 선택해주세요.');
+			$('#confirmModal').modal();
+			$('#noBtn').hide();
+			$('#yesBtn').hide();
+			$('#okBtn').show();
+		}
+	})
+	$('#yesBtn').click(() => {
+		$('#confirmModal').modal('hide')
+			$.ajax({
+				url: 'del/' + $('#movieNum:checked').val(),
+				method: 'delete'
+			}).done(listMovies)
+	})
+}
+
+$(init)
+</script>
+<style>
+>>>>>>> 9105c89 (movie 정리)
 
     #searchMovieBtn,#fixMovieBtn,#delMovieBtn,#addMovieBtn{
         background-color: #b1c3e0;
@@ -71,7 +138,11 @@
                                     <span class='label  d-md-inline'>수정</span>
                                 </button>
                                 <button type='button' class='btn flex-fill border' id='delMovieBtn'
+<<<<<<< HEAD
                                     data-toggle='modal' data-target='#delMovieModal'>
+=======
+                                    data-toggle='modal' data-target='#confirmModal'>
+>>>>>>> 9105c89 (movie 정리)
                                     <span class='label d-md-inline'>삭제</span>
                                 </button>
                                 <button type='button' class='btn flex-fill border'id='addMovieBtn' onclick="location.href='addMovie' ">
@@ -89,7 +160,11 @@
                                 <thead><tr><th></th><th>NO</th><th>작품명</th><th>개봉일</th><th>장르</th><th>감독</th><th>출연진</th></tr></thead>
                                 <tbody>
                                     <tr>
+<<<<<<< HEAD
                                         <td><input type='radio' name='BoardId'/></td>
+=======
+                                        <td><input id='movieNum' type='radio' name='BoardId'/></td>
+>>>>>>> 9105c89 (movie 정리)
                                         <td>1</td>
                                         <td>블랙 아담</td>
                                         <td>2022.10.19.</td>
@@ -142,20 +217,37 @@
     </ul>
 </nav>
 
+<<<<<<< HEAD
 <div id='delMovieModal' class='modal fade' tabindex='-1'>
 	<div class='modal-dialog'>
 		<div class='modal-content'>
 			<div class='modal-header'>
+=======
+<div id='confirmModal' class='modal fade' tabindex='-1'>
+	<div class='modal-dialog'>
+		<div class='modal-content'>
+			<div class='modal-header'>
+				<h5 id='modalTitle'>영화 삭제</h5>
+>>>>>>> 9105c89 (movie 정리)
 				<button type='button' class='close' data-dismiss='modal'>
 					<span>&times;</span>
 				</button>
 			</div>
 			<div class='modal-body'>
+<<<<<<< HEAD
 				<p>[영화작품명] 삭제하시겠습니까?</p>
 			</div>
 			<div class='modal-footer'>
 				<button type='button' class='btn btn-secondary' data-dismiss='modal'>취소</button>
 				<button type='button' class='btn btn-primary' data-dismiss='modal' id='delMovieOkBtn'>확인</button>
+=======
+				<p id='modalMsg' style='text-align: center'></p>
+			</div>
+			<div class='modal-footer'>
+				<button type='button' class='btn btn-primary' data-dismiss='modal' id='yesBtn'>확인</button>
+				<button type='button' class='btn btn-secondary' data-dismiss='modal' id='noBtn'>취소</button>
+				<button type='button' class='btn btn-primary' data-dismiss='modal' id='okBtn'>확인</button>
+>>>>>>> 9105c89 (movie 정리)
 			</div>
 		</div>
 	</div>
