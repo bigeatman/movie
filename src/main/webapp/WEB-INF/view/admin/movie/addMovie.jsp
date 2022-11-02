@@ -14,9 +14,12 @@
 
 </script>
 <style>
+<<<<<<< HEAD
     .btn:hover{
         background-color: rgb(134, 136, 243);
     }
+=======
+>>>>>>> 9105c89 (movie 정리)
 
 	td {
 		height: 30px;
@@ -105,6 +108,13 @@
 						</table>
                     </div>
                 </div>
+<<<<<<< HEAD
+=======
+            <div class='form-group mt-1'>
+				<label for='#movieCountry'>국가</label><input type='text' class='form-control' placeholder='국가를 입력하세요.' required/>
+				<span id='errmsg3'></span>
+			</div>
+>>>>>>> 9105c89 (movie 정리)
 			<div class='form-group mt-1'>
 				<label for='#movieDirector'>감독</label><input type='text' class='form-control' placeholder='감독명을 입력하세요.' required/>
 				<span id='errmsg3'></span>

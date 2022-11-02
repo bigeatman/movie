@@ -7,6 +7,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.my.movie.service.MovieService;
+<<<<<<< HEAD
+=======
+import com.my.movie.service.UserService;
+>>>>>>> 9105c89 (movie 정리)
 
 @Controller
 public class MainController {
