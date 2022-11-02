@@ -216,7 +216,7 @@ nav a {
 			<input  class='form-control w-75' type='text' placeholder='검색'/>
 			<button type='button' class=" btn ml-3 border" onclick='location.href="../movie/01.html"'>
 			   <i class='fa-solid fa-magnifying-glass'></i>
-			   <span class='ml-2 d-none d-md-inline'>검색</sapn>
+			   <span class='ml-2 d-none d-md-inline'>검색:</sapn>
 			</button>
 		 </div>
 	  </form>
@@ -226,14 +226,14 @@ nav a {
 		<div class="container center">
 			<div class="poster">영화포스터</div>
 			<div class="movieinfo">
-				<div class="menu">영화 제목</div>
+				<div class="menu">${movie.movieName }</div>
 				<div class="row movieinfo-line">
 					<div class="submenu">개요</div>
-					<div class="form-group submenu-content">액션, 코미디 | 대한민국</div>
+					<div class="form-group submenu-content">${movie.movieCountry }</div>
 				</div>
 				<div class="row movieinfo-line">
 					<div class="submenu">상영시간</div>
-					<div class="submenu-content">129분</div>
+					<div class="submenu-content">${movie.movieRunningTime }분</div>
 				</div>
 				<div class="row movieinfo-line">
 					<div class="submenu">개봉</div>

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.my.movie.dao.MovieDao;
+import com.my.movie.domain.Movie;
 
 @Controller
 @RequestMapping("review")
@@ -18,10 +19,17 @@ public class ReviewController {
 
 	@PostMapping
 	public ModelAndView movieDetail(ModelAndView mv, @RequestParam(value = "movieNo") Integer movieNo) {
-		mv.setViewName("review/review");
-		System.out.println(movieNo);
-		System.out.println(movieDao);
-		System.out.println(movieDao.selectById(movieNo));
+		Movie targetMovie = movieDao.selectById(movieNo);
+		System.out.println(targetMovie);
+
+		if (targetMovie == null) {
+			mv.setViewName("../main");
+		} else {
+			mv.setViewName("review/review");
+		}
+
+		mv.addObject("movie", targetMovie);
+
 		return mv;
 	}
 }

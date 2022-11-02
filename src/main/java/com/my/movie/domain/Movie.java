@@ -1,6 +1,6 @@
 package com.my.movie.domain;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,11 +15,11 @@ public class Movie {
 
 	private String movieName;
 
-	private LocalDateTime movieReleaseDate;
+	private LocalDate movieReleaseDate;
 
 	private int movieRunningTime;
 
-	private String movieSummary;
+	private String movieCountry;
 
 	private String hashTag;
 
@@ -27,4 +27,5 @@ public class Movie {
 
 	private String movieImgFileName;
 
+	private String movieStory;
 }

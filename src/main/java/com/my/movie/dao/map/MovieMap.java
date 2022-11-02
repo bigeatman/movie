@@ -4,6 +4,6 @@ import com.my.movie.domain.Movie;
 
 public interface MovieMap {
 
-	public Movie selectById(long id);
+	Movie selectById(long id);
 	
 }
