@@ -1,10 +1,12 @@
 package com.my.movie.domain;
 
+import lombok.Data;
+
+@Data
 public class ReviewDto {
 
 	private Movie movie;
 
-	private String genre;
-	
-	
+	private String summaryString;
+
 }

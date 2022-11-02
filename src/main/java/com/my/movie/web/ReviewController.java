@@ -7,29 +7,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.my.movie.dao.MovieDao;
-import com.my.movie.domain.Movie;
+import com.my.movie.dao.map.GenreMap;
+import com.my.movie.domain.ReviewDto;
+import com.my.movie.service.ReviewService;
 
 @Controller
 @RequestMapping("review")
 public class ReviewController {
 
 	@Autowired
-	private MovieDao movieDao;
+	private ReviewService reivewService;
+
+	@Autowired
+	private GenreMap genreMap;
 
 	@PostMapping
 	public ModelAndView movieDetail(ModelAndView mv, @RequestParam(value = "movieNo") Integer movieNo) {
-		Movie targetMovie = movieDao.selectById(movieNo);
-		System.out.println(targetMovie);
 
-		if (targetMovie == null) {
-			mv.setViewName("../main");
-		} else {
-			mv.setViewName("review/review");
-		}
+		ReviewDto dto = reivewService.getReviewDtoByMovieId(movieNo);
+		mv.addObject("review", dto);
 
-		mv.addObject("movie", targetMovie);
-
+		System.out.println(dto);
+		System.out.println(genreMap.selectAll());
 		return mv;
 	}
 }
