@@ -25,6 +25,12 @@ public class UserController {
 		return mv;
 	}
 	
+//	@GetMapping("searchMovie")
+//	public ModelAndView movie(ModelAndView mv) {
+//		mv.setViewName("movie/searchMovie");
+//		return mv;
+//	}
+	
 	@GetMapping("mypage")
 	public ModelAndView mypage(ModelAndView mv) {
 		mv.setViewName("user/mypage");
