@@ -12,6 +12,8 @@ import lombok.NoArgsConstructor;
 public class CommReply {
 	private String communityReplyContent;
 	private LocalDate communityReplyDate;
+	private int userNum;
+	private int communityNum;
 	private String userId;
 	private String nickname;
 }

@@ -222,9 +222,7 @@ label {
 <div>
     <div class='row mb-3 mt-3'>
         <div class='col'>
-            <li id='repliesCount'class='list-group-item'>
-               
-            </li>
+            <li id='repliesCount'class='list-group-item'></li>
         </div>
     </div>
     <div class='row'>
@@ -237,9 +235,7 @@ label {
 <div class='row mt-3'>
     <div class='col d-flex'>
         <textarea class='form-control col-10' rows='1' placeholder='댓글을 작성해주세요.'></textarea>
-        <a>
-        	<button id='regReplyBtn' type="button" class="btn btn-primary">등록</button>
-        </a>                
+        <button id='regReplyBtn' type="button" class="btn btn-primary">등록</button>               
     </div>
 </div>
 </body>

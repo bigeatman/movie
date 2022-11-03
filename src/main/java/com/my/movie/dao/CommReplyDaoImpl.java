@@ -16,4 +16,9 @@ public class CommReplyDaoImpl implements CommReplyDao {
 	public List<CommReply> selectCommReplies(int communityNum) {
 		return commReplyMap.selectCommReplies(communityNum);
 	}
+	
+	@Override
+	public int insertReply(CommReply commReply) {
+		return commReplyMap.insertReply(commReply);
+	}
 }

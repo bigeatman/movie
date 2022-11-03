@@ -16,4 +16,9 @@ public class CommReplyServiceImpl implements CommReplyService {
 	public List<CommReply> getCommReplies(int communityNum) {
 		return commReplyDao.selectCommReplies(communityNum);
 	}
+	
+	@Override
+	public void addReply(CommReply commReply) {
+		commReplyDao.insertReply(commReply);
+	}
 }

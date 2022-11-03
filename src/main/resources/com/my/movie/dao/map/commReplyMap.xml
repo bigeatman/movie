@@ -3,10 +3,16 @@
 	'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
 <mapper namespace='com.my.movie.dao.map.CommReplyMap'>
 	<select id='selectCommReplies' resultType='commReply'>
-		select community_reply_content, community_reply_date, c.user_num, u.user_num, u.user_id, u.nickname
+		select community_reply_content, community_reply_date, c.user_num,
+			   u.user_id, u.nickname
 		from community_replies c
 		LEFT OUTER JOIN users u
 		ON c.user_num = u.user_num
 		where community_num = #{communityNum, jdbcType=NUMERIC}
 	</select>
+	
+	<insert id='insertCommReply'>
+		insert into community_replies
+		values(community_reply_num_seq.nextval, #{communityReplyContent}, #{communityReplyDate}, #{userNum}, #{communityNum})
+	</insert>
 </mapper>
