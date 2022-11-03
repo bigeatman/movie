@@ -73,7 +73,7 @@ function replyInit(replyIdx) {
 <!-- 동적리스트 부분완료(db에서 불러와서 목록 나열하고, 해당 정보들까지 맞게 출력, 댓글별 모달까지 작동하도록 설계) -->
 <script>
 function listReplies() {	
-	// url의 1은 커뮤니티 글조회시 해당글의 게시글번호를 붙일것
+	// url의 community/list 부분은 커뮤니티 글조회시 community/해당글의 게시글번호 로 붙일것
 	$.ajax({
 		url: `community/list/${1}`, 
 		success: commReplyList => {
@@ -117,7 +117,7 @@ function listReplies() {
 
 $(() => {
 	$('#regReplyBtn').click(() => {
-		
+		$(listReflies)
 	})	
 })	
 
