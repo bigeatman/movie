@@ -45,35 +45,32 @@ public class UserController {
 		return mv;
 	}
 	
+	@PostMapping("join")
+	public void join(@RequestBody User user) {
+		userService.addUser(user);
+	}
+	
 	@PostMapping("join/checkId")
 	public int idCheck(@RequestBody UserDto userId) {
-		System.out.println(userId);
 		int result = userService.checkUserId(userId);
-		System.out.println(result);
 		return result;
 	}
 	
 	@PostMapping("join/checkNickname")
 	public int nicknameCheck(@RequestBody UserDto nickname) {
-		System.out.println(nickname);
 		int result = userService.checkUserNickname(nickname);
-		System.out.println(result);
 		return result;
 	}
 	
 	@PostMapping("join/checkPhoneNum")
 	public int phoneNumCheck(@RequestBody UserDto phoneNum) {
-		System.out.println(phoneNum);
 		int result = userService.checkUserPhoneNum(phoneNum);
-		System.out.println(result);
 		return result;
 	}
 	
 	@PostMapping("join/checkEmail")
 	public int emailCheck(@RequestBody UserDto email) {
-		System.out.println(email);
 		int result = userService.checkUserEmail(email);
-		System.out.println(result);
 		return result;
 	}
 }

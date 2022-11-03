@@ -8,29 +8,35 @@
 <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js'></script>
 <script>
 function isVal(field) {
-	let isGood = false
-	let errMsg
-
-	$('#errMsg').empty()
-
-	if(!field.val()) errMsg = '입력하지 않은 값을 입력하세요.'
-	else isGood = true
-
-	if(!isGood) $('#errMsg').text(errMsg)
-
+	let isGood
+	
+	if(!field.val() && !$('#userId').val()) {
+		$('#idErrMsg').css('color', 'red').text('아이디는 필수 사항 입니다.')
+		isGood = false
+	}
+	
+	if(!field.val() && !$('#pw').val()) {
+		$('#pwErrMsg').css('color', 'red').text('비밀번호는 필수 사항 입니다.')
+		isGood = false
+	}
+	
+	if(!field.val() && !$('#nickname').val()) {
+		$('#nnErrMsg').css('color', 'red').text('닉네임은 필수 사항 입니다.')
+		isGood = false
+	}
+	
+	if(!field.val() && !$('#phoneNum').val()) {
+		$('#pnErrMsg').css('color', 'red').text('연락처는 필수 사항 입니다.')
+		isGood = false
+	}
+	
+	if(!field.val() && !$('#email').val()) {
+		$('#emailErrMsg').css('color', 'red').text('이메일은 필수 사항 입니다.')
+		isGood = false
+	}
+	
 	return isGood
 }
-
-function sumEmail() {
-	let firstEmail = $('#email').val()
-	let middle = '@'
-	let lastEmail = $('#domainTxt').val()
-	
-	if(!(firstEmail.length && lastEmail.length)) {
-		$('#totalEamil').val(firstEmail + middle + lastEmail)
-	}
-}
-
 
 function join() {
 	$('#userId').keyup(function() {
@@ -46,7 +52,6 @@ function join() {
 		    	  	userId: $('#userId').val()
 		      	}),
 		      	success: function(result) {
-		      		console.log(result)
 		      		if(result == 1) {
 		      			$('#idErrMsg').css('color', 'red').text('이미 존재하는 아이디 입니다.')
 			   			$('#userId').focus()
@@ -83,7 +88,6 @@ function join() {
 		    	  	nickname: $('#nickname').val()
 		      	}),
 		      	success: function(result) {
-		      		console.log(result)
 		      		if(result == 1) {
 		      			$('#nnErrMsg').css('color', 'red').text('이미 존재하는 닉네임 입니다.')
 			   			$('#nickname').focus()
@@ -111,7 +115,6 @@ function join() {
 		    	  	phoneNum: $('#phoneNum').val()
 		      	}),
 		      	success: function(result) {
-		      		console.log(result)
 		      		if(result == 1) {
 		      			$('#pnErrMsg').css('color', 'red').text('이미 존재하는 연락처 입니다.')
 			   			$('#phoneNum').focus()
@@ -127,27 +130,18 @@ function join() {
 	})
 	
 	$('#email').keyup(function() {
-		let firstEmail = $('#email').val()
-		let middle = '@'
-		let lastEmail = $('#domainTxt').val()
-		
-		$('#totalEmail').val(firstEmail + middle + lastEmail)
-		
-		console.log($('#domainTxt').val())
-		console.log($('#totalEmail').val())
-		let email = /^[a-zA-Z0-9]{}$/;
-		if(!(email.test($('#email').val() && $('#domainTxt').val()))) {
-			$('#emailErrMsg').css('color', 'red').text('영문, 숫자 2자 이상 20자 이하로 입력하세요.')
+		let email = /^([0-9a-zA-Z]{2,20})+\@[a-z]+\.[a-z]{2,3}$/;
+		if(!(email.test($('#email').val()))) {
+			$('#emailErrMsg').css('color', 'red').text('2자 이상 20자이하로 이메일 형식으로 입력하세요.')
 		} else {
 			$.ajax({
 				url: 'join/checkEmail',
 		      	method:'post',
 		      	contentType: 'application/json',
 		      	data: JSON.stringify({
-		    	  	email: $('#totalEmail').val()
+		    	  	email: $('#email').val()
 		      	}),
 		      	success: function(result) {
-		      		console.log(result)
 		      		if(result == 1) {
 		      			$('#emailErrMsg').css('color', 'red').text('이미 존재하는 이메일 입니다.')
 			   			$('#email').focus()
@@ -163,20 +157,29 @@ function join() {
 	})
 	
     $('#joinBtn').click(() => {
-        $('#modalMsg').text('회원가입이 완료되었습니다.')
-        $('#joinCheckBtn').show()
-        $('#joinModal').modal()
-    })
-
-    $("#domainList").change(function() {
-       	$('#domainTxt').val(($(this).val()))
-       	console.log($(this).val())
-       	console.log($(this).length)
+    	if(isVal($('#userId')) && isVal($('#pw')) && isVal($('#nickname')) &&
+    			isVal($('#phoneNum')) && isVal($('#email'))) {
+    		$('#modalMsg').text('회원가입이 완료되었습니다.')
+	        $('#joinCheckBtn').show()
+	        $('#joinModal').modal()
+    	}
     })
 
     $('#joinOkBtn').click(() => {
+     	$.ajax({
+ 			url: 'join',
+ 		    method:'post',
+ 		    contentType: 'application/json',
+ 		    data: JSON.stringify({
+ 		    	userId: $('#userId').val(),
+ 		    	pw: $('#pw').val(),
+ 		    	nickname: $('#nickname').val(),
+ 		    	phoneNum: $('#phoneNum').val(),
+ 		    	email: $('#email').val()
+ 		    }),
+ 		    success: location.href='/'
+        })
         $('#joinModal').modal('hide')
-        $(location).attr('href', '../main')
     })
 
     $('#cancelBtn').click(() => {
@@ -194,15 +197,9 @@ label {
     width: 75px;
 }
 
-#userId, #pw, #nickName, #phoneNum {
+#userId, #pw, #nickName, #phoneNum, #email {
     height: 30px;
     width: 330px;
-    font-size: 11px;
-}
-
-#email, #at, #domainTxt, #domainList {
-    height: 30px;
-    width: 100px;
     font-size: 11px;
 }
 </style>
@@ -240,21 +237,9 @@ label {
                     <small id='emailErrMsg' class='form-text m-3 d-inline msg'></small>
                 </label>
                 <div class='row' style='padding-left: 15px'>
-                    <input id='email' type='text' class='form-control' placeholder='영문, 숫자 2자' required/>
-                    &nbsp;@&nbsp;
-                    <input id='domainTxt' type='text' class='form-control'/>
-                    &nbsp;
-                    <select id='domainList' class='form-control'>
-                        <option value=''>직접 입력</option>
-                        <option value='naver.com'>naver.com</option>
-                        <option value='gmail.com'>gmail.com</option>
-                        <option value='daum.net'>daum.net</option>
-                        <option value='nate.com'>nate.com</option>
-                        <option value='kakao.com'>kakao.com</option>
-                    </select>
+                    <input id='email' name='email' type='email' class='form-control' placeholder='EX) example@naver.com' required/>
                 </div>
             </div>
-            <input id='totalEmail' name='email' type='hidden'/>
             <div class='form-group'>
                 <label for='genre'>관심장르</label><br>
                 <div class='row' style='padding-left: 15px'>

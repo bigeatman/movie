@@ -10,4 +10,5 @@ public interface UserDao {
 	int selectUserNickname(UserDto nickname);
 	int selectUserPhoneNum(UserDto phoneNum);
 	int selectUserEmail(UserDto email);
+	void insertUser(User user);
 }

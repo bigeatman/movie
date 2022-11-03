@@ -18,7 +18,6 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public int selectUserId(UserDto userId) {
-		System.out.println(userMap.selectUserId(userId));
 		return userMap.selectUserId(userId);
 	}
 
@@ -40,5 +39,10 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public int selectUserEmail(UserDto email) {
 		return userMap.selectUserEmail(email);
+	}
+	
+	@Override
+	public void insertUser(User user) {
+		userMap.insertUser(user);
 	}
 }
