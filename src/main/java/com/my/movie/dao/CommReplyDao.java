@@ -5,5 +5,5 @@ import java.util.List;
 import com.my.movie.domain.CommReply;
 
 public interface CommReplyDao {
-	List<CommReply> selectCommReplies();
+	List<CommReply> selectCommReplies(int communityNum);
 }

@@ -205,7 +205,7 @@ table {
                	</a>
             </div>
             <div class='col text-center'>
-               	<a id='community' href='community/contentNum' class='ml-1'>
+               	<a id='community' href='community' class='ml-1'>
                   	<i class='fa-regular fa-comments fa-xl'></i><br>
                   	<span class='iconfont'>커뮤니티</span>
                	</a>
