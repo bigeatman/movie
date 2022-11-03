@@ -235,7 +235,7 @@ nav a {
 			<input  class='form-control w-75' type='text' placeholder='검색'/>
 			<button type='button' class=" btn ml-3 border" onclick='location.href="../movie/01.html"'>
 			   <i class='fa-solid fa-magnifying-glass'></i>
-			   <span class='ml-2 d-none d-md-inline'>검색:</sapn>
+			   <span class='ml-2 d-none d-md-inline'>검색:</span>
 			</button>
 		 </div>
 	  </form>
@@ -269,7 +269,7 @@ nav a {
 			<div class="movieinfo-contents">
 				<div class="menu">줄거리</div>
 				<div id="movieStory" class="movieinfo-contents-detail ">${review.movie.movieStory }</div>
-				<button class="moreinfo-contents-button" onclick="createDetailContent()" type="button" data-toggle="modal" data-target='#dialogModal'>자세히</button>
+				<button class="moreinfo-contents-button" onclick="createDetailContentDialog()" type="button" data-toggle="modal" data-target='#dialogModal'>자세히</button>
 			</div>
 			<div class="movieinfo-actors">
 				<div class="menu">출연진</div>
@@ -287,8 +287,8 @@ nav a {
 						<div class="movieinfo-actor-name">주연</div>
 					</div>
 					<div class="movieinfo-actor">
-						<div id="circle" class="movieinfo-actor-more"><span>&#10097;&#10097;</span></div>
-						<div class="movieinfo-actor-name movieinfo-contents-more" style="color:#007bff;"><a href='#'>더보기</a></div>
+						<div id="circle" class="movieinfo-actor-more" onclick="createActorContent"><span>&#10097;&#10097;</span></div>
+						<div class="movieinfo-actor-name movieinfo-contents-more" onclick="createActorContent" style="color:#007bff;"><a href='#'>더보기</a></div>
 					</div>
 				</div>
 			</div>
@@ -381,15 +381,21 @@ nav a {
 		</div>
 	</div>
 <script>
+	function createDetailContentDialog() {
+		createDialog("상세 줄거리", 0x1111);
+	}
 	
+	function createActorContent() {
+		
+	}
 	
-	function createDetailContent() {
+	function createDialog(title, code) {
 		var dialog = document.querySelector("#dialog");
 		
-		createDialogTopMargin(dialog, 0x01);
+		createDialogTopMargin(dialog, code);
 		createTitle(dialog, "상세 줄거리");
-		createBody(dialog, 0x111);
-		createButtons(dialog, 0x1000);
+		createBody(dialog, code);
+		createButtons(dialog, code);
 	}
 	
 	function createDialogTopMargin(dialog, code) {

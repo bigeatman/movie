@@ -39,5 +39,4 @@ public class GenreDaoImpl implements GenreDao {
 			genreMap.insertMovieGenre(movie.getMovieNum(), genreNum);
 		}
 	}
-
 }
