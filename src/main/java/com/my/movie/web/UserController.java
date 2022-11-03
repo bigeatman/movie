@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.my.movie.domain.User;
+import com.my.movie.domain.UserDto;
 import com.my.movie.service.UserService;
 
 @RestController
@@ -32,8 +33,47 @@ public class UserController {
 	
 	@PostMapping("login")
 	public User login(@RequestBody User userLogin, HttpSession session) {
+		System.out.println(userLogin);
 		User user = userService.loginValidate(userLogin);
 		session.setAttribute("user", user);
 		return user;
+	}
+	
+	@GetMapping("join")
+	public ModelAndView join(ModelAndView mv) {
+		mv.setViewName("user/join");
+		return mv;
+	}
+	
+	@PostMapping("join/checkId")
+	public int idCheck(@RequestBody UserDto userId) {
+		System.out.println(userId);
+		int result = userService.checkUserId(userId);
+		System.out.println(result);
+		return result;
+	}
+	
+	@PostMapping("join/checkNickname")
+	public int nicknameCheck(@RequestBody UserDto nickname) {
+		System.out.println(nickname);
+		int result = userService.checkUserNickname(nickname);
+		System.out.println(result);
+		return result;
+	}
+	
+	@PostMapping("join/checkPhoneNum")
+	public int phoneNumCheck(@RequestBody UserDto phoneNum) {
+		System.out.println(phoneNum);
+		int result = userService.checkUserPhoneNum(phoneNum);
+		System.out.println(result);
+		return result;
+	}
+	
+	@PostMapping("join/checkEmail")
+	public int emailCheck(@RequestBody UserDto email) {
+		System.out.println(email);
+		int result = userService.checkUserEmail(email);
+		System.out.println(result);
+		return result;
 	}
 }

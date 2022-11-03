@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.my.movie.dao.UserDao;
 import com.my.movie.domain.User;
+import com.my.movie.domain.UserDto;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -12,6 +13,33 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User loginValidate(User user) {
-		return userDao.selectUser(user);
+		return userDao.selectUserLogin(user);
+	}
+
+	@Override
+	public int checkUserId(UserDto userId) {
+		System.out.println(userId);
+		System.out.println(userDao.selectUserId(userId));
+		return userDao.selectUserId(userId);
+	}
+
+	@Override
+	public UserDto checkUserPw(UserDto pw) {
+		return userDao.selectUserPw(pw);
+	}
+
+	@Override
+	public int checkUserNickname(UserDto nickname) {
+		return userDao.selectUserNickname(nickname);
+	}
+
+	@Override
+	public int checkUserPhoneNum(UserDto phoneNum) {
+		return userDao.selectUserPhoneNum(phoneNum);
+	}
+
+	@Override
+	public int checkUserEmail(UserDto email) {
+		return userDao.selectUserEmail(email);
 	}
 }
