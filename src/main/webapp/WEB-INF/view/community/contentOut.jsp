@@ -70,12 +70,12 @@ function replyInit(replyIdx) {
 }
 </script>
 
-<!-- 동적리스트 진행중 -->
+<!-- 동적리스트 부분완료(db에서 불러와서 목록 나열하고, 해당 정보들까지 맞게 출력, 댓글별 모달까지 작동하도록 설계) -->
 <script>
 function listReplies() {	
 	// url의 1은 커뮤니티 글조회시 해당글의 게시글번호를 붙일것
 	$.ajax({
-		url: 'community/list/' + 1, 
+		url: `community/list/${1}`, 
 		success: commReplyList => {
 			replies = []
 			repliesCount = 0
@@ -84,7 +84,7 @@ function listReplies() {
 					'<div class="row" id="reply">' +
 				    '<div class="col mb-1">' +
 				            '<li id="replyBg" class="list-group-item d-flex justify-content-between">' +
-				                '<div>' + '__닉네임 __아이디' + '</div>' +
+				                '<div>' + `\${reply.nickname} \${reply.userId}` + '</div>' +
 				                '<div>' + reply.communityReplyDate  +
 				                    '<button class="ml-0" id="replyMenu" data-toggle="dropdown"><i class="bi bi-gear-fill"></i></button>' + 
 				                    '<div class="dropdown-menu">' +
@@ -99,14 +99,17 @@ function listReplies() {
 			                    '<a href="#"> <i id="__nonEmpathy" class="bi bi-hand-thumbs-down-fill"></i></a>' +
 			        '</div></li></div></div>')
 			        repliesCount++
+			        console.log(reply.userId)
+			        console.log(reply.nickname)
 			})             
 			$('#commReplyList').empty()	
 			$('#commReplyList').append(replies.join(''))
+			
 			for(var i=0; i < repliesCount; i++)
 				$(replyInit(i))
 			
 			console.log(repliesCount)
-			$('#repliesCount').append(`댓글 ${repliesCount}`)
+			$('#repliesCount').append('댓글\n\n' + repliesCount)
 		}
 	})	
 }
