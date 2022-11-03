@@ -15,5 +15,4 @@ public interface MovieMap {
 	void updateMovie(Movie movie);
 	void deleteMovie(int movieNum);
 	public Movie selectById(long id);
-	
 }

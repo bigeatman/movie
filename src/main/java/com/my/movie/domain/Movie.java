@@ -2,6 +2,8 @@ package com.my.movie.domain;
 
 import java.time.LocalDate;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.Data;
 
 @Data
@@ -14,6 +16,5 @@ public class Movie {
 	private int movieRunningtime;
 	private String movieCountry;
 	private int cumulativeAudience;
-	
-//	private MultipartFile movieImgfile;
+	private MultipartFile movieImgfile;
 }

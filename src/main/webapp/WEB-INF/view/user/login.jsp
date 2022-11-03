@@ -11,12 +11,13 @@
 <script src="https://kit.fontawesome.com/449f39a7b2.js" crossorigin="anonymous"></script>
 <script>
 function isVal(field) {
+	let userId = $('#userId')
 	let isGood = false
 	let errMsg
 
 	$('#errMsg').empty()
 
-	if(!field.val()) errMsg = '아이디 또는 비밀번호를 입력하세요.'
+	if(!field.val()) errMsg = '아이디와 비밀번호를 입력하세요.'
 	else isGood = true
 
 	if(!isGood) $('#errMsg').text(errMsg)
@@ -36,24 +37,15 @@ function login() {
 		    	  	pw: $('#pw').val()
 		      	})
 		   	}).done(user => {
-		   		console.log(user)
 			   	if(!user) {
 				   	$('#errMsg').text('아이디 또는 비밀번호가 틀렸습니다.')
 				   	$('input').val('')
 				   	$('#userId').focus()
 			   	} else {
-			   		if($('#userId').val() == 'admin') {
-			   			location.href="/admin"
-			   		} else {
-			   			location.href="/"
-			   		}
+				  	location.href="/"
 			   	}
 		   })
 		}	
-	})
-	
-	$('#joinBtn').click(() => {
-		location.href="join"
 	})
 }
 $(login)
@@ -96,7 +88,13 @@ nav a {
 					<label for='userPw'>비밀번호 </label>
 					<input id='pw' name='pw' type='password' class='form-control mb-2'  placeholder='••••'/>
 				</div>
-				<small id='errMsg' class='msg d-inline' style='margin-left: 40px; color: red;'></small>
+				<small id='errMsg' class='msg d-inline' style='margin-left: 50px; color: red;'></small>
+				<div class='d-flex justify-content-center'>
+					<div class=''>
+						<input id='saveId' type='checkbox'/>
+						<label for='saveId'>아이디저장</label>
+					</div>
+				</div>
 				<div class='d-flex justify-content-center mb-2'><a href='#' id='foundId'>아이디 찾기</a>&nbsp;/&nbsp;<a href='#' id='foundPw'>비밀번호 찾기</a></div>
 				<div class='form-group'>
 					<button id='loginBtn' type='button' class='btn border btn-block bg-success'>
