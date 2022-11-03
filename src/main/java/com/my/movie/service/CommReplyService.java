@@ -6,4 +6,5 @@ import com.my.movie.domain.CommReply;
 
 public interface CommReplyService {
 	List<CommReply> getCommReplies(int communityNum);
+	void addReply(CommReply commReply);
 }
