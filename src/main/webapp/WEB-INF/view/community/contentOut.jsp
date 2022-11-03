@@ -218,7 +218,7 @@ label {
         <div class='col'>
             <li class='list-group-item d-flex'>
                 댓글
-                _댓글수_
+                __댓글수
             </li>
         </div>
     </div>
