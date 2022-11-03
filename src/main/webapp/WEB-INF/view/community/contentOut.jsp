@@ -109,6 +109,7 @@ function listReplies() {
 				$(replyInit(i))
 			
 			console.log(repliesCount)
+			$('#repliesCount').empty()
 			$('#repliesCount').append('댓글\n\n' + repliesCount)
 		}
 	})	
