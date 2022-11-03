@@ -37,4 +37,9 @@
 		from users
 		where email = #{email}
 	</select>
+	
+	<insert id='insertUser'>
+		insert into users(user_num, user_id, pw, nickname, phone_num, email)
+		values(user_num_seq.nextval, #{userId}, #{pw}, #{nickname}, #{phoneNum}, #{email})
+	</insert>
 </mapper>

@@ -10,4 +10,5 @@ public interface UserService {
 	int checkUserNickname(UserDto nickname);
 	int checkUserPhoneNum(UserDto phoneNum);
 	int checkUserEmail(UserDto email);
+	void addUser(User user);
 }

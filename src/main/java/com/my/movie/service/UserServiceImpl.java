@@ -18,8 +18,6 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public int checkUserId(UserDto userId) {
-		System.out.println(userId);
-		System.out.println(userDao.selectUserId(userId));
 		return userDao.selectUserId(userId);
 	}
 
@@ -41,5 +39,10 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public int checkUserEmail(UserDto email) {
 		return userDao.selectUserEmail(email);
+	}
+
+	@Override
+	public void addUser(User user) {
+		userDao.insertUser(user);
 	}
 }
