@@ -9,4 +9,6 @@ public class ReviewDto {
 
 	private String summaryString;
 
+	private String audienceString;
+
 }

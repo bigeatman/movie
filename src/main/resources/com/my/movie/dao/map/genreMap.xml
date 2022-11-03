@@ -2,15 +2,42 @@
 <!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
 	'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
 <mapper namespace='com.my.movie.dao.map.GenreMap'>
-	
-	<select id='searchGenre' resultType='String'>
+
+	<select id='getMovieGenre' resultType='String'>
 		select genre_name from genre
 		join movie_genre on genre.genre_num = movie_genre.genre_num
-		where movie_num = ${movieNum}
+		where
+		movie_num = ${movieNum}
+	</select>
+
+	<select id='getGenreId' resultType='Integer'>
+		select genre_num from genre where genre_name = '${genreName}'
+	</select>
+	
+	<select id='searchMovieByGenre' resultType='Movie'>
+		select 
+			movies.movie_num, 
+			movie_name,movie_country,
+			movie_releasedate,
+			movie_runningtime,
+			movie_story,
+			hashtag,
+			cumulative_audience,
+			movie_imgfile_name
+		from movie_genre
+		join movies on movie_genre.movie_num = movies.movie_num
+		where genre_num = 0
 	</select>
 	
 	<select id='selectAll' resultType='Genre'>
 		select * from genre
 	</select>
-	
+
+	<insert id='insertUserGenre'>
+		insert into user_genre(user_num, genre_num) values(${userId}, ${genre})
+	</insert>
+
+	<insert id='insertMovieGenre'>
+		insert into movie_genre(movie_num, genre_num) values(${movieId}, ${genre})
+	</insert>
 </mapper>

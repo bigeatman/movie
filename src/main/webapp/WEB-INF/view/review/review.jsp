@@ -226,22 +226,22 @@ nav a {
 		<div class="container center">
 			<div class="poster">영화포스터</div>
 			<div class="movieinfo">
-				<div class="menu">${movie.movieName }</div>
+				<div class="menu">${review.movie.movieName }</div>
 				<div class="row movieinfo-line">
 					<div class="submenu">개요</div>
-					<div class="form-group submenu-content">${movie.movieCountry }</div>
+					<div class="form-group submenu-content">${review.summaryString }</div>
 				</div>
 				<div class="row movieinfo-line">
 					<div class="submenu">상영시간</div>
-					<div class="submenu-content">${movie.movieRunningTime }분</div>
+					<div class="submenu-content">${review.movie.movieRunningtime }분</div>
 				</div>
 				<div class="row movieinfo-line">
 					<div class="submenu">개봉</div>
-					<div class="submenu-content">2022.09.07.</div>
+					<div class="submenu-content">${review.movie.movieReleasedate }</div>
 				</div>
 				<div class="row movieinfo-line">
 					<div class="submenu">누적 관객</div>
-					<div class="submenu-content">622만</div>
+					<div class="submenu-content">${review.audienceString }명</div>
 				</div>
 			</div>
 		</div>
@@ -288,7 +288,7 @@ nav a {
 				<!-- <i class="fa fa-star-o" style="font-size:14px"></i> !-->
 				<span style="font-size:14px; color:#FF7F00"">4.7</span>
 			</div>
-			<div class="write-review"><button class="btn-secondary" type="button" data-toggle="modal" data-target='#dialogModal' id="writeReivewBtn" style="border:1px solid gray">평 작성하기</button></div>
+			<div class="write-review"><button class="btn-secondary" type="button" data-toggle="modal" data-target='#dialogModal' id="writereviewBtn" style="border:1px solid gray">평 작성하기</button></div>
 		</div>
 		<div class="container center" id="reviewContainer">
 			<div class="rectangle" id="review_10" isCommentOpened="false">
@@ -699,7 +699,7 @@ nav a {
 		$('#dialogModal').modal('hide');
 	}
 
-	function createReivewDialog() {
+	function createreviewDialog() {
 		var dialog = createDialog('사용자 평 추가', 0x13);
 		var okButton = document.querySelector("#okButton");
 
@@ -777,7 +777,7 @@ nav a {
 		createAddCommentDialog(reviewID);
 	}
 
-	document.querySelector("#writeReivewBtn").addEventListener('click', createReivewDialog);
+	document.querySelector("#writereviewBtn").addEventListener('click', createreviewDialog);
 	viewComments(10);
 	viewComments(11);
 </script>

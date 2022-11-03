@@ -1,5 +1,6 @@
 package com.my.movie.service;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,8 @@ public class ReviewServiceImpl implements ReviewService {
 	@Autowired
 	private GenreDao genreDao;
 
+	private static DecimalFormat formatter = new DecimalFormat("###,###");
+
 	@Override
 	public ReviewDto getReviewDtoByMovieId(int movieId) {
 		Movie movie = movieDao.selectById(movieId);
@@ -27,6 +30,7 @@ public class ReviewServiceImpl implements ReviewService {
 		ReviewDto dto = new ReviewDto();
 		dto.setMovie(movie);
 		dto.setSummaryString(summaryString);
+		dto.setAudienceString(formatter.format(movie.getCumulativeAudience()));
 
 		return dto;
 	}

@@ -14,6 +14,7 @@ public class Movie {
 	private int movieRunningtime;
 	private String movieCountry;
 	private int cumulativeAudience;
+	private String movieStory;
 	
 //	private MultipartFile movieImgfile;
 }
