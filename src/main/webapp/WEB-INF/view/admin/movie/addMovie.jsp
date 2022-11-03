@@ -68,15 +68,15 @@
 				<hr>
 			</div>
 			<div class='form-group mt-1' >
-				<label for='#movieName'>작품명</label><input type='text' id='movieTitle' class='text-area form-control' placeholder='작품명을 2자 이상 20자 이하로 입력하세요.' required/>
+				<label id='movieName' name='movieName'>작품명</label><input type='text' id='movieTitle' class='text-area form-control' placeholder='작품명을 2자 이상 20자 이하로 입력하세요.' required/>
 				<span id='errmsg'></span>
 			</div>
 			<div class='form-group mt-1'>
-				<label for='#movieReleasedate'>개봉일</label><input type='date' class='form-control' required/>
+				<label id='movieReleasedate' name='movieReleasedate'>개봉일</label><input type='date' class='form-control' required/>
 				<span id='errmsg2'></span>
 			</div>
 			<div class='form-group mt-1'>
-				 <label for='#movieGenre'>장르</label>
+				 <label id='genre' >장르</label>
 				<span id='errmsg3'></span>
 				<div class='col'>
                     <div class='col d-flex justify-content-center align-items-center'></div>
@@ -140,7 +140,7 @@
 				<button class='btn btn-secondary btn-block h-100 w-100 mr-5' onclick='location.href="../movie/listMovie"'>취소</button>
 				</div>
 				<div class='p-1'>
-				<button type='submit' class='btn btn-success btn-block h-100 w-100 mr-5'>추가</button>
+				<button type='submit' class='btn btn-success btn-block h-100 w-100 mr-5' id='addMoiveBtn'>추가</button>
 				</div>
 			</div>
 		</form>
