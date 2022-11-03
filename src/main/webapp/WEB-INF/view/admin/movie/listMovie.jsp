@@ -145,43 +145,7 @@ $(init)
                         <div class='col'>
                             <table class='table table-bordered' id='BoardTable'>
                                 <thead><tr><th></th><th>NO</th><th>작품명</th><th>개봉일</th><th>장르</th><th>감독</th><th>출연진</th></tr></thead>
-                                <tbody>
-                                    <tr>
-                                        <td><input id='movieNum' type='radio' name='BoardId'/></td>
-                                        <td>1</td>
-                                        <td>블랙 아담</td>
-                                        <td>2022.10.19.</td>
-                                        <td>액션</td>
-                                        <td>자움 콜렛 세라</td>
-                                        <td>드웨인 존슨, 노아 센티네오</td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type='radio' name='BoardId'/></td>
-                                        <td>2</td>
-                                        <td>공조2: 인터내셔날</td>
-                                        <td>2022.09.07.</td>
-                                        <td>액션</td>
-                                        <td>이석훈</td>
-                                        <td>현빈, 유해진, 윤아</td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type='radio' name='BoardId'/></td>
-                                        <td>...</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type='radio' name='BoardId'/></td>
-                                        <td>...</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
+                                <tbody id='movies'>
                                 </tbody>
                             </table>
                         </div>

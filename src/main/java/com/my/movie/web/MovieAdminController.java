@@ -56,30 +56,30 @@ public class MovieAdminController {
 		movieService.delMovie(movieNum);
 	}
 	
-//	@ResponseBody
-//	@PostMapping("/addMovie")
-//	public ModelAndView addMovie(Movie movie, ModelAndView mv) throws IOException {
-//		try {
-//		String movieFileName = movie.getMovieImgfile().getOriginalFilename();
-//		
-//		saveMovieFile(attachPath + "/" + movieFileName, movie.getMovieImgfile());
-//		movie.setMovieImgfileName(movieFileName);
-//		
-//		movieService.addMovie(movie);
-//		} catch(NullPointerException e) {}
-//		mv.setViewName("admin/movie/listMovie");
-//		return mv;
-//	}
-//	
-//	@ResponseBody
-//	@PostMapping("/fix")
-//	public void fixMovie(@RequestBody Movie movie, HttpServletRequest request, HttpServletResponse response) {
-//		movieService.fixMovie(movie);
-//	}
-//
-//	private void saveMovieFile(String movieFileName, MultipartFile movieFile) {
-//		try {
-//			movieFile.transferTo(new File(movieFileName));
-//		} catch(IOException e) {}
-//	}
+	@ResponseBody
+	@PostMapping("/addMovie")
+	public ModelAndView addMovie(Movie movie, ModelAndView mv) throws IOException {
+		try {
+		String movieFileName = movie.getMovieImgfile().getOriginalFilename();
+		
+		saveMovieFile(attachPath + "/" + movieFileName, movie.getMovieImgfile());
+		movie.setMovieImgfileName(movieFileName);
+		
+		movieService.addMovie(movie);
+		} catch(NullPointerException e) {}
+		mv.setViewName("admin/movie/listMovie");
+		return mv;
+	}
+	
+	@ResponseBody
+	@PostMapping("/fix")
+	public void fixMovie(@RequestBody Movie movie, HttpServletRequest request, HttpServletResponse response) {
+		movieService.fixMovie(movie);
+	}
+
+	private void saveMovieFile(String movieFileName, MultipartFile movieFile) {
+		try {
+			movieFile.transferTo(new File(movieFileName));
+		} catch(IOException e) {}
+	}
 }
