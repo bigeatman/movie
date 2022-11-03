@@ -14,8 +14,8 @@
 
 <!-- 댓글 modal script -->
 <script>
-function replyInit() {
-	$('#_delReplyBtn_').click(() => {
+function replyInit(replyIdx) {
+	$(`#delReplyBtn\${replyIdx}`).click(() => {
 	    $('#modalHeadMsg').text('댓글 삭제')
 	    
 	    $('#modalBodyMsg').text('해당 댓글을 삭제하시겠습니까?')
@@ -41,7 +41,7 @@ function replyInit() {
 	    $('replyModal').modal()
 	})
 
-	$('#_inspectionReplyBtn_').click(() => {
+	$(`#inspectionReplyBtn\${replyIdx}`).click(() => {
 	    $('#modalHeadMsg').text('댓글 신고')
 	
 	    $('#modalBodyMsg').text('신고 사유를 입력해주세요.')
@@ -72,34 +72,48 @@ function replyInit() {
 
 <!-- 동적리스트 진행중 -->
 <script>
-function listReplies() {
-	replies = []
-	replies.push(
-		'<div class="row" id="reply">' +
-	    '<div class="col mb-1">' +
-	            '<li id="replyBg" class="list-group-item d-flex justify-content-between">' +
-	                '<div>' + '__닉네임 __아이디' + '</div>' +
-	                '<div>' + '__작성일'  +
-	                    '<button class="ml-0" id="replyMenu" data-toggle="dropdown"><i class="bi bi-gear-fill"></i></button>' + 
-	                    '<div class="dropdown-menu">' +
-	                        '<a class="dropdown-item" id="__delReplyBtn">삭제</a>' +
-	                        '<div class="dropdown-divider"></div>' +
-	                        '<a class="dropdown-item" id="__inspectionReplyBtn">신고</a>' +
-	                    '</div></div></li>'+
-	             '<li id="replyBg" class="list-group-item"><div class="col mb-3">' +
-                        '__댓글내용' +
-                    '<div><a href="#"> <i id="__empathy" class="bi bi-hand-thumbs-up-fill"></i></a>' +
-                        '__해당댓글공감기록' + 
-                    '<a href="#"> <i id="__nonEmpathy" class="bi bi-hand-thumbs-down-fill"></i></a>' +
-        '</div></li></div></div>')                             
-	        	
-	$('#replyList').append(replies.join(''))
+function listReplies() {	
+	// url의 1은 커뮤니티 글조회시 해당글의 게시글번호를 붙일것
+	$.ajax({
+		url: 'community/list/' + 1, 
+		success: commReplyList => {
+			replies = []
+			repliesCount = 0
+			commReplyList.forEach((reply, replyIdx) => {
+				replies.push(
+					'<div class="row" id="reply">' +
+				    '<div class="col mb-1">' +
+				            '<li id="replyBg" class="list-group-item d-flex justify-content-between">' +
+				                '<div>' + '__닉네임 __아이디' + '</div>' +
+				                '<div>' + reply.communityReplyDate  +
+				                    '<button class="ml-0" id="replyMenu" data-toggle="dropdown"><i class="bi bi-gear-fill"></i></button>' + 
+				                    '<div class="dropdown-menu">' +
+				                        `<a class="dropdown-item" id="delReplyBtn\${replyIdx}">삭제</a>` +
+				                        '<div class="dropdown-divider"></div>' +
+				                        `<a class="dropdown-item" id="inspectionReplyBtn\${replyIdx}">신고</a>` +
+				                    '</div></div></li>'+
+				             '<li id="replyBg" class="list-group-item"><div class="col mb-3">' +
+			                        reply.communityReplyContent +
+			                    '<div id="empathyContainer"><a href="#"> <i id="__empathy" class="bi bi-hand-thumbs-up-fill"></i></a>' +
+			                        '__해당댓글공감기록' + 
+			                    '<a href="#"> <i id="__nonEmpathy" class="bi bi-hand-thumbs-down-fill"></i></a>' +
+			        '</div></li></div></div>')
+			        repliesCount++
+			})             
+			$('#commReplyList').empty()	
+			$('#commReplyList').append(replies.join(''))
+			for(var i=0; i < repliesCount; i++)
+				$(replyInit(i))
+			
+			console.log(repliesCount)
+			$('#repliesCount').append(`댓글 ${repliesCount}`)
+		}
+	})	
 }
 
 $(() => {
 	$('#regReplyBtn').click(() => {
-		$(listReplies)
-		$(replyInit)
+		
 	})	
 })	
 
@@ -156,20 +170,8 @@ label {
     border: 0px;
 }
 
-#boardMenu {
+.bi{
     color:black;
-    background-color: rgb(209, 208, 208);
-    border: 0px;
-}
-
-#empathy{
-    color:black;
-}
-
-#nonEmpathy{
-    color:black;
-    transform:scaleX(-1);
-    transform:scaleY(-1);
 }
 
 #regReplyBtn {
@@ -186,13 +188,13 @@ label {
 <div id='navBar' class='container-fluid'>
     <nav class='row fixed-bottom p-1'>
       <div class='col m-2 text-center'>
-        <a id='goHome' href='../main.html' class='ml-1'>
+        <a id='goHome' href='/' class='ml-1'>
           <i class='fa-solid fa-house fa-xl'></i>
           <span class='iconfont'>&nbsp;홈</span>
         </a>
       </div>
       <div class='col m-2 text-center'>
-        <a id='blind' href='../community/01.html' class='ml-1'>
+        <a id='blind' href='community/' class='ml-1'>
           <i class='fa-regular fa-comments fa-xl'></i>
           <span class='iconfont'>커뮤니티</span>
         </a>
@@ -213,14 +215,18 @@ label {
 </div>
 
 <!-- 영화평 댓글 -->
-<div id='replyList'>
+<div>
     <div class='row mb-3 mt-3'>
         <div class='col'>
-            <li class='list-group-item d-flex'>
-                댓글
-                __댓글수
+            <li id='repliesCount'class='list-group-item'>
+               
             </li>
         </div>
+    </div>
+    <div class='row'>
+	    <div class='col' id='commReplyList'>
+	    	
+	    </div>
     </div>
 </div>
    
@@ -235,7 +241,7 @@ label {
 </body>
 
 <!-- 하단내비바에 안깔리게 하려고 넣어둔 거 -->
-<footer class='container-fulid mt-5 p-1'>
+<footer class='container-fluid mt-5 p-1'>
     <div class='row m-3'>
         <div class='col-sm-3 d-flex justify-content-center align-items-center'>
             <div></div>

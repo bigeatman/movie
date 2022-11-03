@@ -13,7 +13,7 @@ public class CommReplyDaoImpl implements CommReplyDao {
 	@Autowired private CommReplyMap commReplyMap;
 
 	@Override
-	public List<CommReply> selectCommReplies() {
-		return commReplyMap.selectCommReplies();
+	public List<CommReply> selectCommReplies(int communityNum) {
+		return commReplyMap.selectCommReplies(communityNum);
 	}
 }
