@@ -9,7 +9,6 @@
 		LEFT OUTER JOIN users u
 		ON c.user_num = u.user_num
 		where community_num = #{communityNum, jdbcType=NUMERIC}
-		order by c.community_reply_num
 	</select>
 	
 	<insert id='insertCommReply'>
