@@ -73,14 +73,14 @@ function replyInit(replyIdx) {
 <!-- 동적리스트 부분완료(db에서 불러와서 목록 나열하고, 해당 정보들까지 맞게 출력, 댓글별 모달까지 작동하도록 설계) -->
 <script>
 function listReplies() {	
-	// url의 community/list 부분은 커뮤니티 글조회시 community/해당글의 게시글번호 로 붙일것
+	// 각 ajax의 url의 부분은 커뮤니티 글조회시 community/해당글의 게시글번호 로 붙일것
 	$.ajax({
 		url: `community/list/${1}`, 
 		success: commReplyList => {
 			replies = []
 			repliesCount = 0
 			commReplyList.forEach((reply, replyIdx) => {
-				replies.push(
+				replies.unshift(
 					'<div class="row" id="reply">' +
 				    '<div class="col mb-1">' +
 				            '<li id="replyBg" class="list-group-item d-flex justify-content-between">' +
@@ -99,8 +99,6 @@ function listReplies() {
 			                    '<a href="#"> <i id="__nonEmpathy" class="bi bi-hand-thumbs-down-fill"></i></a>' +
 			        '</div></li></div></div>')
 			        repliesCount++
-			        console.log(reply.userId)
-			        console.log(reply.nickname)
 			})             
 			$('#commReplyList').empty()	
 			$('#commReplyList').append(replies.join(''))
@@ -108,16 +106,38 @@ function listReplies() {
 			for(var i=0; i < repliesCount; i++)
 				$(replyInit(i))
 			
-			console.log(repliesCount)
 			$('#repliesCount').empty()
 			$('#repliesCount').append('댓글\n\n' + repliesCount)
 		}
 	})	
 }
 
+function getToday() {
+	var today = new Date()
+		
+	return today.getFullYear() + "-" +("0" + (today.getMonth() + 1)).slice(-2) + "-" + ("0" + today.getDate()).slice(-2)
+}
+
 $(() => {
 	$('#regReplyBtn').click(() => {
-		$(listReflies)
+		var regDate = getToday()
+		
+		$.ajax({
+			url: 'community/add',
+			method: 'post',
+			contentType: 'application/json',
+			data: JSON.stringify({
+				communityReplyContent: $('#regReplyContent').val(),
+				communityReplyDate: regDate,
+				userNum: ${99},
+				communityNum: ${1}
+			}),
+			success: function succRegReply() {
+				window.location.href = '/community'
+				listReplies
+
+			}
+		})
 	})	
 })	
 
@@ -126,7 +146,9 @@ $(replyInit)
 </script>
 </head>
 
-    
+
+
+
 <style>
 
 nav {
@@ -198,7 +220,7 @@ label {
         </a>
       </div>
       <div class='col m-2 text-center'>
-        <a id='blind' href='community/' class='ml-1'>
+        <a id='blind' href='/community' class='ml-1'> <!-- 임시로 댓글로 넘어가도록 만들었습니다. -->
           <i class='fa-regular fa-comments fa-xl'></i>
           <span class='iconfont'>커뮤니티</span>
         </a>
@@ -231,16 +253,17 @@ label {
 	    </div>
     </div>
 </div>
-   
+ 
+<!-- 댓글 작성 -->
 <div class='row mt-3'>
     <div class='col d-flex'>
-        <textarea class='form-control col-10' rows='1' placeholder='댓글을 작성해주세요.'></textarea>
+        <textarea id='regReplyContent'class='form-control col-10' rows='1' placeholder='댓글을 작성해주세요.'></textarea>
         <button id='regReplyBtn' type="button" class="btn btn-primary">등록</button>               
     </div>
 </div>
 </body>
 
-<!-- 하단내비바에 안깔리게 하려고 넣어둔 거 -->
+<!-- footer -->
 <footer class='container-fluid mt-5 p-1'>
     <div class='row m-3'>
         <div class='col-sm-3 d-flex justify-content-center align-items-center'>

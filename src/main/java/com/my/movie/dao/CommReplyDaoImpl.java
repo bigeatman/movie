@@ -18,7 +18,7 @@ public class CommReplyDaoImpl implements CommReplyDao {
 	}
 	
 	@Override
-	public int insertReply(CommReply commReply) {
-		return commReplyMap.insertReply(commReply);
+	public int insertCommReply(CommReply commReply) {
+		return commReplyMap.insertCommReply(commReply);
 	}
 }

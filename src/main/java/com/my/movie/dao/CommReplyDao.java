@@ -6,5 +6,5 @@ import com.my.movie.domain.CommReply;
 
 public interface CommReplyDao {
 	List<CommReply> selectCommReplies(int communityNum);
-	int insertReply(CommReply commReply);
+	int insertCommReply(CommReply commReply);
 }
