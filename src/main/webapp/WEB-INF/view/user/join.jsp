@@ -13,27 +13,27 @@ function isVal(field) {
 	if(!field.val() && !$('#userId').val()) {
 		$('#idErrMsg').css('color', 'red').text('아이디는 필수 사항 입니다.')
 		isGood = false
-	}
+	} else isGood = true
 	
 	if(!field.val() && !$('#pw').val()) {
 		$('#pwErrMsg').css('color', 'red').text('비밀번호는 필수 사항 입니다.')
 		isGood = false
-	}
+	} else isGood = true
 	
 	if(!field.val() && !$('#nickname').val()) {
 		$('#nnErrMsg').css('color', 'red').text('닉네임은 필수 사항 입니다.')
 		isGood = false
-	}
+	} else isGood = true
 	
 	if(!field.val() && !$('#phoneNum').val()) {
 		$('#pnErrMsg').css('color', 'red').text('연락처는 필수 사항 입니다.')
 		isGood = false
-	}
+	} else isGood = true
 	
 	if(!field.val() && !$('#email').val()) {
 		$('#emailErrMsg').css('color', 'red').text('이메일은 필수 사항 입니다.')
 		isGood = false
-	}
+	} else isGood = true
 	
 	return isGood
 }
@@ -164,22 +164,33 @@ function join() {
 	        $('#joinModal').modal()
     	}
     })
-
+	
     $('#joinOkBtn').click(() => {
+    	let valueArr = []
+    	$('input[name=genre]:checked').each(function() {
+    		let value = $(this).val()
+    		valueArr.push(value)
+    	})
      	$.ajax({
  			url: 'join',
  		    method:'post',
  		    contentType: 'application/json',
- 		    data: JSON.stringify({
- 		    	userId: $('#userId').val(),
- 		    	pw: $('#pw').val(),
- 		    	nickname: $('#nickname').val(),
- 		    	phoneNum: $('#phoneNum').val(),
- 		    	email: $('#email').val()
- 		    }),
- 		    success: location.href='/'
+ 		    data: JSON.stringify(
+ 		    	{
+ 		    		user: {
+		 		    	userId: $('#userId').val(),
+		 		    	pw: $('#pw').val(),
+		 		    	nickname: $('#nickname').val(),
+		 		    	phoneNum: $('#phoneNum').val(),
+		 		    	email: $('#email').val()
+ 		    		},
+ 		    		genreNum: valueArr
+ 		    	}
+ 		    ),
+ 		    success: console.log('성공') //location.href='/'
         })
         $('#joinModal').modal('hide')
+        console.log(valueArr)
     })
 
     $('#cancelBtn').click(() => {
@@ -245,58 +256,58 @@ label {
                 <div class='row' style='padding-left: 15px'>
                     <div class='row' style='padding-left: 15px; margin-left: 5px;'>
                         <div id='cw'>
-                            <input type='checkbox' name='genre' value=''/> <label for='genre'>액션</label>
+                            <input type='checkbox' name='genre' value='1'/> <label for='genre'>액션</label>
                         </div>
                         <div id='cw'>
-                            <input type='checkbox' name='genre' value=''/> <label for='genre'>범죄</label>
+                            <input type='checkbox' name='genre' value='2'/> <label for='genre'>범죄</label>
                         </div>
                         <div id='cw'>
-                            <input type='checkbox' name='genre' value=''/> <label for='genre'>SF</label>
+                            <input type='checkbox' name='genre' value='3'/> <label for='genre'>SF</label>
                         </div>
                         <div id='cw'>
-                            <input type='checkbox' name='genre' value=''/> <label for='genre'>스릴러</label>
-                        </div>
-                    </div>
-                    <div class='row' style='padding-left: 15px; margin-left: 5px;'>
-                        <div id='cw'>
-                            <input type='checkbox' name='genre' value=''/> <label for='genre'>공포</label>
-                        </div>
-                        <div id='cw'>
-                            <input type='checkbox' name='genre' value=''/> <label for='genre'>전쟁</label>
-                        </div>
-                        <div id='cw'>
-                            <input type='checkbox' name='genre' value=''/> <label for='genre'>미스터리</label>
-                        </div>
-                        <div id='cw'>
-                            <input type='checkbox' name='genre' value=''/> <label for='genre'>판타지</label>
+                            <input type='checkbox' name='genre' value='4'/> <label for='genre'>스릴러</label>
                         </div>
                     </div>
                     <div class='row' style='padding-left: 15px; margin-left: 5px;'>
                         <div id='cw'>
-                            <input type='checkbox' name='genre' value=''/> <label for='genre'>코미디</label>
+                            <input type='checkbox' name='genre' value='5'/> <label for='genre'>공포</label>
                         </div>
                         <div id='cw'>
-                            <input type='checkbox' name='genre' value=''/> <label for='genre'>로맨스</label>
+                            <input type='checkbox' name='genre' value='6'/> <label for='genre'>전쟁</label>
                         </div>
                         <div id='cw'>
-                            <input type='checkbox' name='genre' value=''/> <label for='genre'>멜로</label>
+                            <input type='checkbox' name='genre' value='7'/> <label for='genre'>미스터리</label>
                         </div>
                         <div id='cw'>
-                            <input type='checkbox' name='genre' value=''/> <label for='genre'>드라마</label>
+                            <input type='checkbox' name='genre' value='8'/> <label for='genre'>판타지</label>
                         </div>
                     </div>
                     <div class='row' style='padding-left: 15px; margin-left: 5px;'>
                         <div id='cw'>
-                            <input type='checkbox' name='genre' value=''/> <label for='genre'>뮤지컬</label>
+                            <input type='checkbox' name='genre' value='9'/> <label for='genre'>코미디</label>
                         </div>
                         <div id='cw'>
-                            <input type='checkbox' name='genre' value=''/> <label for='genre'>음악</label>
+                            <input type='checkbox' name='genre' value='10'/> <label for='genre'>로맨스</label>
                         </div>
                         <div id='cw'>
-                            <input type='checkbox' name='genre' value=''/> <label for='genre'>스포츠</label>
+                            <input type='checkbox' name='genre' value='11'/> <label for='genre'>멜로</label>
                         </div>
                         <div id='cw'>
-                            <input type='checkbox' name='genre' value=''/> <label for='genre'>애니</label>
+                            <input type='checkbox' name='genre' value='12'/> <label for='genre'>드라마</label>
+                        </div>
+                    </div>
+                    <div class='row' style='padding-left: 15px; margin-left: 5px;'>
+                        <div id='cw'>
+                            <input type='checkbox' name='genre' value='13'/> <label for='genre'>뮤지컬</label>
+                        </div>
+                        <div id='cw'>
+                            <input type='checkbox' name='genre' value='14'/> <label for='genre'>음악</label>
+                        </div>
+                        <div id='cw'>
+                            <input type='checkbox' name='genre' value='15'/> <label for='genre'>스포츠</label>
+                        </div>
+                        <div id='cw'>
+                            <input type='checkbox' name='genre' value='16'/> <label for='genre'>애니</label>
                         </div>
                     </div>
                 </div>

@@ -38,8 +38,13 @@
 		where email = #{email}
 	</select>
 	
-	<insert id='insertUser'>
+	<insert id='insertUser' keyProperty="userNum" useGeneratedKeys="true">
 		insert into users(user_num, user_id, pw, nickname, phone_num, email)
 		values(user_num_seq.nextval, #{userId}, #{pw}, #{nickname}, #{phoneNum}, #{email})
+	</insert>
+	
+	<insert id='insertUserGenre'>
+		insert into user_genre(user_num, genre_num)
+		values(user_num_seq.nextval, #{genreNum})
 	</insert>
 </mapper>

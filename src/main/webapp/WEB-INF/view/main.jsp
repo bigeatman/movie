@@ -1,5 +1,4 @@
 <%@ page language='java' contentType='text/html; charset=utf-8' pageEncoding='utf-8'%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -12,10 +11,6 @@
 <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js'></script>
 <script src="https://kit.fontawesome.com/449f39a7b2.js" crossorigin="anonymous"></script>
 <script>
-function coinfirmSubmitAction(movieNum) {
-	document.querySelector("#movie_" + movieNum).submit();
-}
-
 function checkLogin() {
 <%
 	if(session.getAttribute("user") != null) {
@@ -96,11 +91,8 @@ table {
                                     <div id='topMovie'>블랙 아담</div></a>
                                  </div>
                                  <div class='carousel-item'>
-                                 	<form action="review" method="post" id="movie_0">
-	                                 	<div id='movieImg2' onclick="coinfirmSubmitAction(0)">영화이미지</div>
-	                                    <div id='topMovie' onclick="coinfirmSubmitAction(0)">공조2: 인터내셔날</div>
-	                                    <input type="hidden" name="movieNo" value="0">
-                                 	</form>
+                                    <div id='movieImg2'><a href='review/01.html'>영화이미지</div>
+                                    <div id='topMovie'>공조2: 인터내셔날</div></a>
                                  </div>
                                  <div class='carousel-item'>
                                     <div id='movieImg3'><a href='review/01.html'>영화이미지</div>
@@ -205,7 +197,7 @@ table {
                	</a>
             </div>
             <div class='col text-center'>
-               	<a id='community' href='community' class='ml-1'>
+               	<a id='community' href='#' class='ml-1'>
                   	<i class='fa-regular fa-comments fa-xl'></i><br>
                   	<span class='iconfont'>커뮤니티</span>
                	</a>
@@ -225,5 +217,4 @@ table {
       	</nav>
    	</div>
 </body>
-
 </html>
