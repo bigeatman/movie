@@ -18,7 +18,7 @@ public class CommReplyServiceImpl implements CommReplyService {
 	}
 	
 	@Override
-	public void addReply(CommReply commReply) {
-		commReplyDao.insertReply(commReply);
+	public void addCommReply(CommReply commReply) {
+		commReplyDao.insertCommReply(commReply);
 	}
 }

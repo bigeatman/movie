@@ -32,6 +32,6 @@ public class CommReplyController {
 	
 	@PostMapping("add")
 	public void addReply(@RequestBody CommReply commReply) {
-		commReplyService.addReply(commReply);
+		commReplyService.addCommReply(commReply);
 	}
 }
