@@ -1,11 +1,14 @@
 package com.my.movie.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.my.movie.dao.UserDao;
 import com.my.movie.domain.User;
 import com.my.movie.domain.UserDto;
+import com.my.movie.domain.UserGenre;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -44,5 +47,10 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void addUser(User user) {
 		userDao.insertUser(user);
+	}
+
+	@Override
+	public void addUserGenre(UserGenre userGenre) {
+		userDao.insertUserGenre(userGenre);
 	}
 }

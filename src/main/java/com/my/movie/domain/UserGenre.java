@@ -1,5 +1,7 @@
 package com.my.movie.domain;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Genre {
-	private int genreNum;
-	private String genreName;
+public class UserGenre {
+	private User user;
+	private List<String> genreNum;
 }

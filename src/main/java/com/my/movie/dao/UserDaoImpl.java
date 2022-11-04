@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import com.my.movie.dao.map.UserMap;
 import com.my.movie.domain.User;
 import com.my.movie.domain.UserDto;
+import com.my.movie.domain.UserGenre;
 
 @Repository
 public class UserDaoImpl implements UserDao {
@@ -44,5 +45,10 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public void insertUser(User user) {
 		userMap.insertUser(user);
+	}
+
+	@Override
+	public void insertUserGenre(UserGenre userGenre) {
+		userMap.insertUserGenre(userGenre);
 	}
 }

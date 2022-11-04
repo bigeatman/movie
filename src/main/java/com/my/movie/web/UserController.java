@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.my.movie.dao.GenreDao;
 import com.my.movie.domain.User;
 import com.my.movie.domain.UserDto;
+import com.my.movie.domain.UserGenre;
 import com.my.movie.service.UserService;
 
 @RestController
@@ -19,17 +21,13 @@ import com.my.movie.service.UserService;
 public class UserController {
 	@Autowired private UserService userService;
 	
+	@Autowired private GenreDao genreDao;
+	
 	@GetMapping("login")
 	public ModelAndView login(ModelAndView mv) {
 		mv.setViewName("user/login");
 		return mv;
 	}
-	
-//	@GetMapping("searchMovie")
-//	public ModelAndView movie(ModelAndView mv) {
-//		mv.setViewName("movie/searchMovie");
-//		return mv;
-//	}
 	
 	@GetMapping("mypage")
 	public ModelAndView mypage(ModelAndView mv) {
@@ -52,8 +50,19 @@ public class UserController {
 	}
 	
 	@PostMapping("join")
-	public void join(@RequestBody User user) {
-		userService.addUser(user);
+	public void join(@RequestBody UserGenre userGenre) {
+		System.out.println(userGenre);
+		User user = userGenre.getUser();
+		System.out.println(user);
+		for(String genre: userGenre.getGenreNum()) {
+			System.out.println(genre);
+		}
+		
+//		genreDao.addUserGenre(user, userGenre.getGenreNum());
+		//int userNum = num++;
+		//Genre genre = userGenre.getGenre();
+		//userService.addUser(userGenre.getUser());
+		//userService.addUserGenre(userNum, genre.getGenreNum());
 	}
 	
 	@PostMapping("join/checkId")
