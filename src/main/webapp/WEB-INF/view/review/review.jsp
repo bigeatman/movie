@@ -93,7 +93,7 @@ nav a {
 
 .movieinfo-actor-name {
 	text-align : center;
-	font-size : 13px;
+	font-size : 12px;
 	margin-top : 10px;
 }
 
@@ -188,6 +188,15 @@ nav a {
 	border : 1px solid gray;
 }
 
+.circle {
+	width: 40px;
+	height: 40px;
+	-webkit-border-radius: 25px;
+	-moz-border-radius: 25px;
+	border-radius: 25px;
+	border : 1px solid gray;
+}
+
 .rectangle {
 	width : 330px;
 	height : 50px;
@@ -243,7 +252,9 @@ nav a {
 	<div class="container"><hr></div>
 	<div style="overflow:scroll; height:464px; overflow-x:hidden;">
 		<div class="container center">
-			<div class="poster">영화포스터</div>
+			<div class="poster">
+				<img src="${review.movie.movieImgfileName }" style="object-fit: cover; width:100%; height:100%;">
+			</div>
 			<div class="movieinfo">
 				<div class="menu">${review.movie.movieName }</div>
 				<div class="row movieinfo-line">
@@ -275,8 +286,8 @@ nav a {
 				<div class="menu">출연진</div>
 				<div class="container row movieinfo-actors">
 					<div class="movieinfo-actor">
-						<div id="circle" style="font-size:8px; padding-top:5px; text-align:center">감독이미지</div>
-						<div class="movieinfo-actor-name">감독</div>
+						<img src="${review.director.directorImgFileName}" alt="Avatar" class="w3-col s6 circle" style="border-radius:50%;">
+						<div class="movieinfo-actor-name">${review.director.directorName} (감독)</div>
 					</div>
 					<div class="movieinfo-actor">
 						<div id="circle" style="font-size:8px; padding-top:5px; text-align:center">주연이미지</div>

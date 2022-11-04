@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.my.movie.dao.GenreDao;
+import com.my.movie.dao.DirectorDao;
 import com.my.movie.domain.ReviewDto;
 import com.my.movie.service.ReviewService;
 
@@ -17,12 +17,13 @@ public class ReviewController {
 
 	@Autowired
 	private ReviewService reivewService;
-
+	
 	@Autowired
-	private GenreDao genreDao;
-
+	private DirectorDao dao;
+		
 	@PostMapping
 	public ModelAndView movieDetail(ModelAndView mv, @RequestParam(value = "movieNo") Integer movieNo) {
+		System.out.println(dao.findDirectorByMovieId(movieNo));
 
 		ReviewDto dto = reivewService.getReviewDtoByMovieId(movieNo);
 

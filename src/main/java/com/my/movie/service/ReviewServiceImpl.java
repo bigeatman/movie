@@ -6,8 +6,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.my.movie.dao.DirectorDao;
 import com.my.movie.dao.GenreDao;
 import com.my.movie.dao.MovieDao;
+import com.my.movie.domain.Director;
 import com.my.movie.domain.Movie;
 import com.my.movie.domain.ReviewDto;
 
@@ -20,17 +22,20 @@ public class ReviewServiceImpl implements ReviewService {
 	@Autowired
 	private GenreDao genreDao;
 
-	private static DecimalFormat formatter = new DecimalFormat("###,###");
+	@Autowired
+	private DirectorDao directorDao;
+
+	private static final DecimalFormat formatter = new DecimalFormat("###,###");
 
 	@Override
 	public ReviewDto getReviewDtoByMovieId(int movieId) {
 		Movie movie = movieDao.selectById(movieId);
-		String summaryString = toSummaryString(movie);
 
 		ReviewDto dto = new ReviewDto();
 		dto.setMovie(movie);
-		dto.setSummaryString(summaryString);
+		dto.setSummaryString(toSummaryString(movie));
 		dto.setAudienceString(formatter.format(movie.getCumulativeAudience()));
+		dto.setDirector(directorDao.findDirectorByMovieId(movieId));
 
 		return dto;
 	}
