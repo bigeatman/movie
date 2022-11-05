@@ -415,34 +415,138 @@ nav a {
 		createDialog("전체 출연진", 0x1121);
 	}
 	
+	function createReviewDialog() {
+		clearDialog();
+		createDialog("사용자 평 작성하기", 0x11142);
+	}
+	
 	function createDialog(title, code) {
 		var dialog = document.querySelector("#dialog");
 		
 		createDialogTopMargin(dialog, code);
-		createTitle(dialog, title);
+		createTitle(dialog, title, code);
 		createBody(dialog, code);
 		createButtons(dialog, code);
 	}
 	
 	function createDialogTopMargin(dialog, code) {
-		if((code & 0x01) == 0x01) {
-			document.querySelector("#dialogUpperMargin").style.setProperty('height', '150px');
+		var marginElem = document.querySelector("#dialogUpperMargin");
+		
+		if((code & 0x1) == 0x01) {
+			marginElem.style.setProperty('height', '150px');
 			dialog.style.setProperty('height', '300px');
+		} else if ((code & 0x2) == 0x2) {
+			marginElem.style.setProperty('height', '290px');
+			dialog.style.setProperty('height', '150px');
 		}
 	}
 	
-	function createTitle(dialog, title) {
-		var titleDiv = document.createElement('div');
-		titleDiv.innerHTML = title;
-		titleDiv.classList.add('menu');
+	function createTitle(dialog, title, code) {
+		if((code & 0x10000) == 0x10000) {
+			createScoreTitle(dialog, title);
+		} else {
+			createNormalTitle(dialog, title);
+		}
+	}
+	
+	function createScoreTitle(dialog, title) {
+		var titleElem = createTitleElem(title);
+		var scoreElem = createScoreElem();
+		var comboBoxElem = createComboBox();
+		titleElem.style.setProperty('width', '160px');
+		
+		var containerElem = document.createElement('div');
+		containerElem.style.setProperty('display', 'flex');
+		containerElem.appendChild(titleElem);
+		containerElem.appendChild(scoreElem);
+		containerElem.appendChild(comboBoxElem);
+		
+		dialog.appendChild(containerElem);
+	}
+	
+	function createTitleElem(title) {
+		var titleElem = document.createElement('div');
+		titleElem.innerHTML = title;
+		titleElem.classList.add('menu');
+		return titleElem;
+	}
+	
+	function createScoreElem() {
+		var scoreElem = document.createElement('span');
+		scoreElem.setAttribute('id', 'scoreSpan');
+		scoreElem.style.setProperty('padding-top', '2px');
+		scoreElem.style.setProperty('margin-right', '5px');
+		for(i = 0; i < 5; i++) {
+			scoreElem.innerHTML += '<i class="fa fa-star" style="font-size:12px"></i>';
+		}
+		
+		return scoreElem;
+	}
+	
+	function createComboBox() {
+		var comboBoxNode = document.createElement('select');
+		var isNum = true;
+
+		for(i = 5; i >= 0; i -= 0.5) {
+			var optionNode = document.createElement('option');
+			optionNode.innerHTML = i;
+
+			if(isNum) {
+				optionNode.innerHTML += '.0';
+				isNum = false;
+			} else {
+				isNum = true;
+			}
+
+			comboBoxNode.appendChild(optionNode);
+		}
+		
+		comboBoxNode.style.setProperty('font-size', '12px', '');
+		comboBoxNode.style.setProperty('width', '40px', '');
+		comboBoxNode.style.setProperty('margin-right', '2px', '');
+		comboBoxNode.style.setProperty('border', '0px solid gray', '');
+
+		comboBoxNode.setAttribute('id', 'scoreBox');
+		comboBoxNode.setAttribute('onchange', 'changeScoreSpan()');
+
+		return comboBoxNode;
+	}
+	
+	function changeScoreSpan() {
+		var comboBox = document.querySelector("#scoreBox");
+		var selected = comboBox.options[comboBox.selectedIndex].value;
+		var numValue = parseInt(selected);
+		var floatValue = selected - numValue;
+
+		var scoreSpan = document.querySelector("#scoreSpan");
+		scoreSpan.innerHTML = '';
+
+		for (i = 0; i < numValue; i++) {
+			scoreSpan.innerHTML += '<i class="fa fa-star" style="font-size:12px"></i>';
+		}
+
+		if (floatValue != 0) {
+			scoreSpan.innerHTML += '<i class="fa fa-star-half-o" style="font-size:12px"></i>';
+			numValue++;
+		}
+
+		for(i = 0; i < 5 - numValue; i++) {
+			scoreSpan.innerHTML += '<i class="fa fa-star-o" style="font-size:12px"></i>';
+		}
+	}
+	
+	function createNormalTitle(dialog, title) {
+		var titleDiv = createTitleElem(title);
 		dialog.appendChild(titleDiv);
 	}
 	
 	function createBody(dialog, code) {
 		if((code & 0x10) == 0x10) {
 			createTextBody(dialog, code);
-		} else if((code & 0x20) == 0x20) {
+		} else if ((code & 0x20) == 0x20) {
 			createAllActorBody(dialog);
+		} else if ((code & 0x40) == 0x40) {
+			createInputTextBody(dialog);
 		}
 	}
 	
@@ -477,7 +581,7 @@ nav a {
 			var actorName = actorDiv.querySelector('#name').innerHTML;
 			var actorUrl = actorDiv.querySelector('#imgUrl').innerHTML;
 			var actorPosition = actorDiv.querySelector('#position').innerHTML;
-			console.log(actorName);
+			
 			if((i + 1) % 5 == 0) {
 				lineDiv = document.createElement('div');
 				lineDiv.style.setProperty('display', 'flex');
@@ -516,10 +620,18 @@ nav a {
 		return divElem;
 	}
 	
+	function createInputTextBody(dialog, code) {
+		var inputTextElem = document.createElement('textarea');
+		inputTextElem.style.setProperty('width', '100%');
+		inputTextElem.style.setProperty('padding', '0px');
+		inputTextElem.style.setProperty('resize', 'none');
+		dialog.appendChild(inputTextElem);
+	}
+	
 	function createButtons(dialog, code) {
 		var buttonDiv = document.createElement('div');
 		buttonDiv.style.setProperty('height', '50px');
-		buttonDiv.style.setProperty('padding-top', '10px');
+		buttonDiv.style.setProperty('padding-top', '5px');
 		buttonDiv.style.setProperty('padding-bottom', '10px');
 		
 		if((code & 0x1000) == 0x1000) {
