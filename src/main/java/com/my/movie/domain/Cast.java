@@ -5,12 +5,12 @@ import lombok.Data;
 @Data
 public class Cast {
 
-	int castNum;
+	private int castNum;
 
-	String castName;
+	private String castName;
 
-	String castImgFileName;
+	private String castImgFileName;
 	
-	int position;
+	private int position;
 
 }

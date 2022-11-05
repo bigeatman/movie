@@ -248,6 +248,7 @@ nav a {
 				<span id="imgUrl">${review.casts[status.current].castImgFileName }</span>
 				<span id="position"><c:if test="${review.casts[status.current].position eq 1 }">주연</c:if><c:if test="${review.casts[status.current].position eq 0 }">조연</c:if></span>
 			</span>
+			<span id="loginedUserNum">${user.userNum}</span>
 		</c:forEach>
 	</div>
 	
@@ -405,19 +406,70 @@ nav a {
 		</div>
 	</div>
 <script>
-	function createDetailContentDialog() {
+	function getLoginedUserId() {
+		var userNum = document.querySelector("#loginedUserNum").innerHTML;
+		
+		if(userNum) {
+			return userNum;
+		} else {
+			return -1;
+		}
+	}
+	
+	function createNeedLoginDialog() {
+		clearDialog();
+	}
+	
+	function createDetailContentDialog () {
 		clearDialog();
 		createDialog("상세 줄거리", 0x1111);
+		addOkButtonListener();
+	}
+	
+	function addOkButtonListener() {
+		document.querySelector('#okButton').addEventListener('click', function() {
+			clearDialog();
+		});
 	}
 	
 	function createActorDetail() {
 		clearDialog();
 		createDialog("전체 출연진", 0x1121);
+		addOkButtonListener();
 	}
 	
 	function createReviewDialog() {
-		clearDialog();
-		createDialog("사용자 평 작성하기", 0x11142);
+		if(getLoginedUserId() != -1) {
+			clearDialog();
+			createDialog("사용자 평 작성하기", 0x11142);	
+			addWriteReviewListener();
+		} else {
+			createNeedLoginDialog();
+		}
+	}
+	
+	function addWriteReviewListener() {
+		document.querySelector('#okButton').addEventListener('click', function() {
+			$.ajax({
+				url: 'rev',
+				method: 'post',
+				contentType: 'application/json',
+				data: JSON.stringify({
+					movieNum : ${review.movie.movieNum},
+					grade : document.querySelector("#scoreBox").value,
+					reviewContent : document.querySelector("#reviewContent").value,
+					userNum : getLoginedUserId()
+				}),
+			    success: function(result) {
+			    	console.log(result);
+			    },
+			    error: function() {
+			    	console.log("에러");
+			    }
+			}).done(function() {
+				clearDialog();
+			});
+		});
 	}
 	
 	function createDialog(title, code) {
@@ -622,6 +674,7 @@ nav a {
 	
 	function createInputTextBody(dialog, code) {
 		var inputTextElem = document.createElement('textarea');
+		inputTextElem.setAttribute('id', 'reviewContent');
 		inputTextElem.style.setProperty('width', '100%');
 		inputTextElem.style.setProperty('padding', '0px');
 		inputTextElem.style.setProperty('resize', 'none');
@@ -630,6 +683,7 @@ nav a {
 	
 	function createButtons(dialog, code) {
 		var buttonDiv = document.createElement('div');
+		buttonDiv.setAttribute('id', 'okButton');
 		buttonDiv.style.setProperty('height', '50px');
 		buttonDiv.style.setProperty('padding-top', '5px');
 		buttonDiv.style.setProperty('padding-bottom', '10px');
@@ -649,7 +703,6 @@ nav a {
 		button.style.setProperty('background-color', '#007bff');
 		button.style.setProperty('color', 'white');
 		button.innerHTML = '확인';
-		button.addEventListener('click', clearDialog);
 		buttonDiv.appendChild(button);
 	}
 	
@@ -657,6 +710,8 @@ nav a {
 		dialog.innerHTML = '';
 		$('#dialogModal').modal('hide');
 	}
+	
+	
 	
 	
 </script>

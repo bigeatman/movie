@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.my.movie.dao.DirectorDao;
 import com.my.movie.domain.ReviewDto;
 import com.my.movie.service.ReviewService;
 
