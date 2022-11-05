@@ -1,4 +1,7 @@
 <%@ page language='java' contentType='text/html; charset=utf-8' pageEncoding='utf-8'%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -88,7 +91,7 @@ nav a {
 	width : 50px;
 	height : 100px;
 	padding : 5px;
-	margin-top : 10px;
+	margin-top : 5px;
 }
 
 .movieinfo-actor-name {
@@ -237,6 +240,17 @@ nav a {
 </style>
 </head>
 <body>
+	<div hidden="true">
+		<span id="actor_size">${fn:length(review.casts) }</span>
+		<c:forEach begin="0" end="${fn:length(review.casts) }" varStatus="status">
+			<span id="actor_${status.current }">
+				<span id="name">${review.casts[status.current].castName }</span>
+				<span id="imgUrl">${review.casts[status.current].castImgFileName }</span>
+				<span id="position"><c:if test="${review.casts[status.current].position eq 1 }">주연</c:if><c:if test="${review.casts[status.current].position eq 0 }">조연</c:if></span>
+			</span>
+		</c:forEach>
+	</div>
+	
 	<!-- HEADER !-->
 	<form class='mt-3'>
 		 <div class='col form-group d-flex justify-content-center align-items-center'>
@@ -297,8 +311,8 @@ nav a {
 						<div class="movieinfo-actor-name">${review.casts[1].castName} (주연)</div>
 					</div>
 					<div class="movieinfo-actor">
-						<div id="circle" class="movieinfo-actor-more" onclick="createActorContent"><span>&#10097;&#10097;</span></div>
-						<div class="movieinfo-actor-name movieinfo-contents-more" onclick="createActorContent" style="color:#007bff;"><a href='#'>더보기</a></div>
+						<div id="circle" class="movieinfo-actor-more" onclick="createActorDetail()" type="button" data-toggle="modal" data-target='#dialogModal'><span>&#10097;&#10097;</span></div>
+						<div class="movieinfo-actor-name movieinfo-contents-more" onclick="createActorDetail()" style="color:#007bff; margin-top:5px;" type="button" data-toggle="modal" data-target='#dialogModal'><a href='#'>더보기</a></div>
 					</div>
 				</div>
 			</div>
@@ -392,18 +406,20 @@ nav a {
 	</div>
 <script>
 	function createDetailContentDialog() {
+		clearDialog();
 		createDialog("상세 줄거리", 0x1111);
 	}
 	
-	function createActorContent() {
-		
+	function createActorDetail() {
+		clearDialog();
+		createDialog("전체 출연진", 0x1121);
 	}
 	
 	function createDialog(title, code) {
 		var dialog = document.querySelector("#dialog");
 		
 		createDialogTopMargin(dialog, code);
-		createTitle(dialog, "상세 줄거리");
+		createTitle(dialog, title);
 		createBody(dialog, code);
 		createButtons(dialog, code);
 	}
@@ -425,6 +441,8 @@ nav a {
 	function createBody(dialog, code) {
 		if((code & 0x10) == 0x10) {
 			createTextBody(dialog, code);
+		} else if((code & 0x20) == 0x20) {
+			createAllActorBody(dialog);
 		}
 	}
 	
@@ -439,6 +457,63 @@ nav a {
 		}
 		
 		dialog.appendChild(textDiv);
+	}
+	
+	function createAllActorBody(dialog) {
+		var bodyDiv = document.createElement('div');
+		var lineDiv = document.createElement('div');
+		
+		bodyDiv.appendChild(lineDiv);
+		bodyDiv.style.setProperty('height', '200px');
+		bodyDiv.style.setProperty('overflow', 'scroll');
+		
+		lineDiv.style.setProperty('display', 'flex');
+		lineDiv.appendChild(createDirectorDiv('${review.director.directorImgFileName}', '${review.director.directorName}', '감독'));
+		
+		var totalActors = document.querySelector('#actor_size').innerHTML;
+		
+		for(var i = 0; i < totalActors; i++) {
+			var actorDiv = document.querySelector('#actor_' + i);
+			var actorName = actorDiv.querySelector('#name').innerHTML;
+			var actorUrl = actorDiv.querySelector('#imgUrl').innerHTML;
+			var actorPosition = actorDiv.querySelector('#position').innerHTML;
+			console.log(actorName);
+			if((i + 1) % 5 == 0) {
+				lineDiv = document.createElement('div');
+				lineDiv.style.setProperty('display', 'flex');
+				bodyDiv.appendChild(lineDiv);
+			}
+			
+			lineDiv.appendChild(createDirectorDiv(actorUrl, actorName, actorPosition));
+		}
+		
+		dialog.append(bodyDiv);
+	}
+	
+	function createDirectorDiv(imgUrl, name, position) {
+		var imageElem = document.createElement('img');
+		imageElem.setAttribute('src', imgUrl);
+		imageElem.setAttribute('alt', 'Avater');
+		imageElem.classList.add('w3-col');
+		imageElem.classList.add('s6');
+		imageElem.classList.add('circle');
+		imageElem.style.setProperty('width', '50px');
+		imageElem.style.setProperty('height', '50px');
+		imageElem.style.setProperty('border-radius', '50%');
+		
+		var nameElem = document.createElement('div');
+		nameElem.classList.add('movieinfo-actor-name');
+		nameElem.style.setProperty('width', '50px');
+		nameElem.style.setProperty('height', '50px');
+		nameElem.innerHTML += (name + '<br>(' + position + ')');
+		
+		var divElem = document.createElement('div');
+		divElem.style.setProperty('margin-right', '10px');
+		divElem.classList.add('movieinfo-actor');
+		divElem.appendChild(imageElem);
+		divElem.appendChild(nameElem);
+		
+		return divElem;
 	}
 	
 	function createButtons(dialog, code) {
