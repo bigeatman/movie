@@ -17,13 +17,9 @@ public class ReviewController {
 
 	@Autowired
 	private ReviewService reivewService;
-	
-	@Autowired
-	private DirectorDao dao;
-		
+
 	@PostMapping
 	public ModelAndView movieDetail(ModelAndView mv, @RequestParam(value = "movieNo") Integer movieNo) {
-		System.out.println(dao.findDirectorByMovieId(movieNo));
 
 		ReviewDto dto = reivewService.getReviewDtoByMovieId(movieNo);
 

@@ -94,7 +94,6 @@ nav a {
 .movieinfo-actor-name {
 	text-align : center;
 	font-size : 12px;
-	margin-top : 10px;
 }
 
 .movieinfo-actor-more {
@@ -194,7 +193,7 @@ nav a {
 	-webkit-border-radius: 25px;
 	-moz-border-radius: 25px;
 	border-radius: 25px;
-	border : 1px solid gray;
+	border : 2px solid black;
 }
 
 .rectangle {
@@ -290,12 +289,12 @@ nav a {
 						<div class="movieinfo-actor-name">${review.director.directorName} (감독)</div>
 					</div>
 					<div class="movieinfo-actor">
-						<div id="circle" style="font-size:8px; padding-top:5px; text-align:center">주연이미지</div>
-						<div class="movieinfo-actor-name">주연</div>
+						<img src="${review.casts[0].castImgFileName}" alt="Avatar" class="w3-col s6 circle" style="border-radius:50%;">
+						<div class="movieinfo-actor-name">${review.casts[0].castName} (주연)</div>
 					</div>
 					<div class="movieinfo-actor">
-						<div id="circle" style="font-size:8px; padding-top:5px; text-align:center">주연이미지</div>
-						<div class="movieinfo-actor-name">주연</div>
+						<img src="${review.casts[1].castImgFileName}" alt="Avatar" class="w3-col s6 circle" style="border-radius:50%;">
+						<div class="movieinfo-actor-name">${review.casts[1].castName} (주연)</div>
 					</div>
 					<div class="movieinfo-actor">
 						<div id="circle" class="movieinfo-actor-more" onclick="createActorContent"><span>&#10097;&#10097;</span></div>

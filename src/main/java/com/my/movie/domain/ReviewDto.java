@@ -1,5 +1,7 @@
 package com.my.movie.domain;
 
+import java.util.List;
+
 import lombok.Data;
 
 @Data
@@ -13,5 +15,6 @@ public class ReviewDto {
 	
 	private Director director;
 	
+	private List<Cast> casts;
 }
   
