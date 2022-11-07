@@ -248,8 +248,8 @@ nav a {
 				<span id="imgUrl">${review.casts[status.current].castImgFileName }</span>
 				<span id="position"><c:if test="${review.casts[status.current].position eq 1 }">주연</c:if><c:if test="${review.casts[status.current].position eq 0 }">조연</c:if></span>
 			</span>
-			<span id="loginedUserNum">${user.userNum}</span>
 		</c:forEach>
+		<span id="loginedUserNum">${user.userNum}</span>
 	</div>
 	
 	<!-- HEADER !-->
