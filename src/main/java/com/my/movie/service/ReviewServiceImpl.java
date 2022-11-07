@@ -6,9 +6,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.my.movie.dao.CastDao;
+import com.my.movie.dao.DirectorDao;
 import com.my.movie.dao.GenreDao;
 import com.my.movie.dao.MovieDao;
+import com.my.movie.dao.ReviewDao;
 import com.my.movie.domain.Movie;
+import com.my.movie.domain.Review;
 import com.my.movie.domain.ReviewDto;
 
 @Repository
@@ -20,19 +24,44 @@ public class ReviewServiceImpl implements ReviewService {
 	@Autowired
 	private GenreDao genreDao;
 
-	private static DecimalFormat formatter = new DecimalFormat("###,###");
+	@Autowired
+	private DirectorDao directorDao;
+
+	@Autowired
+	private CastDao castDao;
+
+	@Autowired
+	private ReviewDao reviewDao;
+
+	private static final DecimalFormat formatter = new DecimalFormat("###,###");
 
 	@Override
 	public ReviewDto getReviewDtoByMovieId(int movieId) {
 		Movie movie = movieDao.selectById(movieId);
-		String summaryString = toSummaryString(movie);
 
 		ReviewDto dto = new ReviewDto();
 		dto.setMovie(movie);
-		dto.setSummaryString(summaryString);
+		dto.setSummaryString(toSummaryString(movie));
 		dto.setAudienceString(formatter.format(movie.getCumulativeAudience()));
+		dto.setDirector(directorDao.findDirectorByMovieId(movieId));
+		dto.setCasts(castDao.findCastByMovieId(movieId));
+		dto.setReviews(reviewDao.selectReviewByMovieId(movieId, 0, 5));
+		toAnonymousUserId(dto.getReviews());
 
 		return dto;
+	}
+
+	private void toAnonymousUserId(List<Review> reviews) {
+		for (Review review : reviews) {
+			String userId = review.getUserId();
+			StringBuilder builder = new StringBuilder();
+			builder.append(userId.subSequence(0, 3));
+
+			for (int i = 0; i < userId.length() - 3; i++) {
+				builder.append("*");
+			}
+			review.setNickName(builder.toString());
+		}
 	}
 
 	private String toSummaryString(Movie movie) {
@@ -50,4 +79,5 @@ public class ReviewServiceImpl implements ReviewService {
 		builder.setLength(builder.length() - 2);
 		return builder.toString();
 	}
+
 }

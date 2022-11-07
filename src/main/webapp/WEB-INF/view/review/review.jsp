@@ -1,4 +1,7 @@
 <%@ page language='java' contentType='text/html; charset=utf-8' pageEncoding='utf-8'%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -88,13 +91,12 @@ nav a {
 	width : 50px;
 	height : 100px;
 	padding : 5px;
-	margin-top : 10px;
+	margin-top : 5px;
 }
 
 .movieinfo-actor-name {
 	text-align : center;
-	font-size : 13px;
-	margin-top : 10px;
+	font-size : 12px;
 }
 
 .movieinfo-actor-more {
@@ -188,6 +190,15 @@ nav a {
 	border : 1px solid gray;
 }
 
+.circle {
+	width: 40px;
+	height: 40px;
+	-webkit-border-radius: 25px;
+	-moz-border-radius: 25px;
+	border-radius: 25px;
+	border : 2px solid black;
+}
+
 .rectangle {
 	width : 330px;
 	height : 50px;
@@ -229,6 +240,18 @@ nav a {
 </style>
 </head>
 <body>
+	<div hidden="true">
+		<span id="actor_size">${fn:length(review.casts) }</span>
+		<c:forEach begin="0" end="${fn:length(review.casts) }" varStatus="status">
+			<span id="actor_${status.current }">
+				<span id="name">${review.casts[status.current].castName }</span>
+				<span id="imgUrl">${review.casts[status.current].castImgFileName }</span>
+				<span id="position"><c:if test="${review.casts[status.current].position eq 1 }">주연</c:if><c:if test="${review.casts[status.current].position eq 0 }">조연</c:if></span>
+			</span>
+		</c:forEach>
+		<span id="loginedUserNum">${user.userNum}</span>
+	</div>
+	
 	<!-- HEADER !-->
 	<form class='mt-3'>
 		 <div class='col form-group d-flex justify-content-center align-items-center'>
@@ -243,7 +266,9 @@ nav a {
 	<div class="container"><hr></div>
 	<div style="overflow:scroll; height:464px; overflow-x:hidden;">
 		<div class="container center">
-			<div class="poster">영화포스터</div>
+			<div class="poster">
+				<img src="${review.movie.movieImgfileName }" style="object-fit: cover; width:100%; height:100%;">
+			</div>
 			<div class="movieinfo">
 				<div class="menu">${review.movie.movieName }</div>
 				<div class="row movieinfo-line">
@@ -275,20 +300,20 @@ nav a {
 				<div class="menu">출연진</div>
 				<div class="container row movieinfo-actors">
 					<div class="movieinfo-actor">
-						<div id="circle" style="font-size:8px; padding-top:5px; text-align:center">감독이미지</div>
-						<div class="movieinfo-actor-name">감독</div>
+						<img src="${review.director.directorImgFileName}" alt="Avatar" class="w3-col s6 circle" style="border-radius:50%;">
+						<div class="movieinfo-actor-name">${review.director.directorName} (감독)</div>
 					</div>
 					<div class="movieinfo-actor">
-						<div id="circle" style="font-size:8px; padding-top:5px; text-align:center">주연이미지</div>
-						<div class="movieinfo-actor-name">주연</div>
+						<img src="${review.casts[0].castImgFileName}" alt="Avatar" class="w3-col s6 circle" style="border-radius:50%;">
+						<div class="movieinfo-actor-name">${review.casts[0].castName} (주연)</div>
 					</div>
 					<div class="movieinfo-actor">
-						<div id="circle" style="font-size:8px; padding-top:5px; text-align:center">주연이미지</div>
-						<div class="movieinfo-actor-name">주연</div>
+						<img src="${review.casts[1].castImgFileName}" alt="Avatar" class="w3-col s6 circle" style="border-radius:50%;">
+						<div class="movieinfo-actor-name">${review.casts[1].castName} (주연)</div>
 					</div>
 					<div class="movieinfo-actor">
-						<div id="circle" class="movieinfo-actor-more" onclick="createActorContent"><span>&#10097;&#10097;</span></div>
-						<div class="movieinfo-actor-name movieinfo-contents-more" onclick="createActorContent" style="color:#007bff;"><a href='#'>더보기</a></div>
+						<div id="circle" class="movieinfo-actor-more" onclick="createActorDetail()" type="button" data-toggle="modal" data-target='#dialogModal'><span>&#10097;&#10097;</span></div>
+						<div class="movieinfo-actor-name movieinfo-contents-more" onclick="createActorDetail()" style="color:#007bff; margin-top:5px;" type="button" data-toggle="modal" data-target='#dialogModal'><a href='#'>더보기</a></div>
 					</div>
 				</div>
 			</div>
@@ -309,37 +334,26 @@ nav a {
 				<button class="btn-secondary" type="button" data-toggle="modal" data-target='#dialogModal' id="writereviewBtn" onclick="createReviewDialog()" style="border:1px solid gray">평 작성하기</button></div>
 		</div>
 		<div class="container center" id="reviewContainer">
-			<div class="rectangle" id="review_10" isCommentOpened="false">
-				<div class="row container" style="margin:0px; padding:0px;">
-					<div class="review-id">즐거운 무지(mooji***)</div>
-					<div class="like-unlike-panel">
-						<button class="like-button"><i class="fa">&#xf087;</i></button>
-						<span class="like-button">128&nbsp&nbsp</span>
-						<button class="like-button"><span class="fa fa-thumbs-down"></span></button>
-						<span class="like-button">Unlike</span>
-						<button class="like-button" type="button" data-toggle="modal" data-target='#dialogModal' onclick="reportReview(10)"><i class="fa-solid fa-triangle-exclamation"></i></button>
+			<c:forEach var="rev" items="${review.reviews}" varStatus="status">
+				<div class="rectangle" id="review_10" isCommentOpened="false">
+					<div class="row container" style="margin:0px; padding:0px;">
+						<div class="review-id">${ rev.nickName }(${rev.userId })</div>
+						<div class="like-unlike-panel">
+							<button class="like-button"><i class="fa">&#xf087;</i></button>
+							<span class="like-button">128&nbsp&nbsp</span>
+							<button class="like-button"><span class="fa fa-thumbs-down"></span></button>
+							<span class="like-button">Unlike</span>
+							<button class="like-button" type="button" data-toggle="modal" data-target='#dialogModal' onclick="reportReview(10)"><i class="fa-solid fa-triangle-exclamation"></i></button>
+						</div>
+					</div>
+					<div class="row container" style="margin:0px; padding:0px;">
+						<span class="review-content">${rev.reviewContent }]</span>
+						<button class="comment-panel btn-secondary">댓글 22</button>
 					</div>
 				</div>
-				<div class="row container" style="margin:0px; padding:0px;">
-					<span class="review-content">끝도 없이 달려 절망의 땅에서 찾는 구원</span>
-					<button class="comment-panel btn-secondary">댓글 22</button>
-				</div>
-			</div>
-			<div class="rectangle" id="review_11" isCommentOpened="false">
-				<div class="row container" style="margin:0px; padding:0px;">
-					<div class="review-id">개빡친 제이지 (jage***)</div>
-					<div class="like-unlike-panel">
-						<button class="like-button"><i class="fa">&#xf087;</i></button>
-						<span class="like-button">78&nbsp&nbsp</span>
-						<button class="like-button"><span class="fa fa-thumbs-down"></span></button>
-						<span class="like-button">Unlike</span>
-						<button class="like-button" type="button" data-toggle="modal" data-target='#dialogModal' onclick="reportReview(11)"><i class="fa-solid fa-triangle-exclamation"></i></button>
-					</div>
-				</div>
-				<div class="row container" style="margin:0px; padding:0px;">
-					<span class="review-content">언니 돔황챠!!</span>
-					<button class="comment-panel btn-secondary">댓글 9</button>
-				</div>
+			</c:forEach>
+			<div class="movieinfo-actor-name" style="width:100%">
+				<span onclick="viewMoreReview()">더보기 <i class="fa-solid fa-square-caret-down"></i></span>
 			</div>
 		</div>
 	</div>
@@ -381,40 +395,223 @@ nav a {
 		</div>
 	</div>
 <script>
-	function createDetailContentDialog() {
-		createDialog("상세 줄거리", 0x1111);
+	var currentReviews = 5;
+	
+	function viewMoreReview() {
+		
+		
+		$.ajax({
+			url : 'rev/morerev',
+			method: 'post',
+			contentType: 'application/json',
+			data: JSON.stringify({
+				movieId : '${review.movie.movieNum}',
+				startIndex : currentReviews,
+				rowCount : currentReviews + 5
+			}),
+			success : function(result) {
+				console.log(result);
+				currentReviews = currentReviews + 5;
+			},
+			error : function() {
+				console.log('ERROR');
+			}
+		});
 	}
 	
-	function createActorContent() {
+	function getLoginedUserId() {
+		var userNum = document.querySelector("#loginedUserNum").innerHTML;
 		
+		if(userNum) {
+			return userNum;
+		} else {
+			return -1;
+		}
+	}
+	
+	function createNeedLoginDialog() {
+		clearDialog();
+	}
+	
+	function createDetailContentDialog () {
+		clearDialog();
+		createDialog("상세 줄거리", 0x1111);
+		addOkButtonListener();
+	}
+	
+	function addOkButtonListener() {
+		document.querySelector('#okButton').addEventListener('click', function() {
+			clearDialog();
+		});
+	}
+	
+	function createActorDetail() {
+		clearDialog();
+		createDialog("전체 출연진", 0x1121);
+		addOkButtonListener();
+	}
+	
+	function createReviewDialog() {
+		if(getLoginedUserId() != -1) {
+			clearDialog();
+			createDialog("사용자 평 작성하기", 0x11142);	
+			addWriteReviewListener();
+		} else {
+			createNeedLoginDialog();
+		}
+	}
+	
+	function addWriteReviewListener() {
+		document.querySelector('#okButton').addEventListener('click', function() {
+			$.ajax({
+				url: 'rev/add',
+				method: 'post',
+				contentType: 'application/json',
+				data: JSON.stringify({
+					movieNum : ${review.movie.movieNum},
+					grade : document.querySelector("#scoreBox").value,
+					reviewContent : document.querySelector("#reviewContent").value,
+					userNum : getLoginedUserId()
+				}),
+			    success: function(result) {
+			    	console.log(result);
+			    },
+			    error: function() {
+			    	console.log("에러");
+			    }
+			}).done(function() {
+				clearDialog();
+			});
+		});
 	}
 	
 	function createDialog(title, code) {
 		var dialog = document.querySelector("#dialog");
 		
 		createDialogTopMargin(dialog, code);
-		createTitle(dialog, "상세 줄거리");
+		createTitle(dialog, title, code);
 		createBody(dialog, code);
 		createButtons(dialog, code);
 	}
 	
 	function createDialogTopMargin(dialog, code) {
-		if((code & 0x01) == 0x01) {
-			document.querySelector("#dialogUpperMargin").style.setProperty('height', '150px');
+		var marginElem = document.querySelector("#dialogUpperMargin");
+		
+		if((code & 0x1) == 0x01) {
+			marginElem.style.setProperty('height', '150px');
 			dialog.style.setProperty('height', '300px');
+		} else if ((code & 0x2) == 0x2) {
+			marginElem.style.setProperty('height', '290px');
+			dialog.style.setProperty('height', '150px');
 		}
 	}
 	
-	function createTitle(dialog, title) {
-		var titleDiv = document.createElement('div');
-		titleDiv.innerHTML = title;
-		titleDiv.classList.add('menu');
+	function createTitle(dialog, title, code) {
+		if((code & 0x10000) == 0x10000) {
+			createScoreTitle(dialog, title);
+		} else {
+			createNormalTitle(dialog, title);
+		}
+	}
+	
+	function createScoreTitle(dialog, title) {
+		var titleElem = createTitleElem(title);
+		var scoreElem = createScoreElem();
+		var comboBoxElem = createComboBox();
+		titleElem.style.setProperty('width', '160px');
+		
+		var containerElem = document.createElement('div');
+		containerElem.style.setProperty('display', 'flex');
+		containerElem.appendChild(titleElem);
+		containerElem.appendChild(scoreElem);
+		containerElem.appendChild(comboBoxElem);
+		
+		dialog.appendChild(containerElem);
+	}
+	
+	function createTitleElem(title) {
+		var titleElem = document.createElement('div');
+		titleElem.innerHTML = title;
+		titleElem.classList.add('menu');
+		return titleElem;
+	}
+	
+	function createScoreElem() {
+		var scoreElem = document.createElement('span');
+		scoreElem.setAttribute('id', 'scoreSpan');
+		scoreElem.style.setProperty('padding-top', '2px');
+		scoreElem.style.setProperty('margin-right', '5px');
+		for(i = 0; i < 5; i++) {
+			scoreElem.innerHTML += '<i class="fa fa-star" style="font-size:12px"></i>';
+		}
+		
+		return scoreElem;
+	}
+	
+	function createComboBox() {
+		var comboBoxNode = document.createElement('select');
+		var isNum = true;
+
+		for(i = 5; i >= 0; i -= 0.5) {
+			var optionNode = document.createElement('option');
+			optionNode.innerHTML = i;
+
+			if(isNum) {
+				optionNode.innerHTML += '.0';
+				isNum = false;
+			} else {
+				isNum = true;
+			}
+
+			comboBoxNode.appendChild(optionNode);
+		}
+		
+		comboBoxNode.style.setProperty('font-size', '12px', '');
+		comboBoxNode.style.setProperty('width', '40px', '');
+		comboBoxNode.style.setProperty('margin-right', '2px', '');
+		comboBoxNode.style.setProperty('border', '0px solid gray', '');
+
+		comboBoxNode.setAttribute('id', 'scoreBox');
+		comboBoxNode.setAttribute('onchange', 'changeScoreSpan()');
+
+		return comboBoxNode;
+	}
+	
+	function changeScoreSpan() {
+		var comboBox = document.querySelector("#scoreBox");
+		var selected = comboBox.options[comboBox.selectedIndex].value;
+		var numValue = parseInt(selected);
+		var floatValue = selected - numValue;
+
+		var scoreSpan = document.querySelector("#scoreSpan");
+		scoreSpan.innerHTML = '';
+
+		for (i = 0; i < numValue; i++) {
+			scoreSpan.innerHTML += '<i class="fa fa-star" style="font-size:12px"></i>';
+		}
+
+		if (floatValue != 0) {
+			scoreSpan.innerHTML += '<i class="fa fa-star-half-o" style="font-size:12px"></i>';
+			numValue++;
+		}
+
+		for(i = 0; i < 5 - numValue; i++) {
+			scoreSpan.innerHTML += '<i class="fa fa-star-o" style="font-size:12px"></i>';
+		}
+	}
+	
+	function createNormalTitle(dialog, title) {
+		var titleDiv = createTitleElem(title);
 		dialog.appendChild(titleDiv);
 	}
 	
 	function createBody(dialog, code) {
 		if((code & 0x10) == 0x10) {
 			createTextBody(dialog, code);
+		} else if ((code & 0x20) == 0x20) {
+			createAllActorBody(dialog);
+		} else if ((code & 0x40) == 0x40) {
+			createInputTextBody(dialog);
 		}
 	}
 	
@@ -431,10 +628,77 @@ nav a {
 		dialog.appendChild(textDiv);
 	}
 	
+	function createAllActorBody(dialog) {
+		var bodyDiv = document.createElement('div');
+		var lineDiv = document.createElement('div');
+		
+		bodyDiv.appendChild(lineDiv);
+		bodyDiv.style.setProperty('height', '200px');
+		bodyDiv.style.setProperty('overflow', 'scroll');
+		
+		lineDiv.style.setProperty('display', 'flex');
+		lineDiv.appendChild(createDirectorDiv('${review.director.directorImgFileName}', '${review.director.directorName}', '감독'));
+		
+		var totalActors = document.querySelector('#actor_size').innerHTML;
+		
+		for(var i = 0; i < totalActors; i++) {
+			var actorDiv = document.querySelector('#actor_' + i);
+			var actorName = actorDiv.querySelector('#name').innerHTML;
+			var actorUrl = actorDiv.querySelector('#imgUrl').innerHTML;
+			var actorPosition = actorDiv.querySelector('#position').innerHTML;
+			
+			if((i + 1) % 5 == 0) {
+				lineDiv = document.createElement('div');
+				lineDiv.style.setProperty('display', 'flex');
+				bodyDiv.appendChild(lineDiv);
+			}
+			
+			lineDiv.appendChild(createDirectorDiv(actorUrl, actorName, actorPosition));
+		}
+		
+		dialog.append(bodyDiv);
+	}
+	
+	function createDirectorDiv(imgUrl, name, position) {
+		var imageElem = document.createElement('img');
+		imageElem.setAttribute('src', imgUrl);
+		imageElem.setAttribute('alt', 'Avater');
+		imageElem.classList.add('w3-col');
+		imageElem.classList.add('s6');
+		imageElem.classList.add('circle');
+		imageElem.style.setProperty('width', '50px');
+		imageElem.style.setProperty('height', '50px');
+		imageElem.style.setProperty('border-radius', '50%');
+		
+		var nameElem = document.createElement('div');
+		nameElem.classList.add('movieinfo-actor-name');
+		nameElem.style.setProperty('width', '50px');
+		nameElem.style.setProperty('height', '50px');
+		nameElem.innerHTML += (name + '<br>(' + position + ')');
+		
+		var divElem = document.createElement('div');
+		divElem.style.setProperty('margin-right', '10px');
+		divElem.classList.add('movieinfo-actor');
+		divElem.appendChild(imageElem);
+		divElem.appendChild(nameElem);
+		
+		return divElem;
+	}
+	
+	function createInputTextBody(dialog, code) {
+		var inputTextElem = document.createElement('textarea');
+		inputTextElem.setAttribute('id', 'reviewContent');
+		inputTextElem.style.setProperty('width', '100%');
+		inputTextElem.style.setProperty('padding', '0px');
+		inputTextElem.style.setProperty('resize', 'none');
+		dialog.appendChild(inputTextElem);
+	}
+	
 	function createButtons(dialog, code) {
 		var buttonDiv = document.createElement('div');
+		buttonDiv.setAttribute('id', 'okButton');
 		buttonDiv.style.setProperty('height', '50px');
-		buttonDiv.style.setProperty('padding-top', '10px');
+		buttonDiv.style.setProperty('padding-top', '5px');
 		buttonDiv.style.setProperty('padding-bottom', '10px');
 		
 		if((code & 0x1000) == 0x1000) {
@@ -452,7 +716,6 @@ nav a {
 		button.style.setProperty('background-color', '#007bff');
 		button.style.setProperty('color', 'white');
 		button.innerHTML = '확인';
-		button.addEventListener('click', clearDialog);
 		buttonDiv.appendChild(button);
 	}
 	
@@ -460,6 +723,8 @@ nav a {
 		dialog.innerHTML = '';
 		$('#dialogModal').modal('hide');
 	}
+	
+	
 	
 	
 </script>
