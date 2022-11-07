@@ -1,7 +1,5 @@
 package com.my.movie.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +15,16 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User loginValidate(User user) {
 		return userDao.selectUserLogin(user);
+	}
+
+	@Override
+	public User getUser(User user) {
+		return userDao.selectUser(user);
+	}
+
+	@Override
+	public int getWithDrawal(int userNum) {
+		return userDao.selectWithDrawal(userNum);
 	}
 
 	@Override
@@ -53,8 +61,14 @@ public class UserServiceImpl implements UserService {
 	public void addUserGenre(UserGenre userGenre) {
 		userDao.insertUserGenre(userGenre);
 	}
-	
-	//Ïû¨Ïõê
+
+
+	@Override
+	public void addWithDrawal(int userNum) {
+		userDao.insertWithDrawal(userNum);
+	}
+
+//¿Áø¯
 	@Override
 	public String findId1(User user) {
 		return userDao.selectId1(user);

@@ -38,6 +38,10 @@ function isVal(field) {
 	return isGood
 }
 
+$(document).on("keyup", "input[phoneNum]", function() {
+	$(this).val( $(this).val().replace(/[^0-9]/g, '').replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3").replace(/(\-{1,2})$/g, ""))   
+})
+
 function join() {
 	$('#userId').keyup(function() {
 		let userId = /^[a-z0-9]{4,10}$/;
@@ -45,7 +49,7 @@ function join() {
 			$('#idErrMsg').css('color', 'red').text('영문, 숫자 4자 이상 10자 이하로 입력하세요.')
 		} else {
 			$.ajax({
-				url: 'join/checkId',
+				url: 'checkUserId',
 		      	method:'post',
 		      	contentType: 'application/json',
 		      	data: JSON.stringify({
@@ -81,7 +85,7 @@ function join() {
 			$('#nnErrMsg').css('color', 'red').text('특수문자 제외 4자 이상 8자 이하로 입력하세요.')
 		} else {
 			$.ajax({
-				url: 'join/checkNickname',
+				url: 'checkUserNickname',
 		      	method:'post',
 		      	contentType: 'application/json',
 		      	data: JSON.stringify({
@@ -103,12 +107,12 @@ function join() {
 	})
 	
 	$('#phoneNum').keyup(function() {
-		let phoneNum = /^(010|011)[0-9]{8}$/;
+		let phoneNum = /^(010|011)-([0-9]{4})-([0-9]{4})$/;
 		if(!(phoneNum.test($('#phoneNum').val()))) {
 			$('#pnErrMsg').css('color', 'red').text('010 또는 011로 시작하는 연락처를 입력하세요.')
 		} else {
 			$.ajax({
-				url: 'join/checkPhoneNum',
+				url: 'checkUserPhoneNum',
 		      	method:'post',
 		      	contentType: 'application/json',
 		      	data: JSON.stringify({
@@ -135,7 +139,7 @@ function join() {
 			$('#emailErrMsg').css('color', 'red').text('2자 이상 20자이하로 이메일 형식으로 입력하세요.')
 		} else {
 			$.ajax({
-				url: 'join/checkEmail',
+				url: 'checkUserEmail',
 		      	method:'post',
 		      	contentType: 'application/json',
 		      	data: JSON.stringify({
@@ -172,21 +176,19 @@ function join() {
     		valueArr.push(value)
     	})
      	$.ajax({
- 			url: 'join',
+ 			url: 'addUser',
  		    method:'post',
  		    contentType: 'application/json',
- 		    data: JSON.stringify(
- 		    	{
- 		    		user: {
-		 		    	userId: $('#userId').val(),
-		 		    	pw: $('#pw').val(),
-		 		    	nickname: $('#nickname').val(),
-		 		    	phoneNum: $('#phoneNum').val(),
-		 		    	email: $('#email').val()
- 		    		},
- 		    		genreNum: valueArr
- 		    	}
- 		    ),
+ 		    data: JSON.stringify({
+ 		    	user: {
+		 		    userId: $('#userId').val(),
+		 		    pw: $('#pw').val(),
+		 		    nickname: $('#nickname').val(),
+		 		    phoneNum: $('#phoneNum').val(),
+		 		    email: $('#email').val()
+ 		    	},
+ 		    	genreNum: valueArr
+ 		    }),
  		    success: console.log('성공') //location.href='/'
         })
         $('#joinModal').modal('hide')
@@ -241,7 +243,7 @@ label {
                 <label for='phoneNum'>연락처*
                     <small id='pnErrMsg' class='form-text m-3 d-inline msg'></small>
                 </label>
-                <input id='phoneNum' name='phoneNum' type='text' class='form-control' placeholder='-를 빼고 입력하세요.' required/>
+                <input id='phoneNum' name='phoneNum' type='text' class='form-control' placeholder='연락처를 입력하세요.' maxlength='13' required phoneNum/>
             </div>
             <div class='form-group'>
                 <label for='email'>이메일*

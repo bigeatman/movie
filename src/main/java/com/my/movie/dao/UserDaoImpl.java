@@ -18,6 +18,16 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
+	public User selectUser(User user) {
+		return userMap.selectUser(user);
+	}
+
+	@Override
+	public int selectWithDrawal(int userNum) {
+		return userMap.selectWithDrawal(userNum);
+	}
+
+	@Override
 	public int selectUserId(UserDto userId) {
 		return userMap.selectUserId(userId);
 	}
@@ -51,8 +61,13 @@ public class UserDaoImpl implements UserDao {
 	public void insertUserGenre(UserGenre userGenre) {
 		userMap.insertUserGenre(userGenre);
 	}
-	
-	//ì¬ì›
+
+	@Override
+	public void insertWithDrawal(int userNum) {
+		userMap.insertWithDrawal(userNum);
+	}
+
+//Àç¿ø
 	@Override
 	public String selectId1(User user) {
 		return userMap.selectId1(user);
@@ -72,6 +87,4 @@ public class UserDaoImpl implements UserDao {
 	public void updatePw1(String pw, String userId) {
 		userMap.updatePw1(pw, userId);
 	}
-	//ì¬ì›
-	
-}
+	//Àç¿ø

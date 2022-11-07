@@ -34,26 +34,32 @@ function login() {
 		      	data: JSON.stringify({
 		    	  	userId: $('#userId').val(),
 		    	  	pw: $('#pw').val()
-		      	})
-		   	}).done(user => {
-		   		console.log(user)
-			   	if(!user) {
-				   	$('#errMsg').text('아이디 또는 비밀번호가 틀렸습니다.')
-				   	$('input').val('')
-				   	$('#userId').focus()
-			   	} else {
-			   		if($('#userId').val() == 'admin') {
-			   			location.href="/admin"
-			   		} else {
-			   			location.href="/"
-			   		}
-			   	}
-		   })
+		      	}),
+		      	success: function(user) {
+		      		if(!user) {
+					   	$('#errMsg').text('아이디 또는 비밀번호가 틀렸습니다.')
+					   	$('input').val('')
+					   	$('#userId').focus()
+				   	} else {
+				   		if(user.userNum == -1) {
+				   			$('#errMsg').text('탈퇴한 회원입니다.')
+					   		$('input').val('')
+					   		$('#userId').focus()
+				   		} else {
+				   			if($('#userId').val() == 'admin') {
+				   				location.href='/admin'
+				   			} else {
+				   				location.href='/'
+				   			}
+				   		}
+				   	}
+		      	}
+		   	})
 		}	
 	})
 	
 	$('#joinBtn').click(() => {
-		location.href="join"
+		location.href="addUser"
 	})
 }
 $(login)
@@ -86,17 +92,17 @@ nav a {
 			</h5>
 		</div>
 	</header><hr>
-		<div class='col'>
+		<div class='col' style='text-align: center'>
 			<form class='m-4'>
 				<div class='form-group'>
-					<label for='userId'>아이디 </label>
+					<label for='userId' class='d-flex'>아이디 </label>
 					<input id='userId' name='userId' type='text' class='form-control' placeholder='아이디를 입력하세요.'/>
 				</div>
 				<div class='form-group'>
-					<label for='userPw'>비밀번호 </label>
+					<label for='userPw' class='d-flex'>비밀번호 </label>
 					<input id='pw' name='pw' type='password' class='form-control mb-2'  placeholder='••••'/>
 				</div>
-				<small id='errMsg' class='msg d-inline' style='margin-left: 40px; color: red;'></small>
+				<small id='errMsg' class='msg d-inline' style='color: red;'></small>
 				<div class='d-flex justify-content-center mb-2'><a href='findId' id='findId'>아이디 찾기</a>&nbsp;/&nbsp;<a href='findPw' id='findPw'>비밀번호 찾기</a></div>
 				<div class='form-group'>
 					<button id='loginBtn' type='button' class='btn border btn-block bg-success'>

@@ -32,34 +32,62 @@ public class UserController {
 		return mv;
 	}
 
+	@PostMapping("login")
+	public User login(@RequestBody User userLogin, HttpSession session) {
+		User user = userService.loginValidate(userLogin);
+		if(user != null) {
+			User userInfo = userService.getUser(userLogin);
+			int userWithDrawal = userService.getWithDrawal(userInfo.getUserNum());
+			if(userWithDrawal == 1) {
+				user = new User();
+				user.setUserNum(-1);
+			} else {
+				user.setUserNum(userInfo.getUserNum());
+				user.setUserId(userInfo.getUserId());
+				user.setNickname(userInfo.getNickname());
+				user.setPhoneNum(userInfo.getPhoneNum());
+				user.setEmail(userInfo.getEmail());
+				session.setAttribute("user", user);
+			}
+		}
+		return user;
+	}
+	@GetMapping("logout")
+	public ModelAndView logout(ModelAndView mv, HttpSession session) {
+		session.invalidate();
+		mv.setViewName("redirect:/");
+		return mv;
+	}
+	
 	@GetMapping("mypage")
 	public ModelAndView mypage(ModelAndView mv) {
 		mv.setViewName("user/mypage");
 		return mv;
 	}
 
-	@PostMapping("login")
-	public User login(@RequestBody User userLogin, HttpSession session) {
-		System.out.println(userLogin);
-		User user = userService.loginValidate(userLogin);
-		session.setAttribute("user", user);
-		return user;
+	@GetMapping("addWithDrawal")
+	public ModelAndView addWithDrawal(ModelAndView mv) {
+		mv.setViewName("user/withDrawal");
+		return mv;
 	}
 
-	@GetMapping("join")
+	@PostMapping("addWithDrawal")
+	public void addWithDrawal(@RequestBody User userNum, HttpSession session) {
+		userService.addWithDrawal(userNum.getUserNum());
+		session.invalidate();
+	}
+	
+	@GetMapping("addUser")
 	public ModelAndView join(ModelAndView mv) {
 		mv.setViewName("user/join");
 		return mv;
 	}
 
-	@PostMapping("join")
+	@PostMapping("addUser")
 	public void join(@RequestBody UserGenre userGenre) {
 		System.out.println(userGenre);
 		User user = userGenre.getUser();
-		System.out.println(user);
-		for (String genre : userGenre.getGenreNum()) {
-			System.out.println(genre);
-		}
+
 
 //		genreDao.addUserGenre(user, userGenre.getGenreNum());
 		// int userNum = num++;
@@ -68,31 +96,31 @@ public class UserController {
 		// userService.addUserGenre(userNum, genre.getGenreNum());
 	}
 
-	@PostMapping("join/checkId")
+	@PostMapping("checkUserId")
 	public int idCheck(@RequestBody UserDto userId) {
 		int result = userService.checkUserId(userId);
 		return result;
 	}
 
-	@PostMapping("join/checkNickname")
+	@PostMapping("checkUserNickname")
 	public int nicknameCheck(@RequestBody UserDto nickname) {
 		int result = userService.checkUserNickname(nickname);
 		return result;
 	}
 
-	@PostMapping("join/checkPhoneNum")
+	@PostMapping("checkUserPhoneNum")
 	public int phoneNumCheck(@RequestBody UserDto phoneNum) {
 		int result = userService.checkUserPhoneNum(phoneNum);
 		return result;
 	}
 
-	@PostMapping("join/checkEmail")
+	@PostMapping("checkUserEmail")
 	public int emailCheck(@RequestBody UserDto email) {
 		int result = userService.checkUserEmail(email);
 		return result;
 	}
 
-	// Ïû¨Ïõê
+	// ¿Áø¯
 	@GetMapping("findId")
 	public ModelAndView findId(ModelAndView mv) {
 		mv.setViewName("user/findId");
@@ -110,7 +138,7 @@ public class UserController {
 		return mv;
 	}
 
-	// ÎπÑÎ∞ÄÎ≤àÌò∏ Ï∞æÍ∏∞
+	// ∫Òπ–π¯»£ √£±‚
 	@GetMapping("findPw")
 	public ModelAndView findPw(ModelAndView mv) {
 		mv.setViewName("user/findPw");
@@ -140,7 +168,7 @@ public class UserController {
 		return mv;
 	}
 
-	// ÎπÑÎ∞ÄÎ≤àÌò∏ ÏàòÏ†ï
+	// ∫Òπ–π¯»£ ºˆ¡§
 	@GetMapping("fixPw/{userId}")
 	public ModelAndView changePw(ModelAndView mv,
 			@PathVariable String userId) {

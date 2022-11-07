@@ -8,6 +8,18 @@
 		where user_id = #{userId} and pw = #{pw}
 	</select>
 	
+	<select id='selectWithDrawal' resultType='_int'>
+		select count(*)
+		from users, user_withdrawal 
+		where users.user_num = #{userNum} and user_withdrawal.user_num = #{userNum}
+	</select>
+	
+	<select id='selectUser' resultType='user'>
+		select *
+		from users
+		where user_id = #{userId}
+	</select>
+	
 	<select id='selectUserId' resultType='int'>
 		select count(*)
 		from users
@@ -47,8 +59,13 @@
 		insert into user_genre(user_num, genre_num)
 		values(user_num_seq.nextval, #{genreNum})
 	</insert>
-	
-	<!-- ì¬ì› -->
+
+	<insert id='insertWithDrawal'>
+		insert into user_WITHDRAWAL(user_num)
+		values(#{userNum})
+	</insert>
+
+<!-- Àç¿ø -->
 	<select id='selectId1' resultType='string'>
 		select user_id
 		from users
