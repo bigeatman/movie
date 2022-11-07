@@ -97,7 +97,7 @@ nav a {
 					<input id='pw' name='pw' type='password' class='form-control mb-2'  placeholder='••••'/>
 				</div>
 				<small id='errMsg' class='msg d-inline' style='margin-left: 40px; color: red;'></small>
-				<div class='d-flex justify-content-center mb-2'><a href='#' id='foundId'>아이디 찾기</a>&nbsp;/&nbsp;<a href='#' id='foundPw'>비밀번호 찾기</a></div>
+				<div class='d-flex justify-content-center mb-2'><a href='findId' id='findId'>아이디 찾기</a>&nbsp;/&nbsp;<a href='findPw' id='findPw'>비밀번호 찾기</a></div>
 				<div class='form-group'>
 					<button id='loginBtn' type='button' class='btn border btn-block bg-success'>
 						<span class='h5'>로 그 인</span>

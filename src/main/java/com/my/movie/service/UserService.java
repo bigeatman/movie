@@ -13,4 +13,9 @@ public interface UserService {
 	int checkUserEmail(UserDto email);
 	void addUser(User user);
 	void addUserGenre(UserGenre userGenre);
+	//재원
+	String findId1(User user);
+	String findPw1(User user);
+	String findPw1(String email, String userId);
+	void fixPw1(String pw, String userId);
 }

@@ -53,4 +53,25 @@ public class UserServiceImpl implements UserService {
 	public void addUserGenre(UserGenre userGenre) {
 		userDao.insertUserGenre(userGenre);
 	}
+	
+	//재원
+	@Override
+	public String findId1(User user) {
+		return userDao.selectId1(user);
+	}
+	
+	@Override
+	public String findPw1(User user) {
+		return userDao.selectPw1(user);
+	}
+	
+	@Override
+	public String findPw1(String email, String userId) {
+		return userDao.selectPw1(email, userId);
+	}
+	
+	@Override
+	public void fixPw1(String pw, String userId) {
+		userDao.updatePw1(pw, userId);
+	}
 }
