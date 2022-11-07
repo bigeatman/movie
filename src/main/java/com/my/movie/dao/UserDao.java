@@ -13,4 +13,9 @@ public interface UserDao {
 	int selectUserEmail(UserDto email);
 	void insertUser(User user);
 	void insertUserGenre(UserGenre userGenre);
+	//재원
+	String selectId1(User user);
+	String selectPw1(User user);
+	String selectPw1(String email, String userId);
+	void updatePw1(String pw, String userId);
 }

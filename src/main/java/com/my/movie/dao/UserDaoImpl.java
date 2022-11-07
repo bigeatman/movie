@@ -51,4 +51,27 @@ public class UserDaoImpl implements UserDao {
 	public void insertUserGenre(UserGenre userGenre) {
 		userMap.insertUserGenre(userGenre);
 	}
+	
+	//재원
+	@Override
+	public String selectId1(User user) {
+		return userMap.selectId1(user);
+	}
+	
+	@Override
+	public String selectPw1(User user) {
+		return userMap.selectPw1(user);
+	}
+	
+	@Override
+	public String selectPw1(String email, String userId) {
+		return userMap.selectPw1(email, userId);
+	}
+	
+	@Override
+	public void updatePw1(String pw, String userId) {
+		userMap.updatePw1(pw, userId);
+	}
+	//재원
+	
 }

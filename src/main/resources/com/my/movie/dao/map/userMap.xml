@@ -47,4 +47,23 @@
 		insert into user_genre(user_num, genre_num)
 		values(user_num_seq.nextval, #{genreNum})
 	</insert>
+	
+	<!-- 재원 -->
+	<select id='selectId1' resultType='string'>
+		select user_id
+		from users
+		where email = #{email} and phone_num = #{phoneNum}
+	</select>
+	
+	<select id='selectPw1' resultType='string'>
+		select user_id, email
+		from users
+		where user_id = #{userId} and email = #{email}
+	</select>
+	
+	<update id='updatePw1'>
+		update users
+		set pw = #{pw}
+		where user_id = #{userId}
+	</update>
 </mapper>
