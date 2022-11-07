@@ -248,8 +248,8 @@ nav a {
 				<span id="imgUrl">${review.casts[status.current].castImgFileName }</span>
 				<span id="position"><c:if test="${review.casts[status.current].position eq 1 }">주연</c:if><c:if test="${review.casts[status.current].position eq 0 }">조연</c:if></span>
 			</span>
-			<span id="loginedUserNum">${user.userNum}</span>
 		</c:forEach>
+		<span id="loginedUserNum">${user.userNum}</span>
 	</div>
 	
 	<!-- HEADER !-->
@@ -334,37 +334,26 @@ nav a {
 				<button class="btn-secondary" type="button" data-toggle="modal" data-target='#dialogModal' id="writereviewBtn" onclick="createReviewDialog()" style="border:1px solid gray">평 작성하기</button></div>
 		</div>
 		<div class="container center" id="reviewContainer">
-			<div class="rectangle" id="review_10" isCommentOpened="false">
-				<div class="row container" style="margin:0px; padding:0px;">
-					<div class="review-id">즐거운 무지(mooji***)</div>
-					<div class="like-unlike-panel">
-						<button class="like-button"><i class="fa">&#xf087;</i></button>
-						<span class="like-button">128&nbsp&nbsp</span>
-						<button class="like-button"><span class="fa fa-thumbs-down"></span></button>
-						<span class="like-button">Unlike</span>
-						<button class="like-button" type="button" data-toggle="modal" data-target='#dialogModal' onclick="reportReview(10)"><i class="fa-solid fa-triangle-exclamation"></i></button>
+			<c:forEach var="rev" items="${review.reviews}" varStatus="status">
+				<div class="rectangle" id="review_10" isCommentOpened="false">
+					<div class="row container" style="margin:0px; padding:0px;">
+						<div class="review-id">${ rev.nickName }(${rev.userId })</div>
+						<div class="like-unlike-panel">
+							<button class="like-button"><i class="fa">&#xf087;</i></button>
+							<span class="like-button">128&nbsp&nbsp</span>
+							<button class="like-button"><span class="fa fa-thumbs-down"></span></button>
+							<span class="like-button">Unlike</span>
+							<button class="like-button" type="button" data-toggle="modal" data-target='#dialogModal' onclick="reportReview(10)"><i class="fa-solid fa-triangle-exclamation"></i></button>
+						</div>
+					</div>
+					<div class="row container" style="margin:0px; padding:0px;">
+						<span class="review-content">${rev.reviewContent }]</span>
+						<button class="comment-panel btn-secondary">댓글 22</button>
 					</div>
 				</div>
-				<div class="row container" style="margin:0px; padding:0px;">
-					<span class="review-content">끝도 없이 달려 절망의 땅에서 찾는 구원</span>
-					<button class="comment-panel btn-secondary">댓글 22</button>
-				</div>
-			</div>
-			<div class="rectangle" id="review_11" isCommentOpened="false">
-				<div class="row container" style="margin:0px; padding:0px;">
-					<div class="review-id">개빡친 제이지 (jage***)</div>
-					<div class="like-unlike-panel">
-						<button class="like-button"><i class="fa">&#xf087;</i></button>
-						<span class="like-button">78&nbsp&nbsp</span>
-						<button class="like-button"><span class="fa fa-thumbs-down"></span></button>
-						<span class="like-button">Unlike</span>
-						<button class="like-button" type="button" data-toggle="modal" data-target='#dialogModal' onclick="reportReview(11)"><i class="fa-solid fa-triangle-exclamation"></i></button>
-					</div>
-				</div>
-				<div class="row container" style="margin:0px; padding:0px;">
-					<span class="review-content">언니 돔황챠!!</span>
-					<button class="comment-panel btn-secondary">댓글 9</button>
-				</div>
+			</c:forEach>
+			<div class="movieinfo-actor-name" style="width:100%">
+				<span onclick="viewMoreReview()">더보기 <i class="fa-solid fa-square-caret-down"></i></span>
 			</div>
 		</div>
 	</div>
@@ -406,6 +395,30 @@ nav a {
 		</div>
 	</div>
 <script>
+	var currentReviews = 5;
+	
+	function viewMoreReview() {
+		
+		
+		$.ajax({
+			url : 'rev/morerev',
+			method: 'post',
+			contentType: 'application/json',
+			data: JSON.stringify({
+				movieId : '${review.movie.movieNum}',
+				startIndex : currentReviews,
+				rowCount : currentReviews + 5
+			}),
+			success : function(result) {
+				console.log(result);
+				currentReviews = currentReviews + 5;
+			},
+			error : function() {
+				console.log('ERROR');
+			}
+		});
+	}
+	
 	function getLoginedUserId() {
 		var userNum = document.querySelector("#loginedUserNum").innerHTML;
 		
@@ -451,7 +464,7 @@ nav a {
 	function addWriteReviewListener() {
 		document.querySelector('#okButton').addEventListener('click', function() {
 			$.ajax({
-				url: 'rev',
+				url: 'rev/add',
 				method: 'post',
 				contentType: 'application/json',
 				data: JSON.stringify({

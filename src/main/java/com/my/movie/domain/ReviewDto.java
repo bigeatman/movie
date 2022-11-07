@@ -16,5 +16,8 @@ public class ReviewDto {
 	private Director director;
 	
 	private List<Cast> casts;
+	
+	private List<Review> reviews;
+	
 }
   

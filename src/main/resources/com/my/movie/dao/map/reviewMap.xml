@@ -12,4 +12,13 @@
 			${movieNum}
 		)
 	</insert>
+	
+	<select id="selectReviewByMovieId" resultType="Review">
+		SELECT * FROM 
+		    (SELECT ROWNUM AS RN, REVIEWS.*, USERS.NICKNAME, USERS.USER_ID FROM REVIEWS 
+		    JOIN USERS ON REVIEWS.USER_NUM = USERS.USER_NUM)
+		WHERE 
+		    RN BETWEEN ${startIndex} AND ${rowCount} AND
+		    MOVIE_NUM = ${movieId}
+	</select>
 </mapper>
