@@ -11,21 +11,21 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.my.movie.dao.map.ReviewMap;
+import com.my.movie.dao.ReviewDao;
+import com.my.movie.domain.CreateReviewRequest;
 import com.my.movie.domain.Review;
-import com.my.movie.web.request.CreateReviewRequest;
-import com.my.movie.web.request.ViewMoreReviewRequest;
+import com.my.movie.domain.ViewMoreReviewRequest;
 
 @RestController
 @RequestMapping("rev")
 public class ReviewRestController {
 
 	@Autowired
-	private ReviewMap reviewMap;
+	private ReviewDao reviewDao;
 
 	@PostMapping("add")
 	public void addReview(@RequestBody CreateReviewRequest request) {
-		reviewMap.insertReview(request);
+		reviewDao.insertReview(request);
 	}
 
 	@PostMapping("morerev")
@@ -34,11 +34,8 @@ public class ReviewRestController {
 		int startIndex = request.getStartIndex();
 		int rowCount = request.getRowCount();
 		
-		System.out.println(request);
-		
 		try {
-			List<Review> reviews = reviewMap.selectReviewByMovieId(movieId, startIndex, rowCount);
-			System.out.println(reviews);
+			List<Review> reviews = reviewDao.selectReviewByMovieId(movieId, startIndex, rowCount);
 			ObjectMapper mapper = new ObjectMapper();
 			mapper.registerModule(new JavaTimeModule());
 			return mapper.writeValueAsString(reviews);

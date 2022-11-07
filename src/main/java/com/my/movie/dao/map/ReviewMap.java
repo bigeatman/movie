@@ -2,8 +2,8 @@ package com.my.movie.dao.map;
 
 import java.util.List;
 
+import com.my.movie.domain.CreateReviewRequest;
 import com.my.movie.domain.Review;
-import com.my.movie.web.request.CreateReviewRequest;
 
 public interface ReviewMap {
 	

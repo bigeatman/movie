@@ -46,22 +46,8 @@ public class ReviewServiceImpl implements ReviewService {
 		dto.setDirector(directorDao.findDirectorByMovieId(movieId));
 		dto.setCasts(castDao.findCastByMovieId(movieId));
 		dto.setReviews(reviewDao.selectReviewByMovieId(movieId, 0, 5));
-		toAnonymousUserId(dto.getReviews());
 
 		return dto;
-	}
-
-	private void toAnonymousUserId(List<Review> reviews) {
-		for (Review review : reviews) {
-			String userId = review.getUserId();
-			StringBuilder builder = new StringBuilder();
-			builder.append(userId.subSequence(0, 3));
-
-			for (int i = 0; i < userId.length() - 3; i++) {
-				builder.append("*");
-			}
-			review.setNickName(builder.toString());
-		}
 	}
 
 	private String toSummaryString(Movie movie) {

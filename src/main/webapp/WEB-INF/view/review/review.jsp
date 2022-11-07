@@ -335,9 +335,9 @@ nav a {
 		</div>
 		<div class="container center" id="reviewContainer">
 			<c:forEach var="rev" items="${review.reviews}" varStatus="status">
-				<div class="rectangle" id="review_10" isCommentOpened="false">
+				<div class="rectangle" id="review_${rev.reviewNum}" isCommentOpened="false">
 					<div class="row container" style="margin:0px; padding:0px;">
-						<div class="review-id">${ rev.nickName }(${rev.userId })</div>
+						<div id="reviewWriter" "class="review-id">${ rev.nickName }(${rev.userId })</div>
 						<div class="like-unlike-panel">
 							<button class="like-button"><i class="fa">&#xf087;</i></button>
 							<span class="like-button">128&nbsp&nbsp</span>
@@ -347,12 +347,12 @@ nav a {
 						</div>
 					</div>
 					<div class="row container" style="margin:0px; padding:0px;">
-						<span class="review-content">${rev.reviewContent }]</span>
+						<span id="reviewContent" class="review-content">${rev.reviewContent }]</span>
 						<button class="comment-panel btn-secondary">댓글 22</button>
 					</div>
 				</div>
 			</c:forEach>
-			<div class="movieinfo-actor-name" style="width:100%">
+			<div id="moreReviewButton"class="movieinfo-actor-name" style="width:100%">
 				<span onclick="viewMoreReview()">더보기 <i class="fa-solid fa-square-caret-down"></i></span>
 			</div>
 		</div>
@@ -398,8 +398,6 @@ nav a {
 	var currentReviews = 5;
 	
 	function viewMoreReview() {
-		
-		
 		$.ajax({
 			url : 'rev/morerev',
 			method: 'post',
@@ -410,13 +408,66 @@ nav a {
 				rowCount : currentReviews + 5
 			}),
 			success : function(result) {
-				console.log(result);
 				currentReviews = currentReviews + 5;
+				createAdditionalReviewElement(JSON.parse(result));
+				/*
+				var test = JSON.parse(result);
+				console.log(test.length);
+				console.log(test[0]);
+				console.log(test[0].grade);
+				*/
 			},
 			error : function() {
 				console.log('ERROR');
 			}
 		});
+	}
+	
+	function createAdditionalReviewElement(reviews) {
+		var button = document.querySelector("#moreReviewButton");
+		var reviewContainer = document.querySelector("#reviewContainer");
+		
+		button.remove();
+		insertReviews(reviewContainer, reviews);
+		reviewContainer.appendChild(button);
+	}
+	
+	/*
+	<div class="rectangle" id="review_${rev.reviewNum}" isCommentOpened="false">
+		<div class="row container" style="margin:0px; padding:0px;">
+			<div class="review-id">${ rev.nickName }(${rev.userId })</div>
+			<div class="like-unlike-panel">
+				<button class="like-button"><i class="fa">&#xf087;</i></button>
+				<span class="like-button">128&nbsp&nbsp</span>
+				<button class="like-button"><span class="fa fa-thumbs-down"></span></button>
+				<span class="like-button">Unlike</span>
+				<button class="like-button" type="button" data-toggle="modal" data-target='#dialogModal' onclick="reportReview(10)"><i class="fa-solid fa-triangle-exclamation"></i></button>
+			</div>
+		</div>
+		<div class="row container" style="margin:0px; padding:0px;">
+			<span class="review-content">${rev.reviewContent }]</span>
+			<button class="comment-panel btn-secondary">댓글 22</button>
+		</div>
+	</div>
+	*/
+	
+	function insertReviews(reviewContainer, reviews) {
+		for(var i = 0; i < reviews.length; i++) {
+			console.log(reviews[i]);
+			var reviewElem = reviewContainer.firstElementChild.cloneNode(true);
+			writeReviewData(reviews[i], reviewElem);
+			reviewContainer.appendChild(reviewElem);
+		}
+	}
+	
+	function writeReviewData(review, reviewElem) {
+		reviewElem.setAttribute("id", "review_" + review.reviewNum);
+		
+		var nicknameElem = reviewElem.querySelector("#reviewWriter");
+		nicknameElem.innerHTML = review.nickName + "(" + review.userId  + ")";
+		
+		var contentElem = reviewElem.querySelector("#reviewContent");
+		contentElem.innerHTML = review.reviewContent;
 	}
 	
 	function getLoginedUserId() {
