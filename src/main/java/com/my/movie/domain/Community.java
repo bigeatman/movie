@@ -11,7 +11,5 @@ public class Community {
 	private String communityContent;
 	private Date communityDate;
 	private String communityImgFileName;
-	private int communityUserNum;
-	private String userId;
-	private String getUserId;
+	private int UserNum;
 }

@@ -6,7 +6,6 @@
 <meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'>
 <link rel='stylesheet' href='http://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css'/>
-<link rel='stylesheet' href='../res/style.css'>
 <script src='https://code.jquery.com/jquery-3.6.0.min.js'></script>
 <script src='https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js'></script>
 <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js'></script>
@@ -23,8 +22,9 @@ function checkLogin() {
 %>
 }
 $(checkLogin)
-
-$(() => {
+</script>
+<script>
+/* $(() => {
 	$('#writePostBtn').click(() => {
 		if(isVal($('#title')) && isVal($('#contents'))) {
 			$.ajax({
@@ -42,7 +42,38 @@ $(() => {
 			})
 		}
 	})
-})
+}) */
+/* function getToday() {
+	var today = new Date()
+		
+	return today.getFullYear() + "-" +("0" + (today.getMonth() + 1)).slice(-2) + "-" + ("0" + today.getDate()).slice(-2)
+}
+
+$(() => {
+	$('#writePostBtn').click(() => {
+		var regDate = getToday()
+		
+		if(session.getAttribute("user") != null) {
+		
+			$.ajax({
+				url: 'list/add',
+				method: 'post',
+				contentType: 'application/json',
+				data: JSON.stringify({
+					communityContent: $('#writePostBtn').val(),
+					communityDate: regDate,
+					userNum: user.userNum,
+				}), 
+				success: function successWritePost() {
+					window.location.href = '/community/list'
+					CommunityList
+					
+				}
+			})
+		} 
+	})	
+})	
+ */
 
 </script>
 <style>
@@ -90,7 +121,7 @@ label {
     <div style="border:1px solid; padding:10px;">
     <form method="post">
       <div class="form-group">
-
+<div id="communityWrite">
         <input type="text" class="form-control" id="title"
          placeholder="제목 (2자 이상 30자 이하)" name="title"
          minlength="2" maxlength="30" required="required"
@@ -111,10 +142,11 @@ label {
     <label for="input-file"></label>
       <input type="file" id="input-file"/></label>
       <div class='row mt-3 p-3 border-top'>
-        <button id='writePostBtn' type='button' class='btn btn-success border btn-block' onclick='location.href="list"'>추가</button>
+        <!-- <button id='writePostBtn' type='button' class='btn btn-success border btn-block' onclick='location.href="list"'>추가</button> -->
+        <input type="submit" class="btn btn-success border btn-block" value="글쓰기">
       </div>
   </div>
-
+</div>
 <!-- 네비게이션 바 -->
 <div id='navBar' class='container-fulid'>
        	<nav class='row fixed-bottom p-2'>

@@ -24,31 +24,31 @@ function checkLogin() {
 $(checkLogin)
 
 function CommunityList() {
-   
    $.ajax({
       method: 'post',
       url: "<%=request.getContextPath() %>/community/list",
-      success:communityList => {
-  	 	  communities = []
-   
-      if(communities.length) {
-         const communityArr = []
-   
-         communityList.forEach((community) => {
-            communities.push(
-               '<div>' + `\${community.communityNum}` + '<div>' +
-               '<div>' + `\${community.communityTitle}` + '</div>' + 
-                    '<td>1</td> <td>2</td> <td>3</td> </tr>'     
-            );
-            console.log(communityArr)
-         })
-   
-         $('#communities').empty()
-         $('#communities').append(communityArr.join(''))
-      } else {
-         $('#communities').append('<tr><td colspan=6 class=text-center>등록된 게시글이 없습니다.</td></tr>')
-      }
-   })
+      dataType:"json",
+      success: function(result) {
+    	  console.log(result);
+    	  createCommunityElement(result);
+      }});
+}
+
+function createCommunityElement(result) {
+		var container = document.querySelector("#communityContainer");
+		
+		var comDiv = document.createElement('li');
+		var aElem = document.createElement('a');
+		
+		comDiv.appendChild(aElem);
+		
+	for(var i = 0; i < result.length; i++) {
+		container.innerHTML += "<a href='content'>" + "<li class='row pt-3 pb-3 list-unstyled border-bottom'>" +
+							   "<span class='col-1'>" + result[i].communityNum + "</span>" +
+		 					   "<span class='col-8'>" + result[i].communityTitle + "</span>" +
+							   "<span class='col-2'>" + result[i].userNum + "</span>" + "</li>" + "</a>";
+		
+	}
 }
 $(CommunityList)
 </script>
@@ -83,81 +83,90 @@ label {
     width: 1px;
 }
 
+pagination {
+	text-align:center;
+}
+
 </style>
 </head>
+
 <div class="container">
     <h2><strong><br><center>커뮤니티</center></strong></h2>
 
     <hr style="border: double 1px black;">
     <h3><em><u><center>영화평</center></u></em></h3>
 
-<table class='table table-boarded'>
-	<thead><tr><th></th><th></th></tr></thead>
-	<tbody id='communities'>
-	</tbody>
-</table>
-
-<!-- <div class='justify-content-center'>
-        <ul class='list-unstyled border-top'>
-            <li class='border-bottom pt-3 pb-3'>
-                <a href="content" id="communities" class='row justify-content-center align-items-center'>
-                    <span class='col-1'></span>
-                    <span class='col-8'></span>
-                    <span class='col-3'></span>
-                </a>
-            </li>
-            <li class='border-bottom pt-3 pb-3'>
-                <a href="content" id="communityList" class='row justify-content-center align-items-center'>
-                    <span class='col-1'></span>
-                    <span class='col-8'></span>
-                    <span class='col-3'></span>
-                </a>
-            </li>
-            <li class='border-bottom pt-3 pb-3'>
-                <a href="content" class='row justify-content-center align-items-center'>
-                    <span class='col-1'></span>
-                    <span class='col-8'></span>
-                    <span class='col-3'></span>
-                </a>
-            <li class='border-bottom pt-3 pb-3'>
-                    <a href="content" class='row justify-content-center align-items-center'>
-                        <span class='col-1'></span>
-                        <span class='col-8'></span>
-                        <span class='col-3'></span>
-                </a>
-            <li class='border-bottom pt-3 pb-3'>
-                    <a href="content" class='row justify-content-center align-items-center'>
-                        <span class='col-1'></span>
-                        <span class='col-8'></span>
-                        <span class='col-3'></span>
-                </a>
-            <li class='border-bottom pt-3 pb-3'>
-                    <a href="content" class='row justify-content-center align-items-center'>
-                        <span class='col-1'></span>
-                        <span class='col-8'></span>
-                        <span class='col-3'></span>
-                </a>
-            </li>    
-        </ul>
-    </div> -->
+<div class='justify-content-center'>
+	<ul class='list-unstyled border-top' id="communityContainer">
+	</ul>
+</div>
         
     <button type="submit" onclick='location.href="write"' style="width: 245pt; HEIGHT: 25pt" class="btn btn-primary">글쓰기</button>
 
-<!-- < 1,2,3,4,5 > -->
-    <div class='row mt-5 justify-content-center'>
-        <span class='col'>
-            <i class="fa-solid fa-angle-left"></i>
-        </span>
-        <span class='col'>1</span>
-        <span class='col'>2</span>
-        <span class='col'>3</span>
-        <span class='col'>4</span>
-        <span class='col'>5</span>
-        <span class='col'>
-            <i class="fa-solid fa-angle-right"></i>
-        </span><br><br>
-    </div>
-    
+<!-- PAGINATION -->
+
+<!-- / <div class='d-flex justify-content-center'>
+         <ul class='pagination'>
+         	<c:if test='${startNum > 1 }'>
+         		<a href='?p=${startNum-1}' class='page-link'>«</a>
+         	</c:if>
+         	<c:if test='${startNum <= 1}'>
+		    	<span id='noPrev' class='page-link' data-toggle='modal' data-target='#prePageAlert'>«</span>
+		    </c:if>
+			
+         	<c:forEach var='i' begin='0' end='4'>
+         		<c:if test='${page eq startNum+i}'>
+         			<li class='page-item'><a class='page-link' href='?p=${startNum+i}' style='background:#d3d3d3'>${startNum+i}</a></li>
+         		</c:if>
+         		<c:if test='${page ne startNum+i}'>
+         			 <c:if test='${startNum+i <= lastNum }'> 
+           				<li class='page-item'><a class='page-link' href='?p=${startNum+i}'>${startNum+i}</a></li>
+           			 </c:if> 
+           		</c:if>
+            </c:forEach>
+            <c:if test='${startNum+5 <= lastNum}'>
+	      		<a href='?p=${startNum+5}' class='page-link'>»</a>
+		    </c:if>
+		    <c:if test='${startNum+5 > lastNum}'>
+		    	<span class='page-link' data-toggle='modal' data-target='#nextPageAlert'>»</span>
+		    </c:if>
+         </ul>
+      </div>
+ --%>
+<!-- <div class="row mt-5 justify-content-center" aria-label="Page navigation example">      
+    <ul id="paging" class="pagination" style="justify-content: center;">
+      <li class="page-item"><a class="page-link" href="#">＜</a></li>
+      <li class="page-item"><a class="page-link" href="#">1</a></li>
+      <li class="page-item"><a class="page-link" href="#">2</a></li>
+      <li class="page-item"><a class="page-link" href="#">3</a></li>
+      <li class="page-item"><a class="page-link" href="#">4</a></li>
+      <li class="page-item"><a class="page-link" href="#">5</a></li>
+      <li class="page-item"><a class="page-link" href="#">＞</a></li>
+    </ul>
+</div> -->
+
+<!-- <div class="row mt-5 justify-content-center" aria-label="Page navigation">
+  	<ul class="pagination">
+    	<li class="page-item">
+      	<a class="page-link" href="#" aria-label="Previous">
+        	<span aria-hidden="true">&laquo;</span>
+      	</a>
+    	</li>
+    	
+    	<li class="page-item"><a class="page-link" style="width:35pt" href="#">1</a></li>
+    	<li class="page-item"><a class="page-link" style="width:35pt" href="#">2</a></li>
+    	<li class="page-item"><a class="page-link" style="width:35pt" href="#">3</a></li>
+    	<li class="page-item"><a class="page-link" style="width:35pt" href="#">4</a></li>
+    	<li class="page-item"><a class="page-link" style="width:35pt" href="#">5</a></li>
+    	
+    	<li class="page-item">
+      	<a class="page-link" href="#" aria-label="Next">
+        	<span aria-hidden="true">&raquo;</span>
+      	</a>
+    	</li>
+  	</ul>
+</div> -->
+
 <!-- 네비게이션 바 -->
 <div id='navBar' class='container-fulid'>
        	<nav class='row fixed-bottom p-2'>

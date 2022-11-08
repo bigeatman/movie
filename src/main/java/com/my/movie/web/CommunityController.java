@@ -14,18 +14,34 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.my.movie.domain.Community;
 import com.my.movie.service.CommunityService;
 
 @RestController
 @RequestMapping("community")
 public class CommunityController {
-	@Autowired private CommunityService communityService;
+	@Autowired
+	private CommunityService communityService;
 	
-	@RequestMapping("list")
+	@GetMapping("list")
 	public ModelAndView communities(ModelAndView mv) {
 		mv.setViewName("community/list");
 		return mv;
+	}
+	
+	@PostMapping("list")
+	public String communities() {
+		ObjectMapper mapper = new ObjectMapper();
+		
+		try {
+			return mapper.writeValueAsString(communityService.getCommunities());
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		return "ERROR";
 	}
 	
 	@PostMapping
@@ -61,4 +77,6 @@ public class CommunityController {
 	public void delCommunity(@PathVariable int communityNum) {
 		communityService.delCommunity(communityNum);
 	}
+	
+
 }

@@ -13,14 +13,15 @@
 	</select>
 	
 	<resultMap id='communityMap' type='community'>
-		<id property='communityId' column='community_id'/>
+		<id property='communityNum' column='community_num'/>
 		<result property='title' column='title'/>
 		<result property='communityDate' column='communityDate'/>
 	</resultMap>
 	
 	<insert id='insertCommunity'>
-		insert into communities(community_id, title, communityDate)
-		values(community_id_seq.nextval, #{title}, #{communityDate})
+		INSERT INTO movie.COMMUNITIES(COMMUNITY_NUM, COMMUNITY_TITLE,
+		 COMMUNITY_CONTENT, COMMUNITY_DATE, COMMUNITY_IMGFILE_NAME, USER_NUM)
+		<!-- values(community_id_seq.nextval, #{title}, #{communityDate}) -->
 	</insert>
 	
 	<delete id='deleteCommunity'>
