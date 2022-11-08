@@ -1,0 +1,245 @@
+<%@ page language='java' contentType='text/html; charset=utf-8' pageEncoding='utf-8'%>
+
+<head>
+    <title>회원</title>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <script src='https://code.jquery.com/jquery-3.6.0.min.js'></script>
+    <script src='https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js'></script>
+    <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js'></script>
+    <link rel='stylesheet' href='http://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css' />
+    <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.6.3/css/all.css' />
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css' />
+    <script src="https://kit.fontawesome.com/449f39a7b2.js" crossorigin="anonymous"></script>
+</head>
+<script>
+const users =[]
+let user = 0
+
+function isVal(field){
+    let isGood = false
+    let errMsg
+    $('#modalMsg').text('')
+
+    if (!field.length) errMsg = '유저를 선택하세요.'
+    else isGood = true
+
+    if (!isGood) {
+        $('#modalMsg').text(errMsg)
+        $('#noBtn').text('확인')
+        $('#yesBtn').hide()
+        $('#modal').modal()
+    }
+
+    return isGood
+}
+
+function listUsers(){
+/*
+    $('input').not(':radio').val('') // not(':radio') 라디오가 아닌것
+    $('#laborers').empty()
+    
+    if(laborers.length){
+        const laborerArr = []
+
+        $.each(laborers, (i, laborer) => {
+            laborerArr.unshift( // push는 [ 1 , 2 ,3 ,...] 순서 // unshift는 [... ,3 ,2 ,1 ]
+                `<tr>
+                    <td><input type='radio' name='laborerId' id='laborerId'
+                        value='${laborer.laborerId}'/></td>
+                    <td>${laborer.laborerId}</td>
+                    <td>${laborer.name}</td>
+                    <td>${laborer.hireDate}</td>
+                </tr>`
+            )
+        })
+    
+        $('#laborers').append(laborerArr.join(''))
+    } else $('#laborers').append(
+        '<tr><td colspan=4 class=text-center>노동자가 없습니다.</td></tr>'
+    )
+*/
+}
+// 유저 닉네임 수정
+    function init() {
+        $('#fixBtn').click(() => {
+            $('#yesDelBtn').attr('id', 'yesBtn')
+            $('#fixMag').remove()
+
+            if(isVal($('#no:checked'))){
+                $('#modalMsg').append('<h4 id="fixMag">수정해야함[',$('#nickname:checked').text(),'] 을/를 ','[', $('#fixNickname').val(), ']으로 수정하시겠습니까?</h4>')
+                $('#noBtn').text('취소')
+                $('#yesBtn').show()
+                $('#yesBtn').attr('class', 'col btn btn-block btn-primary')
+                $('#modal').modal() 
+            }
+        })
+    
+//수정 확인
+        $('#yesBtn').click(() => {
+            $.each(users, (i, user) =>{
+                if(user.no == $('#no:checked').val()) {
+                    no.nickname= $('#fixNickname').val()
+                    return false
+                }
+            })
+            
+            listUsers()
+        })
+
+    // 유저 삭제
+        $('#delBtn').click(() => {
+            $('#modalMsg').text(`해당 회원을 삭제하시겠습니까?`)
+            $('#yesBtn').attr('id', 'yesDelBtn')
+            $('#yesDelBtn').show()
+            $('#yesDelBtn').attr('class', 'col btn btn-block btn-primary')
+            $('#noBtn').text('취소')
+            $('#modal').modal()
+        })
+
+
+    //삭제 확인
+        $('#yesDelBtn').click(() => {
+            $.each(users, (i, user) =>{
+                if(user.no == $('#no:checked').val()) {
+                    users.splice(i,1)
+                    return false
+                }
+            })
+
+        //  $('#modal').modal('hide')
+            listusers()
+        })
+
+/* 수정할 아이디 칸에 자동입력
+        $('#no').on({
+            change(){
+                $('#fixNickname').val($(this).parent().next().next().next().next().text())
+          }      
+        }, '#no')
+*/
+}
+
+    $(init)
+</script>
+<style>
+    #yesBtn,
+    #noBtn,
+    #yesDelBtn {
+        margin: auto;
+        width: 100%;
+        max-width: 10rem;
+        height: 100%;
+    }
+
+    table{
+        table-layout:fixed; 
+        word-break:break-all;
+    }
+</style>
+<body>
+    <div class='container'>
+            <div class='header'>
+                <div class='float-left mt-3'>
+                    <h5>| 회원</h5>
+                </div>
+                <div id='btn_group' class='float-right mt-3'>
+                    <label style='font-size:13'>admin님</label>&emsp;
+                    <span style='font-size:12'>(08:23)</span>&emsp;
+                    <a href='../main.html'><button style='font-size:13'>로그아웃</button></a>
+                </div><br>
+                <div class='row mt-5'>
+                    <div class='col'>
+                        <div class='container'>
+                            <div class='row'>
+                                <div class='col-12 text-center'>
+                                    <div class='btn-group btn-block'>
+                                        <button type='button' class='btn btn-secondary'
+                                            onclick='location.href="../main.html" '>홈</button>
+                                        <button type='button' class='btn btn-secondary'>회 원</button>
+                                        <button type='button' class='btn btn-secondary'
+                                            onclick='location.href="../movie/01.html" '>영 화</button>
+                                        <button type='button' class='btn btn-secondary'
+                                            onclick='location.href="../inspection/01.html" '>신고 조회</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            &nbsp;
+            <div class='row'>
+                <div class='col'>
+                    <form class='mt-3'>
+                        <div class='col form-group d-flex justify-content-end'>
+                            <input class='form-control w-25' type='text' placeholder='검색' />
+                            <button type='button' class="btn ml-3 border">
+                                <i class='fa-solid fa-magnifying-glass'></i>
+                            </button>
+                        </div>
+                    </form>
+                    <table class='table'>
+                        <thead style='text-align: center'>
+                            <tr class="bg-light">
+                                <th></th>
+                                <th>No</th>
+                                <th>ID</th>
+                                <th>비밀번호</th>
+                                <th>닉네임</th>
+                                <th>연락처</th>
+                                <th>이메일</th>
+                                <th>가입일</th>
+                            </tr>
+                        </thead>
+                        <tbody style='text-align: center'>
+                            <tr>
+                                <td><input type='radio' name='no' id='no'></td>
+                                <td id='no'>1</td>
+                                <td id='id'>id123</td>
+                                <td id='pw'>qs123456</td>
+                                <td id='nickname'>뿡뿡이</td>
+                                <td id='tel'>01039158928</td>
+                                <td id='email'>xxxx123@naver.com</td>
+                                <td id='joinDate'>2022-10-13</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <hr>
+            <div class='row'>
+                <div class='col d-flex align-items-center justify-content-end'>
+                    <input type='text' placeholder='수정할 닉네임' id='fixNickname'>
+                    <input type='button' value='회원 수정' id='fixBtn' class='mx-3 btn btn-primary' data-toggle='modal'
+                        data-target='#modal'>
+                    <input type='button' value='회원 삭제' id='delBtn' class='btn btn-warning'>
+                </div>
+            </div>
+            <div class='row footer'>
+                <nav id='nav' aria-label="Page navigation example" style='width: 100%;'>
+                    <ul id="paging" class="pagination" style="justify-content: center;">
+                        <li class="page-item"><a class="page-link" href="#"><</a></li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">></a></li>
+                    </ul>
+                </nav>
+            </div>
+    </div>
+</body>
+<div class='modal fade' tabindex='-1' id='modal'>
+    <div class='modal-dialog modal-dialog-centered'>
+        <div class='modal-content'>
+            <div class='modal-header'></div>
+            <div class='modal-body' style='text-align: center;'>
+                <p id='modalMsg'></p>
+                <div class='row'>
+                    <button type='button' class='col btn btn-block btn-secondary' data-dismiss='modal'
+                        id='noBtn'>취소</button>
+                    <button type='button' data-dismiss='modal' id='yesBtn'>확인</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
