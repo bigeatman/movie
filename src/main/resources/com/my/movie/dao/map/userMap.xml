@@ -81,6 +81,6 @@
 	<update id='updatePw1'>
 		update users
 		set pw = #{pw}
-		where user_id = #{userId}
+		where user_id = #{userId} and email = #{email}
 	</update>
 </mapper>

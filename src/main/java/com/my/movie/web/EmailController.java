@@ -1,6 +1,5 @@
 package com.my.movie.web;
 
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.my.movie.service.EmailService;
@@ -11,7 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RequiredArgsConstructor
 @RestController	
-@RequestMapping("user")
 public class EmailController {
 	private final EmailService emailService;
 	

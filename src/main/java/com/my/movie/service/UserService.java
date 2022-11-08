@@ -20,5 +20,5 @@ public interface UserService {
 	String findId1(User user);
 	String findPw1(User user);
 	String findPw1(String email, String userId);
-	void fixPw1(String pw, String userId);
+	void fixPw1(User user);
 }

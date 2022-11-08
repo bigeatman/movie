@@ -1,12 +1,13 @@
 package com.my.movie.web;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -92,7 +93,7 @@ public class UserController {
 		List<Integer> genres = userGenre.getGenreNum();
 		for(int genre: genres) {
 			userService.addUserGenre(genre);
-		}
+	}
 	}
 
 	@PostMapping("checkUserId")
@@ -131,7 +132,8 @@ public class UserController {
 	}
 
 	@GetMapping("findIdResult/{userId}")
-	public ModelAndView findIdResult(ModelAndView mv, @PathVariable String userId) {
+	public ModelAndView findIdResult(ModelAndView mv,
+			@PathVariable String userId) {
 		mv.setViewName("user/findIdResult");
 		return mv;
 	}
@@ -165,17 +167,22 @@ public class UserController {
 		return mv;
 	}
 
+	// 비밀번호 수정
 	@GetMapping("fixPw/{userId}")
 	public ModelAndView changePw(ModelAndView mv,
 			@PathVariable String userId) {
+	@PostMapping("fixPw")
+	public ModelAndView fixPw (ModelAndView mv
+			,HttpServletRequest request) {
+
 		mv.setViewName("user/fixPw");
+		mv.addObject("email", request.getParameter("email"));
+		mv.addObject("userId", request.getParameter("userId"));
 		return mv;
 	}
-
-	@PostMapping("fixPw")
-	public void changePw (@RequestBody String pw, 
-			@RequestParam("userId") String userId) {
-		userService.fixPw1(pw, userId);
-		System.out.println(userId);
+	
+	@PatchMapping("fixPw")
+	public void fixPw(@RequestBody User fix) {
+		userService.fixPw1(fix);
 	}
 }

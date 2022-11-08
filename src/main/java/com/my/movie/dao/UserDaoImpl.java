@@ -89,7 +89,7 @@ public class UserDaoImpl implements UserDao {
 	}
 	
 	@Override
-	public void updatePw1(String pw, String userId) {
-		userMap.updatePw1(pw, userId);
+	public void updatePw1(User user) {
+		userMap.updatePw1(user);
 	}
 }

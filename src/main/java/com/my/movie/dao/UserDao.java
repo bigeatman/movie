@@ -19,5 +19,5 @@ public interface UserDao {
 	String selectId1(User user);
 	String selectPw1(User user);
 	String selectPw1(String email, String userId);
-	void updatePw1(String pw, String userId);
+	void updatePw1(User user);
 }
