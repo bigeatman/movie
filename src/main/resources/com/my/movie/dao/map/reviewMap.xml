@@ -21,4 +21,8 @@
 		    RN BETWEEN ${startIndex} AND ${rowCount} AND
 		    MOVIE_NUM = ${movieId}
 	</select>
+	
+	<delete id="deleteReview">
+		DELETE FROM REVIEWS WHERE REVIEW_NUM = ${reviewId}
+	</delete>
 </mapper>

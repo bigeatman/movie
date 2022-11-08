@@ -1,4 +1,4 @@
-package com.my.movie.domain;
+package com.my.movie.domain.request;
 
 import lombok.Data;
 

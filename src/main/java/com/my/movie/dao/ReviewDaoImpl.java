@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.my.movie.dao.map.ReviewMap;
-import com.my.movie.domain.CreateReviewRequest;
 import com.my.movie.domain.Review;
+import com.my.movie.domain.request.CreateReviewRequest;
 
 @Repository
 public class ReviewDaoImpl implements ReviewDao {
@@ -38,5 +38,10 @@ public class ReviewDaoImpl implements ReviewDao {
 		}
 		
 		return reviews;
+	}
+
+	@Override
+	public void deleteReview(int reviewId) {
+		reviewMap.deleteReview(reviewId);
 	}
 }

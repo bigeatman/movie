@@ -334,50 +334,58 @@ nav a {
 				<button class="btn-secondary" type="button" data-toggle="modal" data-target='#dialogModal' id="writereviewBtn" onclick="createReviewDialog()" style="border:1px solid gray">평 작성하기</button></div>
 		</div>
 		<div class="container center" id="reviewContainer">
-			<c:forEach var="rev" items="${review.reviews}" varStatus="status">
-				<div class="rectangle" id="review_${rev.reviewNum}" isCommentOpened="false">
-					<div class="row container" style="margin:0px; padding:0px;">
-						<div id="reviewWriter" class="review-id">${ rev.nickName }(${rev.userId })</div>
-						<div class="like-unlike-panel">
-							<button class="like-button"><i class="fa">&#xf087;</i></button>
-							<span class="like-button">128&nbsp&nbsp</span>
-							<button class="like-button"><span class="fa fa-thumbs-down"></span></button>
-							<span class="like-button">Unlike</span>
-							<c:if test="${not empty user}">
-								<c:if test="${user.userNum eq rev.userNum }">
-									<button class="like-button" type="button" data-toggle="modal" data-target='#dialogModal' onclick="removeReview(${rev.reviewNum})"> 
-										<i class="fa-solid fa-trash"></i>
-									</button>
+			<c:if test="${fn:length(review.reviews) eq 0 }">
+				<div style="font-size:12px; text-align:center; width:100%; margin-top:5px;">
+					작성된 사용자 평이 없습니다.<br>
+					사용자 평을 작성해 주세요!
+				</div>
+			</c:if>
+			<c:if test="${fn:length(review.reviews) ne 0 }">
+				<c:forEach var="rev" items="${review.reviews}" varStatus="status">
+					<div class="rectangle" id="review_${rev.reviewNum}" isCommentOpened="false">
+						<div class="row container" style="margin:0px; padding:0px;">
+							<div id="reviewWriter" class="review-id">${ rev.nickName }(${rev.userId })</div>
+							<div class="like-unlike-panel">
+								<button class="like-button"><i class="fa">&#xf087;</i></button>
+								<span class="like-button">128&nbsp&nbsp</span>
+								<button class="like-button"><span class="fa fa-thumbs-down"></span></button>
+								<span class="like-button">Unlike</span>
+								<c:if test="${not empty user}">
+									<c:if test="${user.userNum eq rev.userNum }">
+										<button class="like-button" type="button" data-toggle="modal" data-target='#dialogModal' onclick="removeReview(${rev.reviewNum})"> 
+											<i class="fa-solid fa-trash"></i>
+										</button>
+									</c:if>
+									<c:if test="${user.userNum ne rev.userNum }">
+										<button class="like-button" type="button" data-toggle="modal" data-target='#dialogModal' onclick="reportReview(${rev.reviewNum})"> 
+											<i class="fa-solid fa-triangle-exclamation"></i>
+										</button>
+									</c:if>
 								</c:if>
-								<c:if test="${user.userNum ne rev.userNum }">
-									<button class="like-button" type="button" data-toggle="modal" data-target='#dialogModal' onclick="removeReview(${rev.reviewNum})"> 
+								<c:if test="${empty user}">
+									<button class="like-button" type="button" data-toggle="modal" data-target='#dialogModal' onclick="reportReview(${rev.reviewNum})"> 
 										<i class="fa-solid fa-triangle-exclamation"></i>
 									</button>
 								</c:if>
-							</c:if>
-							<c:if test="${empty user}">
-								<button class="like-button" type="button" data-toggle="modal" data-target='#dialogModal' onclick="reportReview(${rev.reviewNum})"> 
-									<i class="fa-solid fa-triangle-exclamation"></i>
-								</button>
-							</c:if>
+							</div>
+						</div>
+						<div class="row container" style="margin:0px; padding:0px;">
+							<span id="reviewContent" class="review-content">${rev.reviewContent }</span>
+							<button class="comment-panel btn-secondary">댓글 22</button>
 						</div>
 					</div>
-					<div class="row container" style="margin:0px; padding:0px;">
-						<span id="reviewContent" class="review-content">${rev.reviewContent }]</span>
-						<button class="comment-panel btn-secondary">댓글 22</button>
-					</div>
+				</c:forEach>
+				<div id="moreReviewButton"class="movieinfo-actor-name" style="width:100%">
+					<span onclick="viewMoreReview()">더보기 <i class="fa-solid fa-square-caret-down"></i></span>
 				</div>
-			</c:forEach>
-			<div id="moreReviewButton"class="movieinfo-actor-name" style="width:100%">
-				<span onclick="viewMoreReview()">더보기 <i class="fa-solid fa-square-caret-down"></i></span>
-			</div>
+			</c:if>
 		</div>
 	</div>
 	<!-- NAVGATION BAR !-->
 	<div id='navBar' class='container-fulid'>
 		<nav class='row fixed-bottom p-1'>
 			<div class='col m-2 text-center'>
-				<a id='goHome' href='../main.html' class='ml-1'>
+				<a id='goHome' href='../' class='ml-1'>
 					<i class='fa-solid fa-house fa-xl'></i>
 					<span class='iconfont'>&nbsp;홈</span>
 				</a>
@@ -395,7 +403,7 @@ nav a {
 				</a>
 			</div>
 			<div class='col m-2 text-center'>
-				<a id='user' href='../user/01.html' class='ml-1'>
+				<a id='user' href='../user/login' class='ml-1'>
 					<i class='fa-regular fa-user fa-xl'></i>
 					<span class='iconfont'>&nbsp;&nbsp;&nbsp;로그인</span>
 				</a>
@@ -466,6 +474,27 @@ nav a {
 			return -1;
 		}
 	}
+	    
+	function removeReview(reviewNum) {
+		clearDialog();
+		createDialog("사용자 평 삭제", 0x3132);
+		document.querySelector('#okButton').addEventListener('click', function() {
+			console.log("TEST");
+			$('#dialogModal').modal('hide');
+			
+			$.ajax({
+				url : "rev/remove",
+				method : "post",
+				contentType: 'application/json',
+				data : JSON.stringify({
+					reviewId : reviewNum
+				}),
+				success : function(result) {
+					document.querySelector("#review_" + reviewNum).remove();
+				}
+			})
+		});
+	}
 	
 	function createNeedLoginDialog() {
 		clearDialog();
@@ -512,7 +541,7 @@ nav a {
 				data: JSON.stringify({
 					movieNum : ${review.movie.movieNum},
 					grade : document.querySelector("#scoreBox").value,
-					reviewContent : document.querySelector("#reviewContent").value,
+					reviewContent : document.querySelector("#reviewContentNew").value,
 					userNum : getLoginedUserId()
 				}),
 			    success: function(result) {
@@ -648,16 +677,18 @@ nav a {
 	}
 	
 	function createBody(dialog, code) {
-		if((code & 0x10) == 0x10) {
+		if((code & 0xF0) == 0x10) {
 			createTextBody(dialog, code);
-		} else if ((code & 0x20) == 0x20) {
+		} else if ((code & 0xF0) == 0x20) {
 			createAllActorBody(dialog);
-		} else if ((code & 0x40) == 0x40) {
+		} else if ((code & 0xF0) == 0x30) {
+			createRemoveReviewBody(dialog);
+		} else if ((code & 0xF0) == 0x40) {
 			createInputTextBody(dialog);
-		} else if ((code & 0x80) == 0x80) {
+		} else if ((code & 0xF0) == 0x80) {
 			createNeedLoginBody(dialog);
 		}
-	}
+	}7
 	
 	function createTextBody(dialog, code) {
 		var textDiv = document.createElement('div');
@@ -729,9 +760,14 @@ nav a {
 		return divElem;
 	}
 	
+	function createRemoveReviewBody(dialog) {
+		var divElem = createTextDivBody('작성된 리뷰를 삭제하시겠습니까?')
+		dialog.appendChild(divElem);
+	}
+	
 	function createInputTextBody(dialog, code) {
 		var inputTextElem = document.createElement('textarea');
-		inputTextElem.setAttribute('id', 'reviewContent');
+		inputTextElem.setAttribute('id', 'reviewContentNew');
 		inputTextElem.style.setProperty('width', '100%');
 		inputTextElem.style.setProperty('padding', '0px');
 		inputTextElem.style.setProperty('resize', 'none');
@@ -739,12 +775,17 @@ nav a {
 	}
 	
 	function createNeedLoginBody(dialog) {
+		var divElem = createTextDivBody('로그인이 필요합니다.')
+		dialog.appendChild(divElem);
+	}
+	
+	function createTextDivBody(text) {
 		var divElem = document.createElement('div');
-		divElem.innerHTML = "로그인이 필요합니다.";
+		divElem.innerHTML = text;
 		divElem.style.setProperty("font-size", "12px");
 		divElem.style.setProperty('height', '50px');
 		
-		dialog.appendChild(divElem);
+		return divElem;
 	}
 	
 	function createButtons(dialog, code) {
@@ -754,10 +795,12 @@ nav a {
 		buttonDiv.style.setProperty('padding-top', '5px');
 		buttonDiv.style.setProperty('padding-bottom', '10px');
 		
-		if((code & 0x1000) == 0x1000) {
+		if((code & 0xF000) == 0x1000) {
 			createSingleButton(buttonDiv);
-		} else if ((code & 0x2000) == 0x2000) {
+		} else if ((code & 0xF000) == 0x2000) {
 			createDoubleButton(buttonDiv, "로그인");
+		} else if ((code & 0xF000) == 0x3000) {
+			createDoubleButton(buttonDiv, "삭제");
 		}
 		
 		dialog.appendChild(buttonDiv);
