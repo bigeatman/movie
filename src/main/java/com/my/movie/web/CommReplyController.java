@@ -15,7 +15,7 @@ import com.my.movie.domain.CommReply;
 import com.my.movie.service.CommReplyService;
 
 @RestController
-@RequestMapping("community")
+@RequestMapping("communityReply")
 public class CommReplyController {
 	@Autowired private CommReplyService commReplyService;
 	

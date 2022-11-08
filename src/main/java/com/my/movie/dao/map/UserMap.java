@@ -17,8 +17,8 @@ public interface UserMap {
 	int selectUserEmail(UserDto email);
 	void insertUser(User user);
 	void insertUserGenre(UserGenre userGenre);
-	void insertWithDrawal(int userNum);.
-	//Àç¿ø
+	void insertWithDrawal(int userNum);
+	//ï¿½ï¿½ï¿½
 	String selectId1(User user);
 	String selectPw1(User user);
 	String selectPw1(@Param("email")String email,

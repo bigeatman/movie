@@ -67,7 +67,7 @@ public class UserDaoImpl implements UserDao {
 		userMap.insertWithDrawal(userNum);
 	}
 
-//Àç¿ø
+//ï¿½ï¿½ï¿½
 	@Override
 	public String selectId1(User user) {
 		return userMap.selectId1(user);
@@ -87,4 +87,4 @@ public class UserDaoImpl implements UserDao {
 	public void updatePw1(String pw, String userId) {
 		userMap.updatePw1(pw, userId);
 	}
-	//Àç¿ø
+}

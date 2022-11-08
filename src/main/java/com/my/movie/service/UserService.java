@@ -16,8 +16,9 @@ public interface UserService {
 	void addUser(User user);
 	void addUserGenre(UserGenre userGenre);
 	void addWithDrawal(int userNum);
-	//Àç¿ø
+	//ï¿½ï¿½ï¿½
 	String findId1(User user);
 	String findPw1(User user);
 	String findPw1(String email, String userId);
 	void fixPw1(String pw, String userId);
+}

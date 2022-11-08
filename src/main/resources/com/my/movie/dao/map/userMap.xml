@@ -65,7 +65,7 @@
 		values(#{userNum})
 	</insert>
 
-<!-- Àç¿ø -->
+<!-- ï¿½ï¿½ï¿½ -->
 	<select id='selectId1' resultType='string'>
 		select user_id
 		from users
