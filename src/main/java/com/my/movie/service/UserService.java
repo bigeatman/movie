@@ -6,6 +6,8 @@ import com.my.movie.domain.UserGenre;
 
 public interface UserService {
 	User loginValidate(User user);
+	User getUser(User user);
+	int getWithDrawal(int userNum);
 	int checkUserId(UserDto userId);
 	UserDto checkUserPw(UserDto pw);
 	int checkUserNickname(UserDto nickname);
@@ -13,7 +15,8 @@ public interface UserService {
 	int checkUserEmail(UserDto email);
 	void addUser(User user);
 	void addUserGenre(UserGenre userGenre);
-	//재원
+	void addWithDrawal(int userNum);
+	//���
 	String findId1(User user);
 	String findPw1(User user);
 	String findPw1(String email, String userId);

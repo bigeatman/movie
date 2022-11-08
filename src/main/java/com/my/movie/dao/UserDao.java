@@ -6,6 +6,8 @@ import com.my.movie.domain.UserGenre;
 
 public interface UserDao {
 	User selectUserLogin(User user);
+	User selectUser(User user);
+	int selectWithDrawal(int userNum);
 	int selectUserId(UserDto userId);
 	UserDto selectUserPw(UserDto pw);
 	int selectUserNickname(UserDto nickname);
@@ -13,7 +15,7 @@ public interface UserDao {
 	int selectUserEmail(UserDto email);
 	void insertUser(User user);
 	void insertUserGenre(UserGenre userGenre);
-	//재원
+	void insertWithDrawal(int userNum);
 	String selectId1(User user);
 	String selectPw1(User user);
 	String selectPw1(String email, String userId);

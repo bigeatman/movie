@@ -1,5 +1,4 @@
 <%@ page language='java' contentType='text/html; charset=utf-8' pageEncoding='utf-8'%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <title>MYPAGE</title>
 <meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'>
@@ -8,13 +7,28 @@
 <script src='https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js'></script>
 <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js'></script>
 <script>
-function logout() {
-	$('#logoutBtn').click(() => {
-		<% session.invalidate();%>
-		location.href = "/"
+function init() {
+	$('#delUserBtn').click(() => {
+		$('#modalMsg').text('탈퇴 하시겠습니까?')
+        $('#delUserNoBtn').show()
+        $('#delUserYesBtn').show()
+        $('#myPageModal').modal()
 	})
+	
+	$('#delUserOkBtn').click(() => {
+		$.ajax({
+			url: 'addWithDrawal',
+	      	method:'post',
+	      	contentType: 'application/json',
+	      	data: JSON.stringify({
+	    	  	userNum: ${user.userNum}
+	      	}),
+	      	success: location.href='addWithDrawal'
+	   	})
+        $('#myPageModal').modal('hide')
+    })
 }
-$(logout)
+$(init)
 </script>
 <style>
     label {
@@ -32,19 +46,19 @@ $(logout)
         <form>
             <div class='form-group'>
                 <label for='userId'>아이디</label><br>
-                <label for='userId'>user</label>
+                <label for='userId'>${user.userId}</label>
             </div>
             <div class='form-group'>
                 <label for='nickName'>닉네임</label><br>
-                <label for='nickName'>안녕하세요</label>
+                <label for='nickName'>${user.nickname}</label>
             </div>
             <div class='form-group'>
                 <label for='phoneNum'>연락처</label><br>
-                <label for='phoneNum'>010 - 1234 - 5678</label>
+                <label for='phoneNum'>${user.phoneNum}</label>
             </div>
             <div class='form-group'>
                 <label for='email'>이메일</label><br>
-                <label for='email'>user@daum.net</label>
+                <label for='email'>${user.email}</label>
             </div>
             <div class='form-group'>
                 <label for='genre'>관심장르</label><br>
@@ -108,7 +122,7 @@ $(logout)
                 </div>
             </div>
             <div>
-                <button id='cancelBtn' type='button' class='btn btn-light' style='width: 90px; margin-left: 45px; margin-right: 30px; margin-bottom: 30px;'>
+                <button id='cancelBtn' type='button' class='btn btn-light' onclick='location.href="logout"' style='width: 90px; margin-left: 45px; margin-right: 30px; margin-bottom: 30px;'>
                     <span class='h6'>뒤로가기</span>
                 </button>
                 <button id='fixUserBtn' type='button' class='btn btn-primary' style='width: 90px; margin-left: 30px; margin-bottom: 30px;'>
@@ -117,7 +131,7 @@ $(logout)
                 <button id='delUserBtn' type='button' class='btn btn-warning' style='width: 90px; margin-left: 45px; margin-right: 30px;'>
                     <span class='h6'>회원탈퇴</span>
                 </button>
-                <button id='logoutBtn' type='button' class='btn btn-secondary' style='width: 90px; margin-left: 30px;'>
+                <button id='logoutBtn' type='button' class='btn btn-secondary' onclick='location.href="logout"' style='width: 90px; margin-left: 30px;'>
                     <span class='h6'>로그아웃</span>
                 </button>
             </div>
@@ -137,9 +151,6 @@ $(logout)
                 </div>
                 <div class='col' id='delUserYesBtn'>
                     <button type='button' class='btn btn-primary btn-block' id='delUserOkBtn'>확인</button>
-                </div>
-                <div class='col' id='delUserCheckBtn'>
-                    <button type='button' class='btn btn-primary btn-block' id='delUserCheckOkBtn'>확인</button>
                 </div>
             </div>
         </div>
