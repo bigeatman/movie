@@ -34,7 +34,7 @@ public class ReviewDaoImpl implements ReviewDao {
 			for (int i = 0; i < userId.length() - 3; i++) {
 				builder.append("*");
 			}
-			review.setNickName(builder.toString());
+			review.setUserId(builder.toString());
 		}
 		
 		return reviews;

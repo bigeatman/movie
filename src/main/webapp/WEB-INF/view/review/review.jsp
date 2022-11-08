@@ -337,13 +337,29 @@ nav a {
 			<c:forEach var="rev" items="${review.reviews}" varStatus="status">
 				<div class="rectangle" id="review_${rev.reviewNum}" isCommentOpened="false">
 					<div class="row container" style="margin:0px; padding:0px;">
-						<div id="reviewWriter" "class="review-id">${ rev.nickName }(${rev.userId })</div>
+						<div id="reviewWriter" class="review-id">${ rev.nickName }(${rev.userId })</div>
 						<div class="like-unlike-panel">
 							<button class="like-button"><i class="fa">&#xf087;</i></button>
 							<span class="like-button">128&nbsp&nbsp</span>
 							<button class="like-button"><span class="fa fa-thumbs-down"></span></button>
 							<span class="like-button">Unlike</span>
-							<button class="like-button" type="button" data-toggle="modal" data-target='#dialogModal' onclick="reportReview(10)"><i class="fa-solid fa-triangle-exclamation"></i></button>
+							<c:if test="${not empty user}">
+								<c:if test="${user.userNum eq rev.userNum }">
+									<button class="like-button" type="button" data-toggle="modal" data-target='#dialogModal' onclick="removeReview(${rev.reviewNum})"> 
+										<i class="fa-solid fa-trash"></i>
+									</button>
+								</c:if>
+								<c:if test="${user.userNum ne rev.userNum }">
+									<button class="like-button" type="button" data-toggle="modal" data-target='#dialogModal' onclick="removeReview(${rev.reviewNum})"> 
+										<i class="fa-solid fa-triangle-exclamation"></i>
+									</button>
+								</c:if>
+							</c:if>
+							<c:if test="${empty user}">
+								<button class="like-button" type="button" data-toggle="modal" data-target='#dialogModal' onclick="reportReview(${rev.reviewNum})"> 
+									<i class="fa-solid fa-triangle-exclamation"></i>
+								</button>
+							</c:if>
 						</div>
 					</div>
 					<div class="row container" style="margin:0px; padding:0px;">
@@ -425,7 +441,6 @@ nav a {
 	
 	function insertReviews(reviewContainer, reviews) {
 		for(var i = 0; i < reviews.length; i++) {
-			console.log(reviews[i]);
 			var reviewElem = reviewContainer.firstElementChild.cloneNode(true);
 			writeReviewData(reviews[i], reviewElem);
 			reviewContainer.appendChild(reviewElem);
