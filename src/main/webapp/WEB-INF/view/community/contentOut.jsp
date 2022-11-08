@@ -12,6 +12,20 @@
 <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js'></script>
 <script src="https://kit.fontawesome.com/449f39a7b2.js" crossorigin="anonymous"></script>
 
+<script>
+function checkLogin() {
+	<%
+		if(session.getAttribute("user") != null) {
+	%>
+		$('#user').attr('href', '../user/mypage')
+		$('#loginSpan').text('프로필')
+	<%
+		}
+	%>
+}
+$(checkLogin)
+</script>
+
 <!-- 댓글 modal script -->
 <script>
 function replyInit(replyIdx) {
@@ -75,7 +89,7 @@ function replyInit(replyIdx) {
 function listReplies() {	
 	// 각 ajax의 url의 부분은 커뮤니티 글조회시 community/해당글의 게시글번호 로 붙일것
 	$.ajax({
-		url: `community/list/${1}`, 
+		url: `communityReply/list/${1}`, 
 		success: commReplyList => {
 			replies = []
 			repliesCount = 0
@@ -104,11 +118,12 @@ function listReplies() {
 			$('#commReplyList').append(replies.join(''))
 			
 			for(var i=0; i < repliesCount; i++)
-				$(replyInit(i))
-			
+			$(replyInit(i))
+		
 			$('#repliesCount').empty()
 			$('#repliesCount').append('댓글\n\n' + repliesCount)
 		}
+		
 	})	
 }
 
@@ -122,22 +137,25 @@ $(() => {
 	$('#regReplyBtn').click(() => {
 		var regDate = getToday()
 		
-		$.ajax({
-			url: 'community/add',
-			method: 'post',
-			contentType: 'application/json',
-			data: JSON.stringify({
-				communityReplyContent: $('#regReplyContent').val(),
-				communityReplyDate: regDate,
-				userNum: ${99},
-				communityNum: ${1}
-			}),
-			success: function succRegReply() {
-				window.location.href = '/community'
-				listReplies
-
-			}
-		})
+		<%
+		if(session.getAttribute("user") != null) {
+		%>
+			$.ajax({
+				url: 'communityReply/add',
+				method: 'post',
+				contentType: 'application/json',
+				data: JSON.stringify({
+					communityReplyContent: $('#regReplyContent').val(),
+					communityReplyDate: regDate,
+					userNum: ${user.userNum},
+					communityNum: ${1}
+				}),
+				success: function succRegReply() {
+					window.location.href = '/communityReply'
+					listReplies
+				}
+			})
+		<% } %>
 	})	
 })	
 
@@ -212,31 +230,31 @@ label {
 <body>
 <!-- 네비게이션 바 -->
 <div id='navBar' class='container-fluid'>
-    <nav class='row fixed-bottom p-1'>
-      <div class='col m-2 text-center'>
-        <a id='goHome' href='/' class='ml-1'>
-          <i class='fa-solid fa-house fa-xl'></i>
-          <span class='iconfont'>&nbsp;홈</span>
-        </a>
-      </div>
-      <div class='col m-2 text-center'>
-        <a id='blind' href='/community' class='ml-1'> <!-- 임시로 댓글로 넘어가도록 만들었습니다. -->
-          <i class='fa-regular fa-comments fa-xl'></i>
-          <span class='iconfont'>커뮤니티</span>
-        </a>
-      </div>
-      <div class='col m-2 text-center'>
-        <a id='chat' href='../movie/01.html' class='ml-1'>
-          <i class='fa-solid fa-compass fa-xl'></i>
-          <span class='iconfont'>&nbsp;&nbsp;탐색</span>
-        </a>
-      </div>
-      <div class='col m-2 text-center'>
-        <a id='user' href='../user/01.html' class='ml-1'>
-          <i class='fa-regular fa-user fa-xl'></i>
-          <span class='iconfont'>&nbsp;&nbsp;&nbsp;로그인</span>
-        </a>
-      </div>
+	<nav class='row fixed-bottom p-1'>
+		<div class='col text-center'>
+	  	<a id='goHome' href='#' class='ml-1'>
+	    	<i class='fa-solid fa-house fa-xl'></i><br>
+	        <span class='iconfont mr-1'>홈</span>
+	    </a>
+		</div>
+		<div class='col text-center'>
+	  	<a id='community' href='communityReply' class='ml-1'>
+	     	<i class='fa-regular fa-comments fa-xl'></i><br>
+	     	<span class='iconfont'>커뮤니티</span>
+	  	</a>
+		</div>
+	    <div class='col text-center'>
+       	<a id='search' href='#' class='ml-1'>
+          	<i class='fa-solid fa-compass fa-xl'></i><br>
+          	<span class='iconfont'>탐색</span>
+       	</a>
+	    </div>
+	    <div class='col text-center'>
+      	<a id='user' href='user/login' class='ml-1'>
+       		<i class='fa-regular fa-user fa-xl'></i><br>
+       		<span id='loginSpan' class='iconfont'>로그인</span>
+       	</a>
+	   	</div>
     </nav>
 </div>
 
