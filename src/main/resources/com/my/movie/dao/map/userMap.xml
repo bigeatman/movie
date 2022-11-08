@@ -2,22 +2,16 @@
 <!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
 	'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
 <mapper namespace='com.my.movie.dao.map.UserMap'>
-	<select id='selectUserLogin' resultType='user'>
+	<select id='selectUser' resultType='user'>
 		select *
 		from users
 		where user_id = #{userId} and pw = #{pw}
 	</select>
 	
-	<select id='selectWithDrawal' resultType='_int'>
+	<select id='selectWithDrawal' resultType='int'>
 		select count(*)
 		from users, user_withdrawal 
 		where users.user_num = #{userNum} and user_withdrawal.user_num = #{userNum}
-	</select>
-	
-	<select id='selectUser' resultType='user'>
-		select *
-		from users
-		where user_id = #{userId}
 	</select>
 	
 	<select id='selectUserId' resultType='int'>
@@ -26,7 +20,7 @@
 		where user_id = #{userId}
 	</select>
 	
-	<select id='selectUserPw' resultType='userDto'>
+	<select id='selectUserPw' resultType='int'>
 		select pw
 		from users
 		where pw = #{pw}
@@ -50,14 +44,21 @@
 		where email = #{email}
 	</select>
 	
-	<insert id='insertUser' keyProperty="userNum" useGeneratedKeys="true">
+	<select id='selectUserGenre' resultType='string'>
+		select genre.genre_name
+		from users, user_genre, genre  
+		where users.user_num = #{userNum} and user_genre.user_num = #{userNum}
+		and user_genre.genre_num = genre.genre_num
+	</select>
+	
+	<insert id='insertUser'>
 		insert into users(user_num, user_id, pw, nickname, phone_num, email)
 		values(user_num_seq.nextval, #{userId}, #{pw}, #{nickname}, #{phoneNum}, #{email})
 	</insert>
 	
 	<insert id='insertUserGenre'>
 		insert into user_genre(user_num, genre_num)
-		values(user_num_seq.nextval, #{genreNum})
+		values(user_num_seq.currval, #{genreNum})
 	</insert>
 
 	<insert id='insertWithDrawal'>
@@ -65,7 +66,6 @@
 		values(#{userNum})
 	</insert>
 
-<!-- ��� -->
 	<select id='selectId1' resultType='string'>
 		select user_id
 		from users

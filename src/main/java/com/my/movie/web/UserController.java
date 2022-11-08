@@ -1,8 +1,11 @@
 package com.my.movie.web;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.my.movie.dao.GenreDao;
 import com.my.movie.domain.User;
 import com.my.movie.domain.UserDto;
 import com.my.movie.domain.UserGenre;
@@ -23,8 +25,6 @@ import com.my.movie.service.UserService;
 public class UserController {
 	@Autowired private UserService userService;
 	@Autowired private EmailController emailController;
-	@Autowired private GenreDao genreDao;
-
 
 	@GetMapping("login")
 	public ModelAndView login(ModelAndView mv) {
@@ -33,25 +33,27 @@ public class UserController {
 	}
 
 	@PostMapping("login")
-	public User login(@RequestBody User userLogin, HttpSession session) {
+	public User login(@RequestBody User userLogin, Model model, HttpSession session) {
 		User user = userService.loginValidate(userLogin);
 		if(user != null) {
-			User userInfo = userService.getUser(userLogin);
-			int userWithDrawal = userService.getWithDrawal(userInfo.getUserNum());
+			List<String> userGenre = userService.getUserGenre(user.getUserNum());
+			for(String genre: userGenre) {
+				System.out.println("ìž¥ë¥´: " + genre);
+			}
+			System.out.println(userGenre.get(0) + " " + userGenre.get(1));
+			System.out.println(userGenre);
+			int userWithDrawal = userService.getWithDrawal(user.getUserNum());
 			if(userWithDrawal == 1) {
 				user = new User();
 				user.setUserNum(-1);
 			} else {
-				user.setUserNum(userInfo.getUserNum());
-				user.setUserId(userInfo.getUserId());
-				user.setNickname(userInfo.getNickname());
-				user.setPhoneNum(userInfo.getPhoneNum());
-				user.setEmail(userInfo.getEmail());
+				System.out.println(user);
 				session.setAttribute("user", user);
 			}
 		}
 		return user;
 	}
+	
 	@GetMapping("logout")
 	public ModelAndView logout(ModelAndView mv, HttpSession session) {
 		session.invalidate();
@@ -78,49 +80,45 @@ public class UserController {
 	}
 	
 	@GetMapping("addUser")
-	public ModelAndView join(ModelAndView mv) {
+	public ModelAndView addUser(ModelAndView mv) {
 		mv.setViewName("user/join");
 		return mv;
 	}
 
 	@PostMapping("addUser")
-	public void join(@RequestBody UserGenre userGenre) {
-		System.out.println(userGenre);
+	public void addUser(@RequestBody UserGenre userGenre) {
 		User user = userGenre.getUser();
-
-
-//		genreDao.addUserGenre(user, userGenre.getGenreNum());
-		// int userNum = num++;
-		// Genre genre = userGenre.getGenre();
-		// userService.addUser(userGenre.getUser());
-		// userService.addUserGenre(userNum, genre.getGenreNum());
+		userService.addUser(user);
+		List<Integer> genres = userGenre.getGenreNum();
+		for(int genre: genres) {
+			userService.addUserGenre(genre);
+		}
 	}
 
 	@PostMapping("checkUserId")
-	public int idCheck(@RequestBody UserDto userId) {
-		int result = userService.checkUserId(userId);
+	public int checkUserId(@RequestBody UserDto userId) {
+		int result = userService.checkUserId(userId.getUserId());
 		return result;
 	}
 
 	@PostMapping("checkUserNickname")
-	public int nicknameCheck(@RequestBody UserDto nickname) {
-		int result = userService.checkUserNickname(nickname);
+	public int checkUserNickname(@RequestBody UserDto nickname) {
+		int result = userService.checkUserNickname(nickname.getNickname());
 		return result;
 	}
 
 	@PostMapping("checkUserPhoneNum")
-	public int phoneNumCheck(@RequestBody UserDto phoneNum) {
-		int result = userService.checkUserPhoneNum(phoneNum);
+	public int checkUserPhoneNum(@RequestBody UserDto phoneNum) {
+		int result = userService.checkUserPhoneNum(phoneNum.getPhoneNum());
 		return result;
 	}
 
 	@PostMapping("checkUserEmail")
-	public int emailCheck(@RequestBody UserDto email) {
-		int result = userService.checkUserEmail(email);
+	public int checkUserEmail(@RequestBody UserDto email) {
+		int result = userService.checkUserEmail(email.getEmail());
 		return result;
 	}
 
-	// Àç¿ø
 	@GetMapping("findId")
 	public ModelAndView findId(ModelAndView mv) {
 		mv.setViewName("user/findId");
@@ -138,7 +136,6 @@ public class UserController {
 		return mv;
 	}
 
-	// ºñ¹Ð¹øÈ£ Ã£±â
 	@GetMapping("findPw")
 	public ModelAndView findPw(ModelAndView mv) {
 		mv.setViewName("user/findPw");
@@ -168,7 +165,6 @@ public class UserController {
 		return mv;
 	}
 
-	// ºñ¹Ð¹øÈ£ ¼öÁ¤
 	@GetMapping("fixPw/{userId}")
 	public ModelAndView changePw(ModelAndView mv,
 			@PathVariable String userId) {

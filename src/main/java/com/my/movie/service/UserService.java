@@ -1,20 +1,20 @@
 package com.my.movie.service;
 
+import java.util.List;
+
 import com.my.movie.domain.User;
-import com.my.movie.domain.UserDto;
-import com.my.movie.domain.UserGenre;
 
 public interface UserService {
 	User loginValidate(User user);
-	User getUser(User user);
 	int getWithDrawal(int userNum);
-	int checkUserId(UserDto userId);
-	UserDto checkUserPw(UserDto pw);
-	int checkUserNickname(UserDto nickname);
-	int checkUserPhoneNum(UserDto phoneNum);
-	int checkUserEmail(UserDto email);
+	int checkUserId(String userId);
+	int checkUserPw(String pw);
+	int checkUserNickname(String nickname);
+	int checkUserPhoneNum(String phoneNum);
+	int checkUserEmail(String email);
+	List<String> getUserGenre(int genreNum);
 	void addUser(User user);
-	void addUserGenre(UserGenre userGenre);
+	void addUserGenre(int genreNum);
 	void addWithDrawal(int userNum);
 	//���
 	String findId1(User user);

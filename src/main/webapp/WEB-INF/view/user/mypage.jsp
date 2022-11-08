@@ -1,3 +1,4 @@
+<%@page import="ch.qos.logback.core.recovery.ResilientSyslogOutputStream"%>
 <%@ page language='java' contentType='text/html; charset=utf-8' pageEncoding='utf-8'%>
 <title>MYPAGE</title>
 <meta charset='utf-8'>
@@ -65,10 +66,10 @@ $(init)
                 <div class='row' style='padding-left: 15px'>
                     <div class='row' style='padding-left: 15px; margin-left: 5px;'>
                         <div id='cw'>
-                            <label for='genre'>액션</label>
+                            <label for='genre'></label>
                         </div>
                         <div id='cw'>
-                            <label for='genre'>범죄</label>
+                            <label for='genre'></label>
                         </div>
                         <div id='cw'>
                             <label for='genre'>SF</label>
