@@ -24,7 +24,6 @@ public class AdminUserServiceImpl implements AdminUserService {
 		return adminUserDao.selectWithDrawal(adminNum);
 	}
 
-//���
 	@Override
 	public String findId1(AdminUser user) {
 		return adminUserDao.selectId1(user);

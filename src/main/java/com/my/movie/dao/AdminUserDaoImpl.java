@@ -6,7 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.my.movie.dao.map.AdminUserMap;
 import com.my.movie.domain.AdminUser;
 
-
 @Repository
 public class AdminUserDaoImpl implements AdminUserDao {
 	@Autowired private AdminUserMap adminUserMap;
@@ -25,7 +24,6 @@ public class AdminUserDaoImpl implements AdminUserDao {
 		return adminUserMap.selectWithDrawal(adminNum);
 	}
 
-//���
 	@Override
 	public String selectId1(AdminUser user) {
 		return adminUserMap.selectId1(user);

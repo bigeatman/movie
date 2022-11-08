@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8' ?>
 <!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
 	'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
-<mapper namespace='com.my.movie.dao.map.UserMap'>
+<mapper namespace='com.my.movie.dao.map.AdminUserMap'>
 	<select id='selectAdminUserLogin' resultType='AdminUser'>
 		select *
 		from users
@@ -14,14 +14,13 @@
 		where user_id = #{adminId}
 	</select>
 	
-	<select id='selectWithDrawal' resultType='_int'>
+	<select id='selectWithDrawal' resultType='int'>
 		select count(*)
 		from users, user_withdrawal 
 		where users.user_num = #{adminNum} and user_withdrawal.user_num = #{adminNum}
 	</select>
 	
 	
-<!-- ��� -->
 	<select id='selectId1' resultType='string'>
 		select user_id
 		from users

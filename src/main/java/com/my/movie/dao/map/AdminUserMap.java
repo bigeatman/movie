@@ -8,10 +8,9 @@ public interface AdminUserMap {
 	AdminUser selectAdminUserLogin(AdminUser admin);
 	AdminUser selectAdminUser(AdminUser admin);
 	int selectWithDrawal(int adminNum);
-	//���
-	String selectId1(AdminUser admin);
-	String selectPw1(AdminUser admin);
+	String selectId1(AdminUser user);
+	String selectPw1(AdminUser user);
 	String selectPw1(@Param("email")String email,
 					@Param("userId")String userId);
-		void updatePw1(AdminUser Admin);
+	void updatePw1(AdminUser user);
 }
