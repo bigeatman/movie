@@ -410,15 +410,6 @@ nav a {
 			success : function(result) {
 				currentReviews = currentReviews + 5;
 				createAdditionalReviewElement(JSON.parse(result));
-				/*
-				var test = JSON.parse(result);
-				console.log(test.length);
-				console.log(test[0]);
-				console.log(test[0].grade);
-				*/
-			},
-			error : function() {
-				console.log('ERROR');
 			}
 		});
 	}
@@ -431,25 +422,6 @@ nav a {
 		insertReviews(reviewContainer, reviews);
 		reviewContainer.appendChild(button);
 	}
-	
-	/*
-	<div class="rectangle" id="review_${rev.reviewNum}" isCommentOpened="false">
-		<div class="row container" style="margin:0px; padding:0px;">
-			<div class="review-id">${ rev.nickName }(${rev.userId })</div>
-			<div class="like-unlike-panel">
-				<button class="like-button"><i class="fa">&#xf087;</i></button>
-				<span class="like-button">128&nbsp&nbsp</span>
-				<button class="like-button"><span class="fa fa-thumbs-down"></span></button>
-				<span class="like-button">Unlike</span>
-				<button class="like-button" type="button" data-toggle="modal" data-target='#dialogModal' onclick="reportReview(10)"><i class="fa-solid fa-triangle-exclamation"></i></button>
-			</div>
-		</div>
-		<div class="row container" style="margin:0px; padding:0px;">
-			<span class="review-content">${rev.reviewContent }]</span>
-			<button class="comment-panel btn-secondary">댓글 22</button>
-		</div>
-	</div>
-	*/
 	
 	function insertReviews(reviewContainer, reviews) {
 		for(var i = 0; i < reviews.length; i++) {
@@ -482,6 +454,10 @@ nav a {
 	
 	function createNeedLoginDialog() {
 		clearDialog();
+		createDialog("알림", 0x2182);
+		document.querySelector('#okButton').addEventListener('click', function() {
+			location.href='../user/login';
+		});
 	}
 	
 	function createDetailContentDialog () {
@@ -663,6 +639,8 @@ nav a {
 			createAllActorBody(dialog);
 		} else if ((code & 0x40) == 0x40) {
 			createInputTextBody(dialog);
+		} else if ((code & 0x80) == 0x80) {
+			createNeedLoginBody(dialog);
 		}
 	}
 	
@@ -745,6 +723,15 @@ nav a {
 		dialog.appendChild(inputTextElem);
 	}
 	
+	function createNeedLoginBody(dialog) {
+		var divElem = document.createElement('div');
+		divElem.innerHTML = "로그인이 필요합니다.";
+		divElem.style.setProperty("font-size", "12px");
+		divElem.style.setProperty('height', '50px');
+		
+		dialog.appendChild(divElem);
+	}
+	
 	function createButtons(dialog, code) {
 		var buttonDiv = document.createElement('div');
 		buttonDiv.setAttribute('id', 'okButton');
@@ -753,21 +740,43 @@ nav a {
 		buttonDiv.style.setProperty('padding-bottom', '10px');
 		
 		if((code & 0x1000) == 0x1000) {
-			createSingleButton(dialog, buttonDiv);
+			createSingleButton(buttonDiv);
+		} else if ((code & 0x2000) == 0x2000) {
+			createDoubleButton(buttonDiv, "로그인");
 		}
 		
 		dialog.appendChild(buttonDiv);
 	}
 	
-	function createSingleButton(dialog, buttonDiv) {
+	function createSingleButton(buttonDiv) {
+		var button = createButton('100%', '확인','#007bff' );
+		buttonDiv.appendChild(button);
+	}
+	
+	function createButton(width, buttonText, color) {
 		var button = document.createElement('button');
 		button.style.setProperty('height', '100%');
-		button.style.setProperty('width', '100%');
+		button.style.setProperty('width', width);
 		button.style.setProperty('border', '0px solid black');
-		button.style.setProperty('background-color', '#007bff');
+		button.style.setProperty('background-color', color);
 		button.style.setProperty('color', 'white');
-		button.innerHTML = '확인';
-		buttonDiv.appendChild(button);
+		button.innerHTML = buttonText;
+		return button;
+	}
+	
+	function createDoubleButton(buttonDiv, confirmButtonText) {
+		var cancelButton = createButton('49%', '취소','#6c757d');
+		cancelButton.setAttribute('id', 'cancelButton');
+		cancelButton.addEventListener('click', function() {
+			clearDialog();
+		});
+		
+		var confirmButton = createButton('49%', confirmButtonText,'#007bff');
+		confirmButton.style.setProperty('margin-left', '2%');
+		confirmButton.setAttribute('id', 'okButton');
+		
+		buttonDiv.appendChild(cancelButton);
+		buttonDiv.appendChild(confirmButton);
 	}
 	
 	function clearDialog() {
