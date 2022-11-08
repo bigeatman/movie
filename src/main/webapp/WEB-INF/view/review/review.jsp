@@ -334,58 +334,85 @@ nav a {
 				<button class="btn-secondary" type="button" data-toggle="modal" data-target='#dialogModal' id="writereviewBtn" onclick="createReviewDialog()" style="border:1px solid gray">평 작성하기</button></div>
 		</div>
 		<div class="container center" id="reviewContainer">
-			<c:forEach var="rev" items="${review.reviews}" varStatus="status">
-				<div class="rectangle" id="review_10" isCommentOpened="false">
-					<div class="row container" style="margin:0px; padding:0px;">
-						<div class="review-id">${ rev.nickName }(${rev.userId })</div>
-						<div class="like-unlike-panel">
-							<button class="like-button"><i class="fa">&#xf087;</i></button>
-							<span class="like-button">128&nbsp&nbsp</span>
-							<button class="like-button"><span class="fa fa-thumbs-down"></span></button>
-							<span class="like-button">Unlike</span>
-							<button class="like-button" type="button" data-toggle="modal" data-target='#dialogModal' onclick="reportReview(10)"><i class="fa-solid fa-triangle-exclamation"></i></button>
+			<c:if test="${fn:length(review.reviews) eq 0 }">
+				<div style="font-size:12px; text-align:center; width:100%; margin-top:5px;">
+					작성된 사용자 평이 없습니다.<br>
+					사용자 평을 작성해 주세요!
+				</div>
+			</c:if>
+			<c:if test="${fn:length(review.reviews) ne 0 }">
+				<c:forEach var="rev" items="${review.reviews}" varStatus="status">
+					<div class="rectangle" id="review_${rev.reviewNum}" isCommentOpened="false">
+						<div class="row container" style="margin:0px; padding:0px;">
+							<div id="reviewWriter" class="review-id">${ rev.nickName }(${rev.userId })</div>
+							<div class="like-unlike-panel">
+								<button class="like-button"><i class="fa">&#xf087;</i></button>
+								<span class="like-button">128&nbsp&nbsp</span>
+								<button class="like-button"><span class="fa fa-thumbs-down"></span></button>
+								<span class="like-button">Unlike</span>
+								<c:if test="${not empty user}">
+									<c:if test="${user.userNum eq rev.userNum }">
+										<button class="like-button" type="button" data-toggle="modal" data-target='#dialogModal' onclick="removeReview(${rev.reviewNum})"> 
+											<i id="removeIcon" class="fa-solid fa-trash"></i>
+										</button>
+									</c:if>
+									<c:if test="${user.userNum ne rev.userNum }">
+										<button class="like-button" type="button" data-toggle="modal" data-target='#dialogModal' onclick="reportReview(${rev.reviewNum})"> 
+											<i class="fa-solid fa-triangle-exclamation"></i>
+										</button>
+									</c:if>
+								</c:if>
+								<c:if test="${empty user}">
+									<button class="like-button" type="button" data-toggle="modal" data-target='#dialogModal' onclick="reportReview(${rev.reviewNum})"> 
+										<i class="fa-solid fa-triangle-exclamation"></i>
+									</button>
+								</c:if>
+							</div>
+						</div>
+						<div class="row container" style="margin:0px; padding:0px;">
+							<span id="reviewContent" class="review-content">${rev.reviewContent }</span>
+							<button class="comment-panel btn-secondary">댓글 22</button>
 						</div>
 					</div>
-					<div class="row container" style="margin:0px; padding:0px;">
-						<span class="review-content">${rev.reviewContent }]</span>
-						<button class="comment-panel btn-secondary">댓글 22</button>
-					</div>
+				</c:forEach>
+				<div id="moreReviewButton"class="movieinfo-actor-name" style="width:100%">
+					<span onclick="viewMoreReview()">더보기 <i class="fa-solid fa-square-caret-down"></i></span>
 				</div>
-			</c:forEach>
-			<div class="movieinfo-actor-name" style="width:100%">
-				<span onclick="viewMoreReview()">더보기 <i class="fa-solid fa-square-caret-down"></i></span>
-			</div>
+			</c:if>
 		</div>
 	</div>
+	
 	<!-- NAVGATION BAR !-->
 	<div id='navBar' class='container-fulid'>
-		<nav class='row fixed-bottom p-1'>
-			<div class='col m-2 text-center'>
-				<a id='goHome' href='../main.html' class='ml-1'>
-					<i class='fa-solid fa-house fa-xl'></i>
-					<span class='iconfont'>&nbsp;홈</span>
-				</a>
-			</div>
-			<div class='col m-2 text-center'>
-				<a id='blind' href='../community/01.html' class='ml-1'>
-					<i class='fa-regular fa-comments fa-xl'></i>
-					<span class='iconfont'>커뮤니티</span>
-				</a>
-			</div>
-			<div class='col m-2 text-center'>
-				<a id='chat' href='../movie/01.html' class='ml-1'>
-					<i class='fa-solid fa-compass fa-xl'></i>
-					<span class='iconfont'>&nbsp;&nbsp;탐색</span>
-				</a>
-			</div>
-			<div class='col m-2 text-center'>
-				<a id='user' href='../user/01.html' class='ml-1'>
-					<i class='fa-regular fa-user fa-xl'></i>
-					<span class='iconfont'>&nbsp;&nbsp;&nbsp;로그인</span>
-				</a>
-			</div>
-		</nav>
-	</div>
+       	<nav class='row fixed-bottom p-2'>
+            <div class='col text-center'>
+               	<a id='goHome' href='../' class='ml-1'>
+                  	<i class='fa-solid fa-house fa-xl'></i><br>
+                  	<span class='iconfont mr-1'>홈</span>
+               	</a>
+            </div>
+            <div class='col text-center'>
+               	<a id='community' href='community' class='ml-1'>
+                  	<i class='fa-regular fa-comments fa-xl'></i><br>
+                  	<span class='iconfont'>커뮤니티</span>
+               	</a>
+            </div>
+            <div class='col text-center'>
+               	<a id='search' href='#' class='ml-1'>
+                  	<i class='fa-solid fa-compass fa-xl'></i><br>
+                  	<span class='iconfont'>탐색</span>
+               	</a>
+            </div>
+            <div class='col text-center'>
+              	<a id='user' href='user/login' class='ml-1'>
+               		<i class='fa-regular fa-user fa-xl'></i><br>
+               		<span id='loginSpan' class='iconfont'>로그인</span>
+               	</a>
+           	</div>
+      	</nav>
+   	</div>
+   	
+   	<!-- DIALOG !-->
 	<div class='modal fade' tabindex='-1' id='dialogModal'>
 		<div class='modal-dialog modal-lg'>
 			<div id="dialogUpperMargin" style="height:290px"></div>
@@ -398,8 +425,6 @@ nav a {
 	var currentReviews = 5;
 	
 	function viewMoreReview() {
-		
-		
 		$.ajax({
 			url : 'rev/morerev',
 			method: 'post',
@@ -410,13 +435,37 @@ nav a {
 				rowCount : currentReviews + 5
 			}),
 			success : function(result) {
-				console.log(result);
 				currentReviews = currentReviews + 5;
-			},
-			error : function() {
-				console.log('ERROR');
+				createAdditionalReviewElement(JSON.parse(result));
 			}
 		});
+	}
+	
+	function createAdditionalReviewElement(reviews) {
+		var button = document.querySelector("#moreReviewButton");
+		var reviewContainer = document.querySelector("#reviewContainer");
+		
+		button.remove();
+		insertReviews(reviewContainer, reviews);
+		reviewContainer.appendChild(button);
+	}
+	
+	function insertReviews(reviewContainer, reviews) {
+		for(var i = 0; i < reviews.length; i++) {
+			var reviewElem = reviewContainer.firstElementChild.cloneNode(true);
+			writeReviewData(reviews[i], reviewElem);
+			reviewContainer.appendChild(reviewElem);
+		}
+	}
+	
+	function writeReviewData(review, reviewElem) {
+		reviewElem.setAttribute("id", "review_" + review.reviewNum);
+		
+		var nicknameElem = reviewElem.querySelector("#reviewWriter");
+		nicknameElem.innerHTML = review.nickName + "(" + review.userId  + ")";
+		
+		var contentElem = reviewElem.querySelector("#reviewContent");
+		contentElem.innerHTML = review.reviewContent;
 	}
 	
 	function getLoginedUserId() {
@@ -428,9 +477,34 @@ nav a {
 			return -1;
 		}
 	}
+	    
+	function removeReview(reviewNum) {
+		clearDialog();
+		createDialog("사용자 평 삭제", 0x3132);
+		document.querySelector('#okButton').addEventListener('click', function() {
+			console.log("TEST");
+			$('#dialogModal').modal('hide');
+			
+			$.ajax({
+				url : "rev/remove",
+				method : "post",
+				contentType: 'application/json',
+				data : JSON.stringify({
+					reviewId : reviewNum
+				}),
+				success : function(result) {
+					document.querySelector("#review_" + reviewNum).remove();
+				}
+			})
+		});
+	}
 	
 	function createNeedLoginDialog() {
 		clearDialog();
+		createDialog("알림", 0x2182);
+		document.querySelector('#okButton').addEventListener('click', function() {
+			location.href='../user/login';
+		});
 	}
 	
 	function createDetailContentDialog () {
@@ -454,10 +528,23 @@ nav a {
 	function createReviewDialog() {
 		if(getLoginedUserId() != -1) {
 			clearDialog();
-			createDialog("사용자 평 작성하기", 0x11142);	
-			addWriteReviewListener();
+			if (checkLoginedWriten()) {
+				createDialog("알림", 0x1152);
+				addOkButtonListener();
+			} else {
+				createDialog("사용자 평 작성하기", 0x11142);	
+				addWriteReviewListener();	
+			}
 		} else {
 			createNeedLoginDialog();
+		}
+	}
+	
+	function checkLoginedWriten() {
+		if(document.querySelector("#removeIcon") != null) {
+			return true;
+		} else {
+			return false;
 		}
 	}
 	
@@ -470,7 +557,7 @@ nav a {
 				data: JSON.stringify({
 					movieNum : ${review.movie.movieNum},
 					grade : document.querySelector("#scoreBox").value,
-					reviewContent : document.querySelector("#reviewContent").value,
+					reviewContent : document.querySelector("#reviewContentNew").value,
 					userNum : getLoginedUserId()
 				}),
 			    success: function(result) {
@@ -606,12 +693,20 @@ nav a {
 	}
 	
 	function createBody(dialog, code) {
-		if((code & 0x10) == 0x10) {
+		var targetCode = code & 0xF0;
+		
+		if(targetCode == 0x10) {
 			createTextBody(dialog, code);
-		} else if ((code & 0x20) == 0x20) {
+		} else if (targetCode == 0x20) {
 			createAllActorBody(dialog);
-		} else if ((code & 0x40) == 0x40) {
+		} else if (targetCode == 0x30) {
+			createRemoveReviewBody(dialog);
+		} else if (targetCode == 0x40) {
 			createInputTextBody(dialog);
+		} else if (targetCode == 0x50) {
+			createAlreadyWritenBody(dialog);
+		} else if (targetCode == 0x80) {
+			createNeedLoginBody(dialog);
 		}
 	}
 	
@@ -685,13 +780,37 @@ nav a {
 		return divElem;
 	}
 	
+	function createRemoveReviewBody(dialog) {
+		var divElem = createTextDivBody('작성된 리뷰를 삭제하시겠습니까?')
+		dialog.appendChild(divElem);
+	}
+	
 	function createInputTextBody(dialog, code) {
 		var inputTextElem = document.createElement('textarea');
-		inputTextElem.setAttribute('id', 'reviewContent');
+		inputTextElem.setAttribute('id', 'reviewContentNew');
 		inputTextElem.style.setProperty('width', '100%');
 		inputTextElem.style.setProperty('padding', '0px');
 		inputTextElem.style.setProperty('resize', 'none');
 		dialog.appendChild(inputTextElem);
+	}
+	
+	function createNeedLoginBody(dialog) {
+		var divElem = createTextDivBody('로그인이 필요합니다.')
+		dialog.appendChild(divElem);
+	}
+	
+	function createAlreadyWritenBody(dialog) {
+		var divElem = createTextDivBody('이미 작성하신 사용자 평이 있습니다.');
+		dialog.appendChild(divElem);
+	}
+	
+	function createTextDivBody(text) {
+		var divElem = document.createElement('div');
+		divElem.innerHTML = text;
+		divElem.style.setProperty("font-size", "12px");
+		divElem.style.setProperty('height', '50px');
+		
+		return divElem;
 	}
 	
 	function createButtons(dialog, code) {
@@ -701,22 +820,46 @@ nav a {
 		buttonDiv.style.setProperty('padding-top', '5px');
 		buttonDiv.style.setProperty('padding-bottom', '10px');
 		
-		if((code & 0x1000) == 0x1000) {
-			createSingleButton(dialog, buttonDiv);
+		if((code & 0xF000) == 0x1000) {
+			createSingleButton(buttonDiv);
+		} else if ((code & 0xF000) == 0x2000) {
+			createDoubleButton(buttonDiv, "로그인");
+		} else if ((code & 0xF000) == 0x3000) {
+			createDoubleButton(buttonDiv, "삭제");
 		}
 		
 		dialog.appendChild(buttonDiv);
 	}
 	
-	function createSingleButton(dialog, buttonDiv) {
+	function createSingleButton(buttonDiv) {
+		var button = createButton('100%', '확인','#007bff' );
+		buttonDiv.appendChild(button);
+	}
+	
+	function createButton(width, buttonText, color) {
 		var button = document.createElement('button');
 		button.style.setProperty('height', '100%');
-		button.style.setProperty('width', '100%');
+		button.style.setProperty('width', width);
 		button.style.setProperty('border', '0px solid black');
-		button.style.setProperty('background-color', '#007bff');
+		button.style.setProperty('background-color', color);
 		button.style.setProperty('color', 'white');
-		button.innerHTML = '확인';
-		buttonDiv.appendChild(button);
+		button.innerHTML = buttonText;
+		return button;
+	}
+	
+	function createDoubleButton(buttonDiv, confirmButtonText) {
+		var cancelButton = createButton('49%', '취소','#6c757d');
+		cancelButton.setAttribute('id', 'cancelButton');
+		cancelButton.addEventListener('click', function() {
+			clearDialog();
+		});
+		
+		var confirmButton = createButton('49%', confirmButtonText,'#007bff');
+		confirmButton.style.setProperty('margin-left', '2%');
+		confirmButton.setAttribute('id', 'okButton');
+		
+		buttonDiv.appendChild(cancelButton);
+		buttonDiv.appendChild(confirmButton);
 	}
 	
 	function clearDialog() {
@@ -724,8 +867,13 @@ nav a {
 		$('#dialogModal').modal('hide');
 	}
 	
-	
-	
+	if(getLoginedUserId() == -1) {
+		document.querySelector('#loginSpan').innerHTML = '로그인';
+		document.querySelector('#user').setAttribute('href', 'user/login');
+	} else {
+		document.querySelector('#loginSpan').innerHTML = '프로필';
+		document.querySelector('#user').setAttribute('href', 'user/mypage');
+	}
 	
 </script>
 </body>

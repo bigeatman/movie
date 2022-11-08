@@ -15,6 +15,8 @@ public class Review {
 	
 	private float grade;
 	
+	private int userNum;
+	
 	private String userId;
 	
 	private String nickName;
