@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class UserGenre {
 	private User user;
-	private List<String> genreNum;
+	private List<Integer> genreNum;
 }
