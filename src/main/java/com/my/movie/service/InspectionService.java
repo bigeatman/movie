@@ -9,4 +9,5 @@ import com.my.movie.domain.UserDto;
 public interface InspectionService {
 	List<Inspection> selectAll();
 	List<Inspection> selectDetail(Inspection inspection);
+	void fixStatus(Inspection inspection);
 }

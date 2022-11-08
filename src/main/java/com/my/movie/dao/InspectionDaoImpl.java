@@ -22,4 +22,9 @@ public class InspectionDaoImpl implements InspectionDao {
 	public List<Inspection> selectDetail(Inspection inspection) {
 		return inspectionMap.selectDetail(inspection);
 	}
+	
+	@Override
+	public void updateStatus(Inspection inspection) {
+		inspectionMap.updateStatus(inspection);
+	}
 }

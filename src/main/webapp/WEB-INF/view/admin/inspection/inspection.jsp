@@ -14,6 +14,52 @@
 </head>
 <script>
 
+function status() {
+	//신고상세목록
+	//InspectionDetail()
+
+	// 신고반려
+  $('#returnbtn').click( function() {
+    if( inspection.setInspectionStatus("0")) {
+    	inspection.setInspectionStatus("1")
+    }
+  });
+});
+/*
+    // 신고반려
+    $('#returnbtn').click(() => {
+    	$(".inspectionStatus").val() == 1;
+    	});
+
+    // 신고삭제
+    $('#delbtn').click(() => {
+        if(isVal($('#laborerId:checked'))) {
+            $('#modalMsg').text('노동자를 삭제하시겠습니까?')
+            $('#modalBtn').show()
+            $('#modal').modal()
+        }
+    })
+
+    $('#delLaborerOkBtn').click(() => {
+        let laborerId = $('#laborerId:checked').val()
+
+        $.ajax({
+        	url: 'laborer/delLaborer.jsp',
+        	data: {laborerId: $('#laborerId:checked').val()},
+        	success: listLaborers
+        })
+        $('#modal').modal('hide')
+    })
+
+    $('#laborers').on({
+        change() {
+            $('#laborerName').val($(this).parent().next().next().text())
+            $('#hireDate').val($(this).parent().next().next().next().text())
+        }
+    }, '#laborerId')
+}
+*/
+$(status)
 </script>
 <body>
 <div class='container'>
@@ -67,7 +113,7 @@
                             <td>${inspection.anyContent}</td>
                             <td type='page-link' style="cursor: pointer;"
                                 data-toggle='modal' data-value="${inspection.inspectionNum}" data-target='#reportModal'><i><u>${inspection.inspectionDetailsCount}건 상세보기</u></i></td>
-                            <td>${inspection.inspectionStatusName}<c:if test="${inspection.inspectionStatus ne '0'}"><br>(${inspection.resultDate})</c:if></td>
+                            <td><span class='inspectionStatus'>${inspection.inspectionStatusName}</span><c:if test="${inspection.inspectionStatus ne '0'}"><br>(${inspection.resultDate})</c:if></td>
                         </tr>
                     </c:forEach>
                     </tbody>
@@ -98,11 +144,11 @@
                         </tr>
                     </thead>
                     <tbody style='text-align: center'>
-                    <c:forEach items="${inspectionDetails}" var="inspectionDetail" varStatus="status">
+                    <c:forEach items="${inspectionDetail}" var="inspection" varStatus="status">
                         <tr>
                         	<td>${status.count}</td>
-                            <td>${inspectionDetails.nickname}(${inspectionDetails.userId})</td>
-                            <td>${inspectionDetails.anyInspectionContent}</td>
+                            <td>${inspectionDetail.nickname}(${inspectionDetail.userId})</td>
+                            <td>${inspectionDetail.inspectionDetailContent}</td>
 						</tr>
 					</c:forEach>
 					</tbody>

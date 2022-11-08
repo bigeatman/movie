@@ -30,7 +30,12 @@ public class InspectionController {
 	}
 
 	@PostMapping("inspection/detail")
-	public List<Inspection> inspectionDetails(@RequestBody Inspection inspection) {
+	public List<Inspection> inspectionDetail(@RequestBody Inspection inspection) {
 		return inspectionService.selectDetail(inspection);
+	}
+	
+	@PostMapping("inspection/status")
+	public void fixStatus(@RequestBody Inspection inspection) {
+			inspectionService.fixStatus(inspection);
 	}
 }

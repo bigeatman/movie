@@ -61,10 +61,18 @@
 	</select>
 	
 	<select id='selectDetail' resultType='Inspection'>
-		select A.*
-		     , B.NICKNAME || '(' || B.USER_ID || ')' as USER_NAME
+		select A.INSPECTION_DETAIL_NUM
+			, A.INSPECTION_CONTENT as INSPECTION_DETAIL_CONTENT
+		    , B.NICKNAME || '(' || B.USER_ID || ')' as USER_NAME
 		  from INSPECTION_DETAILS A
 	inner join USERS B on A.USER_NUM = B.USER_NUM
+	inner join INSPECTIONS C on A.INSPECTION_NUM = C.INSPECTION_NUM
 		 where INSPECTION_NUM = #{inspectionNum}
 	</select>
+	
+	<update id='updateStatus'>
+		update INSPECTIONS
+		set INSPECTION_STATUS = #{inspectionStatus}
+		where INSPECTION_NUM = #{inspectionNum}
+	</update>
 </mapper>

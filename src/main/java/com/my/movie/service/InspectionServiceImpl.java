@@ -38,4 +38,9 @@ public class InspectionServiceImpl implements InspectionService {
 	public List<Inspection> selectDetail(Inspection inspection) {
 		return inspectionDao.selectDetail(inspection);
 	}
+	
+	@Override
+	public void fixStatus(Inspection inspection) {
+		inspectionDao.updateStatus(inspection);
+	}
 }
