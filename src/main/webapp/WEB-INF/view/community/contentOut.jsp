@@ -137,7 +137,9 @@ $(() => {
 	$('#regReplyBtn').click(() => {
 		var regDate = getToday()
 		
+		<%
 		if(session.getAttribute("user") != null) {
+		%>
 			$.ajax({
 				url: 'communityReply/add',
 				method: 'post',
@@ -153,9 +155,9 @@ $(() => {
 					listReplies
 				}
 			})
-		} else {
-			
-		}
+		<%
+		} else { }
+		%>
 	})	
 })	
 
