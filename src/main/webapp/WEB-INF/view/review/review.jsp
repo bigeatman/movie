@@ -353,7 +353,7 @@ nav a {
 								<c:if test="${not empty user}">
 									<c:if test="${user.userNum eq rev.userNum }">
 										<button class="like-button" type="button" data-toggle="modal" data-target='#dialogModal' onclick="removeReview(${rev.reviewNum})"> 
-											<i class="fa-solid fa-trash"></i>
+											<i id="removeIcon" class="fa-solid fa-trash"></i>
 										</button>
 									</c:if>
 									<c:if test="${user.userNum ne rev.userNum }">
@@ -381,35 +381,38 @@ nav a {
 			</c:if>
 		</div>
 	</div>
+	
 	<!-- NAVGATION BAR !-->
 	<div id='navBar' class='container-fulid'>
-		<nav class='row fixed-bottom p-1'>
-			<div class='col m-2 text-center'>
-				<a id='goHome' href='../' class='ml-1'>
-					<i class='fa-solid fa-house fa-xl'></i>
-					<span class='iconfont'>&nbsp;홈</span>
-				</a>
-			</div>
-			<div class='col m-2 text-center'>
-				<a id='blind' href='../community/01.html' class='ml-1'>
-					<i class='fa-regular fa-comments fa-xl'></i>
-					<span class='iconfont'>커뮤니티</span>
-				</a>
-			</div>
-			<div class='col m-2 text-center'>
-				<a id='chat' href='../movie/01.html' class='ml-1'>
-					<i class='fa-solid fa-compass fa-xl'></i>
-					<span class='iconfont'>&nbsp;&nbsp;탐색</span>
-				</a>
-			</div>
-			<div class='col m-2 text-center'>
-				<a id='user' href='../user/login' class='ml-1'>
-					<i class='fa-regular fa-user fa-xl'></i>
-					<span class='iconfont'>&nbsp;&nbsp;&nbsp;로그인</span>
-				</a>
-			</div>
-		</nav>
-	</div>
+       	<nav class='row fixed-bottom p-2'>
+            <div class='col text-center'>
+               	<a id='goHome' href='../' class='ml-1'>
+                  	<i class='fa-solid fa-house fa-xl'></i><br>
+                  	<span class='iconfont mr-1'>홈</span>
+               	</a>
+            </div>
+            <div class='col text-center'>
+               	<a id='community' href='community' class='ml-1'>
+                  	<i class='fa-regular fa-comments fa-xl'></i><br>
+                  	<span class='iconfont'>커뮤니티</span>
+               	</a>
+            </div>
+            <div class='col text-center'>
+               	<a id='search' href='#' class='ml-1'>
+                  	<i class='fa-solid fa-compass fa-xl'></i><br>
+                  	<span class='iconfont'>탐색</span>
+               	</a>
+            </div>
+            <div class='col text-center'>
+              	<a id='user' href='user/login' class='ml-1'>
+               		<i class='fa-regular fa-user fa-xl'></i><br>
+               		<span id='loginSpan' class='iconfont'>로그인</span>
+               	</a>
+           	</div>
+      	</nav>
+   	</div>
+   	
+   	<!-- DIALOG !-->
 	<div class='modal fade' tabindex='-1' id='dialogModal'>
 		<div class='modal-dialog modal-lg'>
 			<div id="dialogUpperMargin" style="height:290px"></div>
@@ -525,10 +528,23 @@ nav a {
 	function createReviewDialog() {
 		if(getLoginedUserId() != -1) {
 			clearDialog();
-			createDialog("사용자 평 작성하기", 0x11142);	
-			addWriteReviewListener();
+			if (checkLoginedWriten()) {
+				createDialog("알림", 0x1152);
+				addOkButtonListener();
+			} else {
+				createDialog("사용자 평 작성하기", 0x11142);	
+				addWriteReviewListener();	
+			}
 		} else {
 			createNeedLoginDialog();
+		}
+	}
+	
+	function checkLoginedWriten() {
+		if(document.querySelector("#removeIcon") != null) {
+			return true;
+		} else {
+			return false;
 		}
 	}
 	
@@ -677,18 +693,22 @@ nav a {
 	}
 	
 	function createBody(dialog, code) {
-		if((code & 0xF0) == 0x10) {
+		var targetCode = code & 0xF0;
+		
+		if(targetCode == 0x10) {
 			createTextBody(dialog, code);
-		} else if ((code & 0xF0) == 0x20) {
+		} else if (targetCode == 0x20) {
 			createAllActorBody(dialog);
-		} else if ((code & 0xF0) == 0x30) {
+		} else if (targetCode == 0x30) {
 			createRemoveReviewBody(dialog);
-		} else if ((code & 0xF0) == 0x40) {
+		} else if (targetCode == 0x40) {
 			createInputTextBody(dialog);
-		} else if ((code & 0xF0) == 0x80) {
+		} else if (targetCode == 0x50) {
+			createAlreadyWritenBody(dialog);
+		} else if (targetCode == 0x80) {
 			createNeedLoginBody(dialog);
 		}
-	}7
+	}
 	
 	function createTextBody(dialog, code) {
 		var textDiv = document.createElement('div');
@@ -779,6 +799,11 @@ nav a {
 		dialog.appendChild(divElem);
 	}
 	
+	function createAlreadyWritenBody(dialog) {
+		var divElem = createTextDivBody('이미 작성하신 사용자 평이 있습니다.');
+		dialog.appendChild(divElem);
+	}
+	
 	function createTextDivBody(text) {
 		var divElem = document.createElement('div');
 		divElem.innerHTML = text;
@@ -842,8 +867,13 @@ nav a {
 		$('#dialogModal').modal('hide');
 	}
 	
-	
-	
+	if(getLoginedUserId() == -1) {
+		document.querySelector('#loginSpan').innerHTML = '로그인';
+		document.querySelector('#user').setAttribute('href', 'user/login');
+	} else {
+		document.querySelector('#loginSpan').innerHTML = '프로필';
+		document.querySelector('#user').setAttribute('href', 'user/mypage');
+	}
 	
 </script>
 </body>
