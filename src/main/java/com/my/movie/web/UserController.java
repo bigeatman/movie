@@ -39,10 +39,6 @@ public class UserController {
 		User user = userService.loginValidate(userLogin);
 		if(user != null) {
 			List<String> userGenre = userService.getUserGenre(user.getUserNum());
-			for(String genre: userGenre) {
-				System.out.println("장르: " + genre);
-			}
-			System.out.println(userGenre.get(0) + " " + userGenre.get(1));
 			System.out.println(userGenre);
 			int userWithDrawal = userService.getWithDrawal(user.getUserNum());
 			if(userWithDrawal == 1) {

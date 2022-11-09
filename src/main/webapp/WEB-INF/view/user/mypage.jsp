@@ -1,4 +1,4 @@
-<%@page import="ch.qos.logback.core.recovery.ResilientSyslogOutputStream"%>
+<%@ page import="ch.qos.logback.core.recovery.ResilientSyslogOutputStream"%>
 <%@ page language='java' contentType='text/html; charset=utf-8' pageEncoding='utf-8'%>
 <title>MYPAGE</title>
 <meta charset='utf-8'>

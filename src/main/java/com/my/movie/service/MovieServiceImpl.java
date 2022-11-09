@@ -36,7 +36,7 @@ public class MovieServiceImpl implements MovieService{
 	public void addMovie(Movie movie) {
 		movieDao.insertMovie(movie);
 	}
-	
+
 	@Override
 	public void fixMovie(Movie movie) {
 		movieDao.updateMovie(movie);

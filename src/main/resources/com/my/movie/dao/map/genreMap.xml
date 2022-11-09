@@ -32,6 +32,18 @@
 	<select id='selectAll' resultType='Genre'>
 		select * from genre
 	</select>
+	
+	<select id='selectMovie' resultType='int'>
+		select * from genre
+	</select>
+	
+	<select id='selectUser' resultType='int'>
+		select * from genre
+	</select>
+	
+	<insert id='insertGenre'>
+		insert into genre values(genre_num_seq.nextval, ${genreName})
+	</insert>
 
 	<insert id='insertUserGenre'>
 		insert into user_genre(user_num, genre_num) values(${userId}, ${genre})
