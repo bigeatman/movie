@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
 	'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
 <mapper namespace='com.my.movie.dao.map.CastMap'>
-	<select id="findCastByMovieId" resultType="Cast">
+	<select id="selectByMovieId" resultType="Cast">
 		SELECT 
 			CAST.CAST_NUM, 
 			CAST.CAST_NAME, 
@@ -10,5 +10,13 @@
 			MOVIE_CAST.POSITION 
 		FROM MOVIE_CAST JOIN CAST ON MOVIE_CAST.CAST_NUM = CAST.cast_num 
 		WHERE MOVIE_CAST.MOVIE_NUM = ${movieId}
+	</select>
+	
+	<select id="selectAllDirector" resultType="Director">
+		SELECT * FROM DIRECTORS
+	</select>
+	
+	<select id="selectAllCast" resultType="Cast">
+		SELECT * FROM CAST
 	</select>
 </mapper>
