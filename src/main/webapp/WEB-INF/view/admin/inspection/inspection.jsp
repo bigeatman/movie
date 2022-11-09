@@ -27,24 +27,23 @@ function clickDetails(inspectionNum, inspectionContentNum, inspectionContentName
 				)
 		});
 	})
-
 		//신고된 컨텐츠 이동
-		/*
 		var url = "";
-		if(inspectionContentName === "리뷰") {
-			url = "/reviews/" + inspectionContentNum;
-		} else if(inspectionContentName === "리뷰댓글") {
-			url = "/.../" + inspectionContentNum;
-		} else if(inspectionContentName === "영화평") {
-			url = "/.../" + inspectionContentNum;
-		} else(inspectionContentName === "영화평댓글") {
-			url = "/.../" + inspectionContentNum;
+	
+		if(inspectionContentName === "영화평") { //영화평에서 해당게시물의 번호로 찾아간다.
+			url = "/community/" + inspectionContentNum;
+		} else if(inspectionContentName === "영화평댓글") { //영화평댓글에서 해당게시물의 번호로 찾아간다.
+			url = "/communityReply/" + inspectionContentNum;
+		} else if(inspectionContentName === "리뷰") { //리뷰에서 해당게시물의 번호로 찾아간다.
+			url = "/review/" + inspectionContentNum;
+		} else(inspectionContentName === "리뷰댓글") { //리뷰댓글에서 해당게시물의 번호로 찾아간다.
+			url = "/rev/" + inspectionContentNum;
 		}
 	}
 		$('#inspectionMove').attr('href', url);
-*/
+
 		$('#reportModal').modal("show");
-//	});
+	});
 }
 
 </script>
@@ -57,7 +56,7 @@ function clickDetails(inspectionNum, inspectionContentNum, inspectionContentName
         <div id='btn_group' class='float-right mt-3'>
             <label style='font-size:13'>admin님</label>&emsp;
             <span style='font-size:12'>(08:23)</span>&emsp;
-            <a href='../main.html'><button style='font-size:13'>로그아웃</button></a>
+            <a href='../user/login'><button style='font-size:13'>로그아웃</button></a>
         </div><br>
         <div class='row mt-5'>
             <div class='col'>
@@ -66,13 +65,13 @@ function clickDetails(inspectionNum, inspectionContentNum, inspectionContentName
                         <div class='col-12 text-center'>
                             <div class='btn-group btn-block'>
                                 <button type='button' class='btn btn-secondary'
-                                    onclick='location.href="../main.jsp" '>홈</button>
+                                    onclick="location.href='../user/main.jsp'">홈</button>
                                 <button type='button' class='btn btn-secondary'
-                                    onclick='location.href="../user/.jsp" '>회 원</button>
+                                    onclick="location.href='../user/login.jsp'">회 원</button>
                                 <button type='button' class='btn btn-secondary'
-                                    onclick='location.href="../movie/listMovie.jsp" '>영 화</button>
+                                    onclick="location.href='../movie/listMovie'">영 화</button>
                                 <button type='button' class='btn btn-secondary'
-                                    onclick='location.href="../inspection/inspection.jsp" '>신고 조회</button>
+                                    onclick="location.href='../inspection/inspection.jsp'">신고 조회</button>
                             </div>
                         </div>
                     </div>
