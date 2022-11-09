@@ -13,53 +13,40 @@
 <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.6.3/css/all.css'/>
 </head>
 <script>
+// 신고 상세페이지
+function clickDetails(inspectionNum, inspectionContentNum, inspectionContentName) {
+	$.get("/admin/inspections/" + inspectionNum + "/details", function(data, status) {
+		console.log('get data', data);
+		$('#detailBody').empty();
+		data.map((detail) => {
+			$('#detailBody').append("<tr>"
+					+ "<td>" + detail.inspectionDetailNum + "</td>"
+					+ "<td>" + detail.nickname + "</td>"
+					+ "<td>" + detail.inspectionContent + "</td>"
+					+ "</tr>"
+				)
+		});
+	})
 
-function status() {
-	//신고상세목록
-	//InspectionDetail()
-
-	// 신고반려
-  $('#returnbtn').click( function() {
-    if( inspection.setInspectionStatus("0")) {
-    	inspection.setInspectionStatus("1")
-    }
-  });
-});
-/*
-    // 신고반려
-    $('#returnbtn').click(() => {
-    	$(".inspectionStatus").val() == 1;
-    	});
-
-    // 신고삭제
-    $('#delbtn').click(() => {
-        if(isVal($('#laborerId:checked'))) {
-            $('#modalMsg').text('노동자를 삭제하시겠습니까?')
-            $('#modalBtn').show()
-            $('#modal').modal()
-        }
-    })
-
-    $('#delLaborerOkBtn').click(() => {
-        let laborerId = $('#laborerId:checked').val()
-
-        $.ajax({
-        	url: 'laborer/delLaborer.jsp',
-        	data: {laborerId: $('#laborerId:checked').val()},
-        	success: listLaborers
-        })
-        $('#modal').modal('hide')
-    })
-
-    $('#laborers').on({
-        change() {
-            $('#laborerName').val($(this).parent().next().next().text())
-            $('#hireDate').val($(this).parent().next().next().next().text())
-        }
-    }, '#laborerId')
-}
+		//신고된 컨텐츠 이동
+		/*
+		var url = "";
+		if(inspectionContentName === "리뷰") {
+			url = "/reviews/" + inspectionContentNum;
+		} else if(inspectionContentName === "리뷰댓글") {
+			url = "/.../" + inspectionContentNum;
+		} else if(inspectionContentName === "영화평") {
+			url = "/.../" + inspectionContentNum;
+		} else(inspectionContentName === "영화평댓글") {
+			url = "/.../" + inspectionContentNum;
+		}
+	}
+		$('#inspectionMove').attr('href', url);
 */
-$(status)
+		$('#reportModal').modal("show");
+//	});
+}
+
 </script>
 <body>
 <div class='container'>
@@ -111,8 +98,7 @@ $(status)
                             <td>${inspection.inspectionContentName}</td>
                             <td>${inspection.nickname}<br>(${inspection.userId})</td>
                             <td>${inspection.anyContent}</td>
-                            <td type='page-link' style="cursor: pointer;"
-                                data-toggle='modal' data-value="${inspection.inspectionNum}" data-target='#reportModal'><i><u>${inspection.inspectionDetailsCount}건 상세보기</u></i></td>
+                            <td type='page-link' style="cursor: pointer;" onclick="clickDetails(${inspection.inspectionNum}, ${inspection.inspectionContentNum}, '${inspection.inspectionContentName}')"><i><u>${inspection.inspectionDetailsCount}건 상세보기</u></i></td>
                             <td><span class='inspectionStatus'>${inspection.inspectionStatusName}</span><c:if test="${inspection.inspectionStatus ne '0'}"><br>(${inspection.resultDate})</c:if></td>
                         </tr>
                     </c:forEach>
@@ -135,7 +121,9 @@ $(status)
         <div class='modal-content'>
             <div class='modal-body'><br>
                 <h3><b>신고 사유 상세</b></h3>
-                <p style='text-align: end; cursor: pointer;' data-dismiss='modal' a href=""><u><i>신고된 컨텐츠로 이동</i></u></p>
+                <a id='inspectionMove'>
+                	<p style='text-align: end; cursor: pointer;' data-dismiss='modal' a href=""><u><i>신고된 컨텐츠로 이동</i></u></p>
+                </a>
                 <div style='width:100%; height:400px; overflow:auto'>
                 <table class='table' width='100%' cellspacing='0' cellpadding='0'>
                     <thead style='text-align: center'>
@@ -143,14 +131,8 @@ $(status)
                             <th width="5%">No.</th><th>신고자ID</th><th width="50%">신고사유</th>
                         </tr>
                     </thead>
-                    <tbody style='text-align: center'>
-                    <c:forEach items="${inspectionDetail}" var="inspection" varStatus="status">
-                        <tr>
-                        	<td>${status.count}</td>
-                            <td>${inspectionDetail.nickname}(${inspectionDetail.userId})</td>
-                            <td>${inspectionDetail.inspectionDetailContent}</td>
-						</tr>
-					</c:forEach>
+                    <tbody id='detailBody' style='text-align: center'>
+                    
 					</tbody>
                 </table>
             </div>

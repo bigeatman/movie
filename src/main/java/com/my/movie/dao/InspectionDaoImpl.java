@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.my.movie.dao.map.InspectionMap;
 import com.my.movie.domain.Inspection;
+import com.my.movie.domain.InspectionDetail;
 
 @Repository
 public class InspectionDaoImpl implements InspectionDao {
@@ -19,8 +20,8 @@ public class InspectionDaoImpl implements InspectionDao {
 	}
 	
 	@Override
-	public List<Inspection> selectDetail(Inspection inspection) {
-		return inspectionMap.selectDetail(inspection);
+	public List<InspectionDetail> selectDetail(Integer inspectionNum) {
+		return inspectionMap.selectDetail(inspectionNum);
 	}
 	
 	@Override

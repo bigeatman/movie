@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.my.movie.dao.InspectionDao;
 import com.my.movie.domain.Inspection;
+import com.my.movie.domain.InspectionDetail;
 
 @Service
 public class InspectionServiceImpl implements InspectionService {
@@ -17,7 +18,7 @@ public class InspectionServiceImpl implements InspectionService {
 	public List<Inspection> selectAll() {
 		List<Inspection> insList = inspectionDao.selectAll();
 		List<Inspection> rtnInsList = new ArrayList<Inspection>();
-		for(int i=0; i<insList.size(); i++) {
+		for(int i = 0; i < insList.size(); i++) {
 			Inspection oneInspection = insList.get(i);
 			String insepctionStatus = oneInspection.getInspectionStatus();
 			String insepctionStatusName = "";
@@ -35,8 +36,8 @@ public class InspectionServiceImpl implements InspectionService {
 	}
 
 	@Override
-	public List<Inspection> selectDetail(Inspection inspection) {
-		return inspectionDao.selectDetail(inspection);
+	public List<InspectionDetail> selectDetail(Integer inspectionNum) {
+		return inspectionDao.selectDetail(inspectionNum);
 	}
 	
 	@Override
