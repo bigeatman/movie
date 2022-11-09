@@ -18,11 +18,7 @@ function isVal(field) {
     if(!field.val()) errMsg = '장르를 입력하세요.'
     else isGood = true
 
-    if(!isGood) {
-        $('#modalMsg').text(errMsg).css('color', 'red')
-        $('#modalBtn').hide()
-        $('#modal').modal()
-    }
+    if(!isGood) $('#errMsg').css('color', 'red').text(errMsg)
 
     return isGood
 }
@@ -31,11 +27,12 @@ function init() {
 	$('#addGenreBtn').click(() => {
 	    if(isVal($('#genre'))) {
 	        $.ajax({
-	        	url: 'admin/genre/addGenre',
+	        	url: 'addGenre',
 	        	method: 'post',
-	        	data: { 
-	                genre: $('#genre').val(),
-	            },
+	        	contentType: 'application/json',
+	        	data: JSON.stringify({
+	                genreName: $('#genre').val()
+	            }),
 	        	success: console.log('성공')
 	        })
 	    }
@@ -73,22 +70,20 @@ $(init)
    </div><hr>
 
         <div class='row mt-5'>
-            <div class='col'>
+            <div class='col' style='text-align: center'>
                 <form>
                     <div class='row mb-3'>
-                        <div class='col'>
-                            <input type='text' class='form-control' name='genre' id='genre' placeholder='장르를 입력하세요.' style=''/>
-                        </div>
-                        <div class='col'>
-                            <nav class='d-flex'>
-                            	<button type='button' class='btn flex-fill border'id='addGenreBtn'>
-                                    <span class='label  d-md-inline'>추가</span>
-                                </button>
-                            </nav>
-                        </div>
+                    	<div style='margin: 0 auto; display: flex'>
+                    		<input type='text' class='form-control' name='genre' id='genre' 
+                    			placeholder='장르를 입력하세요.' style='width: 300px; margin-left: -20px;'/>
+                    		<button type='button' class='btn btn-success flex-fill border' id='addGenreBtn' style='width: 200px; margin-left: 5px;'>
+	                        	<span class='label d-md-inline'>추가</span>
+	                        </button>
+                    	</div>
                     </div>
+                    <p id='errMsg'></p>
                     <div class='col'>
-                        <h5 style='color:#0f56ba'><b>| 장르 목록</b></h5>
+                        <h5 style='color:#0f56ba'><b class='d-flex'>| 장르 목록</b></h5>
                     </div>
                     <div class='row'>
                         <div class='col'>
@@ -115,25 +110,5 @@ $(init)
             </div>
         </div>
     </div>
-</body>
-
-<div id='modal' class='modal fade' tabindex='-1'>
-	<div class='modal-dialog'>
-		<div class='modal-content'>
-			<div class='modal-header'>
-				<button type='button' class='close' data-dismiss='modal'>
-					<span>&times;</span>
-				</button>
-			</div>
-			<div class='modal-body'>
-				<p id='modalMsg'></p>
-			</div>
-			<div class='modal-footer' id='modalBtn'>
-				<button type='button' class='btn btn-secondary' data-dismiss='modal'>취소</button>
-				<button type='button' class='btn btn-primary' data-dismiss='modal' id='delMovieOkBtn'>확인</button>
-			</div>
-		</div>
-	</div>
-</div>
 </body>
 </html>

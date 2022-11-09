@@ -24,6 +24,8 @@ public class GenreController {
 	
 	@PostMapping("addGenre")
 	public void addGenre(@RequestBody Genre genre) {
+		System.out.println(genre);
+		System.out.println(genre.getGenreName());
 		genreService.addGenre(genre.getGenreName());
 	}
 }
