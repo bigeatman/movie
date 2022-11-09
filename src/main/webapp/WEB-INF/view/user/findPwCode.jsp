@@ -13,11 +13,6 @@ function textClear(field){
     return field.children().val('')
 }
  
-function setTime(){
-    setTimeOut()
-    return 
-}
- 
 $(function(){
     $(document).on("keydown", "#onlyNumber", function(e){
         if(/[a-z|ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/g.test(this.value)){ //한글 막기
@@ -50,7 +45,7 @@ function init(){
             	$('#codeBoxRow').children().css({'border-color': 'red'})
             	textClear($('#codeBoxRow'))
         		textClear($('#inputEmail'))    
-        } else location.href="fixPw/${userId}";
+        } else $('#yesBtn').attr('type', 'submit')
     })
  
     $('#noBtn').on('click', ()=>{
@@ -113,21 +108,23 @@ hr {
     <div class='row'>
         <div class='col'>
             <h4>${email}으로 메일을 보냈습니다!
-            ${userId}</h4>
+            </h4>
         </div>
     </div>
-    <form>
-        <div class='row' id='codeBoxRow'>
-            <input type='tel' id='onlyNumber' maxlength='1' min='0' max='9' name='codeBox1'>
-            <input type='tel' id='onlyNumber' maxlength='1' min='0' max='9' name='codeBox2'>
-            <input type='tel' id='onlyNumber' maxlength='1' min='0' max='9' name='codeBox3'>
-            <input type='tel' id='onlyNumber' maxlength='1' min='0' max='9' name='codeBox4'>
-        </div>
-        <div class='row col mb-4' id='msg'>
-            <p id='errMsg'>코드 번호를 입력하세요.</p>
-        </div>
-        <div class='row'>
-            <div class='col d-flex'>
+    <div class='row' id='codeBoxRow'>
+        <input type='tel' id='onlyNumber' maxlength='1' min='0' max='9' name='codeBox1'>
+        <input type='tel' id='onlyNumber' maxlength='1' min='0' max='9' name='codeBox2'>
+        <input type='tel' id='onlyNumber' maxlength='1' min='0' max='9' name='codeBox3'>
+        <input type='tel' id='onlyNumber' maxlength='1' min='0' max='9' name='codeBox4'>
+    </div>
+    <div class='row col mb-4' id='msg'>
+        <p id='errMsg'>코드 번호를 입력하세요.</p>
+    </div>
+    <form action='fixPw' method='post'>
+    	<div class='row'>
+        	<div class='col d-flex'>
+        		<input type='hidden' name='userId' value='${userId}'>
+            	<input type='hidden' name='email' value='${email}'>
                 <input id='noBtn' type="button" class='btn btn-block btn-secondary mr-3' value='취소'
                     style='max-width: 7rem;'>
                 <input id='yesBtn' type="button" class='btn btn-block btn-primary' value='확인'

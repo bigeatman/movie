@@ -21,7 +21,7 @@ public interface UserMap {
 	String selectId1(User user);
 	String selectPw1(User user);
 	String selectPw1(@Param("email")String email,
-						@Param("userId")String userId);
-	void updatePw1(@Param("pw")String pw,
-			@Param("userId")String userId);
+					@Param("userId")String userId);
+	void updatePw1(User user);
+
 }
