@@ -1,7 +1,8 @@
 package com.my.movie.web;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -167,10 +168,13 @@ public class UserController {
 		return mv;
 	}
 
-	// 비밀번호 수정
 	@GetMapping("fixPw/{userId}")
 	public ModelAndView changePw(ModelAndView mv,
 			@PathVariable String userId) {
+		mv.setViewName("user/fixPw");
+		return mv;
+	}
+	
 	@PostMapping("fixPw")
 	public ModelAndView fixPw (ModelAndView mv
 			,HttpServletRequest request) {
