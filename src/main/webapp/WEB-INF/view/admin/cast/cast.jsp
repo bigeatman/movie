@@ -36,6 +36,22 @@ html, body {
 	border : 1px solid gray;
 	border-radius : 0.25rem;
 }
+
+.circle {
+	width: 100px;
+	height: 100px;
+	-webkit-border-radius: 30px;
+	-moz-border-radius: 30px;
+	border-radius: 30px;
+	border : 2px solid black;
+}
+
+.cast-info {
+	margin : 10px;
+	font-size : 16px;
+	text-align : center;
+}
+
 </style>
 <body>
 	<div class='container-fluid'>
@@ -80,7 +96,7 @@ html, body {
 			</div>
 		</div>
 		<div id="view" class="viewLayout">
-			
+		
 		</div>
 	</div>
 </body>
@@ -117,6 +133,8 @@ html, body {
 			actor.style.setProperty('background-color', '#6c757d');
 			actorSelected = false;
 		}
+		
+		request(true);
 	}
 	
 	function disableDirector() {
@@ -132,11 +150,112 @@ html, body {
 			director.style.setProperty('background-color', '#6c757d');
 			directorSelected = false;
 		}
+		
+		request(false);
 	}
 	
 	function disableActor() {
 		actor.style.setProperty('background-color', '#6c757d');
 		actorSelected = false;
+	}
+	
+	function request(isDirector) {
+		var targetUrl;
+		
+		if(isDirector) {
+			targetUrl = "../cst/getdirector";
+		} else {
+			targetUrl = "../cst/getactor";
+		}
+		
+		$.ajax({
+			url : targetUrl,
+			method : "post",
+			type : 'application/json',
+			data : 	JSON.stringify ({
+				startIndex : 0,
+				rowCount : 1000
+			}),
+			success : function(result) {
+				writeData(JSON.parse(result), isDirector);
+				console.log(JSON.parse(result));
+			}
+		});
+		
+	}
+	
+	function writeData(result, isDirector) {
+		var view = document.querySelector("#view");
+		var lineDiv = createLineDiv();
+		view.innerHTML = "";
+		view.appendChild(lineDiv);
+		
+		for(var i = 0; i < result.length; i++) {
+			var imgElem = createImgElement(result[i], isDirector);
+			var nameElem = createNameElement(result[i], isDirector);
+			
+			var imgDiv = createImgDiv();
+			imgDiv.appendChild(imgElem);
+			imgDiv.appendChild(nameElem);
+			lineDiv.appendChild(imgDiv);
+			
+			if(isOverflown(lineDiv)) {
+				imgDiv.remove();
+				lineDiv = createLineDiv();
+				view.appendChild(lineDiv);
+				lineDiv.appendChild(imgDiv);
+			}
+		}
+		
+		view.appendChild(lineDiv);
+	}
+	
+	function createLineDiv() {
+		var lineDiv = document.createElement('div');
+		lineDiv.style.setProperty('display', 'flex');
+		return lineDiv;
+	}
+	
+	function createImgElement(result, isDirector) {
+		var imgElem = document.createElement('img');
+		imgElem.setAttribute('alt', 'Avatar');
+		imgElem.classList.add('w3-col');
+		imgElem.classList.add('s6');
+		imgElem.classList.add('circle');
+		imgElem.style.setProperty('border-radius', '50%');
+		
+		if(isDirector) {
+			imgElem.setAttribute('src', result.directorImgFileName);
+		} else {
+			imgElem.setAttribute('src', result.castImgFileName);
+		}
+		
+		return imgElem;
+	}
+	
+	function createNameElement(result, isDirector) {
+		var nameElem = document.createElement('div');
+		nameElem.classList.add('cast-name');
+		
+		if(isDirector) {
+			nameElem.innerHTML = result.directorName;
+		} else {
+			nameElem.innerHTML = result.castName;
+		}
+		
+		return nameElem;
+	}
+	
+	function createImgDiv() {
+		var imgDiv = document.createElement('div');
+		imgDiv.classList.add('cast-info');
+		imgDiv.style.setProperty('overflow', 'hidden;');
+		return imgDiv;
+	}
+	
+	function isOverflown(element) {
+		return element.scrollHeight > element.clientHeight
+		|| element.scrollWidth > (element.clientWidth);
 	}
 	
 </script>
