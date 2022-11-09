@@ -31,7 +31,7 @@ function login() {
 		      	method:'post',
 		      	contentType: 'application/json',
 		      	data: JSON.stringify({
-		    	  	adminId: $('#adminId').val(),
+		    	  	userId: $('#adminId').val(),
 		    	  	pw: $('#pw').val()
 		      	}),
 		      	success: function(data) {
@@ -43,6 +43,8 @@ function login() {
 						$('#errMsg').text('아이디 또는 비밀번호가 틀렸습니다.')
 						$('input').val('')
 						$('#adminId').focus()
+		   			} else {
+		   				location.href='../../admin'
 		   			}
 			   	}
 	      	})

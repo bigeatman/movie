@@ -13,6 +13,26 @@
     <script src="https://kit.fontawesome.com/449f39a7b2.js" crossorigin="anonymous"></script>
 </head>
 <script>
+function checkLogin() {
+<%
+	if(session.getAttribute("user") != null) {
+%>
+	$('#myModal').modal('hide')
+	$('#loginBtn').attr({
+   		class: "btn btn-secondary",
+   		onclick: "location.href='admin/user/logout'"	
+	})
+<%
+	} else {
+%>
+	$('button[name="page"]').attr({
+		onclick: "location.href"	
+	})
+<%
+	}
+%>
+}
+
 const users =[]
 let user = 0
 
@@ -35,30 +55,36 @@ function isVal(field){
 }
 
 function listUsers(){
-/*
-    $('input').not(':radio').val('') // not(':radio') 라디오가 아닌것
-    $('#laborers').empty()
+    $('input').not(':radio').val('')
+    $('#userList').empty()
     
-    if(laborers.length){
-        const laborerArr = []
-
-        $.each(laborers, (i, laborer) => {
-            laborerArr.unshift( // push는 [ 1 , 2 ,3 ,...] 순서 // unshift는 [... ,3 ,2 ,1 ]
-                `<tr>
-                    <td><input type='radio' name='laborerId' id='laborerId'
-                        value='${laborer.laborerId}'/></td>
-                    <td>${laborer.laborerId}</td>
-                    <td>${laborer.name}</td>
-                    <td>${laborer.hireDate}</td>
-                </tr>`
-            )
-        })
-    
-        $('#laborers').append(laborerArr.join(''))
-    } else $('#laborers').append(
-        '<tr><td colspan=4 class=text-center>노동자가 없습니다.</td></tr>'
-    )
-*/
+    $.ajax({
+		url: 'fixUser/list',
+		dataType: 'json',
+		success: userList => {
+			if(userList.length){
+		        userArr = []
+		        userList.forEach(user => {
+					userArr.unshift( 
+						`<tr>
+                            <td><input type='radio' name='userNum' id='userNum'
+                                   value='\${user.userNum}'/></td>
+                            <td>\${user.userNum}</td> 
+                            <td>\${user.userId}</td>                                  
+                            <td>\${user.pw}</td>
+                            <td>\${user.nickname}</td>                                  
+                            <td>\${user.phoneNum}</td>                                  
+                            <td>\${user.emial}</td>                                  
+                        </tr>`
+			        )
+				})	
+		    
+		        $('#userList').append(laborerArr.join(''))
+		    } else $('#userList').append(
+		        '<tr><td colspan=4 class=text-center>회원이 없습니다.</td></tr>'
+		    )
+		}
+	})
 }
 // 유저 닉네임 수정
     function init() {
@@ -121,6 +147,7 @@ function listUsers(){
 }
 
     $(init)
+    $(checkLogin)
 </script>
 <style>
     #yesBtn,
@@ -136,6 +163,11 @@ function listUsers(){
         table-layout:fixed; 
         word-break:break-all;
     }
+    
+    #logoutBtn{
+	height: 1.5rem;
+	font-size: 14px;		
+	}
 </style>
 <body>
     <div class='container'>
@@ -144,9 +176,11 @@ function listUsers(){
                     <h5>| 회원</h5>
                 </div>
                 <div id='btn_group' class='float-right mt-3'>
-                    <label style='font-size:13'>admin님</label>&emsp;
-                    <span style='font-size:12'>(08:23)</span>&emsp;
-                    <a href='../main.html'><button style='font-size:13'>로그아웃</button></a>
+                    <span id='id' style='font-size:13'>${userId}님 ${nickname}님</span>&emsp;
+                    <span id='sessionTime' style='font-size:12'>(08:23)세션시간 </span>&emsp;
+					<button id='logoutBtn' type='button' class='btn btn-primary btn-block' onclick='location.href="login"'>
+	         			<span id='loginSpan'>로그아웃</span>
+	         		</button>
                 </div><br>
                 <div class='row mt-5'>
                     <div class='col'>
@@ -193,17 +227,7 @@ function listUsers(){
                                 <th>가입일</th>
                             </tr>
                         </thead>
-                        <tbody style='text-align: center'>
-                            <tr>
-                                <td><input type='radio' name='no' id='no'></td>
-                                <td id='no'>1</td>
-                                <td id='id'>id123</td>
-                                <td id='pw'>qs123456</td>
-                                <td id='nickname'>뿡뿡이</td>
-                                <td id='tel'>01039158928</td>
-                                <td id='email'>xxxx123@naver.com</td>
-                                <td id='joinDate'>2022-10-13</td>
-                            </tr>
+                        <tbody id='userList' style='text-align: center'>
                         </tbody>
                     </table>
                 </div>
@@ -229,7 +253,7 @@ function listUsers(){
     </div>
 </body>
 <div class='modal fade' tabindex='-1' id='modal'>
-    <div class='modal-dialog modal-dialog-centered'>
+    <div class='modal-dialog modal-dialog-centered' id='myModal'>
         <div class='modal-content'>
             <div class='modal-header'></div>
             <div class='modal-body' style='text-align: center;'>
