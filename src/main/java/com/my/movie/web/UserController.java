@@ -38,13 +38,11 @@ public class UserController {
 	public User login(@RequestBody User userLogin, Model model, HttpSession session) {
 		User user = userService.loginValidate(userLogin);
 		if(user != null) {
-			List<String> userGenre = userService.getUserGenre(user.getUserNum());
 			int userWithDrawal = userService.getWithDrawal(user.getUserNum());
 			if(userWithDrawal == 1) {
 				user = new User();
 				user.setUserNum(-1);
 			} else {
-				System.out.println(user);
 				session.setAttribute("user", user);
 			}
 		}
@@ -89,7 +87,7 @@ public class UserController {
 		List<Integer> genres = userGenre.getGenreNum();
 		for(int genre: genres) {
 			userService.addUserGenre(genre);
-		}
+	}
 	}
 
 	@PostMapping("checkUserId")
