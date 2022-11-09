@@ -1,5 +1,7 @@
 package com.my.movie.web;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,74 +29,37 @@ public class AdminUserController {
 
 	@PostMapping("login")
 	public AdminUser login(@RequestBody AdminUser adminLogin, HttpSession session) {
-		AdminUser admin = adminUserService.loginValidate(adminLogin);
-		if(admin != null) {
-			int userWithDrawal = adminUserService.getWithDrawal(admin.getAdminNum());
+		AdminUser user = adminUserService.loginValidate(adminLogin);
+
+		if(user != null) {
+			int userWithDrawal = adminUserService.getWithDrawal(user.getUserNum());
 			if(userWithDrawal == 1) {
-				admin = new AdminUser();
-				admin.setAdminNum(-1);
+				user = new AdminUser();
+				user.setUserNum(-1);
 			} else {
-				session.setAttribute("admin", admin);
+				session.setAttribute("user", user);
 			}
 		}
-		return admin;
+		return user;
 	}
+	
 	@GetMapping("logout")
 	public ModelAndView logout(ModelAndView mv, HttpSession session) {
 		session.invalidate();
-		mv.setViewName("redirect:/admin");
-		return mv;
-	}
-/*	
-	@GetMapping("addWithDrawal")
-	public ModelAndView addWithDrawal(ModelAndView mv) {
-		mv.setViewName("user/withDrawal");
-		return mv;
-	}
-
-	@PostMapping("addWithDrawal")
-	public void addWithDrawal(@RequestBody User userNum, HttpSession session) {
-		userService.addWithDrawal(userNum.getUserNum());
-		session.invalidate();
-	}
-	
-	
-
-	@GetMapping("findId")
-	public ModelAndView findId(ModelAndView mv) {
-		mv.setViewName("user/findId");
-		return mv;
-	}
-
-	@PostMapping("findId")
-	public String findId(@RequestBody User find) {
-		return userService.findId1(find);
-	}
-
-	@GetMapping("findPw")
-	public ModelAndView findPw(ModelAndView mv) {
-		mv.setViewName("user/findPw");
-		return mv;
-	}
-
-	@PostMapping("findPw")
-	public String findPw(@RequestBody User find) {
-		return userService.findPw1(find);
-	}
-
-	@PostMapping("fixPw")
-	public ModelAndView fixPw (ModelAndView mv
-			,HttpServletRequest request) {
-
-		mv.setViewName("user/fixPw");
-		mv.addObject("email", request.getParameter("email"));
-		mv.addObject("userId", request.getParameter("userId"));
+		mv.setViewName("redirect:../../admin");
 		return mv;
 	}
 	
-	@PatchMapping("fixPw")
-	public void fixPw(@RequestBody User fix) {
-		userService.fixPw1(fix);
+	@GetMapping("fixUser")
+	public ModelAndView fixUser(ModelAndView mv) {
+		mv.setViewName("admin/user/fixUser");
+		return mv;
 	}
-	*/
+
+	@GetMapping("list")
+	public List<AdminUser> getUsers(){
+		return adminUserService.getUsers();
+	}
+	
+	
 }

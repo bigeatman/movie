@@ -37,6 +37,7 @@ public class UserController {
 	@PostMapping("login")
 	public User login(@RequestBody User userLogin, Model model, HttpSession session) {
 		User user = userService.loginValidate(userLogin);
+
 		if(user != null) {
 			List<String> userGenre = userService.getUserGenre(user.getUserNum());
 			System.out.println(userGenre);
