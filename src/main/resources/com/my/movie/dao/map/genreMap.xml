@@ -42,7 +42,7 @@
 	</select>
 	
 	<insert id='insertGenre'>
-		insert into genre values(genre_num_seq.nextval, ${genreName})
+		insert into genre(genre_num, genre_name) values(genre_num_seq.nextval, '${genreName}')
 	</insert>
 
 	<insert id='insertUserGenre'>
