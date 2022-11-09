@@ -29,17 +29,11 @@ public class AdminUserController {
 	public AdminUser login(@RequestBody AdminUser adminLogin, HttpSession session) {
 		AdminUser admin = adminUserService.loginValidate(adminLogin);
 		if(admin != null) {
-			AdminUser adminInfo = adminUserService.getAdmin(adminLogin);
-			int userWithDrawal = adminUserService.getWithDrawal(adminInfo.getAdminNum());
+			int userWithDrawal = adminUserService.getWithDrawal(admin.getAdminNum());
 			if(userWithDrawal == 1) {
 				admin = new AdminUser();
 				admin.setAdminNum(-1);
 			} else {
-				admin.setAdminNum(adminInfo.getAdminNum());
-				admin.setAdminId(adminInfo.getAdminId());
-				admin.setNickname(adminInfo.getNickname());
-				admin.setPhoneNum(adminInfo.getPhoneNum());
-				admin.setEmail(adminInfo.getEmail());
 				session.setAttribute("admin", admin);
 			}
 		}
@@ -48,16 +42,10 @@ public class AdminUserController {
 	@GetMapping("logout")
 	public ModelAndView logout(ModelAndView mv, HttpSession session) {
 		session.invalidate();
-		mv.setViewName("redirect:/admin/");
+		mv.setViewName("redirect:/admin");
 		return mv;
 	}
 /*	
-	@GetMapping("mypage")
-	public ModelAndView mypage(ModelAndView mv) {
-		mv.setViewName("user/mypage");
-		return mv;
-	}
-
 	@GetMapping("addWithDrawal")
 	public ModelAndView addWithDrawal(ModelAndView mv) {
 		mv.setViewName("user/withDrawal");
@@ -70,50 +58,8 @@ public class AdminUserController {
 		session.invalidate();
 	}
 	
-	@GetMapping("addUser")
-	public ModelAndView join(ModelAndView mv) {
-		mv.setViewName("user/join");
-		return mv;
-	}
+	
 
-	@PostMapping("addUser")
-	public void join(@RequestBody UserGenre userGenre) {
-		System.out.println(userGenre);
-		User user = userGenre.getUser();
-
-
-//		genreDao.addUserGenre(user, userGenre.getGenreNum());
-		// int userNum = num++;
-		// Genre genre = userGenre.getGenre();
-		// userService.addUser(userGenre.getUser());
-		// userService.addUserGenre(userNum, genre.getGenreNum());
-	}
-
-	@PostMapping("checkUserId")
-	public int idCheck(@RequestBody UserDto userId) {
-		int result = userService.checkUserId(userId);
-		return result;
-	}
-
-	@PostMapping("checkUserNickname")
-	public int nicknameCheck(@RequestBody UserDto nickname) {
-		int result = userService.checkUserNickname(nickname);
-		return result;
-	}
-
-	@PostMapping("checkUserPhoneNum")
-	public int phoneNumCheck(@RequestBody UserDto phoneNum) {
-		int result = userService.checkUserPhoneNum(phoneNum);
-		return result;
-	}
-
-	@PostMapping("checkUserEmail")
-	public int emailCheck(@RequestBody UserDto email) {
-		int result = userService.checkUserEmail(email);
-		return result;
-	}
-
-	// ���
 	@GetMapping("findId")
 	public ModelAndView findId(ModelAndView mv) {
 		mv.setViewName("user/findId");
@@ -125,14 +71,6 @@ public class AdminUserController {
 		return userService.findId1(find);
 	}
 
-	@GetMapping("findIdResult/{userId}")
-	public ModelAndView findIdResult(ModelAndView mv,
-			@PathVariable String userId) {
-		mv.setViewName("user/findIdResult");
-		return mv;
-	}
-
-	// ��й�ȣ ã��
 	@GetMapping("findPw")
 	public ModelAndView findPw(ModelAndView mv) {
 		mv.setViewName("user/findPw");
@@ -142,24 +80,6 @@ public class AdminUserController {
 	@PostMapping("findPw")
 	public String findPw(@RequestBody User find) {
 		return userService.findPw1(find);
-	}
-
-	@PostMapping("findPwCode")
-	public ModelAndView mypage(ModelAndView mv,
-			@RequestParam("inputId") String userId,
-			@RequestParam("inputEmail") String inputEmail, 
-			@RequestParam("domainTxt") String domainTxt
-			,String userNum) throws Exception {
-		String email = inputEmail + "@" + domainTxt;
-		userService.findPw1(email, userId);
-		mv.addObject("email", email);
-		mv.addObject("userId", userId);
-		mv.setViewName("user/findPwCode");
-		
-		emailController.mailConfirm(email);
-		mv.addObject("code", emailController.mailConfirm(email));
-		
-		return mv;
 	}
 
 	@PostMapping("fixPw")
