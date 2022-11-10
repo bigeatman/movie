@@ -80,7 +80,7 @@ td {
 								<div class='btn-group btn-block'>
 									<button type='button' class='btn btn-secondary' onclick='location.href="admin"'>홈</button>
 									<button type='button' class='btn btn-secondary' data-toggle='modal' data-target='#modal' 
-										name='page' onclick='location.href="admin/user/fixUser"'>회 원</button>
+										name='page' onclick='location.href="admin/user/users"'>회 원</button>
 									<button type='button' class='btn btn-secondary' data-toggle='modal' data-target='#modal' 
 										name='page' onclick='location.href="movie"'>영 화</button>
 									<button type='button' class='btn btn-secondary' data-toggle='modal' data-target='#modal' 
