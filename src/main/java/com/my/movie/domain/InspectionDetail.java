@@ -10,7 +10,7 @@ public class InspectionDetail {
 	private Integer userNum; //신고자 회원번호
 	private Integer inspectionNum; //신고번호
 	
-	//union 변수선언
+	//join 변수선언
 	private String userId; //회원번호
 	private String userName; //회원이름
 	private String nickname; //닉네임

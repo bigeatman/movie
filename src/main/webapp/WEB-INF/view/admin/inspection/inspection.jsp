@@ -16,34 +16,35 @@
 // 신고 상세페이지
 function clickDetails(inspectionNum, inspectionContentNum, inspectionContentName) {
 	$.get("/admin/inspections/" + inspectionNum + "/details", function(data, status) {
-		console.log('get data', data);
+		//console.log('get data', data);
 		$('#detailBody').empty();
 		data.map((detail) => {
 			$('#detailBody').append("<tr>"
 					+ "<td>" + detail.inspectionDetailNum + "</td>"
-					+ "<td>" + detail.nickname + "</td>"
+					+ "<td>" + detail.userName + "</td>"
 					+ "<td>" + detail.inspectionContent + "</td>"
 					+ "</tr>"
 				)
 		});
 	})
-		//신고된 컨텐츠 이동
+/*
+	//신고된 컨텐츠 이동
 		var url = "";
 	
 		if(inspectionContentName === "영화평") { //영화평에서 해당게시물의 번호로 찾아간다.
-			url = "/community/" + inspectionContentNum;
+			url = "/community/content/" + inspectionContentNum;
 		} else if(inspectionContentName === "영화평댓글") { //영화평댓글에서 해당게시물의 번호로 찾아간다.
-			url = "/communityReply/" + inspectionContentNum;
+			url = "/communityReply/list/" + inspectionContentNum;
 		} else if(inspectionContentName === "리뷰") { //리뷰에서 해당게시물의 번호로 찾아간다.
 			url = "/review/" + inspectionContentNum;
 		} else(inspectionContentName === "리뷰댓글") { //리뷰댓글에서 해당게시물의 번호로 찾아간다.
-			url = "/rev/" + inspectionContentNum;
+			url = "/rev/morerev" + inspectionContentNum;
 		}
 	}
 		$('#inspectionMove').attr('href', url);
-
+*/
 		$('#reportModal').modal("show");
-	});
+//	});
 }
 
 </script>
@@ -65,13 +66,17 @@ function clickDetails(inspectionNum, inspectionContentNum, inspectionContentName
                         <div class='col-12 text-center'>
                             <div class='btn-group btn-block'>
                                 <button type='button' class='btn btn-secondary'
-                                    onclick="location.href='../user/main.jsp'">홈</button>
+                                    onclick='location.href="../user/main.jsp" '>홈</button>
                                 <button type='button' class='btn btn-secondary'
-                                    onclick="location.href='../user/login.jsp'">회 원</button>
+                                    onclick='location.href="../user/login.jsp" '>회 원</button>
+                                <button disabled type='button' class='btn btn-primary'
+                                	onclick='location.href="../genre/addGenre.jsp" '>장 르</button>
                                 <button type='button' class='btn btn-secondary'
-                                    onclick="location.href='../movie/listMovie'">영 화</button>
+                                    onclick='location.href="../movie/listMovie.jsp" '>영 화</button>
                                 <button type='button' class='btn btn-secondary'
-                                    onclick="location.href='../inspection/inspection.jsp'">신고 조회</button>
+                                	onclick='location.href="#" '>감독/배우</button>
+                                <button type='button' class='btn btn-secondary'
+                                    onclick='location.href="../inspection/inspection.jsp" '>신고 조회</button>
                             </div>
                         </div>
                     </div>
@@ -131,7 +136,6 @@ function clickDetails(inspectionNum, inspectionContentNum, inspectionContentName
                         </tr>
                     </thead>
                     <tbody id='detailBody' style='text-align: center'>
-                    
 					</tbody>
                 </table>
             </div>

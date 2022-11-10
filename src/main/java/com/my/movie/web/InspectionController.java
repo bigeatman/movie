@@ -25,7 +25,6 @@ public class InspectionController {
 	@GetMapping("inspection")
 	public ModelAndView inspection(ModelAndView mv) {
 		List<Inspection> insList = inspectionService.selectAll();
-		
 		mv.setViewName("admin/inspection/inspection");
 		mv.addObject("inspection", insList);
 		
