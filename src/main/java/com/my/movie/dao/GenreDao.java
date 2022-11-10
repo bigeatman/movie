@@ -11,6 +11,7 @@ public interface GenreDao {
 	List<String> searchGenre(int movieNum);
 	List<Movie> searchMovieByGenre(String genreName);
 	GenreDto selectGenre(Genre genre, int movieNum, int userNum);
+	int selectCheckGenre(String genreName);
 	int selectMovie(int genreNum);
 	int selectUser(int genreNum);
 	void insertGenre(String genreName);
