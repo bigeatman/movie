@@ -189,7 +189,7 @@ function join() {
  		    	},
  		    	genreNum: valueArr
  		    }),
- 		    success: console.log('성공') //location.href='/'
+ 		    success: location.href='/'
         })
         $('#joinModal').modal('hide')
         console.log(valueArr)
