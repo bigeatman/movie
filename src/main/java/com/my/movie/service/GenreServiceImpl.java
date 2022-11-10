@@ -22,6 +22,11 @@ public class GenreServiceImpl implements GenreService {
 	}
 
 	@Override
+	public int getCheckGenre(String genreName) {
+		return genreDao.selectCheckGenre(genreName);
+	}
+
+	@Override
 	public int getMovie(int genreNum) {
 		return genreDao.selectMovie(genreNum);
 	}

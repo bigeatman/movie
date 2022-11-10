@@ -37,10 +37,8 @@ public class UserController {
 	@PostMapping("login")
 	public User login(@RequestBody User userLogin, Model model, HttpSession session) {
 		User user = userService.loginValidate(userLogin);
-
 		if(user != null) {
 			List<String> userGenre = userService.getUserGenre(user.getUserNum());
-			System.out.println(userGenre);
 			int userWithDrawal = userService.getWithDrawal(user.getUserNum());
 			if(userWithDrawal == 1) {
 				user = new User();
@@ -91,7 +89,7 @@ public class UserController {
 		List<Integer> genres = userGenre.getGenreNum();
 		for(int genre: genres) {
 			userService.addUserGenre(genre);
-	}
+		}
 	}
 
 	@PostMapping("checkUserId")
