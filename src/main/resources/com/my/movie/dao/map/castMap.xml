@@ -19,4 +19,12 @@
 	<select id="selectAllCast" resultType="Cast">
 		SELECT * FROM CAST
 	</select>
+	
+	<insert id="insertDirector">
+		INSERT INTO DIRECTORS VALUES(DIRECTOR_NUM_SEQ.NEXTVAL, '${castName}', '${targetImageFileName}')
+	</insert>
+	
+	<insert id="insertCast">
+		INSERT INTO CAST VALUES(CAST_NUM_SEQ.NEXTVAL, '${castName}', '${targetImageFileName}')
+	</insert>
 </mapper>

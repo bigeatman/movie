@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.my.movie.domain.Cast;
 import com.my.movie.domain.Director;
+import com.my.movie.domain.request.CreateCastRequest;
 
 public interface CastMap {
 
@@ -13,4 +14,7 @@ public interface CastMap {
 
 	List<Cast> selectAllCast();
 	
+	void insertDirector(CreateCastRequest req);
+	
+	void insertCast(CreateCastRequest req);
 }

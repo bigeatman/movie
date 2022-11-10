@@ -31,27 +31,38 @@ html, body {
 }
 
 .viewLayout {
-	height: 78%;
-	margin-top: 2%;
+	height: 79%;
+	margin-top: 1%;
+	padding : 10px;
 	border : 1px solid gray;
 	border-radius : 0.25rem;
 }
 
 .circle {
-	width: 100px;
-	height: 100px;
+	width: 90px;
+	height: 90px;
 	-webkit-border-radius: 30px;
 	-moz-border-radius: 30px;
 	border-radius: 30px;
-	border : 2px solid black;
+	border : 2px solid gray;
 }
 
 .cast-info {
-	margin : 10px;
-	font-size : 16px;
+	margin : 5px;
+	margin-bottom : 0px;
+	font-size : 14px;
 	text-align : center;
 }
 
+.add-button {
+	margin-left : 90%;
+	margin-top : 10px;
+	width : 10%;
+}
+
+#dialog {
+	height : 170px;
+}
 </style>
 <body>
 	<div class='container-fluid'>
@@ -98,9 +109,24 @@ html, body {
 		<div id="view" class="viewLayout">
 		
 		</div>
+		<div>
+			<button type='button' onclick='createCastAddDialog()' class='btn btn-secondary add-button' data-toggle="modal" data-target='#dialogModal'>추가</button>
+		</div>
 	</div>
+	
+	<div class='modal fade' tabindex='-1' id='dialogModal'>
+		<div class='modal-dialog modal-lg'>
+			<div id="dialogUpperMargin" style="height:290px"></div>
+			<div class="modal-content" style="width:500px; margin:0px auto">
+				<div id='dialog' style="margin:5px;padding:15px; background-color: white;"></div>
+			</div>
+		</div>
+	</div>
+	
+	<input hidden='true' accept="image/*" id='fileSelector' type="file" id="fileUpload" />
 </body>
 <script>
+	
 	var directorSelected = false;
 	var actorSelected = false;
 	
@@ -140,6 +166,7 @@ html, body {
 	function disableDirector() {
 		director.style.setProperty('background-color', '#6c757d');
 		directorSelected = false;
+		document.querySelector("#view").innerHTML = '';
 	}
 	
 	function enableActor() {
@@ -157,6 +184,7 @@ html, body {
 	function disableActor() {
 		actor.style.setProperty('background-color', '#6c757d');
 		actorSelected = false;
+		document.querySelector("#view").innerHTML = '';
 	}
 	
 	function request(isDirector) {
@@ -178,13 +206,14 @@ html, body {
 			}),
 			success : function(result) {
 				writeData(JSON.parse(result), isDirector);
-				console.log(JSON.parse(result));
 			}
 		});
 		
 	}
 	
 	function writeData(result, isDirector) {
+		console.log(result);
+		
 		var view = document.querySelector("#view");
 		var lineDiv = createLineDiv();
 		view.innerHTML = "";
@@ -213,6 +242,8 @@ html, body {
 	function createLineDiv() {
 		var lineDiv = document.createElement('div');
 		lineDiv.style.setProperty('display', 'flex');
+		lineDiv.style.setProperty('margin', '0px auto');
+		lineDiv.style.setProperty('width', '100%');
 		return lineDiv;
 	}
 	
@@ -225,9 +256,9 @@ html, body {
 		imgElem.style.setProperty('border-radius', '50%');
 		
 		if(isDirector) {
-			imgElem.setAttribute('src', result.directorImgFileName);
+			imgElem.setAttribute('src', '../img?fileName=' + result.directorImgFileName);
 		} else {
-			imgElem.setAttribute('src', result.castImgFileName);
+			imgElem.setAttribute('src', '../img?fileName=' + result.castImgFileName);
 		}
 		
 		return imgElem;
@@ -257,6 +288,217 @@ html, body {
 		return element.scrollHeight > element.clientHeight
 		|| element.scrollWidth > (element.clientWidth);
 	}
+	
+	////////////
+ 	// DIALOG //
+ 	////////////
+ 	
+	function createCastAddDialog() {
+		var dialog = document.querySelector("#dialog");
+		dialog.innerHTML = '';
+		dialog.appendChild(createTitleElem());
+		dialog.appendChild(createBodyElem());
+		dialog.appendChild(createButtonDiv());
+		
+		document.querySelector("#okButton").addEventListener('click', function() {
+			uploadFile();
+		});
+	}
+	var directorSelected = false;
+	var actorSelected = false;
+	
+	
+	function uploadFile() {
+		var formData = new FormData();
+		formData.append('castName', document.querySelector('#inputName').value);
+		formData.append('img', document.querySelector("#fileSelector").files[0]);
+		
+		if(directorSelected) {
+			formData.append('isDirector', 'true');
+		} else {
+			formData.append('isDirector', 'false');
+		}
+		
+		$.ajax({
+			url : '../cst/addcast',
+			method : 'post',
+			processData : false,
+			contentType : false,
+			data : formData,
+			type : 'post',
+			success : function(result) {
+				console.log(result);
+				$('#dialogModal').modal('hide');
+			}
+		});
+	}
+	
+	function createTitleElem() {
+		var title = document.createElement('div');
+		title.style.setProperty('font-size', '20px');
+		title.style.setProperty('font-weight', 'bold');
+		
+		if((directorSelected == false) && (actorSelected == false)) {
+			title.innerHTML += "알림";
+		} else if (directorSelected) {
+			title.innerHTML += "감독 추가";
+		} else if (actorSelected) {
+	   		title.innerHTML += "배우 추가";
+		}
+		
+		return title;
+	}
+	
+	function createBodyElem() {
+		var body = document.createElement('div');
+		body.style.setProperty('margin-top', '10px');
+		body.style.setProperty('height', '75px');
+		
+		if((directorSelected == false) && (actorSelected == false)) {
+			body.innerHTML += "감독 또는 배우를 선택하세요.";
+		} else if (directorSelected) {
+			body.appendChild(createAddCastBody(true));
+		} else if (actorSelected) {
+			body.appendChild(createAddCastBody(false));
+		}
+		
+		return body;
+	}
+	
+	function createAddCastBody(isDirector) {
+		var nameDiv = createInputNameDiv();
+		var imgDiv = createDialogImgDiv();
+		var bodyDiv = document.createElement('div');
+		
+		bodyDiv.appendChild(nameDiv);
+		bodyDiv.appendChild(imgDiv);
+		
+		return bodyDiv;
+	}
+	
+	function createDialogImgDiv() {
+		var imgLabel = createTextSpanElement('이미지');
+		var inputLabel = createInputLabel();
+		var buttonElem = document.createElement('button');
+		
+		inputLabel.setAttribute('id', 'imgName');
+		inputLabel.style.setProperty('width', '55%');
+		
+		buttonElem.classList.add('btn');
+		buttonElem.classList.add('btn-secondary');
+		buttonElem.style.setProperty('width', '28%');
+		buttonElem.style.setProperty('height', '30px');
+		buttonElem.style.setProperty('margin-left', '2%')
+		buttonElem.style.setProperty('padding', '0px');
+		buttonElem.setAttribute('type', 'button');
+		buttonElem.addEventListener('click', function() {
+			$("#fileSelector").trigger("click");
+		});
+		buttonElem.innerHTML = "찾아보기";
+		
+		var imgDiv = document.createElement('div');
+		imgDiv.style.setProperty('display', 'flex');
+		imgDiv.appendChild(imgLabel);
+		imgDiv.appendChild(inputLabel);
+		imgDiv.appendChild(buttonElem);
+		
+		return imgDiv;
+	}
+	
+	function createInputNameDiv() {
+		var nameLabel = createTextSpanElement('이름');
+		var inputLabel = createInputLabel();
+		var nameDiv = document.createElement('div');
+		
+		inputLabel.setAttribute('id', 'inputName');
+		nameDiv.style.setProperty('display', 'flex');
+		nameDiv.style.setProperty('margin-bottom', '5px');
+		nameDiv.appendChild(nameLabel);
+		nameDiv.appendChild(inputLabel);
+		
+		return nameDiv;
+	}
+	
+	function createTextSpanElement(text) {
+		var nameLabel = document.createElement('span');
+		nameLabel.innerHTML += text;
+		nameLabel.style.setProperty('text-align', 'left');
+		nameLabel.style.setProperty('width', '15%'); 
+		nameLabel.style.setProperty('margin-top', '2px');
+		return nameLabel;
+	}
+	
+	function createInputLabel() {
+		var inputLabel = document.createElement('input');
+		inputLabel.classList.add('form-control');
+		inputLabel.setAttribute('type', 'text');
+		inputLabel.style.setProperty('width', '85%');
+		inputLabel.style.setProperty('height', '30px');
+		return inputLabel;
+	}
+	
+	function createButtonDiv() {
+		var div = document.createElement('div');
+		div.style.setProperty('display', 'flex');
+		
+		if((directorSelected == false) && (actorSelected == false)) {
+			createSingleButton(div);
+		} else {
+			createDoubleButton(div);
+		}
+		
+		return div;
+	}
+	
+	function createDoubleButton(div) {
+		var btnElem = document.createElement('button');
+		btnElem.classList.add('btn');
+		btnElem.classList.add('btn-secondary');
+		btnElem.style.setProperty('width', '49%');
+		btnElem.style.setProperty('height', '35px');
+		btnElem.setAttribute('id', 'cancelBtn');
+		btnElem.innerHTML += '취소';
+		btnElem.addEventListener('click', function() {
+			$('#dialogModal').modal('hide');
+		});
+		div.appendChild(btnElem);
+		
+		
+		btnElem = document.createElement('button');
+		btnElem.classList.add('btn');
+		btnElem.classList.add('btn-primary');
+		btnElem.setAttribute('id', 'okButton');
+		btnElem.style.setProperty('background-color', '#5aaaff');
+		btnElem.style.setProperty('broder', '0px solid gray');
+		btnElem.style.setProperty('width', '49%');
+		btnElem.style.setProperty('height', '35px');
+		btnElem.style.setProperty('margin-left', '2%');
+		btnElem.innerHTML += '확인';
+		div.appendChild(btnElem);
+	}
+	
+	function createSingleButton(div) {
+		var btnElem = document.createElement('button');
+		btnElem.classList.add('btn');
+		btnElem.classList.add('btn-secondary');
+		btnElem.style.setProperty('margin-left', '80%'); 
+		btnElem.style.setProperty('width', '20%');
+		btnElem.innerHTML += '확인';
+		btnElem.addEventListener('click', function() {
+			$('#dialogModal').modal('hide');
+		});
+		
+		div.appendChild(btnElem);
+	}
+	
+	document.querySelector("#fileSelector").onchange = () => {
+		console.log(document.querySelector("#fileSelector").files[0]);
+		document.querySelector('#imgName').value = document.querySelector("#fileSelector").files[0].name;
+	};
+
+	
+</script>
+<script>
 	
 </script>
 </html>
