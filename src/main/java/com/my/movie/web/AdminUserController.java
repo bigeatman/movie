@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,16 +31,7 @@ public class AdminUserController {
 	@PostMapping("login")
 	public AdminUser login(@RequestBody AdminUser adminLogin, HttpSession session) {
 		AdminUser user = adminUserService.loginValidate(adminLogin);
-
-		if(user != null) {
-			int userWithDrawal = adminUserService.getWithDrawal(user.getUserNum());
-			if(userWithDrawal == 1) {
-				user = new AdminUser();
-				user.setUserNum(-1);
-			} else {
-				session.setAttribute("user", user);
-			}
-		}
+			session.setAttribute("user", user);
 		return user;
 	}
 	
@@ -50,16 +42,24 @@ public class AdminUserController {
 		return mv;
 	}
 	
-	@GetMapping("fixUser")
-	public ModelAndView fixUser(ModelAndView mv) {
-		mv.setViewName("admin/user/fixUser");
+	@GetMapping("users")
+	public ModelAndView users(ModelAndView mv) {
+		mv.setViewName("admin/user/users");
 		return mv;
 	}
 
-	@GetMapping("list")
+	@GetMapping("users/list")
 	public List<AdminUser> getUsers(){
 		return adminUserService.getUsers();
 	}
 	
+	@PatchMapping("users/fix")
+	public void fixUser(@RequestBody AdminUser user) {
+		adminUserService.fixAdminUser(user);
+	}
 	
+	@PostMapping("users/addWithDrawal")
+	public void addWithDrawal(@RequestBody AdminUser userNum) {
+		adminUserService.addWithDrawal(userNum.getUserNum());
+	}
 }
