@@ -40,6 +40,12 @@ function init() {
 }
 $(init)
 </script>
+<style>
+#cw {
+	width:25%;
+	text-align : left;
+}
+</style>
 <body>
 	<div class='container-fluid'>
 		<div class='header'>
@@ -73,8 +79,8 @@ $(init)
             <div class='col' style='text-align: center'>
                 <form>
                     <div class='row mb-3'>
-                    	<div style='margin: 0 auto'>
-	                    	<div class='row' style='padding-left: 15px; margin-left: 5px;'>
+                    	<div style='margin: 0 auto; width:350px;'>
+	                    	<div class='row'>
 		                        <div id='cw'>
 		                            <input type='checkbox' name='genre' value='액션'/> <label for='genre'>액션</label>
 		                        </div>
@@ -88,7 +94,7 @@ $(init)
 		                            <input type='checkbox' name='genre' value='스릴러'/> <label for='genre'>스릴러</label>
 		                        </div>
 	                    	</div>
-		                    <div class='row' style='padding-left: 15px; margin-left: 5px;'>
+		                    <div class='row'>
 		                        <div id='cw'>
 		                            <input type='checkbox' name='genre' value='공포'/> <label for='genre'>공포</label>
 		                        </div>
@@ -102,7 +108,7 @@ $(init)
 		                            <input type='checkbox' name='genre' value='판타지'/> <label for='genre'>판타지</label>
 		                        </div>
 		                    </div>
-		                    <div class='row' style='padding-left: 15px; margin-left: 5px;'>
+		                    <div class='row'>
 		                        <div id='cw'>
 		                            <input type='checkbox' name='genre' value='코미디'/> <label for='genre'>코미디</label>
 		                        </div>
@@ -116,7 +122,7 @@ $(init)
 		                            <input type='checkbox' name='genre' value='드라마'/> <label for='genre'>드라마</label>
 		                        </div>
 		                    </div>
-		                    <div class='row' style='padding-left: 15px; margin-left: 5px;'>
+		                    <div class='row'>
 		                        <div id='cw'>
 		                            <input type='checkbox' name='genre' value='뮤지컬'/> <label for='genre'>뮤지컬</label>
 		                        </div>
