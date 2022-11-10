@@ -33,6 +33,12 @@
 		select * from genre
 	</select>
 	
+	<select id='selectCheckGenre' resultType='int'>
+		select count(*)
+		from genre
+		where genre_name = '#{genreName}'
+	</select>
+	
 	<select id='selectMovie' resultType='int'>
 		select * from genre
 	</select>

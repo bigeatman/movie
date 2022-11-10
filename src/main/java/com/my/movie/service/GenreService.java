@@ -6,6 +6,7 @@ import com.my.movie.domain.GenreDto;
 public interface GenreService {
 	void addGenre(String genreName);
 	GenreDto getGenre(Genre genre, int movieNum, int userNum);
+	int getCheckGenre(String genreName);
 	int getMovie(int genreNum);
 	int getUser(int genreNum);
 }
