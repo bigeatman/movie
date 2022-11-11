@@ -44,7 +44,7 @@ public class ReviewServiceImpl implements ReviewService {
 		dto.setSummaryString(toSummaryString(movie));
 		dto.setAudienceString(formatter.format(movie.getCumulativeAudience()));
 		dto.setDirector(directorDao.findDirectorByMovieId(movieId));
-		dto.setCasts(castDao.findCastByMovieId(movieId));
+		dto.setCasts(castDao.selectByMoveId(movieId));
 		dto.setReviews(reviewDao.selectReviewByMovieId(movieId, 0, 5));
 		
 		return dto;
