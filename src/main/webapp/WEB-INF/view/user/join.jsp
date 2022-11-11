@@ -1,4 +1,5 @@
 <%@ page language='java' contentType='text/html; charset=utf-8' pageEncoding='utf-8'%>
+<%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c' %>
 <title>회원가입</title>
 <meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'>
@@ -192,9 +193,8 @@ function join() {
  		    success: location.href='/'
         })
         $('#joinModal').modal('hide')
-        console.log(valueArr)
     })
-
+    
     $('#cancelBtn').click(() => {
         $(location).attr('href', 'login')
     })

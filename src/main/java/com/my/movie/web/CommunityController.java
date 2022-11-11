@@ -51,12 +51,12 @@ public class CommunityController {
 		
 		return mv;
 	}
-	/*
+	
 	@PostMapping("add")
 	public void addCommunity(@RequestBody Community community) {
 		communityService.addCommunity(community);
 	}
-	*/
+	
 	@DeleteMapping("del/{communityNum}")
 	public void delCommunity(@PathVariable int communityNum) {
 		communityService.delCommunity(communityNum);

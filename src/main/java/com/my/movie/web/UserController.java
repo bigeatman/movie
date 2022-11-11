@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.my.movie.domain.Genre;
 import com.my.movie.domain.User;
 import com.my.movie.domain.UserDto;
 import com.my.movie.domain.UserGenre;
+import com.my.movie.service.GenreService;
 import com.my.movie.service.UserService;
 
 @RestController

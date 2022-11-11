@@ -51,7 +51,16 @@ function init() {
 	        	method: 'post',
 	        	contentType: 'application/json',
 	        	data: JSON.stringify(valueArr),
-	        	success: console.log('성공')
+	        	success: function(result) {
+	        		if(result.length) {
+	        			JSON.stringify(result),
+		        		$('#errMsg').css('color', 'red').text(result + '는 이미 존재하는 장르입니다.'),
+		        		$('input:checkbox').prop('checked', false)
+	        		} else {
+	        			$('#errMsg').css('color', 'blue').text('장르를 추가했습니다.'),
+	        			$('input:checkbox').prop('checked', false)
+	        		}
+	        	}
 	        })
 	    }
 	})

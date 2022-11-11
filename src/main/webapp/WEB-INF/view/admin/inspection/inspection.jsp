@@ -13,39 +13,6 @@
 <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.6.3/css/all.css'/>
 </head>
 <script>
-// 신고 상세페이지
-function clickDetails(inspectionNum, inspectionContentNum, inspectionContentName) {
-	$.get("/admin/inspections/" + inspectionNum + "/details", function(data, status) {
-		//console.log('get data', data);
-		$('#detailBody').empty();
-		data.map((detail) => {
-			$('#detailBody').append("<tr>"
-					+ "<td>" + detail.inspectionDetailNum + "</td>"
-					+ "<td>" + detail.userName + "</td>"
-					+ "<td>" + detail.inspectionContent + "</td>"
-					+ "</tr>"
-				)
-		});
-	})
-/*
-	//신고된 컨텐츠 이동
-		var url = "";
-	
-		if(inspectionContentName === "영화평") { //영화평에서 해당게시물의 번호로 찾아간다.
-			url = "/community/content/" + inspectionContentNum;
-		} else if(inspectionContentName === "영화평댓글") { //영화평댓글에서 해당게시물의 번호로 찾아간다.
-			url = "/communityReply/list/" + inspectionContentNum;
-		} else if(inspectionContentName === "리뷰") { //리뷰에서 해당게시물의 번호로 찾아간다.
-			url = "/review/" + inspectionContentNum;
-		} else(inspectionContentName === "리뷰댓글") { //리뷰댓글에서 해당게시물의 번호로 찾아간다.
-			url = "/rev/morerev" + inspectionContentNum;
-		}
-	}
-		$('#inspectionMove').attr('href', url);
-*/
-		$('#reportModal').modal("show");
-//	});
-}
 
 </script>
 <body>
@@ -57,7 +24,7 @@ function clickDetails(inspectionNum, inspectionContentNum, inspectionContentName
         <div id='btn_group' class='float-right mt-3'>
             <label style='font-size:13'>admin님</label>&emsp;
             <span style='font-size:12'>(08:23)</span>&emsp;
-            <a href='../user/login'><button style='font-size:13'>로그아웃</button></a>
+            <a href='../main.html'><button style='font-size:13'>로그아웃</button></a>
         </div><br>
         <div class='row mt-5'>
             <div class='col'>
@@ -66,15 +33,11 @@ function clickDetails(inspectionNum, inspectionContentNum, inspectionContentName
                         <div class='col-12 text-center'>
                             <div class='btn-group btn-block'>
                                 <button type='button' class='btn btn-secondary'
-                                    onclick='location.href="../user/main.jsp" '>홈</button>
+                                    onclick='location.href="../main.jsp" '>홈</button>
                                 <button type='button' class='btn btn-secondary'
-                                    onclick='location.href="../user/login.jsp" '>회 원</button>
-                                <button disabled type='button' class='btn btn-primary'
-                                	onclick='location.href="../genre/addGenre.jsp" '>장 르</button>
+                                    onclick='location.href="../user/.jsp" '>회 원</button>
                                 <button type='button' class='btn btn-secondary'
                                     onclick='location.href="../movie/listMovie.jsp" '>영 화</button>
-                                <button type='button' class='btn btn-secondary'
-                                	onclick='location.href="#" '>감독/배우</button>
                                 <button type='button' class='btn btn-secondary'
                                     onclick='location.href="../inspection/inspection.jsp" '>신고 조회</button>
                             </div>
@@ -102,8 +65,9 @@ function clickDetails(inspectionNum, inspectionContentNum, inspectionContentName
                             <td>${inspection.inspectionContentName}</td>
                             <td>${inspection.nickname}<br>(${inspection.userId})</td>
                             <td>${inspection.anyContent}</td>
-                            <td type='page-link' style="cursor: pointer;" onclick="clickDetails(${inspection.inspectionNum}, ${inspection.inspectionContentNum}, '${inspection.inspectionContentName}')"><i><u>${inspection.inspectionDetailsCount}건 상세보기</u></i></td>
-                            <td><span class='inspectionStatus'>${inspection.inspectionStatusName}</span><c:if test="${inspection.inspectionStatus ne '0'}"><br>(${inspection.resultDate})</c:if></td>
+                            <td type='page-link' style="cursor: pointer;"
+                                data-toggle='modal' data-value="${inspection.inspectionNum}" data-target='#reportModal'><i><u>${inspection.inspectionDetailsCount}건 상세보기</u></i></td>
+                            <td>${inspection.inspectionStatusName}<c:if test="${inspection.inspectionStatus ne '0'}"><br>(${inspection.resultDate})</c:if></td>
                         </tr>
                     </c:forEach>
                     </tbody>
@@ -125,9 +89,7 @@ function clickDetails(inspectionNum, inspectionContentNum, inspectionContentName
         <div class='modal-content'>
             <div class='modal-body'><br>
                 <h3><b>신고 사유 상세</b></h3>
-                <a id='inspectionMove'>
-                	<p style='text-align: end; cursor: pointer;' data-dismiss='modal' a href=""><u><i>신고된 컨텐츠로 이동</i></u></p>
-                </a>
+                <p style='text-align: end; cursor: pointer;' data-dismiss='modal' a href=""><u><i>신고된 컨텐츠로 이동</i></u></p>
                 <div style='width:100%; height:400px; overflow:auto'>
                 <table class='table' width='100%' cellspacing='0' cellpadding='0'>
                     <thead style='text-align: center'>
@@ -135,7 +97,14 @@ function clickDetails(inspectionNum, inspectionContentNum, inspectionContentName
                             <th width="5%">No.</th><th>신고자ID</th><th width="50%">신고사유</th>
                         </tr>
                     </thead>
-                    <tbody id='detailBody' style='text-align: center'>
+                    <tbody style='text-align: center'>
+                    <c:forEach items="${inspectionDetails}" var="inspectionDetail" varStatus="status">
+                        <tr>
+                        	<td>${status.count}</td>
+                            <td>${inspectionDetails.nickname}(${inspectionDetails.userId})</td>
+                            <td>${inspectionDetails.anyInspectionContent}</td>
+						</tr>
+					</c:forEach>
 					</tbody>
                 </table>
             </div>

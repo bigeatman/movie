@@ -12,7 +12,7 @@ public interface GenreMap {
 	List<Movie> searchMovieByGenre(String genreName);
 	List<Genre> selectAll();
 	GenreDto selectGenre(Genre genre, int movieNum, int userNum);
-	int selectCheckGenre(String genreName);
+	List<String> selectCheckGenre();
 	int selectMovie(int genreNum);
 	int selectUser(int genreNum);
 	void insertGenre(String genreName);
