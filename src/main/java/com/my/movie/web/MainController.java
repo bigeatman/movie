@@ -7,6 +7,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.my.movie.service.MovieService;
+import com.my.movie.service.UserService;
+
 
 @Controller
 public class MainController {

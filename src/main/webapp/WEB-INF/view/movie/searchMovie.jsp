@@ -108,7 +108,7 @@ nav a {
 					<div id='movie6' class='p-0 border justify-content-center'>
 						<br>영화이미지
 					</div>
-					<div></div>
+					<div>영화이름</div>
 				</a>
 			</div>
         </div>

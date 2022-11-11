@@ -98,6 +98,7 @@ table {
                                  </div>
                                  <div class='carousel-item'>
                                  	<form action="review" method="post" id="movie_0">
+                                    <form action="review" method="post" id="movie_0">
 	                                 	<div id='movieImg2' onclick="coinfirmSubmitAction(0)">영화이미지</div>
 	                                    <div id='topMovie' onclick="coinfirmSubmitAction(0)">공조2: 인터내셔날</div>
 	                                    <input type="hidden" name="movieNo" value="0">
@@ -212,7 +213,7 @@ table {
                	</a>
             </div>
             <div class='col text-center'>
-               	<a id='search' href='#' class='ml-1'>
+               	<a id='search' href='movie/searchMovie' class='ml-1'>
                   	<i class='fa-solid fa-compass fa-xl'></i><br>
                   	<span class='iconfont'>탐색</span>
                	</a>

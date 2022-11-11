@@ -55,12 +55,15 @@ public class UserController {
 		return mv;
 	}
 	
+//	@GetMapping("searchMovie")
+//	public ModelAndView movie(ModelAndView mv) {
+//		mv.setViewName("movie/searchMovie");
+//		return mv;
+//	}
 	@PostMapping("getGenreNames")
 	public List<String> getGenreNames(@RequestBody int userNum) {
 		return userService.getUserGenre(userNum);
-	}
-	
-	@GetMapping("mypage")
+	}	@GetMapping("mypage")
 	public ModelAndView mypage(ModelAndView mv, HttpSession session) {
 		mv.setViewName("user/mypage");
 		return mv;
