@@ -61,8 +61,8 @@ function init() {
 	        			$('input:checkbox').prop('checked', false)
 	        		}
 	        	}
-	        })
-	    }
+	    	})
+		}
 	})
 }
 $(init)
