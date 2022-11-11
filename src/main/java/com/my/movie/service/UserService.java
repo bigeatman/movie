@@ -12,7 +12,7 @@ public interface UserService {
 	int checkUserNickname(String nickname);
 	int checkUserPhoneNum(String phoneNum);
 	int checkUserEmail(String email);
-	List<String> getUserGenre(int genreNum);
+	List<String> getUserGenre(int userNum);
 	void addUser(User user);
 	void addUserGenre(int genreNum);
 	void addWithDrawal(int userNum);

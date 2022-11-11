@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,7 +26,7 @@ import com.my.movie.service.UserService;
 public class UserController {
 	@Autowired private UserService userService;
 	@Autowired private EmailController emailController;
-
+	
 	@GetMapping("login")
 	public ModelAndView login(ModelAndView mv) {
 		mv.setViewName("user/login");
@@ -35,7 +34,7 @@ public class UserController {
 	}
 
 	@PostMapping("login")
-	public User login(@RequestBody User userLogin, Model model, HttpSession session) {
+	public User login(@RequestBody User userLogin, HttpSession session) {
 		User user = userService.loginValidate(userLogin);
 		if(user != null) {
 			int userWithDrawal = userService.getWithDrawal(user.getUserNum());
@@ -56,8 +55,13 @@ public class UserController {
 		return mv;
 	}
 	
+	@PostMapping("getGenreNames")
+	public List<String> getGenreNames(@RequestBody int userNum) {
+		return userService.getUserGenre(userNum);
+	}
+	
 	@GetMapping("mypage")
-	public ModelAndView mypage(ModelAndView mv) {
+	public ModelAndView mypage(ModelAndView mv, HttpSession session) {
 		mv.setViewName("user/mypage");
 		return mv;
 	}
@@ -87,7 +91,7 @@ public class UserController {
 		List<Integer> genres = userGenre.getGenreNum();
 		for(int genre: genres) {
 			userService.addUserGenre(genre);
-	}
+		}
 	}
 
 	@PostMapping("checkUserId")

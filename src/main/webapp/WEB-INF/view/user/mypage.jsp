@@ -1,5 +1,6 @@
-<%@ page import="ch.qos.logback.core.recovery.ResilientSyslogOutputStream"%>
 <%@ page language='java' contentType='text/html; charset=utf-8' pageEncoding='utf-8'%>
+<%@ page import="ch.qos.logback.core.recovery.ResilientSyslogOutputStream"%>
+<%@ taglib prefix='c' uri='http://java.sun.com/jsp/jstl/core'%>
 <title>MYPAGE</title>
 <meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'>
@@ -8,7 +9,33 @@
 <script src='https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js'></script>
 <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js'></script>
 <script>
+function listGenreNames() {
+	$.ajax({
+    	url: 'getGenreNames',
+    	method:'post',
+    	contentType: 'application/json',
+    	data: JSON.stringify(${user.userNum}),
+    	success: genreNames => {
+    	    if(genreNames.length) {
+    	        const genreArr = []
+    	        $.each(genreNames, (i, genreName) => {
+    	            genreArr.push(
+                			`<div class='row' style='padding-left: 15px; margin-left: 5px;'>
+    	                		<div id='cw'>
+                            		<label for='genre'>\${genreName}</label>
+                        		</div>
+                    		</div>`)
+    	        })
+    	        $('#genres').append(genreArr.join(''))
+    	    } else $('#genres').append(
+    	        '<div class="row" style="margin: 0 auto; margin-bottom: 50px;">관심장르가 없습니다.</div>')
+    	}
+    })
+}
+
 function init() {
+	listGenreNames()
+	
 	$('#delUserBtn').click(() => {
 		$('#modalMsg').text('탈퇴 하시겠습니까?')
         $('#delUserNoBtn').show()
@@ -42,6 +69,21 @@ $(init)
 </style>
 <h5><br><b>&nbsp;&nbsp;&nbsp;&nbsp;| 프로필</b></h5>
 <hr>
+<c:if test='${empty user.userId}'>
+<div class='row' style='margin-top: 100px; text-align: center;'>
+        <div class='col'>
+            <span class='h4'>로그인을 하세요.</span>
+        </div>
+    </div>
+    <div class='row' style='margin-top: 150px; margin-left: 100px;'>
+        <div class='col'>
+            <button id='okBtn' type='button' class='btn btn-primary' onclick='location.href="login"' style='margin-left: 30px;'>
+                <span class='h6'>로그인</span>
+            </button>
+        </div>
+    </div>
+</c:if>
+<c:if test='${not empty user.userId}'>
 <div class="container-fulid">
     <div id='join' class='col'>
         <form>
@@ -63,67 +105,11 @@ $(init)
             </div>
             <div class='form-group'>
                 <label for='genre'>관심장르</label><br>
-                <div class='row' style='padding-left: 15px'>
-                    <div class='row' style='padding-left: 15px; margin-left: 5px;'>
-                        <div id='cw'>
-                            <label for='genre'></label>
-                        </div>
-                        <div id='cw'>
-                            <label for='genre'></label>
-                        </div>
-                        <div id='cw'>
-                            <label for='genre'>SF</label>
-                        </div>
-                        <div id='cw'>
-                            <label for='genre'>스릴러</label>
-                        </div>
-                    </div>
-                    <div class='row' style='padding-left: 15px; margin-left: 5px;'>
-                        <div id='cw'>
-                            <label for='genre'>공포</label>
-                        </div>
-                        <div id='cw'>
-                            <label for='genre'>전쟁</label>
-                        </div>
-                        <div id='cw'>
-                            <label for='genre'>미스터리</label>
-                        </div>
-                        <div id='cw'>
-                            <label for='genre'>판타지</label>
-                        </div>
-                    </div>
-                    <div class='row' style='padding-left: 15px; margin-left: 5px;'>
-                        <div id='cw'>
-                            <label for='genre'>코미디</label>
-                        </div>
-                        <div id='cw'>
-                            <label for='genre'>로맨스</label>
-                        </div>
-                        <div id='cw'>
-                            <label for='genre'>멜로</label>
-                        </div>
-                        <div id='cw'>
-                            <label for='genre'>드라마</label>
-                        </div>
-                    </div>
-                    <div class='row' style='padding-left: 15px; margin-left: 5px;'>
-                        <div id='cw'>
-                            <label for='genre'>뮤지컬</label>
-                        </div>
-                        <div id='cw'>
-                            <label for='genre'>음악</label>
-                        </div>
-                        <div id='cw'>
-                            <label for='genre'>스포츠</label>
-                        </div>
-                        <div id='cw'>
-                            <label for='genre'>애니</label>
-                        </div>
-                    </div>
+                <div id='genres' class='row' style='padding-left: 15px'>
                 </div>
             </div>
             <div>
-                <button id='cancelBtn' type='button' class='btn btn-light' onclick='location.href="logout"' style='width: 90px; margin-left: 45px; margin-right: 30px; margin-bottom: 30px;'>
+                <button id='cancelBtn' type='button' class='btn btn-light' onclick='location.href="/"' style='width: 90px; margin-left: 45px; margin-right: 30px; margin-bottom: 30px;'>
                     <span class='h6'>뒤로가기</span>
                 </button>
                 <button id='fixUserBtn' type='button' class='btn btn-primary' style='width: 90px; margin-left: 30px; margin-bottom: 30px;'>
@@ -157,3 +143,4 @@ $(init)
         </div>
     </div>
 </div>
+</c:if>

@@ -53,8 +53,8 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public List<String> selectUserGenre(int genreNum) {
-		return userMap.selectUserGenre(genreNum);
+	public List<String> selectUserGenre(int userNum) {
+		return userMap.selectUserGenre(userNum);
 	}
 
 	@Override
