@@ -97,11 +97,8 @@ table {
                                     <div id='topMovie'>블랙 아담</div></a>
                                  </div>
                                  <div class='carousel-item'>
-<<<<<<< HEAD
                                  	<form action="review" method="post" id="movie_0">
-=======
                                     <form action="review" method="post" id="movie_0">
->>>>>>> 9105c89 (movie 정리)
 	                                 	<div id='movieImg2' onclick="coinfirmSubmitAction(0)">영화이미지</div>
 	                                    <div id='topMovie' onclick="coinfirmSubmitAction(0)">공조2: 인터내셔날</div>
 	                                    <input type="hidden" name="movieNo" value="0">

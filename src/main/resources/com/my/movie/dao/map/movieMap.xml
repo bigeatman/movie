@@ -8,8 +8,8 @@
 	</select>
 
 	<select id='selectAdminMovies' resultType='movie'>
-		select * from movies
-		order by movieNum desc
+		SELECT * FROM movies
+		order by movie_num desc
 	</select>
 
 	<select id='searchHashtag' resultMap='movieMap'>
@@ -19,14 +19,12 @@
 	
 	<select id='searchMovie' resultType='movie'>
 		select * from movies
-		where movie_num = #{movieNum}
+		where movie_num = #{movieNum}	
 	</select>	
 	
 	<insert id='insertMovie'>
-		insert into movies(movie_num, movie_name, movie_releasedate, movie_runningtime,
-				 movie_country, movie_story, movie_imgfile_name)
-		values(MOVIES_MOVIENUM_SEQ.nextval, #{movieName}, #{movieReleasedate}, #{movieRunningtime}, #{movieCountry},  
-			#{movieStory}, #{movieImgfileName})	
+		insert into movies(movie_num, movie_name, movie_releasedate, movie_runningtime, movie_country, movie_story, hashtag, cumulative_audience, movie_imgfile_name)
+		values(MOVIE_NUM_SEQ.nextval, #{movieName}, #{movieReleasedate}, #{movieRunningtime}, #{movieCountry}, #{movieStory}, #{hashtag}, #{cumulativeAudience}, #{movieImgfileName})	
 	</insert>
 	
 	<update id='updateMovie'>
@@ -36,7 +34,9 @@
 			movie_runningtime = #{movieRunningtime},
 			movie_country = #{movieCountry},
 			movie_story = #{movieStory},
-			movie_imgfile_name = #{movieImgfileName},
+			hashtag = #{hashtag},
+			cumulative_audience = #{cumulativeAudience},
+			movie_imgfile_name = #{movieImgfileName}
 		where movie_num = #{movieNum}
 	</update>
 	
@@ -58,6 +58,7 @@
 		<result property='movieCountry' column='movie_country'/>
 		<result property='movieImgfileName' column='movie_imgfile_name'/>
 		<result property='hashtag' column='hashtag'/>
+		<result property='cumulativeAudience' column='cumulative_audience'/>
 		
 		<result property='id' column='movie_num'/>
 	</resultMap>

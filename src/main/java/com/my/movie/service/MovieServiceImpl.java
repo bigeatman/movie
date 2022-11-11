@@ -24,7 +24,7 @@ public class MovieServiceImpl implements MovieService{
 	
 	@Override
 	public List<Movie> getAdminMovies() {
-		return movieDao.selectAdminMovies();
+		return movieDao.selectAdminMovies();	
 	}
 	
 	@Override
