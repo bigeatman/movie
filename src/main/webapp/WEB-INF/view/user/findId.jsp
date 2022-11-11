@@ -31,9 +31,13 @@ function mailOption() {
     })
 }
 
+$(document).on("keyup", "#inputPhoneNum", function() {
+	$(this).val( $(this).val().replace(/[^0-9]/g, '').replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3").replace(/(\-{1,2})$/g, ""))   
+})
+
 function init(){
     mailOption()
-
+    
     $('#yesBtn').on('click', ()=>{
     	if(isVal($('#inputPhoneNum')) && isVal($('#inputEmail')) && isVal($('#domainTxt'))){
     		$.ajax({
@@ -119,8 +123,8 @@ hr {
                         <option value='kakao.com'>kakao.com</option>
                     </select>
                 </div>
-                <input id='inputPhoneNum' name='check' type='tel' class='form-control mt-4' placeholder='연락처를 입력하세요.(- 없이)'
-                    maxlength='11' onKeyup="this.value=this.value.replace(/[^0-9]/g,'');">
+                <input id='inputPhoneNum' name='check' type='tel' class='form-control mt-4' placeholder='연락처를 입력하세요.'
+                    maxlength='13' onKeyup="this.value=this.value.replace(/[^0-9]/g,'');">
                 <p id='errMsg' class='mt-1' style='font-size: 8px; color: red; height: 8px;'></p>
             </div>
         </div>
