@@ -35,9 +35,6 @@ function checkLogin() {
 $(checkLogin)
 </script>
 <style>
-.btn:hover{
-    background-color: #b1c3e0;
-}
 
 th {
 	height: 50;
@@ -78,14 +75,12 @@ td {
 						<div class='row'>
 							<div class='col-12 text-center'>
 								<div class='btn-group btn-block'>
-									<button type='button' class='btn btn-secondary' onclick='location.href="admin"'>홈</button>
-									<button type='button' class='btn btn-secondary' data-toggle='modal' data-target='#modal' 
-										name='page' onclick='location.href="admin/user/users"'>회 원</button>
-									<button type='button' class='btn btn-secondary' data-toggle='modal' data-target='#modal' 
-										name='page' onclick='location.href="movie"'>영 화</button>
-									<button type='button' class='btn btn-secondary' data-toggle='modal' data-target='#modal' 
-										name='page' onclick='location.href="inspection"'>신고 조회</button>
-								</div>
+								<button disabled type='button' class='btn btn-primary' onclick='location.href="#"'>홈</button>
+								<button type='button' class='btn btn-secondary' onclick='location.href="#"'>회 원</button>
+								<button type='button' class='btn btn-secondary' onclick='location.href="#"'>장 르</button>
+								<button type='button' class='btn btn-secondary' onclick='location.href="../admin/movie/listMovie"'>영 화</button>
+								<button type='button' class='btn btn-secondary' onclick='location.href="#"'>감독/출연진</button>
+								<button type='button' class='btn btn-secondary' onclick='location.h								</div>
 							</div>
 						</div>
 					</div>

@@ -2,7 +2,9 @@ package com.my.movie.domain;
 
 import java.time.LocalDate;
 
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Data;
 
@@ -10,20 +12,13 @@ import lombok.Data;
 public class Movie {
 	private int movieNum;
 	private String movieName;
+	@DateTimeFormat(pattern="yyyy-MM-dd")
+	@JsonFormat(pattern="yyyy-MM-dd", timezone="Asia/Seoul")
 	private LocalDate movieReleasedate;
 	private String hashtag;
 	private String movieImgfileName;
 	private int movieRunningtime;
 	private String movieCountry;
 	private int cumulativeAudience;
-<<<<<<< HEAD
-<<<<<<< HEAD
 	private String movieStory;
-=======
->>>>>>> 9105c89 (movie 정리)
-	
-//	private MultipartFile movieImgfile;
-=======
-	private MultipartFile movieImgfile;
->>>>>>> 48fe4fe (작업 폴더 이동)
 }
