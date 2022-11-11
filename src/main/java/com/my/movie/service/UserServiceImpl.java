@@ -48,8 +48,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<String> getUserGenre(int genreNum) {
-		return userDao.selectUserGenre(genreNum);
+	public List<String> getUserGenre(int userNum) {
+		return userDao.selectUserGenre(userNum);
 	}
 
 	@Override
