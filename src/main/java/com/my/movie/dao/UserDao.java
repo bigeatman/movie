@@ -12,7 +12,7 @@ public interface UserDao {
 	int selectUserNickname(String nickname);
 	int selectUserPhoneNum(String phoneNum);
 	int selectUserEmail(String email);
-	List<String> selectUserGenre(int genreNum);
+	List<String> selectUserGenre(int userNum);
 	void insertUser(User user);
 	void insertUserGenre(int genreNum);
 	void insertWithDrawal(int userNum);

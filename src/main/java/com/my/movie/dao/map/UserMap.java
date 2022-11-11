@@ -14,7 +14,7 @@ public interface UserMap {
 	int selectUserNickname(String nickname);
 	int selectUserPhoneNum(String phoneNum);
 	int selectUserEmail(String email);
-	List<String> selectUserGenre(int genreNum);
+	List<String> selectUserGenre(int userNum);
 	void insertUser(User user);
 	void insertUserGenre(int genreNum);
 	void insertWithDrawal(int userNum);
@@ -23,5 +23,4 @@ public interface UserMap {
 	String selectPw1(@Param("email")String email,
 					@Param("userId")String userId);
 	void updatePw1(User user);
-
 }
