@@ -37,7 +37,8 @@ public class GenreDaoImpl implements GenreDao {
 	@Override
 	public List<String> selectCheckGenre() {
 		return genreMap.selectCheckGenre();
-
+	}
+	
 	@Override
 	public int selectMovie(int genreNum) {
 		return genreMap.selectMovie(genreNum);
