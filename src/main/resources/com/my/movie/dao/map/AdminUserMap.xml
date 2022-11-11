@@ -28,6 +28,19 @@
 		order by users.user_num DESC
 	</select>
 	
+	<select id='selectSearchUsers' resultType='AdminUser'>
+		select users.*
+		from users left join user_withdrawal
+		on user_withdrawal.user_num = users.user_num
+        where user_withdrawal.user_num is null AND (
+        	users.user_Id like '%' || #{keyword} || '%' OR
+        	users.nickname like '%' || #{keyword} || '%' OR
+        	users.phone_num like '%' || #{keyword} || '%' OR
+        	users.email like '%' || #{keyword} || '%'
+        )
+		order by users.user_num DESC
+	</select>
+
 	<update id='updateAdminUser'>
 		update users
 		set nickname = #{nickname}
