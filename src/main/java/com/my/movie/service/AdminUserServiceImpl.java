@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.my.movie.dao.AdminUserDao;
 import com.my.movie.domain.AdminUser;
+import com.my.movie.domain.AdminUserDto;
 
 @Service
 public class AdminUserServiceImpl implements AdminUserService {
@@ -16,6 +17,7 @@ public class AdminUserServiceImpl implements AdminUserService {
 	public AdminUser loginValidate(AdminUser user){
 		return adminUserDao.selectAdminUserLogin(user);
 	}
+	
 	@Override
 	public AdminUser getAdmin(AdminUser user) {
 		return adminUserDao.selectAdminUser(user);
@@ -24,6 +26,11 @@ public class AdminUserServiceImpl implements AdminUserService {
 	@Override
 	public List<AdminUser> getUsers() {
 		return adminUserDao.selectUsers();
+	}
+	
+	@Override
+	public List<AdminUser> getSearchUsers(AdminUserDto adminUserDto) {
+		return adminUserDao.selectSearchUsers(adminUserDto);
 	}
 	
 	@Override

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.my.movie.dao.map.AdminUserMap;
 import com.my.movie.domain.AdminUser;
+import com.my.movie.domain.AdminUserDto;
 
 @Repository
 public class AdminUserDaoImpl implements AdminUserDao {
@@ -27,6 +28,11 @@ public class AdminUserDaoImpl implements AdminUserDao {
 		return adminUserMap.selectUsers();
 	}
 
+	@Override
+	public List<AdminUser> selectSearchUsers(AdminUserDto adminUserDto) {
+		return adminUserMap.selectSearchUsers(adminUserDto);
+	}
+	
 	@Override
 	public void updateAdminUser(AdminUser user) {
 		adminUserMap.updateAdminUser(user);

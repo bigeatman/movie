@@ -13,26 +13,6 @@
     <script src="https://kit.fontawesome.com/449f39a7b2.js" crossorigin="anonymous"></script>
 </head>
 <script>
-function checkLogin() {
-<%
-	if(session.getAttribute("user") != null) {
-%>
-	$('#myModal').modal('hide')
-	$('#loginBtn').attr({
-   		class: "btn btn-secondary",
-   		onclick: "location.href='../logout'"	
-	})
-<%
-	} else {
-%>
-	$('button[name="page"]').attr({
-		onclick: "location.href"	
-	})
-<%
-	}
-%>
-}
-
 const users =[]
 let user = 0
 
@@ -47,18 +27,36 @@ function isVal(field){
     if (!isGood) {
         $('#modalMsg').text(errMsg)
         $('#noBtn').text('확인')
-        $('#yesBtn').hide()
+        $('#yesFixBtn').hide()
         $('#yesDelBtn').hide()
         $('#modal').modal()
     }
     return isGood
 }
 
+function isText(field){
+    let isGood = false
+    let errMsg
+    $('#modalMsg').text('')
+
+    if(!field.val()) errMsg = field.attr('placeholder') + ' 입력하세요.'
+    else isGood = true
+
+    if (!isGood) {
+        $('#modalMsg').text(errMsg)
+        $('#noBtn').text('확인')
+        $('#yesFixBtn').hide()
+        $('#yesDelBtn').hide()
+        $('#modal').modal()
+    }
+    return isGood
+}
+
+//조회
 function listUsers(){
     $('input').not(':radio').val('')
     $('#userList').empty()
-
-
+	
     $.ajax({
     	method:'Get',
 		url: 'users/list',
@@ -88,77 +86,115 @@ function listUsers(){
 		}
 	})
 }	
-// 유저 닉네임 수정
-    function init() {
-    	listUsers()
 
-        $('#fixBtn').click(() => {
-            $('#yesDelBtn').hide()
-        	$('#fixMag').remove()
-            
-        	if(isVal($('#userNum:checked'))){ 
-            	if (!$('#fixNickname').val()){
-            		$('#modalMsg').text('수정할 닉네임을 입력하세요')
-                    $('#noBtn').text('확인')
-                    $('#yesBtn').hide() 
-                    $('#modal').modal()
-            	} else { 					// ModalMsg 글씨크기좀;
-            		$('#modalMsg').append('<h4 id ="fixMsg">','[' ,$('#userNum:checked').parent().next().next().next().next().text(),'] 을/를 <br> [' ,$('#fixNickname').val(), ']으로 수정하시겠습니까?</h4>')
-                	$('#noBtn').text('취소')
-                    $('#yesBtn').show()
-                    $('#yesBtn').attr('class', 'col btn btn-block btn-primary')
-                    $('#modal').modal() 
-            	}
-            }
-        })
+//검색
+function searchUsers(){
+	$('input').not(':radio').val('')
+    $('#userList').empty()
     
-//수정 확인
-        $('#yesBtn').click(() => {
-        	$.ajax({
-               	url: 'users/fix',
-            	method: 'patch',
-            	contentType: 'application/json',
-            	data: JSON.stringify({
-            		userNum: $('#userNum:checked').val(),
-            		nickname: $('#fixNickname').val()
-            	}),
-                success: listUsers
-       		})   
-        })
-
-    // 유저 삭제
-        $('#delBtn').click(() => {
-            $('#modalMsg').text(`해당 회원을 삭제하시겠습니까?`)
-            $('#yesBtn').hide()
-            $('#yesDelBtn').show()
-            $('#noBtn').text('취소')
-            $('#modal').modal()
-        })
-        
-    //삭제 확인
-        $('#yesDelBtn').click(() => {
-        	$.ajax({
-               	url: 'users/addWithDrawal',
-            	method: 'Post',
-            	contentType: 'application/json',
-            	data: JSON.stringify({userNum: $('#userNum:checked').val()}),
-                success: listUsers
-       		})  
-        })
-
-// 수정할 아이디 칸에 자동입력
-		$('#userList').on({
-			change(){
-	            $('#fixNickname').val($('#userNum:checked').parent().next().next().next().next().text())
-			}
-		}, '#userNum')      	
+	$('#searchBtn').click(() => { 
+       	if(isText($('#search'))){ 
+			$.ajax({
+	           	url: 'users/search',
+	        	method: 'Post',
+	        	contentType: 'application/json',	
+	        	data: JSON.stringify({keyword: $('#search').val()}),
+	        	success: searchUsers => {
+	    			if(searchUsers.length){
+	    		        userArr = []
+	    		        searchUsers.forEach(user => {
+	    					userArr.push( 
+	    						`<tr>
+	                                <td><input type='radio' name='userNum' id='userNum'
+	                                       value='\${user.userNum}'/></td>
+	                                <td id='userNum'>\${user.userNum}</td> 
+	                                <td id='userId'>\${user.userId}</td>                                  
+	                                <td id='pw'>\${user.pw}</td>
+	                                <td id='nickname'>\${user.nickname}</td>                                  
+	                                <td id='phoneNum'>\${user.phoneNum}</td>                                  
+	                                <td id='email'>\${user.email}</td>
+	                            </tr>`
+	    			        )
+	    				})	
+	
+	    		        $('#userList').append(userArr.join(''))
+	    		    } else $('#userList').append(
+	    		        '<tr><td colspan=7 class=text-center>검색 내용이 없습니다.</td></tr>'
+	    		    )
+	    		}
+	   		})
+       	}
+    })
 }
 
-    $(init)
-    $(checkLogin)
+function init() {
+    listUsers()
+    searchUsers()  
+    	
+// 닉네임 수정
+    $('#fixBtn').click(() => {
+        $('#yesDelBtn').hide()
+       	$('#fixMag').remove()
+
+       	if(isVal($('#userNum:checked'))){ 
+           	if (isText($('#fixNickname'))){
+           		$('#modalMsg').append('<h4 id ="fixMsg">','[' ,$('#userNum:checked').parent().next().next().next().next().text(),'] 을/를 <br> [' ,$('#fixNickname').val(), ']으로 수정하시겠습니까?</h4>')
+             	$('#noBtn').text('취소')
+                $('#yesFixBtn').show()
+                $('#modal').modal() 
+          	} 
+        }
+    })
+        
+    
+//수정 확인
+    $('#yesFixBtn').click(() => {
+       	$.ajax({
+           	url: 'users/fix',
+           	method: 'patch',
+           	contentType: 'application/json',
+           	data: JSON.stringify({
+           		userNum: $('#userNum:checked').val(),
+           		nickname: $('#fixNickname').val()
+           	}),
+            success: listUsers
+    	})   
+    })
+
+    // 유저 삭제
+	$('#delBtn').click(() => {
+	   	if(isVal($('#userNum:checked'))){ 
+	        $('#modalMsg').text(`해당 회원을 삭제하시겠습니까?`)
+	        $('#yesFixBtn').hide()
+	        $('#yesDelBtn').show()
+	        $('#noBtn').text('취소')
+	        $('#modal').modal()
+		} 
+	})
+      	       
+    //삭제 확인
+    $('#yesDelBtn').click(() => {
+        $.ajax({
+           	url: 'users/addWithDrawal',
+           	method: 'Post',
+           	contentType: 'application/json',
+          	data: JSON.stringify({userNum: $('#userNum:checked').val()}),
+            success: listUsers
+    	})  
+    })
+
+// 수정할 아이디 칸에 자동입력
+	$('#userList').on({
+		change(){
+		    $('#fixNickname').val($('#userNum:checked').parent().next().next().next().next().text())
+		}
+	}, '#userNum')      	
+}
+
+$(init)
 </script>
 <style>
-    #yesBtn,
+    #yesFixBtn,
     #noBtn,
     #yesDelBtn {
         margin: auto;
@@ -174,6 +210,7 @@ function listUsers(){
     
     #logoutBtn{
 	height: 1.5rem;
+	width: 5.5rem;
 	font-size: 14px;		
 	}
 	
@@ -188,11 +225,11 @@ function listUsers(){
                 <div class='float-left mt-3'>
                     <h5>| 회원</h5>
                 </div>
-                <div id='btn_group' class='float-right mt-3'>
-                    <span id='id' style='font-size:13'>${userId}님 ${nickname}님</span>&emsp;
-                    <span id='sessionTime' style='font-size:12'>(08:23)세션시간 </span>&emsp;
-					<button id='logoutBtn' type='button' class='btn btn-primary btn-block' onclick='location.href="login"'>
-	         			<span id='loginSpan'>로그아웃</span>
+                <div id='btn_group' class='row float-right mt-3'>
+                    <span id='id' style='font-size:13'>${user.nickname}님</span>&emsp;
+                    <span id='sessionTime' style='font-size:12'>(08:23)세션시간</span>&emsp;
+					<button id='logoutBtn' type='button' class='btn btn-block btn-secondary' onclick='location.href="logout"'>
+	         			<span id='logoutSpan'>로그아웃</span>
 	         		</button>
                 </div><br>
                 <div class='row mt-5'>
@@ -202,12 +239,12 @@ function listUsers(){
                                 <div class='col-12 text-center'>
                                     <div class='btn-group btn-block'>
                                         <button type='button' class='btn btn-secondary'
-                                            onclick='location.href="../main.html" '>홈</button>
+                                            onclick='location.href="../../admin" '>홈</button>
                                         <button type='button' class='btn btn-secondary'>회 원</button>
                                         <button type='button' class='btn btn-secondary'
-                                            onclick='location.href="../movie/01.html" '>영 화</button>
+                                            onclick='location.href="../movie" '>영 화</button>
                                         <button type='button' class='btn btn-secondary'
-                                            onclick='location.href="../inspection/01.html" '>신고 조회</button>
+                                            onclick='location.href="../inspection" '>신고 조회</button>
                                     </div>
                                 </div>
                             </div>
@@ -221,8 +258,15 @@ function listUsers(){
                 <div class='col'>
                     <form class='mt-3'>
                         <div class='col form-group d-flex justify-content-end'>
-                            <input class='form-control w-25' type='text' placeholder='검색' />
-                            <button type='button' class="btn ml-3 border">
+                        	<select name='type' class='mr-1'>
+                        		<option selected value=''>선택</option>
+                        		<option value='userId'>아이디</option>
+                        		<option value='nickname'>닉네임</option>
+                        		<option value='phoneNum'>연락처</option>
+                        		<option value='email'>이메일</option>
+                        	</select>
+                            <input class='form-control w-25' id='search' type='text' placeholder='검색어' />
+                            <button type='button' class="btn ml-3 border" id='searchBtn'>
                                 <i class='fa-solid fa-magnifying-glass'></i>
                             </button>
                         </div>
@@ -248,9 +292,8 @@ function listUsers(){
             <div class='row'>
                 <div class='col d-flex align-items-center justify-content-end'>
                     <input type='text' placeholder='수정할 닉네임' id='fixNickname' maxlength='8'>
-                    <input type='button' value='회원 수정' id='fixBtn' class='mx-3 btn btn-primary' data-toggle='modal'
-                        data-target='#modal'>
-                    <input type='button' value='회원 삭제' id='delBtn' class='btn btn-warning'>
+                    <button type='button' id='fixBtn' class='mx-3 btn btn-primary' data-toggle='modal'data-target='#modal'>수정</button>
+                    <button type='button' id='delBtn' class='btn btn-warning'>삭제</button>
                 </div>
             </div>
             <div class='row footer'>
@@ -273,9 +316,8 @@ function listUsers(){
                 <div class='row'>
                     <button type='button' class='col btn btn-block btn-secondary' data-dismiss='modal'
                         id='noBtn'>취소</button>
-                    <button type='button' data-dismiss='modal' id='yesBtn' class='btn btn-block btn-primary'>확인</button>
-                    <button type='button' data-dismiss='modal' id='yesDelBtn' class='btn btn-block btn-warning'>확인</button>
-                    
+                    <button type='button' data-dismiss='modal' id='yesFixBtn' class='btn btn-block btn-primary'>수정</button>
+                    <button type='button' data-dismiss='modal' id='yesDelBtn' class='btn btn-block btn-warning'>삭제</button>
                 </div>
             </div>
         </div>
