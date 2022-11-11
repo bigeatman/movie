@@ -13,11 +13,6 @@ public class AdminUserServiceImpl implements AdminUserService {
 	@Autowired private AdminUserDao adminUserDao;
 	
 	@Override
-	public List<AdminUser> getUsers() {
-		return adminUserDao.selectUsers();
-	}
-
-	@Override
 	public AdminUser loginValidate(AdminUser user){
 		return adminUserDao.selectAdminUserLogin(user);
 	}
@@ -27,27 +22,17 @@ public class AdminUserServiceImpl implements AdminUserService {
 	}
 
 	@Override
-	public int getWithDrawal(int userNum) {
-		return adminUserDao.selectWithDrawal(userNum);
-	}
-
-	@Override
-	public String findId1(AdminUser user) {
-		return adminUserDao.selectId1(user);
+	public List<AdminUser> getUsers() {
+		return adminUserDao.selectUsers();
 	}
 	
 	@Override
-	public String findPw1(AdminUser user) {
-		return adminUserDao.selectPw1(user);
+	public void fixAdminUser(AdminUser user) {
+		adminUserDao.updateAdminUser(user);
 	}
 	
 	@Override
-	public String findPw1(String email, String userId) {
-		return adminUserDao.selectPw1(email, userId);
-	}
-	
-	@Override
-	public void fixPw1(AdminUser user) {
-		adminUserDao.updatePw1(user);
+	public void addWithDrawal(int userNum) {
+		adminUserDao.insertWithDrawal(userNum);
 	}
 }

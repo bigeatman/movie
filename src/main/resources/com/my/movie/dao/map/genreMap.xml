@@ -38,11 +38,6 @@
 		from genre
 	</select>
 	
-	<select id='selectGenreNum' resultType='int'>
-		select genre_num
-		from genre
-	</select>
-	
 	<select id='selectMovie' resultType='int'>
 		select * from genre
 	</select>
