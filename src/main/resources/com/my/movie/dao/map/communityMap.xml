@@ -14,18 +14,26 @@
 	
 	<resultMap id='communityMap' type='community'>
 		<id property='communityNum' column='community_num'/>
-		<result property='title' column='title'/>
-		<result property='communityDate' column='communityDate'/>
+		<result property='communityTitle' column='community_title'/>
+		<result property='communityContent' column='community_content'/>
+		<result property='communityDate' column='community_date'/>
+		<result property='communityImgfileName' column='community_imgfileName'/>
+		<result property='userNum' column='user_num'/>
 	</resultMap>
 	
 	<insert id='insertCommunity'>
-		INSERT INTO movie.COMMUNITIES(COMMUNITY_NUM, COMMUNITY_TITLE,
-		 COMMUNITY_CONTENT, COMMUNITY_DATE, COMMUNITY_IMGFILE_NAME, USER_NUM)
-		<!-- values(community_id_seq.nextval, #{title}, #{communityDate}) -->
+		INSERT INTO movie.COMMUNITIES(community_num, community_title,
+		 community_content, community_date, community_imgfile_name, user_num)
+		values(community_num_seq.nextval, #{communityTitle}, #{communityContent}, #{communityDate}, #{communityImgfileName}, #{userNum})
 	</insert>
 	
 	<delete id='deleteCommunity'>
 		delete communities
-		where community_id = #{communityId}
+		where community_num = #{communityNum}
 	</delete>
+	
+	<select id="content" resultType="com.my.movie.domain.Community">
+		select community_num, community_title,
+		 community_content, community_date, community_imgfile_name, user_num
+	</select>
 </mapper>

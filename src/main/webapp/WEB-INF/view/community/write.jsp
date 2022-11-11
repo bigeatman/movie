@@ -43,37 +43,38 @@ $(checkLogin)
 		}
 	})
 }) */
-/* function getToday() {
+function getToday() {
 	var today = new Date()
 		
 	return today.getFullYear() + "-" +("0" + (today.getMonth() + 1)).slice(-2) + "-" + ("0" + today.getDate()).slice(-2)
 }
 
 $(() => {
+	
 	$('#writePostBtn').click(() => {
 		var regDate = getToday()
 		
-		if(session.getAttribute("user") != null) {
-		
+		 if(session.getAttribute("user") != null) {
+			 
 			$.ajax({
-				url: 'list/add',
+				url: 'write',
 				method: 'post',
 				contentType: 'application/json',
 				data: JSON.stringify({
-					communityContent: $('#writePostBtn').val(),
+					communityTitle: $('#communityTitle').val(),
+					communityContent: $('#communityContent').val(),
 					communityDate: regDate,
-					userNum: user.userNum,
+					communityImgfileName: $('#communityImgfileName').val(),
+					userNum: $('#userNum').val()
 				}), 
 				success: function successWritePost() {
-					window.location.href = '/community/list'
-					CommunityList
-					
+					window.location.href = 'community/list'
 				}
 			})
 		} 
 	})	
 })	
- */
+$(getToday)
 
 </script>
 <style>
@@ -121,29 +122,32 @@ label {
     <div style="border:1px solid; padding:10px;">
     <form method="post">
       <div class="form-group">
-<div id="communityWrite">
-        <input type="text" class="form-control" id="title"
-         placeholder="제목 (2자 이상 30자 이하)" name="title"
+		      <div> <input type="number" id="userNum" name="userNum">임시)유저넘버</input>
+		      </div>
+		      <div> <input type="date" id="communityDate" name="communityDate">임시)레그데이트</input>
+		      </div>
+	<div>
+        <input type="text" class="form-control" id="communityTitle"
+         placeholder="제목 (2자 이상 30자 이하)" name="communityTitle"
          minlength="2" maxlength="30" required="required"
-         pattern=".{2,30}">
+         pattern=".{2,30}"/>
          <hr style="border: double 1px grey;">
-      </div>
+     </div>
 
    <div class="form-group">
      <label for="content"></label>
-     <textarea class="form-control" rows="8" id="content"
-      name="content" placeholder="글쓰기 (2자 이상 1000자 이하)"
+     <textarea class="form-control" rows="10" id="communityContent"
+      name="communityContent" placeholder="글쓰기 (2자 이상 1000자 이하)"
       minlength="2" maxlength="1000" required="required"
       pattern=".{2,1000}"></textarea>
-
    </div>
 
    <div class="rows">
     <label for="input-file"></label>
-      <input type="file" id="input-file"/></label>
+      <input type="file" id="communityImgfileName" name="communityImgfileName"/></label>
       <div class='row mt-3 p-3 border-top'>
         <!-- <button id='writePostBtn' type='button' class='btn btn-success border btn-block' onclick='location.href="list"'>추가</button> -->
-        <input type="submit" class="btn btn-success border btn-block" value="글쓰기">
+        <input type="submit" id='writePostBtn' class="btn btn-success border btn-block" value="글쓰기" onclick='location.href="list"'>
       </div>
   </div>
 </div>

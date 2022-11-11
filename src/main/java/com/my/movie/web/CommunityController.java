@@ -1,16 +1,16 @@
 package com.my.movie.web;
 
+import java.io.IOException;
 import java.util.List;
-
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -54,8 +54,27 @@ public class CommunityController {
 		mv.setViewName("community/content");
 		return mv;
 	}
-
+	
 	@GetMapping("write")
+	public ModelAndView write(ModelAndView mv) {
+		mv.setViewName("community/write");
+		return mv;
+	}
+	
+	@ResponseBody
+	@PostMapping("write")
+	public ModelAndView addWrite(Community community, ModelAndView mv) throws IOException {
+	    try {
+	    communityService.addCommunity(community);
+	    }catch(NullPointerException e) {}
+	      
+	    mv.setViewName("community/write");
+	    return mv;
+	}
+	   
+
+/*	   
+	@PostMapping("write")
 	public ModelAndView write(ModelAndView mv, HttpSession session) {
 		String userId = (String) session.getAttribute("userId");
 		if(userId == null) {
@@ -68,15 +87,19 @@ public class CommunityController {
 		return mv;
 	}
 	
-	@PostMapping("add")
+	@GetMapping("write")
 	public void addCommunity(@RequestBody Community community) {
 		communityService.addCommunity(community);
 	}
+*/
 	
 	@DeleteMapping("del/{communityNum}")
 	public void delCommunity(@PathVariable int communityNum) {
 		communityService.delCommunity(communityNum);
-	}
+	}	
 	
-
+	/*
+	 * @RequestMapping(value = "/content", method = RequestMethod.GET) public String
+	 * getcontent() throws Exception { return "community/content"; }
+	 */
 }

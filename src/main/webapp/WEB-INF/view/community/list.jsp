@@ -43,7 +43,7 @@ function createCommunityElement(result) {
 		comDiv.appendChild(aElem);
 		
 	for(var i = 0; i < result.length; i++) {
-		container.innerHTML += "<a href='content'>" + "<li class='row pt-3 pb-3 list-unstyled border-bottom'>" +
+		container.innerHTML += "<a href='${content}'>" + "<li class='row pt-3 pb-3 list-unstyled border-bottom'>" +
 							   "<span class='col-1'>" + result[i].communityNum + "</span>" +
 		 					   "<span class='col-8'>" + result[i].communityTitle + "</span>" +
 							   "<span class='col-2'>" + result[i].userNum + "</span>" + "</li>" + "</a>";
@@ -100,7 +100,7 @@ pagination {
 	<ul class='list-unstyled border-top' id="communityContainer">
 	</ul>
 </div>
-        
+
     <button type="submit" onclick='location.href="write"' style="width: 245pt; HEIGHT: 25pt" class="btn btn-primary">글쓰기</button>
 
 <!-- PAGINATION -->

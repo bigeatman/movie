@@ -127,7 +127,32 @@ function replyInit() {
 }
 $(boardInit)
 $(replyInit)
-
+</script>
+<script>
+$(() => {
+	
+	$('#communityContainer').click(() => {
+		var regDate = getToday()
+		
+			$.ajax({
+				url: 'list',
+				method: 'get',
+				contentType: 'application/json',
+				data: JSON.stringify({
+					communityTitle: $('#communityTitle').val(),
+					communityContent: $('#communityContent').val(),
+					communityDate: regDate,
+					communityImgfileName: $('#communityImgfileName').val()
+					/* userNum: $('#userNum').val() */
+				}), 
+				success: function successWritePost() {
+					window.location.href = 'community/content'
+				}
+			})
+ 
+	})	
+})
+$(CommunityList)
 </script>
 </head>
 
@@ -225,7 +250,7 @@ label {
     <h3><em><u><center>영화평</center></u></em></h3>
     <table border="1">
         <tr>
-            <td width=1500 height=30>&nbsp;[스포주의] 마녀2 후기!!</td>
+            <td width=1500 height=30>&nbsp;${community.title}</td>
             <td width=200>
                 <div class='row border'>
                     <div class='col d-flex justify-content-center align-items-center'></div>
@@ -240,12 +265,21 @@ label {
                             <a class='dropdown-item' id='inspectionBoardBtn'>신고</a>
                         </div>
                     </div>
-                </div> 
+                </div>
+            </td>    
+        </tr>        
     </table>
 
     <div class= "board-box" style="background-color: #dbe8fb; border: #79a5e4 1px solid; padding: 10px;">
-        <td>와 이거 진짜 1탄보다 더 재밌는듯 액션이랑 등장인물들 연기 다 너무잘함</td>
+        <tr>	
+        	<td>&nbsp;${community.content}</td>
+        </tr>
     </div>
+    <table >
+    	<td>작성일:</td>
+    	<td><fmt:formatDate value="${data.date}" pattern="yyyy-MM-dd" />
+    	</td>
+    </table>
 
 <!-- 영화평 공감 버튼 -->
 <div class="container text-center">

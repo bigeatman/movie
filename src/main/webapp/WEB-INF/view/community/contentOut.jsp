@@ -44,7 +44,6 @@ function replyInit(replyIdx) {
 	
 	    $('#replyModal').modal()
 	})
-
 	$('#delYesBtn').click(() => {
 	    $('#modalBodyMsg').text('댓글이 삭제 되었습니다.')
 	
@@ -54,7 +53,6 @@ function replyInit(replyIdx) {
 	
 	    $('replyModal').modal()
 	})
-
 	$(`#inspectionReplyBtn\${replyIdx}`).click(() => {
 	    $('#modalHeadMsg').text('댓글 신고')
 	
@@ -70,7 +68,6 @@ function replyInit(replyIdx) {
 	
 	    $('#replyModal').modal()
 	})
-
 	$('#inspectionYesBtn').click(() => {
 	    $('#modalBodyMsg').text('신고해주셔서 감사합니다. 신고된 내용은 내부 검토를 통해 삭제여부를 확인해보도록 하겠습니다.')
 	    $('#inspectionReasonInput').hide()
@@ -126,13 +123,11 @@ function listReplies() {
 		
 	})	
 }
-
 function getToday() {
 	var today = new Date()
 		
 	return today.getFullYear() + "-" +("0" + (today.getMonth() + 1)).slice(-2) + "-" + ("0" + today.getDate()).slice(-2)
 }
-
 $(() => {
 	$('#regReplyBtn').click(() => {
 		var regDate = getToday()
@@ -158,7 +153,6 @@ $(() => {
 		<% } %>
 	})	
 })	
-
 $(listReplies)
 $(replyInit)
 </script>
@@ -168,60 +162,48 @@ $(replyInit)
 
 
 <style>
-
 nav {
 	background-color: rgb(19, 19, 29);
 }
-
 .fa-compass, .fa-user, .fa-house, .fa-comments {
 	color:rgb(221, 221, 221);
 	font-size:28px;
 }
-
 .iconfont {
 	font-size:12px;
 }
-
 nav a {
 	text-decoration: none;
 	color: white;
 }
-
 .fa-tv {
 	text-decoration: none;
 	color: black;
 }
-
 label {
     font-size:12px;
     width: 1px;
 }
-
 .board-box {
     height: 250px;
     margin-bottom: 20px;
     padding: 50px;
     border-width: 200px;
 }
-
 #replyBg {
         background: rgb(209, 208, 208);
     }
-
 #replyMenu {
     color:black;
     background-color: rgb(209, 208, 208);
     border: 0px;
 }
-
 .bi{
     color:black;
 }
-
 #regReplyBtn {
     width: 110%;
 }
-
 #modalBodyMsg{
     text-align: center;
 }
@@ -325,45 +307,3 @@ label {
     </div>
 </div>
 </html>
-
-<!-- 댓글 양식
-<div class='row' id='reply'>
-        <div class='col mb-1'>
-            <li id='replyBg' class='list-group-item d-flex justify-content-between'>
-                <div>
-                    ㅎㅇ movie1415  <!-- 작성자의 닉네임 id 
-                </div>
-                <div>
-                    2022-10-12  <!-- 해당 댓글의 작성일 
-                    <button class='ml-0' id='replyMenu' data-toggle='dropdown'><i class="bi bi-gear-fill"></i></button>
-                    <div class='dropdown-menu'>
-                        <a class='dropdown-item' id='delReplyBtn'>삭제</a>
-                        <div class='dropdown-divider'></div>
-                        <a class='dropdown-item' id='inspectionReplyBtn'>신고</a>
-                    </div>
-                </div>
-            </li>                    
-            <li id='replyBg' class='list-group-item'>
-                <div class='col mb-3'>
-                    다음작품 벌써부터 기다려져요<br> <!-- 해당 댓글의 내용
-                    현기증난단 말이에요<br>
-                </div>
-                <div>
-                    <a href='/'> <i id='empathy' class="bi bi-hand-thumbs-up-fill"></i></a>
-                    2   <!-- 공감표시 수
-                    <a href='/'> <i id='nonEmpathy' class="bi bi-hand-thumbs-down-fill"></i></a>
-                </div>
-            </li>   
-        </div>
-    </div>
--->  
-    
-<!-- 더보기
-    <div class='row mb-1'>
-	<div class='col flex-low mt-3'>
-        <a href='04.html'>
-            <button id='listReplyBtn' type='button' class='btn btn-primary btn-block'>더보기</button>
-        </a>
-    	</div>
-	</div>
- -->
