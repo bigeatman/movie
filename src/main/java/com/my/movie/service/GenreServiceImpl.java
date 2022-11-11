@@ -1,5 +1,7 @@
 package com.my.movie.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,11 @@ public class GenreServiceImpl implements GenreService {
 	@Autowired private GenreDao genreDao;
 	
 	@Override
+	public List<Genre> getAll() {
+		return genreDao.selectAll();
+	}
+
+	@Override
 	public void addGenre(String genreName) {
 		genreDao.insertGenre(genreName);
 	}
@@ -22,8 +29,8 @@ public class GenreServiceImpl implements GenreService {
 	}
 
 	@Override
-	public int getCheckGenre(String genreName) {
-		return genreDao.selectCheckGenre(genreName);
+	public List<String> getCheckGenre() {
+		return genreDao.selectCheckGenre();
 	}
 
 	@Override

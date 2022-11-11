@@ -1,6 +1,7 @@
 package com.my.movie.web;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,10 +25,15 @@ public class GenreController {
 	}
 	
 	@PostMapping("addGenre")
-	public void addGenre(@RequestBody List<String> genreName) {
-		System.out.println(genreName);
-		for(String genre: genreName) {
-			System.out.println("장르: " + genre);
+	public List<String> addGenre(@RequestBody List<String> genreName) {
+		List<String> genres = genreService.getCheckGenre();
+		List<String> result = genreName.stream().filter(genres::contains).collect(Collectors.toList());
+		genreName.removeAll(genres);
+		if(result.isEmpty()) {
+			for(String genre: genreName) {
+				genreService.addGenre(genre);
+			}
 		}
+		return result;
 	}
 }
