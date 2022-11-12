@@ -11,6 +11,27 @@
 <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js'></script>
 <script src="https://kit.fontawesome.com/449f39a7b2.js" crossorigin="anonymous"></script>
 <script>
+function checkLogin() {
+<%
+	if(session.getAttribute("user") != null) { //로그인상태
+%>
+		$('#loginSpan').text('로그아웃')
+		$('#id').text('${userId}님 ${nickname}님')
+		$('#sessionTime').text('(08:23)세션시간 ')
+		$('button[name="page"]').attr("data-target", "")
+		$('#loginBtn').attr({
+	   		class: "btn btn-secondary",
+	   		onclick: "location.href='admin/user/logout'"	
+	})
+<%
+	} else { //로그아웃 상태
+%>
+		$('button[name="page"]').attr("onclick", "")
+<%
+	}
+%>
+}
+$(checkLogin)
 </script>
 <style>
 
@@ -21,6 +42,18 @@
 	td {
 	height: 100;
 	font-size: 20;
+	}
+
+	#loginBtn{
+		height: 1.5rem;
+		font-size: 14px;		
+	}
+		
+	#yesBtn, #noBtn{
+	    margin: auto;
+	    width: 100%;
+	    max-width: 10rem;
+	    height: 100%;
 	}
 </style>
 <div class='container-fluid'>
@@ -40,11 +73,11 @@
 							<div class='col-12 text-center'>
 								<div class='btn-group btn-block'>
 								<button disabled type='button' class='btn btn-primary' onclick='location.href="#"'>홈</button>
-								<button type='button' class='btn btn-secondary' data-toggle='modal' data-target='#modal' onclick='location.href="#"'>회 원</button>
-								<button type='button' class='btn btn-secondary' data-toggle='modal' data-target='#modal' onclick='location.href="#"'>장 르</button>
-								<button type='button' class='btn btn-secondary' data-toggle='modal' data-target='#modal' onclick='location.href="../admin/movie/listMovie"'>영 화</button>
-								<button type='button' class='btn btn-secondary' data-toggle='modal' data-target='#modal' onclick='location.href="#"'>감독/출연진</button>
-								<button type='button' class='btn btn-secondary' data-toggle='modal' data-target='#modal' onclick='location.href="#"'>신고 조회</button>
+								<button type='button' class='btn btn-secondary' name='page' data-toggle='modal' data-target='#modal' onclick='location.href="../admin/user/users"'>회 원</button>
+								<button type='button' class='btn btn-secondary' name='page' data-toggle='modal' data-target='#modal' onclick='location.href="#"'>장 르</button>
+								<button type='button' class='btn btn-secondary' name='page' data-toggle='modal' data-target='#modal' onclick='location.href="../admin/movie/listMovie"'>영 화</button>
+								<button type='button' class='btn btn-secondary' name='page' data-toggle='modal' data-target='#modal' onclick='location.href="#"'>감독/출연진</button>
+								<button type='button' class='btn btn-secondary' name='page' data-toggle='modal' data-target='#modal' onclick='location.href="#"'>신고 조회</button>
 								</div>
 							</div>
 						</div>
@@ -77,3 +110,19 @@
 	</div>
 </body>
 </html>
+<div class='modal fade' tabindex='-1' id='modal'>
+	<div class='modal-dialog modal-dialog-centered' id='myModal'>
+	    <div class='modal-content'>
+	        <div class='modal-header'></div>
+	        <div class='modal-body' style='text-align: center;'>
+	            <h4 id='modalMsg' style='color: red;'>로그인 하세요</h4>
+	            <div class='row'>
+	                <button type='button' class='col btn btn-block btn-secondary' data-dismiss='modal'
+	                    id='noBtn'>취소</button>
+	                <button type='button' class='col btn btn-block btn-primary' data-dismiss='modal'
+	                	id='yesBtn' onclick='location.href="admin/user/login"'>확인</button>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+</div>
