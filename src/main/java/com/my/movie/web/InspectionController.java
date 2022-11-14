@@ -17,7 +17,7 @@ import com.my.movie.domain.InspectionDetail;
 import com.my.movie.service.InspectionService;
 
 @Controller
-@RequestMapping("admin")
+@RequestMapping("admin/inspection")
 public class InspectionController {
 
 	@Autowired private InspectionService inspectionService;
@@ -39,7 +39,6 @@ public class InspectionController {
 	
 	@ResponseBody
 	@PostMapping("inspection/status")
-	@ResponseBody
 	public void fixStatus(@RequestBody Inspection inspection) {
 		inspectionService.fixStatus(inspection);
 	}
