@@ -21,7 +21,6 @@ import com.my.movie.service.AdminUserService;
 public class AdminUserController {
 	@Autowired private AdminUserService adminUserService;
 
-
 	@GetMapping("login")
 	public ModelAndView login(ModelAndView mv) {
 		mv.setViewName("admin/user/login");
@@ -31,14 +30,14 @@ public class AdminUserController {
 	@PostMapping("login")
 	public AdminUser login(@RequestBody AdminUser adminLogin, HttpSession session) {
 		AdminUser user = adminUserService.loginValidate(adminLogin);
-			session.setAttribute("user", user);
+			session.setAttribute("userId", user.getUserId());
 		return user;
 	}
 	
 	@GetMapping("logout")
 	public ModelAndView logout(ModelAndView mv, HttpSession session) {
 		session.invalidate();
-		mv.setViewName("redirect:../../admin");
+		mv.setViewName("redirect:/admin");
 		return mv;
 	}
 	

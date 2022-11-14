@@ -1,4 +1,5 @@
 <%@ page language='java' contentType='text/html; charset=utf-8' pageEncoding='utf-8'%>
+<%@ taglib prefix='c' uri='http://java.sun.com/jsp/jstl/core'%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -24,7 +25,33 @@ function isVal(field) {
     return isGood
 }
 
+function listGenre() {
+	$.ajax({
+    	url: 'getGenre',
+    	dataType: 'json',
+    	success: genreNames => {
+    	    if(genreNames.length) {
+    	        const genreArr = []
+    	        $.each(genreNames, (i, genreName) => {
+    	            genreArr.push(
+                			`<tr>
+	    	                    <td>\${genreName.genreNum}</td>
+	    	                    <td>\${genreName.genreName}</td> 
+	    	                    <td>\${genreName.targetNumMovies}</td>
+	    	                    <td>\${genreName.numRegInterest}</td>
+    	                	</tr>`
+    	            )
+    	        })
+    	        $('#genres').append(genreArr.join(''))
+    	    } else $('#genres').append(
+    	        '<tr><td colspan=4 class=text-center>등록된 장르가 없습니다.</td></tr>')
+    	}
+    })
+}
+
 function init() {
+	listGenre()
+	
 	$('#selectAll').click(function() {
 	    $(this).parents('#checkBoxGroup').find('input').prop('checked', $(this).is(':checked'))
 	})
@@ -59,6 +86,7 @@ function init() {
 	        		} else {
 	        			$('#errMsg').css('color', 'blue').text('장르를 추가했습니다.'),
 	        			$('input:checkbox').prop('checked', false)
+	        			location.href='addGenre'
 	        		}
 	        	}
 	    	})
@@ -74,13 +102,27 @@ $(init)
 }
 </style>
 <body>
+<c:if test='${empty userId}'>
+<div class='row' style='margin-top: 100px; text-align: center;'>
+        <div class='col'>
+            <span class='h4'>로그인을 하세요.</span>
+        </div>
+    </div>
+    <div class='row' style='margin-top: 150px; margin-left: 100px;'>
+        <div class='col'>
+            <button id='okBtn' type='button' class='btn btn-primary' onclick='location.href="login"' style='margin-left: 30px;'>
+                <span class='h6'>로그인</span>
+            </button>
+        </div>
+    </div>
+</c:if>
+<c:if test='${not empty userId}'>
 	<div class='container-fluid'>
 		<div class='header'>
             <div class='float-left mt-3'><h5>| 장르</h5></div>
 			 <div id='btn_group' class='float-right mt-3'>
-				  <label style='font-size:13'>admin님</label>&emsp;
-                  <span style='font-size:12'>(08:23)</span>&emsp;
-				  <a href='#'><button style='font-size:13'>로그아웃</button></a>
+				  <label style='font-size:13'>${user}</label>&emsp;
+				  <a href='<%= request.getContextPath() %>/admin/user/logout'><button style='font-size:13'>로그아웃</button></a>
 			  </div><br>
 		  <div class='row mt-5'>
 			  <div class='col'>
@@ -88,12 +130,12 @@ $(init)
 					 <div class='row'>
 						 <div class='col-12 text-center'>
 							 <div class='btn-group btn-block'>
-                                <button type='button' class='btn btn-secondary' onclick='location.href=".." '>홈</button>
+                                <button type='button' class='btn btn-secondary' onclick='location.href="/admin"'>홈</button>
 								<button type='button' class='btn btn-secondary' onclick='location.href="#" '>회 원</button>
 								<button disabled type='button' class='btn btn-primary' onclick='location.href="#" '>장 르</button>
 								<button type='button' class='btn btn-secondary' onclick='location.href="#" '>영 화</button>
 								<button type='button' class='btn btn-secondary' onclick='location.href="#" '>감독/배우</button>
-								<button type='button' class='btn btn-secondary' onclick='location.href="#" '>신고 조회</button>
+								<button type='button' class='btn btn-secondary' onclick='location.href="../inspection" '>신고 조회</button>
 							 </div>
 						 </div>
 					 </div>
@@ -185,19 +227,7 @@ $(init)
                         <div class='col'>
                             <table class='table table-bordered' id='BoardTable'>
                                 <thead><tr><th>NO</th><th>장르명</th><th>대상 영화 수</th><th>관심 등록 수</th></tr></thead>
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>액션</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>범죄</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                    </tr>
+                                <tbody id='genres'>
                                 </tbody>
                             </table>
                         </div>
@@ -206,5 +236,6 @@ $(init)
             </div>
         </div>
     </div>
+</c:if>
 </body>
 </html>

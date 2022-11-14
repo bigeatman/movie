@@ -11,10 +11,8 @@ public interface GenreMap {
 	Integer getGenreId(String genreName);
 	List<Movie> searchMovieByGenre(String genreName);
 	List<Genre> selectAll();
-	GenreDto selectGenre(Genre genre, int movieNum, int userNum);
+	List<GenreDto> selectGenre();
 	List<String> selectCheckGenre();
-	int selectMovie(int genreNum);
-	int selectUser(int genreNum);
 	void insertGenre(String genreName);
 	void insertUserGenre(int userId, int genre);
 	void insertMovieGenre(int movieId, int genre);
