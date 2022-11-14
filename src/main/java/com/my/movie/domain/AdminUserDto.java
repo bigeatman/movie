@@ -3,7 +3,7 @@ package com.my.movie.domain;
 import lombok.Data;
 
 @Data
-public class AdminUserDto {
+public class AdminUserDto{
 	private int userNum;
 	private String userId;
 	private String pw;

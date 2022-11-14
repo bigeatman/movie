@@ -16,6 +16,13 @@
 const users =[]
 let user = 0
 
+function errModal(){
+        $('#noBtn').text('확인')
+        $('#yesFixBtn').hide()
+        $('#yesDelBtn').hide()
+        $('#modal').modal()
+}
+
 function isVal(field){
     let isGood = false
     let errMsg
@@ -26,10 +33,7 @@ function isVal(field){
 
     if (!isGood) {
         $('#modalMsg').text(errMsg)
-        $('#noBtn').text('확인')
-        $('#yesFixBtn').hide()
-        $('#yesDelBtn').hide()
-        $('#modal').modal()
+    	errModal()
     }
     return isGood
 }
@@ -44,10 +48,7 @@ function isText(field){
 
     if (!isGood) {
         $('#modalMsg').text(errMsg)
-        $('#noBtn').text('확인')
-        $('#yesFixBtn').hide()
-        $('#yesDelBtn').hide()
-        $('#modal').modal()
+    	errModal()
     }
     return isGood
 }
@@ -55,11 +56,10 @@ function isText(field){
 //조회
 function listUsers(){
     $('input').not(':radio').val('')
-    $('#userList').empty()
 	
     $.ajax({
     	method:'Get',
-		url: 'users/list',
+		url: 'user/list',
 		dataType: 'json',
 		success: userList => {
 			if(userList.length){
@@ -78,7 +78,7 @@ function listUsers(){
                         </tr>`
 			        )
 				})	
-
+    			$('#userList').empty()
 		        $('#userList').append(userArr.join(''))
 		    } else $('#userList').append(
 		        '<tr><td colspan=7 class=text-center>회원이 없습니다.</td></tr>'
@@ -92,10 +92,9 @@ function searchUsers(){
 	$('input').not(':radio').val('')
     
 	$('#searchBtn').click(() => { 
-	    $('#userList').empty()
        	if(isText($('#search'))){ 
 			$.ajax({
-	           	url: 'users/search',
+	           	url: 'user/search',
 	        	method: 'Post',
 	        	contentType: 'application/json',	
 	        	data: JSON.stringify({keyword: $('#search').val()}),
@@ -116,11 +115,11 @@ function searchUsers(){
 	                            </tr>`
 	    			        )
 	    				})	
-	
+		    			$('#userList').empty()
 	    		        $('#userList').append(userArr.join(''))
-	    		    } else $('#userList').append(
-	    		        '<tr><td colspan=7 class=text-center>검색 내용이 없습니다.</td></tr>'
-	    		    )
+	    		    } else {
+	    		    	$('#userList').append( '<tr><td colspan=7 class=text-center>검색 내용이 없습니다.</td></tr>')
+	    		    }
 	    		}
 	   		})
        	}
@@ -150,7 +149,7 @@ function init() {
 //수정 확인
     $('#yesFixBtn').click(() => {
        	$.ajax({
-           	url: 'users/fix',
+           	url: 'user/fix',
            	method: 'patch',
            	contentType: 'application/json',
            	data: JSON.stringify({
@@ -175,7 +174,7 @@ function init() {
     //삭제 확인
     $('#yesDelBtn').click(() => {
         $.ajax({
-           	url: 'users/addWithDrawal',
+           	url: 'user/addWithDrawal',
            	method: 'Post',
            	contentType: 'application/json',
           	data: JSON.stringify({userNum: $('#userNum:checked').val()}),
@@ -252,13 +251,13 @@ $(init)
                 </div>
             </div>
             <hr>
-            &nbsp;
             <div class='row'>
                 <div class='col'>
-                    <form class='mt-3'>
+                    <form class='mt-1'>
                         <div class='col form-group d-flex justify-content-end'>
-                            <input class='form-control w-25' id='search' type='text' placeholder='검색어' />
-                            <button type='button' class="btn ml-3 border" id='searchBtn'>
+                        	<button type='button' class="btn border justify-content-start" id='searchAllBtn'  onclick='location.href="user"'>전체 조회</button>
+                            <input class='form-control w-25 mx-2' id='search' type='text' placeholder='검색어' />
+                            <button type='button' class="btn border" id='searchBtn'>
                                 <i class='fa-solid fa-magnifying-glass'></i>
                             </button>
                         </div>

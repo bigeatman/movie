@@ -25,9 +25,9 @@ public interface UserMap {
 	void insertWithDrawal(int userNum);
 	int updateUser(User userData);
 	void deleteUserGenre(int userNum);
-	String selectId1(User user);
-	String selectPw1(User user);
-	String selectPw1(@Param("email")String email,
+	String selectId(UserDto userDto);
+	String selectPw(UserDto userDto);
+	String selectPw(@Param("email")String email,
 					@Param("userId")String userId);
-	void updatePw1(User user);
+	void updatePw(User user);
 }

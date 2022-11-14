@@ -1,14 +1,4 @@
 package com.my.movie.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class AdminUser{
-	private int userNum;
-	private String userId;
-	private String pw;
+public class AdminUser extends User {
 }
