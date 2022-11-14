@@ -1,5 +1,6 @@
 <%@ page language='java' contentType='text/html; charset=utf-8' pageEncoding='utf-8'%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -139,6 +140,9 @@ function clickDetails(inspectionNum, inspectionContentNum, inspectionContentName
                     </thead>
                     <tbody style='text-align: center' id="inspectionTable">
                     <c:forEach items="${inspection}" var="inspection" varStatus="status">
+                     <c:if test="${fn:length(inspection) == 0 }">
+                        	<h5 style='text-align: center'>신고된 내용이 없습니다.</h5>
+                    </c:if>
                         <tr>
                             <td>${status.count}</td>
                             <td>${inspection.inspectionContentName}</td>
