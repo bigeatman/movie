@@ -6,10 +6,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,7 +36,7 @@ public class UserController {
 	}
 
 	@PostMapping("login")
-	public User login(@RequestBody User userLogin, HttpSession session) {
+	public User login(@RequestBody User userLogin, Model model, HttpSession session) {
 		User user = userService.loginValidate(userLogin);
 		if(user != null) {
 			int userWithDrawal = userService.getWithDrawal(user.getUserNum());
@@ -42,7 +44,8 @@ public class UserController {
 				user = new User();
 				user.setUserNum(-1);
 			} else {
-				session.setAttribute("user", user);
+				session.setAttribute("userId", user.getUserId());
+				session.setAttribute("userNum", user.getUserNum());
 			}
 		}
 		return user;
@@ -55,18 +58,24 @@ public class UserController {
 		return mv;
 	}
 	
+	
 //	@GetMapping("searchMovie")
 //	public ModelAndView movie(ModelAndView mv) {
 //		mv.setViewName("movie/searchMovie");
 //		return mv;
 //	}
+
+	@GetMapping("mypage")
+	public ModelAndView mypage(ModelAndView mv, HttpSession session) {
+		User user = userService.getUser((String)session.getAttribute("userId"));
+		mv.addObject("user", user);
+		mv.setViewName("user/mypage");
+		return mv;
+	}
+	
 	@PostMapping("getGenreNames")
 	public List<String> getGenreNames(@RequestBody int userNum) {
 		return userService.getUserGenre(userNum);
-	}	@GetMapping("mypage")
-	public ModelAndView mypage(ModelAndView mv, HttpSession session) {
-		mv.setViewName("user/mypage");
-		return mv;
 	}
 
 	@GetMapping("addWithDrawal")
@@ -91,34 +100,80 @@ public class UserController {
 	public void addUser(@RequestBody UserGenre userGenre) {
 		User user = userGenre.getUser();
 		userService.addUser(user);
+		User userNum = userService.getUser(user.getUserId());
 		List<Integer> genres = userGenre.getGenreNum();
 		for(int genre: genres) {
-			userService.addUserGenre(genre);
+			userService.addUserGenre(userNum.getUserNum(), genre);
 		}
+	}
+	
+	@GetMapping("fixUser")
+	public ModelAndView fixUser(ModelAndView mv, HttpSession session) {
+		User user = userService.getUser((String)session.getAttribute("userId"));
+		List<Integer> genre = userService.getGenreNum((int)session.getAttribute("userNum"));
+		mv.addObject("user", user);
+		mv.addObject("genre", genre);
+		mv.setViewName("user/fixUser");
+		return mv;
+	}
+	
+	@PutMapping("fixUser")
+	public int fixUser(@RequestBody UserGenre userGenre) {
+		userService.delUserGenre(userGenre.getUser().getUserNum());
+		userService.fixUser(userGenre.getUser());
+		List<Integer> genres = userGenre.getGenreNum();
+		for(int genre: genres) {
+			userService.addUserGenre(userGenre.getUser().getUserNum(), genre);
+		}
+		return userService.fixUser(userGenre.getUser());
+	}
+	
+	@GetMapping("checkFixUserPw")
+	public ModelAndView checkFixUserPw(ModelAndView mv, HttpSession session) {
+		User user = userService.getUser((String)session.getAttribute("userId"));
+		mv.addObject("user", user);
+		mv.setViewName("user/checkFixUserPw");
+		return mv;
+	}
+	
+	@PostMapping("checkFixUserPw")
+	public User checkFixUserPw(@RequestBody User pw) {
+		return userService.loginValidate(pw);
 	}
 
 	@PostMapping("checkUserId")
 	public int checkUserId(@RequestBody UserDto userId) {
-		int result = userService.checkUserId(userId.getUserId());
-		return result;
+		return userService.checkUserId(userId.getUserId());
 	}
 
 	@PostMapping("checkUserNickname")
 	public int checkUserNickname(@RequestBody UserDto nickname) {
-		int result = userService.checkUserNickname(nickname.getNickname());
-		return result;
+		return userService.checkUserNickname(nickname.getNickname());
 	}
 
 	@PostMapping("checkUserPhoneNum")
 	public int checkUserPhoneNum(@RequestBody UserDto phoneNum) {
-		int result = userService.checkUserPhoneNum(phoneNum.getPhoneNum());
-		return result;
+		return userService.checkUserPhoneNum(phoneNum.getPhoneNum());
 	}
 
 	@PostMapping("checkUserEmail")
 	public int checkUserEmail(@RequestBody UserDto email) {
-		int result = userService.checkUserEmail(email.getEmail());
-		return result;
+		return userService.checkUserEmail(email.getEmail());
+	}
+	
+	@PostMapping("checkFixUserNickname")
+	public int checkFixUserNickname(@RequestBody UserDto nickname) {
+		return userService.checkFixUserNickname(nickname);
+	}
+
+	@PostMapping("checkFixUserPhoneNum")
+	public int checkFixUserPhoneNum(@RequestBody UserDto phoneNum) {
+		return userService.checkFixUserPhoneNum(phoneNum);
+	}
+
+	@PostMapping("checkFixUserEmail")
+	public int checkFixUserEmail(@RequestBody UserDto email) {
+		return userService.checkFixUserEmail(email);
 	}
 
 	@GetMapping("findId")

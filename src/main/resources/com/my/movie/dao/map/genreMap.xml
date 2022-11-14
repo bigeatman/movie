@@ -33,17 +33,19 @@
 		select * from genre
 	</select>
 	
+	<select id='selectGenre' resultType='genreDto'>
+		select distinct g.genre_num, g.genre_name, 
+        	(select count(mg.genre_num) from movie_genre mg where mg.genre_num = g.genre_num) as target_Num_Movies,
+        	(select count(ug.genre_num) from user_genre ug where ug.genre_num = g.genre_num) as num_Reg_Interest
+		from genre g
+		left join movie_genre mg on mg.genre_num = g.genre_num
+		left join user_genre ug on ug.genre_num = g.genre_num
+		order by g.genre_num
+	</select>
+	
 	<select id='selectCheckGenre' resultType='string'>
 		select genre_name
 		from genre
-	</select>
-	
-	<select id='selectMovie' resultType='int'>
-		select * from genre
-	</select>
-	
-	<select id='selectUser' resultType='int'>
-		select * from genre
 	</select>
 	
 	<insert id='insertGenre'>

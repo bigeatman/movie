@@ -11,12 +11,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.my.movie.domain.GenreDto;
 import com.my.movie.service.GenreService;
 
 @RestController
 @RequestMapping("admin/genre")
 public class GenreController {
 	@Autowired private GenreService genreService;
+	
+	@GetMapping("getGenre")
+	public List<GenreDto> getGenre() {
+		return genreService.getGenre();
+	}
 	
 	@GetMapping("addGenre")
 	public ModelAndView addGenre(ModelAndView mv) {
