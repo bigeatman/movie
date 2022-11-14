@@ -30,9 +30,9 @@ function clickDetails(inspectionNum, inspectionContentNum, inspectionContentName
 		});
 	})
 	//신고된 컨텐츠 이동
-	var url = "";
+		var url = "";
 	
-	if(inspectionContentName === "영화평") { //영화평에서 해당게시물의 번호로 찾아간다.
+		if(inspectionContentName === "영화평") { //영화평에서 해당게시물의 번호로 찾아간다.
 			url = "/community/content/" + inspectionContentNum;
 		} else if(inspectionContentName === "영화평댓글") { //영화평댓글에서 해당게시물의 번호로 찾아간다.
 			url = "/communityReply/list/" + inspectionContentNum;
@@ -41,9 +41,9 @@ function clickDetails(inspectionNum, inspectionContentNum, inspectionContentName
 		} else if(inspectionContentName === "리뷰댓글") { //리뷰댓글에서 해당게시물의 번호로 찾아간다.
 			url = "/rev/morerev" + inspectionContentNum;
 		}
-	$('#inspectionMove').attr('href', url);
-	
-	//신고 반려
+		$('#inspectionMove').attr('href', url);
+
+//신고 반려
 	var today = new Date();
 	var year = today.getFullYear();
 	var month = ('0' + (today.getMonth() + 1)).slice(-2);
@@ -66,11 +66,10 @@ function clickDetails(inspectionNum, inspectionContentNum, inspectionContentName
 					//$('#status'+inspectionNum).text('Date');
 				},
 				error: function(error, status){
-					console.log("error ", error);
-				}
+					console.log("error ", error);}
 		})
 	})
-	
+
 	//신고 삭제
 	$('#delbtn').click(() => {
 		$.ajax({
@@ -103,7 +102,6 @@ function clickDetails(inspectionNum, inspectionContentNum, inspectionContentName
         </div>
         <div id='btn_group' class='float-right mt-3'>
             <label style='font-size:13'>admin님</label>&emsp;
-            <span style='font-size:12'>(08:23)</span>&emsp;
             <a href='../user/login'><button style='font-size:13'>로그아웃</button></a>
         </div><br>
         <div class='row mt-5'>
