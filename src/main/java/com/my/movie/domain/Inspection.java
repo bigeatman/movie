@@ -20,4 +20,8 @@ public class Inspection {
 	private String nickname; //닉네임
 	private String anyContent; //컨텐츠모음
 	private Integer inspectionDetailsCount; //신고건 카운트
+	
+	//신고상세페이지 변수선언
+	private Integer inspectionDetailNum;
+	private String anyInspectionContent;
 }

@@ -30,8 +30,7 @@ function clickDetails(inspectionNum, inspectionContentNum, inspectionContentName
 		});
 	})
 	//신고된 컨텐츠 이동
-		var url = "";
-	
+		var url = "";	
 		if(inspectionContentName === "영화평") { //영화평에서 해당게시물의 번호로 찾아간다.
 			url = "/community/content/" + inspectionContentNum;
 		} else if(inspectionContentName === "영화평댓글") { //영화평댓글에서 해당게시물의 번호로 찾아간다.
@@ -42,7 +41,6 @@ function clickDetails(inspectionNum, inspectionContentNum, inspectionContentName
 			url = "/rev/morerev" + inspectionContentNum;
 		}
 		$('#inspectionMove').attr('href', url);
-
 //신고 반려
 	var today = new Date();
 	var year = today.getFullYear();
@@ -118,7 +116,7 @@ function clickDetails(inspectionNum, inspectionContentNum, inspectionContentName
                                 <button type='button' class='btn btn-secondary'
                                     onclick='location.href="../admin/movie/listMovie" '>영 화</button>
                                 <button type='button' class='btn btn-secondary'
-                                	onclick='location.href="...." '>감독/배우</button> <!-- 이동불가능 -->
+                                	onclick='location.href="../admin/" '>감독/배우</button> <!-- 이동불가능 -->
                                 <button type='button' class='btn btn-secondary'
                                     onclick='location.href="../admin/inspection" '>신고 조회</button>
                             </div>
