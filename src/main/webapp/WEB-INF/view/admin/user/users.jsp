@@ -90,9 +90,9 @@ function listUsers(){
 //검색
 function searchUsers(){
 	$('input').not(':radio').val('')
-    $('#userList').empty()
     
 	$('#searchBtn').click(() => { 
+	    $('#userList').empty()
        	if(isText($('#search'))){ 
 			$.ajax({
 	           	url: 'users/search',
@@ -226,8 +226,7 @@ $(init)
                     <h5>| 회원</h5>
                 </div>
                 <div id='btn_group' class='row float-right mt-3'>
-                    <span id='id' style='font-size:13'>${user.nickname}님</span>&emsp;
-                    <span id='sessionTime' style='font-size:12'>(08:23)세션시간</span>&emsp;
+                    <span id='id' style='font-size:13'>${user.userId}님</span>&emsp;
 					<button id='logoutBtn' type='button' class='btn btn-block btn-secondary' onclick='location.href="logout"'>
 	         			<span id='logoutSpan'>로그아웃</span>
 	         		</button>
@@ -258,13 +257,6 @@ $(init)
                 <div class='col'>
                     <form class='mt-3'>
                         <div class='col form-group d-flex justify-content-end'>
-                        	<select name='type' class='mr-1'>
-                        		<option selected value=''>선택</option>
-                        		<option value='userId'>아이디</option>
-                        		<option value='nickname'>닉네임</option>
-                        		<option value='phoneNum'>연락처</option>
-                        		<option value='email'>이메일</option>
-                        	</select>
                             <input class='form-control w-25' id='search' type='text' placeholder='검색어' />
                             <button type='button' class="btn ml-3 border" id='searchBtn'>
                                 <i class='fa-solid fa-magnifying-glass'></i>

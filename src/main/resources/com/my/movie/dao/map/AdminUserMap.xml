@@ -20,7 +20,7 @@
 		where users.user_num = #{userNum} and user_withdrawal.user_num = #{userNum}
 	</select>
 	
-	<select id='selectUsers' resultType='AdminUser'>
+	<select id='selectUsers' resultType='AdminUserDto'>
 		select users.*
 		from users left join user_withdrawal
 		on user_withdrawal.user_num = users.user_num
@@ -28,7 +28,7 @@
 		order by users.user_num DESC
 	</select>
 	
-	<select id='selectSearchUsers' resultType='AdminUser'>
+	<select id='selectSearchUsers' resultType='AdminUserDto'>
 		select users.*
 		from users left join user_withdrawal
 		on user_withdrawal.user_num = users.user_num

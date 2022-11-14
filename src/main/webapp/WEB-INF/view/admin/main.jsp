@@ -16,8 +16,7 @@ function checkLogin() {
 	if(session.getAttribute("user") != null) { //로그인상태
 %>
 		$('#loginSpan').text('로그아웃')
-		$('#id').text('${userId}님 ${nickname}님')
-		$('#sessionTime').text('(08:23)세션시간 ')
+		$('#id').text('${user.userId}님')
 		$('button[name="page"]').attr("data-target", "")
 		$('#loginBtn').attr({
 	   		class: "btn btn-secondary",
