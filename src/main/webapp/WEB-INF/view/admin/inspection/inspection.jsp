@@ -90,8 +90,7 @@ function clickDetails(inspectionNum, inspectionContentNum, inspectionContentName
 					console.log("error ", error);
 				}
 		})
-	})
-}
+	})}
 
 </script>
 <body>
