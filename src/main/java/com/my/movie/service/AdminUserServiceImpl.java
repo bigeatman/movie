@@ -34,8 +34,8 @@ public class AdminUserServiceImpl implements AdminUserService {
 	}
 	
 	@Override
-	public void fixAdminUser(AdminUser user) {
-		adminUserDao.updateAdminUser(user);
+	public void fixAdminUser(AdminUserDto adminUserDto) {
+		adminUserDao.updateAdminUser(adminUserDto);
 	}
 	
 	@Override

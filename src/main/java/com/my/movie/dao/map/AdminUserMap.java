@@ -8,10 +8,10 @@ import com.my.movie.domain.AdminUser;
 import com.my.movie.domain.AdminUserDto;
 
 public interface AdminUserMap {
-	AdminUser selectAdminUserLogin(AdminUser user);
-	AdminUser selectAdminUser(AdminUser user);
+	AdminUser selectAdminUserLogin(AdminUser adminUser);
+	AdminUser selectAdminUser(AdminUser adminUser);
 	List<AdminUser> selectUsers();
 	List<AdminUser> selectSearchUsers(AdminUserDto adminUserDto);
-	void updateAdminUser(AdminUser user);
-	void insertWithDrawal(int userNum);
+	void updateAdminUser(AdminUserDto adminUserDto);
+	void insertWithDrawal(int adminUserDto);
 }

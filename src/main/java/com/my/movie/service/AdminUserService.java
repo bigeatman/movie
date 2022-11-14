@@ -6,10 +6,10 @@ import com.my.movie.domain.AdminUser;
 import com.my.movie.domain.AdminUserDto;
 
 public interface AdminUserService {
-	AdminUser loginValidate(AdminUser userLogin);
-	AdminUser getAdmin(AdminUser user);
+	AdminUser loginValidate(AdminUser adminUser);
+	AdminUser getAdmin(AdminUser adminUser);
 	List<AdminUser> getUsers(); 
 	List<AdminUser> getSearchUsers(AdminUserDto adminUserDto);
-	void fixAdminUser(AdminUser user);
+	void fixAdminUser(AdminUserDto adminUserDto);
 	void addWithDrawal(int userNum);
 }

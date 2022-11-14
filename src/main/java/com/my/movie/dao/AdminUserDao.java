@@ -11,6 +11,6 @@ public interface AdminUserDao {
 	AdminUser selectAdminUser(AdminUser user);
 	List<AdminUser> selectUsers();
 	List<AdminUser> selectSearchUsers(AdminUserDto adminUserDto);
-	void updateAdminUser(AdminUser user);
+	void updateAdminUser(AdminUserDto adminUserDto);
 	void insertWithDrawal(int userNum);
 }

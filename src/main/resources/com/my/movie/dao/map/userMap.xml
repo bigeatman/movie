@@ -102,19 +102,19 @@
 		where user_num = #{userNum}
 	</delete>
 
-	<select id='selectId1' resultType='string'>
+	<select id='selectId' resultType='string'>
 		select user_id
 		from users
 		where email = #{email} and phone_num = #{phoneNum}
 	</select>
 	
-	<select id='selectPw1' resultType='string'>
+	<select id='selectPw' resultType='string'>
 		select user_id, email
 		from users
 		where user_id = #{userId} and email = #{email}
 	</select>
 	
-	<update id='updatePw1'>
+	<update id='updatePw'>
 		update users
 		set pw = #{pw}
 		where user_id = #{userId} and email = #{email}

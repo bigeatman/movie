@@ -62,12 +62,12 @@ public class AdminUserController {
 	}
 	
 	@PatchMapping("users/fix")
-	public void fixUser(@RequestBody AdminUser user) {
-		adminUserService.fixAdminUser(user);
+	public void fixUser(@RequestBody AdminUserDto adminUserDto) {
+		adminUserService.fixAdminUser(adminUserDto);
 	}
 	
 	@PostMapping("users/addWithDrawal")
-	public void addWithDrawal(@RequestBody AdminUser userNum) {
+	public void addWithDrawal(@RequestBody AdminUserDto userNum) {
 		adminUserService.addWithDrawal(userNum.getUserNum());
 	}
 }
