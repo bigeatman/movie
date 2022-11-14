@@ -1,12 +1,8 @@
 package com.my.movie.domain;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class AdminUserDto {
 	private int userNum;
 	private String userId;

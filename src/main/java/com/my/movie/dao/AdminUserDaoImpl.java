@@ -14,13 +14,13 @@ public class AdminUserDaoImpl implements AdminUserDao {
 	@Autowired private AdminUserMap adminUserMap;
 
 	@Override
-	public AdminUser selectAdminUserLogin(AdminUser user) {
-		return adminUserMap.selectAdminUserLogin(user);
+	public AdminUser selectAdminUserLogin(AdminUser adminUser) {
+		return adminUserMap.selectAdminUserLogin(adminUser);
 	}
 	
 	@Override
-	public AdminUser selectAdminUser(AdminUser user) {
-		return adminUserMap.selectAdminUser(user);
+	public AdminUser selectAdminUser(AdminUser adminUser) {
+		return adminUserMap.selectAdminUser(adminUser);
 	}
 	
 	@Override
@@ -34,8 +34,8 @@ public class AdminUserDaoImpl implements AdminUserDao {
 	}
 	
 	@Override
-	public void updateAdminUser(AdminUser user) {
-		adminUserMap.updateAdminUser(user);
+	public void updateAdminUser(AdminUserDto adminUserDto) {
+		adminUserMap.updateAdminUser(adminUserDto);
 	}
 	
 	@Override
