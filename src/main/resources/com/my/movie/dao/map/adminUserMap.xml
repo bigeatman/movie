@@ -2,16 +2,23 @@
 <!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
 	'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
 <mapper namespace='com.my.movie.dao.map.AdminUserMap'>
-	<select id='selectAdminUserLogin' resultType='AdminUser'>
+	<select id='selectAdminUserLogin' resultType='adminUser'>
 		select *
 		from users
 		where user_id = #{userId} and pw = #{pw}
 	</select>
 	
-	<select id='selectAdminUser' resultType='AdminUser'>
+	<select id='selectAdminUser' resultType='adminUser'>
 		select *
 		from users
 		where user_id = #{userId}
+	</select>
+	
+	<select id='selectCountList' resultType='adminCountList'>
+		select distinct count(user_num) over() as countUser, 
+    		(select count(COMMUNITY_num) from COMMUNITIES) as countCommunity,
+    		(select count(INSPECTION_NUM) from INSPECTIONS) as countInspection
+		from users
 	</select>
 	
 	<select id='selectWithDrawal' resultType='int'>
@@ -20,7 +27,7 @@
 		where users.user_num = #{userNum} and user_withdrawal.user_num = #{userNum}
 	</select>
 	
-	<select id='selectUsers' resultType='AdminUser'>
+	<select id='selectUsers' resultType='adminUser'>
 		select users.*
 		from users left join user_withdrawal
 		on user_withdrawal.user_num = users.user_num

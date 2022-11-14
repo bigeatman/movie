@@ -1,5 +1,5 @@
 <%@ page language='java' contentType='text/html; charset=utf-8' pageEncoding='utf-8'%>
-
+<%@ taglib prefix='c' uri='http://java.sun.com/jsp/jstl/core'%>
 <head>
     <title>회원</title>
     <meta charset='utf-8'>
@@ -13,26 +13,6 @@
     <script src="https://kit.fontawesome.com/449f39a7b2.js" crossorigin="anonymous"></script>
 </head>
 <script>
-function checkLogin() {
-<%
-	if(session.getAttribute("user") != null) {
-%>
-	$('#myModal').modal('hide')
-	$('#loginBtn').attr({
-   		class: "btn btn-secondary",
-   		onclick: "location.href='../logout'"	
-	})
-<%
-	} else {
-%>
-	$('button[name="page"]').attr({
-		onclick: "location.href"	
-	})
-<%
-	}
-%>
-}
-
 const users =[]
 let user = 0
 
@@ -57,7 +37,6 @@ function isVal(field){
 function listUsers(){
     $('input').not(':radio').val('')
     $('#userList').empty()
-
 
     $.ajax({
     	method:'Get',
@@ -153,9 +132,7 @@ function listUsers(){
 			}
 		}, '#userNum')      	
 }
-
-    $(init)
-    $(checkLogin)
+$(init)
 </script>
 <style>
     #yesBtn,
@@ -183,15 +160,31 @@ function listUsers(){
 	}
 </style>
 <body>
+<c:if test='${empty userId}'>
+<div style='text-align: center;'>
+	<div class='row' style='margin-top: 100px;'>
+		<div class='col'>
+			<span class='h4'>로그인을 하세요.</span>
+		</div>
+	</div>
+	<div class='row' style='margin-top: 150px;'>
+		<div class='col'>
+			<button id='okBtn' type='button' class='btn btn-primary' style='height: 35px; display: flex;' onclick='location.href="../user/login"'>
+				<span class='h6'>로그인</span>
+			</button>
+		</div>
+	</div>
+</div>
+</c:if>
+<c:if test='${not empty userId}'>
     <div class='container'>
             <div class='header'>
                 <div class='float-left mt-3'>
                     <h5>| 회원</h5>
                 </div>
                 <div id='btn_group' class='float-right mt-3'>
-                    <span id='id' style='font-size:13'>${userId}님 ${nickname}님</span>&emsp;
-                    <span id='sessionTime' style='font-size:12'>(08:23)세션시간 </span>&emsp;
-					<button id='logoutBtn' type='button' class='btn btn-primary btn-block' onclick='location.href="login"'>
+                    <span id='id' style='font-size:13'>${userId}님</span>
+					<button id='logoutBtn' type='button' class='btn btn-secondary btn-block' style='height: 35px' onclick='location.href="logout"'>
 	         			<span id='loginSpan'>로그아웃</span>
 	         		</button>
                 </div><br>
@@ -201,13 +194,12 @@ function listUsers(){
                             <div class='row'>
                                 <div class='col-12 text-center'>
                                     <div class='btn-group btn-block'>
-                                        <button type='button' class='btn btn-secondary'
-                                            onclick='location.href="../main.html" '>홈</button>
-                                        <button type='button' class='btn btn-secondary'>회 원</button>
-                                        <button type='button' class='btn btn-secondary'
-                                            onclick='location.href="../movie/01.html" '>영 화</button>
-                                        <button type='button' class='btn btn-secondary'
-                                            onclick='location.href="../inspection/01.html" '>신고 조회</button>
+	                                    <button type='button' class='btn btn-secondary' onclick='location.href="/admin"'>홈</button>
+										<button disabled type='button' class='btn btn-primary'>회 원</button>
+										<button type='button' class='btn btn-secondary' onclick='location.href="../genre/addGenre"'>장 르</button>
+										<button type='button' class='btn btn-secondary' onclick='location.href="#"'>영 화</button>
+										<button type='button' class='btn btn-secondary' onclick='location.href="#"'>감독/배우</button>
+										<button type='button' class='btn btn-secondary' onclick='location.href="../inspection"'>신고 조회</button>
                                     </div>
                                 </div>
                             </div>
@@ -263,6 +255,7 @@ function listUsers(){
                 </nav>
             </div>
     </div>
+    </c:if>
 </body>
 <div class='modal fade' tabindex='-1' id='modal'>
     <div class='modal-dialog modal-dialog-centered' id='myModal'>
@@ -275,7 +268,6 @@ function listUsers(){
                         id='noBtn'>취소</button>
                     <button type='button' data-dismiss='modal' id='yesBtn' class='btn btn-block btn-primary'>확인</button>
                     <button type='button' data-dismiss='modal' id='yesDelBtn' class='btn btn-block btn-warning'>확인</button>
-                    
                 </div>
             </div>
         </div>

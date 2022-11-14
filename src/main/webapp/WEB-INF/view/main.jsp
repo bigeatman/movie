@@ -197,7 +197,7 @@ table {
    	<div id='navBar' class='container-fulid'>
        	<nav class='row fixed-bottom p-2'>
             <div class='col text-center'>
-               	<a id='goHome' href='#' class='ml-1'>
+               	<a id='goHome' href='/' class='ml-1'>
                   	<i class='fa-solid fa-house fa-xl'></i><br>
                   	<span class='iconfont mr-1'>홈</span>
                	</a>

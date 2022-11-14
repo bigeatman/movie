@@ -1,8 +1,5 @@
 <%@ page language='java' contentType='text/html; charset=utf-8' pageEncoding='utf-8'%>
 <%@ taglib prefix='c' uri='http://java.sun.com/jsp/jstl/core'%>
-<!DOCTYPE html>
-<html lang="ko">
-<head>
 <title>장르</title>
 <meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'>
@@ -100,49 +97,60 @@ $(init)
 	width:25%;
 	text-align : left;
 }
+
+#logoutBtn {
+	height: 1.5rem;
+	font-size: 14px;		
+}
 </style>
 <body>
 <c:if test='${empty userId}'>
-<div class='row' style='margin-top: 100px; text-align: center;'>
-        <div class='col'>
-            <span class='h4'>로그인을 하세요.</span>
-        </div>
-    </div>
-    <div class='row' style='margin-top: 150px; margin-left: 100px;'>
-        <div class='col'>
-            <button id='okBtn' type='button' class='btn btn-primary' onclick='location.href="login"' style='margin-left: 30px;'>
-                <span class='h6'>로그인</span>
-            </button>
-        </div>
-    </div>
+<div style='text-align: center;'>
+	<div class='row' style='margin-top: 100px;'>
+		<div class='col'>
+			<span class='h4'>로그인을 하세요.</span>
+		</div>
+	</div>
+	<div class='row' style='margin-top: 150px;'>
+		<div class='col'>
+			<button id='okBtn' type='button' class='btn btn-primary' onclick='location.href="../user/login"' style='width: 300px;'>
+				<span class='h6'>로그인</span>
+			</button>
+		</div>
+	</div>
+</div>
 </c:if>
 <c:if test='${not empty userId}'>
-	<div class='container-fluid'>
+	<div class='container'>
 		<div class='header'>
-            <div class='float-left mt-3'><h5>| 장르</h5></div>
-			 <div id='btn_group' class='float-right mt-3'>
-				  <label style='font-size:13'>${user}</label>&emsp;
-				  <a href='<%= request.getContextPath() %>/admin/user/logout'><button style='font-size:13'>로그아웃</button></a>
-			  </div><br>
-		  <div class='row mt-5'>
-			  <div class='col'>
-				 <div class='container'>
-					 <div class='row'>
-						 <div class='col-12 text-center'>
-							 <div class='btn-group btn-block'>
-                                <button type='button' class='btn btn-secondary' onclick='location.href="/admin"'>홈</button>
-								<button type='button' class='btn btn-secondary' onclick='location.href="#" '>회 원</button>
-								<button disabled type='button' class='btn btn-primary' onclick='location.href="#" '>장 르</button>
-								<button type='button' class='btn btn-secondary' onclick='location.href="#" '>영 화</button>
-								<button type='button' class='btn btn-secondary' onclick='location.href="#" '>감독/배우</button>
-								<button type='button' class='btn btn-secondary' onclick='location.href="../inspection" '>신고 조회</button>
-							 </div>
-						 </div>
-					 </div>
-				 </div>
-			  </div>
-		 </div>
-   </div><hr>
+        	<div class='float-left mt-3'>
+        		<h5>| 장르</h5>
+        	</div>
+			<div id='btn_group' class='float-right mt-3'>
+            	<span id='id' style='font-size:13'>${userId}님</span>
+					<button id='logoutBtn' type='button' class='btn btn-secondary btn-block' style='height: 35px' onclick='location.href="logout"'>
+	         			<span id='loginSpan'>로그아웃</span>
+	        		</button>
+            </div><br>
+			<div class='row mt-5'>
+				<div class='col'>
+					<div class='container'>
+						<div class='row'>
+							<div class='col-12 text-center'>
+								<div class='btn-group btn-block'>
+	                                <button type='button' class='btn btn-secondary' onclick='location.href="/admin"'>홈</button>
+									<button type='button' class='btn btn-secondary' onclick='location.href="../user/users"'>회 원</button>
+									<button disabled type='button' class='btn btn-primary'>장 르</button>
+									<button type='button' class='btn btn-secondary' onclick='location.href="#"'>영 화</button>
+									<button type='button' class='btn btn-secondary' onclick='location.href="#" '>감독/배우</button>
+									<button type='button' class='btn btn-secondary' onclick='location.href="../inspection" '>신고 조회</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+   		</div><hr>
 
         <div class='row mt-5'>
             <div class='col' style='text-align: center'>
@@ -212,7 +220,7 @@ $(init)
 			                        </div>
 			                    </div>
 			                </div>
-	                        <div class='row' style='width: 200px; margin-left: 150px;'>
+	                        <div class='row' style='width: 200px; text-align: center; display: inline-block;'>
 		                    	<button type='button' class='btn btn-success flex-fill border' id='addGenreBtn' style='width: 200px;'>
 			                        	<span class='label d-md-inline'>추가</span>
 			                    </button>

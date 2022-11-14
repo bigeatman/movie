@@ -96,15 +96,33 @@ function clickDetails(inspectionNum, inspectionContentNum, inspectionContentName
 
 </script>
 <body>
+<c:if test='${empty userId}'>
+<div style='text-align: center;'>
+	<div class='row' style='margin-top: 100px;'>
+		<div class='col'>
+			<span class='h4'>로그인을 하세요.</span>
+		</div>
+	</div>
+	<div class='row' style='margin-top: 150px;'>
+		<div class='col'>
+			<button id='okBtn' type='button' class='btn btn-primary' onclick='location.href="user/login"' style='width: 300px;'>
+				<span class='h6'>로그인</span>
+			</button>
+		</div>
+	</div>
+</div>
+</c:if>
+<c:if test='${not empty userId}'>
 <div class='container'>
     <div class='header'>
         <div class='float-left mt-3'>
             <h5>| 신고조회</h5>
         </div>
         <div id='btn_group' class='float-right mt-3'>
-            <label style='font-size:13'>admin님</label>&emsp;
-            <span style='font-size:12'>(08:23)</span>&emsp;
-            <a href='../user/login'><button style='font-size:13'>로그아웃</button></a>
+        	<span id='id' style='font-size:13'>${userId}님</span>
+				<button id='logoutBtn' type='button' class='btn btn-secondary btn-block' style='height: 35px' onclick='location.href="logout"'>
+	         		<span id='loginSpan'>로그아웃</span>
+	        	</button>
         </div><br>
         <div class='row mt-5'>
             <div class='col'>
@@ -134,36 +152,35 @@ function clickDetails(inspectionNum, inspectionContentNum, inspectionContentName
     <hr>
     &nbsp;
     <h5><b>신고 컨텐츠 목록</b></h5><br>
-        <div class='row'>
-            <div class='col'>
-                <table class='table'>
-                    <thead style='text-align: center'>
-                        <tr class="bg-light">
-                            <th>No.</th><th>종류</th><th>작성자ID</th><th>내용</th><th>상세 신고내용</th><th>처리결과</th>
-                        </tr>
-                    </thead>
-                    <tbody style='text-align: center' id="inspectionTable">
-                    <c:forEach items="${inspection}" var="inspection" varStatus="status">
-                        <tr>
-                            <td>${status.count}</td>
-                            <td>${inspection.inspectionContentName}</td>
-                            <td>${inspection.nickname}<br>(${inspection.userId})</td>
-                            <td>${inspection.anyContent}</td>
-                            <td type='page-link' style="cursor: pointer;" onclick="clickDetails(${inspection.inspectionNum}, ${inspection.inspectionContentNum}, '${inspection.inspectionContentName}')"><i><u>${inspection.inspectionDetailsCount}건 상세보기</u></i></td>
-                            <td><span id='status${inspection.inspectionNum}' class='inspectionStatus'>${inspection.inspectionStatusName}</span><c:if test="${inspection.inspectionStatus ne '0'}"><br>(${inspection.resultDate})</c:if></td>
-                        </tr>
-                    </c:forEach>
-                    </tbody>
-                </table><hr>
-                <span id="inspectionErrMsg" style="font-color:red;"></span>
-                <nav aria-label="page nav-footer">
-                    <ul id="paging" class="pagination" style="justify-content: center;">
-                      <li class="page-item"><a class="page-link" href="#"><</a></li>
-                      <li class="page-item"><a class="page-link" href="#">1</a></li>
-                      <li class="page-item"><a class="page-link" href="#">></a></li>
-                    </ul>
-                </nav>
-            </div>
+    <div class='row'>
+        <div class='col'>
+            <table class='table'>
+                <thead style='text-align: center'>
+                    <tr class="bg-light">
+                        <th>No.</th><th>종류</th><th>작성자ID</th><th>내용</th><th>상세 신고내용</th><th>처리결과</th>
+                    </tr>
+                </thead>
+                <tbody style='text-align: center' id="inspectionTable">
+                <c:forEach items="${inspection}" var="inspection" varStatus="status">
+                    <tr>
+                        <td>${status.count}</td>
+                        <td>${inspection.inspectionContentName}</td>
+                        <td>${inspection.nickname}<br>(${inspection.userId})</td>
+                        <td>${inspection.anyContent}</td>
+                        <td type='page-link' style="cursor: pointer;" onclick="clickDetails(${inspection.inspectionNum}, ${inspection.inspectionContentNum}, '${inspection.inspectionContentName}')"><i><u>${inspection.inspectionDetailsCount}건 상세보기</u></i></td>
+                        <td><span id='status${inspection.inspectionNum}' class='inspectionStatus'>${inspection.inspectionStatusName}</span><c:if test="${inspection.inspectionStatus ne '0'}"><br>(${inspection.resultDate})</c:if></td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table><hr>
+            <span id="inspectionErrMsg" style="font-color:red;"></span>
+            <nav aria-label="page nav-footer">
+                <ul id="paging" class="pagination" style="justify-content: center;">
+                  <li class="page-item"><a class="page-link" href="#"><</a></li>
+                  <li class="page-item"><a class="page-link" href="#">1</a></li>
+                  <li class="page-item"><a class="page-link" href="#">></a></li>
+                </ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -194,5 +211,6 @@ function clickDetails(inspectionNum, inspectionContentNum, inspectionContentName
         </div>
     </div>
 </div>
+</c:if>
 </body>
 </html>

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.my.movie.domain.AdminCountList;
 import com.my.movie.domain.AdminUser;
 import com.my.movie.service.AdminUserService;
 
@@ -30,7 +31,9 @@ public class AdminUserController {
 	@PostMapping("login")
 	public AdminUser login(@RequestBody AdminUser adminLogin, HttpSession session) {
 		AdminUser user = adminUserService.loginValidate(adminLogin);
+		if(user != null) {
 			session.setAttribute("userId", user.getUserId());
+		}
 		return user;
 	}
 	
@@ -39,6 +42,12 @@ public class AdminUserController {
 		session.invalidate();
 		mv.setViewName("redirect:/admin");
 		return mv;
+	}
+	
+	@GetMapping("getCountList")
+	public AdminCountList getCountList() {
+		System.out.println(adminUserService.getCountList());
+		return adminUserService.getCountList();
 	}
 	
 	@GetMapping("users")

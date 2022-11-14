@@ -35,16 +35,17 @@ function login() {
 		    	  	pw: $('#pw').val()
 		      	}),
 		      	success: function(data) {
-		      		if($('#adminId').val() != 'admin') {
-			   			$('#errMsg').text('잘못된 접근입니다.')
-					   	$('input').val('')
-					   	$('#adminId').focus()
-		   			} else if(!data) { 
-						$('#errMsg').text('아이디 또는 비밀번호가 틀렸습니다.')
+		      		console.log(data)
+		      		if(!data) {
+		      			$('#errMsg').text('아이디 또는 비밀번호가 틀렸습니다.')
 						$('input').val('')
 						$('#adminId').focus()
+		   			} else if(!(data.userId == 'admin')) { 
+						$('#errMsg').text('잘못된 접근입니다.')
+					   	$('input').val('')
+					   	$('#adminId').focus()
 		   			} else {
-		   				location.href='../../admin'
+		   				location.href='/admin'
 		   			}
 			   	}
 	      	})
@@ -68,14 +69,14 @@ body{
 </style>
 <body>
     <div class='container'>
-		<div class='col'>
+		<div class='col' style='text-align: center'>
 			<form class='m-4'>
 				<div class='form-group'>
-				<label for='adminId'>아이디 </label>
-				<input id='adminId'  name='adminId' type='text' class='form-control' placeholder='아이디를 입력하세요.'/>
+				<label for='adminId' class='d-flex'>아이디 </label>
+				<input id='adminId' name='userId' type='text' class='form-control' placeholder='아이디를 입력하세요.'/>
 				</div>
 				<div class='form-group mt-3'>
-					<label for='pw'>비밀번호 </label>
+					<label for='pw' class='d-flex'>비밀번호 </label>
 					<input id='pw' name='pw' type='password' class='form-control mb-2'  placeholder='••••'/>
 				</div>
 				<small id='errMsg' class='msg d-inline' style='color: red;'></small>

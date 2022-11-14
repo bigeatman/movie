@@ -19,7 +19,6 @@ import com.my.movie.service.InspectionService;
 @Controller
 @RequestMapping("admin")
 public class InspectionController {
-
 	@Autowired private InspectionService inspectionService;
 	
 	@GetMapping("inspection")

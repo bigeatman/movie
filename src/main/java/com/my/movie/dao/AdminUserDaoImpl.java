@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.my.movie.dao.map.AdminUserMap;
+import com.my.movie.domain.AdminCountList;
 import com.my.movie.domain.AdminUser;
 
 @Repository
@@ -22,6 +23,11 @@ public class AdminUserDaoImpl implements AdminUserDao {
 		return adminUserMap.selectAdminUser(user);
 	}
 	
+	@Override
+	public AdminCountList selectCountList() {
+		return adminUserMap.selectCountList();
+	}
+
 	@Override
 	public List<AdminUser> selectUsers() {
 		return adminUserMap.selectUsers();
