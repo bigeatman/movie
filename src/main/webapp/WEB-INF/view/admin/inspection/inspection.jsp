@@ -25,6 +25,8 @@ function clickDetails(inspectionNum, inspectionContentNum, inspectionContentName
 					+ "<td>" + detail.inspectionContent + "</td>"
 					+ "</tr>"
 				)
+				
+				$('#reportModal').modal("show");
 		});
 	})
 /*
@@ -41,10 +43,8 @@ function clickDetails(inspectionNum, inspectionContentNum, inspectionContentName
 			url = "/rev/morerev" + inspectionContentNum;
 		}
 	}
-		$('#inspectionMove').attr('href', url);
-*/
-		$('#reportModal').modal("show");
-//	});
+		$('#inspectionMove').attr('href', url);		
+	}); */
 }
 
 </script>
@@ -56,7 +56,6 @@ function clickDetails(inspectionNum, inspectionContentNum, inspectionContentName
         </div>
         <div id='btn_group' class='float-right mt-3'>
             <label style='font-size:13'>admin님</label>&emsp;
-            <span style='font-size:12'>(08:23)</span>&emsp;
             <a href='../user/login'><button style='font-size:13'>로그아웃</button></a>
         </div><br>
         <div class='row mt-5'>
@@ -66,17 +65,17 @@ function clickDetails(inspectionNum, inspectionContentNum, inspectionContentName
                         <div class='col-12 text-center'>
                             <div class='btn-group btn-block'>
                                 <button type='button' class='btn btn-secondary'
-                                    onclick='location.href="../user/main.jsp" '>홈</button>
+                                    onclick='location.href="../admin" '>홈</button> 
                                 <button type='button' class='btn btn-secondary'
-                                    onclick='location.href="../user/login.jsp" '>회 원</button>
-                                <button disabled type='button' class='btn btn-primary'
-                                	onclick='location.href="../genre/addGenre.jsp" '>장 르</button>
+                                    onclick='location.href="../admin/user/list" '>회 원</button> <!-- 이동불가능 -->
                                 <button type='button' class='btn btn-secondary'
-                                    onclick='location.href="../movie/listMovie.jsp" '>영 화</button>
+                                	onclick='location.href="../admin/genre/addGenre" '>장 르</button>
                                 <button type='button' class='btn btn-secondary'
-                                	onclick='location.href="#" '>감독/배우</button>
+                                    onclick='location.href="../admin/movie/listMovie" '>영 화</button>
                                 <button type='button' class='btn btn-secondary'
-                                    onclick='location.href="../inspection/inspection.jsp" '>신고 조회</button>
+                                	onclick='location.href="...." '>감독/배우</button> <!-- 이동불가능 -->
+                                <button type='button' class='btn btn-secondary'
+                                    onclick='location.href="../admin/inspection" '>신고 조회</button>
                             </div>
                         </div>
                     </div>
