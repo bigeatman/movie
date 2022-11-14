@@ -69,7 +69,7 @@ $(init)
 </style>
 <h5><br><b>&nbsp;&nbsp;&nbsp;&nbsp;| 프로필</b></h5>
 <hr>
-<c:if test='${empty user.userId}'>
+<c:if test='${empty userId}'>
 <div class='row' style='margin-top: 100px; text-align: center;'>
         <div class='col'>
             <span class='h4'>로그인을 하세요.</span>
@@ -83,7 +83,7 @@ $(init)
         </div>
     </div>
 </c:if>
-<c:if test='${not empty user.userId}'>
+<c:if test='${not empty userId}'>
 <div class="container-fulid">
     <div id='join' class='col'>
         <form>
@@ -112,7 +112,7 @@ $(init)
                 <button id='cancelBtn' type='button' class='btn btn-light' onclick='location.href="/"' style='width: 90px; margin-left: 45px; margin-right: 30px; margin-bottom: 30px;'>
                     <span class='h6'>뒤로가기</span>
                 </button>
-                <button id='fixUserBtn' type='button' class='btn btn-primary' style='width: 90px; margin-left: 30px; margin-bottom: 30px;'>
+                <button id='fixUserBtn' type='button' class='btn btn-primary' onclick='location.href="checkFixUserPw"' style='width: 90px; margin-left: 30px; margin-bottom: 30px;'>
                     <span class='h6'>회원수정</span>
                 </button>
                 <button id='delUserBtn' type='button' class='btn btn-warning' style='width: 90px; margin-left: 45px; margin-right: 30px;'>

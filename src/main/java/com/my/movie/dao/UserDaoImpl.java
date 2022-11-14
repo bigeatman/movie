@@ -7,14 +7,20 @@ import org.springframework.stereotype.Repository;
 
 import com.my.movie.dao.map.UserMap;
 import com.my.movie.domain.User;
+import com.my.movie.domain.UserDto;
 
 @Repository
 public class UserDaoImpl implements UserDao {
 	@Autowired private UserMap userMap;
 
 	@Override
-	public User selectUser(User user) {
-		return userMap.selectUser(user);
+	public User selectLoginUser(User user) {
+		return userMap.selectLoginUser(user);
+	}
+
+	@Override
+	public User selectUser(String userId) {
+		return userMap.selectUser(userId);
 	}
 
 	@Override
@@ -24,32 +30,37 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public int selectUserId(String userId) {
-		int result = userMap.selectUserId(userId);
-		return result;
-	}
-
-	@Override
-	public int selectUserPw(String pw) {
-		int result = userMap.selectUserPw(pw);
-		return result;
+		return userMap.selectUserId(userId);
 	}
 
 	@Override
 	public int selectUserNickname(String nickname) {
-		int result = userMap.selectUserNickname(nickname);
-		return result;
+		return userMap.selectUserNickname(nickname);
 	}
 
 	@Override
 	public int selectUserPhoneNum(String phoneNum) {
-		int result = userMap.selectUserPhoneNum(phoneNum);
-		return result;
+		return userMap.selectUserPhoneNum(phoneNum);
 	}
 
 	@Override
 	public int selectUserEmail(String email) {
-		int result = userMap.selectUserEmail(email);
-		return result;
+		return userMap.selectUserEmail(email);
+	}
+
+	@Override
+	public int selectFixUserNickname(UserDto nickname) {
+		return userMap.selectFixUserNickname(nickname);
+	}
+
+	@Override
+	public int selectFixUserPhoneNum(UserDto phoneNum) {
+		return userMap.selectFixUserPhoneNum(phoneNum);
+	}
+
+	@Override
+	public int selectFixUserEmail(UserDto email) {
+		return userMap.selectFixUserEmail(email);
 	}
 
 	@Override
@@ -58,13 +69,18 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
+	public List<Integer> selectGenreNum(int userNum) {
+		return userMap.selectGenreNum(userNum);
+	}
+
+	@Override
 	public void insertUser(User user) {
 		userMap.insertUser(user);
 	}
 
 	@Override
-	public void insertUserGenre(int genreNum) {
-		userMap.insertUserGenre(genreNum);
+	public void insertUserGenre(int userNum, int genreNum) {
+		userMap.insertUserGenre(userNum, genreNum);
 	}
 
 	@Override
@@ -72,7 +88,16 @@ public class UserDaoImpl implements UserDao {
 		userMap.insertWithDrawal(userNum);
 	}
 
-//���
+	@Override
+	public int updateUser(User userData) {
+		return userMap.updateUser(userData);
+	}
+
+	@Override
+	public void deleteUserGenre(int userNum) {
+		userMap.deleteUserGenre(userNum);
+	}
+
 	@Override
 	public String selectId1(User user) {
 		return userMap.selectId1(user);

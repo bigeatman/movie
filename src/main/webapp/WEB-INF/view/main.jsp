@@ -1,6 +1,7 @@
 <%@page import="ch.qos.logback.core.recovery.ResilientSyslogOutputStream"%>
 <%@ page language='java' contentType='text/html; charset=utf-8' pageEncoding='utf-8'%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix='c' uri='http://java.sun.com/jsp/jstl/core'%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -17,17 +18,13 @@ function coinfirmSubmitAction(movieNum) {
 	document.querySelector("#movie_" + movieNum).submit();
 }
 
-function checkLogin() {
-<%
-	if(session.getAttribute("user") != null) {
-%>
-	$('#user').attr('href', 'user/mypage')
-	$('#loginSpan').text('프로필')
-<%
+function init() {
+	if(${not empty userId}) {
+		$('#user').attr('href', 'user/mypage')
+		$('#loginSpan').text('프로필')
 	}
-%>
 }
-$(checkLogin)
+$(init)
 </script>
 <style>
 nav {
@@ -227,5 +224,4 @@ table {
       	</nav>
    	</div>
 </body>
-
 </html>
