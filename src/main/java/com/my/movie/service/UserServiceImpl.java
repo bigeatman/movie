@@ -114,7 +114,7 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public void fixPw(User user) {
-		userDao.updatePw(user);
+	public void fixPw(UserDto userDto) {
+		userDao.updatePw(userDto);
 	}
 }

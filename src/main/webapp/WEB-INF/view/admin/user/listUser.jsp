@@ -1,5 +1,5 @@
 <%@ page language='java' contentType='text/html; charset=utf-8' pageEncoding='utf-8'%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <head>
     <title>회원</title>
     <meta charset='utf-8'>
@@ -13,6 +13,14 @@
     <script src="https://kit.fontawesome.com/449f39a7b2.js" crossorigin="anonymous"></script>
 </head>
 <script>
+//로그아웃상태에서 url로 강제 접근시 로그인페이지로 이동
+function checkLogin() {
+	if(${empty userId}) {
+		location.href="user/login"
+	} else console.log("${userId} 성공")
+}
+$(checkLogin)
+
 const users =[]
 let user = 0
 
@@ -92,6 +100,7 @@ function searchUsers(){
 	$('input').not(':radio').val('')
     
 	$('#searchBtn').click(() => { 
+		$('#userList').empty()
        	if(isText($('#search'))){ 
 			$.ajax({
 	           	url: 'user/search',
@@ -115,7 +124,6 @@ function searchUsers(){
 	                            </tr>`
 	    			        )
 	    				})	
-		    			$('#userList').empty()
 	    		        $('#userList').append(userArr.join(''))
 	    		    } else {
 	    		    	$('#userList').append( '<tr><td colspan=7 class=text-center>검색 내용이 없습니다.</td></tr>')
@@ -209,48 +217,44 @@ $(init)
     
     #logoutBtn{
 	height: 1.5rem;
-	width: 5.5rem;
 	font-size: 14px;		
 	}
 	
 	#fixMsg{
 		font-size: 3Rem;
-		font-weigt: 1px;
+	    font-weight: 1px;
 	}
 </style>
 <body>
-    <div class='container'>
-            <div class='header'>
-                <div class='float-left mt-3'>
-                    <h5>| 회원</h5>
-                </div>
-                <div id='btn_group' class='row float-right mt-3'>
-                    <span id='id' style='font-size:13'>${user.userId}님</span>&emsp;
-					<button id='logoutBtn' type='button' class='btn btn-block btn-secondary' onclick='location.href="logout"'>
-	         			<span id='logoutSpan'>로그아웃</span>
-	         		</button>
-                </div><br>
-                <div class='row mt-5'>
-                    <div class='col'>
-                        <div class='container'>
-                            <div class='row'>
-                                <div class='col-12 text-center'>
-                                    <div class='btn-group btn-block'>
-                                        <button type='button' class='btn btn-secondary'
-                                            onclick='location.href="../../admin" '>홈</button>
-                                        <button type='button' class='btn btn-secondary'>회 원</button>
-                                        <button type='button' class='btn btn-secondary'
-                                            onclick='location.href="../movie" '>영 화</button>
-                                        <button type='button' class='btn btn-secondary'
-                                            onclick='location.href="../inspection" '>신고 조회</button>
-                                    </div>
+    <div class='container-fluid'>
+        <div class='header'>
+            <div class='float-left mt-3'><h5>| 회원</h5></div>
+            <div id='btn_group' class='float-right mt-3'>
+                <span id='id'>${userId}님</span>&emsp;
+				<button id='logoutBtn' type='button' class='btn btn-secondary' onclick='location.href="user/logout"'>
+	        		<span id='logoutSpan'>로그아웃</span>
+	        	</button>
+            </div><br>	    		
+            <div class='row mt-5'>
+                <div class='col'>
+                    <div class='container'>
+                        <div class='row'>
+                            <div class='col-12 text-center'>
+                                <div class='btn-group btn-block'>
+	                                <button type='button' class='btn btn-secondary' onclick='location.href="../admin"'>홈</button>
+									<button disabled type='button' class='btn btn-primary' name='page' onclick='location.href="user"'>회 원</button>
+									<button type='button' class='btn btn-secondary' name='page' onclick='location.href="../admin/genre/addGenre"'>장 르</button>
+									<button type='button' class='btn btn-secondary' name='page' onclick='location.href="../admin/movie/listMovie"'>영 화</button>
+									<button type='button' class='btn btn-secondary' name='page' onclick='location.href="../admin/cast"'>감독/배우</button>
+									<button type='button' class='btn btn-secondary' name='page' onclick='location.href="../admin/inspection"'>신고 조회</button>    
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <hr>
+        </div>
+        <hr>
             <div class='row'>
                 <div class='col'>
                     <form class='mt-1'>

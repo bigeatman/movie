@@ -99,7 +99,7 @@ $(init)
 					 <div class='row'>
 						 <div class='col-12 text-center'>
 							 <div class='btn-group btn-block'>
-                                <button type='button' class='btn btn-secondary' onclick='location.href=".." '>홈</button>
+                                <button type='button' class='btn btn-secondary' onclick='location.href="../../admin" '>홈</button>
 								 <button type='button' class='btn btn-secondary' onclick='location.href="#" '>회 원</button>
 								 <button type='button' class='btn btn-secondary' onclick='location.href="#" '>장 르</button>
 								 <button disabled type='button' class='btn btn-primary' onclick='location.href="#" '>영 화</button>

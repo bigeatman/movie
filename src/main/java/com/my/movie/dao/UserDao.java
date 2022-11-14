@@ -26,5 +26,5 @@ public interface UserDao {
 	String selectId(UserDto userDto);
 	String selectPw(UserDto userDto);
 	String selectPw(String email, String userId);
-	void updatePw(User user);
+	void updatePw(UserDto userDto);
 }

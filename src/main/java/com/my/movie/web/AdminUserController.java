@@ -31,7 +31,7 @@ public class AdminUserController {
 	}
 
 	@PostMapping("login")
-	public AdminUser login(@RequestBody AdminUser adminLogin, HttpSession session) {
+	public AdminUser login(@RequestBody AdminUser adminLogin, Model model, HttpSession session) {
 		AdminUser user = adminUserService.loginValidate(adminLogin);
 		
 		if (user != null) {
@@ -47,7 +47,7 @@ public class AdminUserController {
 		return mv;
 	}
 	
-	@GetMapping
+	@GetMapping()
 	public ModelAndView users(ModelAndView mv) {
 		mv.setViewName("admin/user/listUser");
 		return mv;

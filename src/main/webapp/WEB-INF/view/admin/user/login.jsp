@@ -44,7 +44,7 @@ function login() {
 						$('input').val('')
 						$('#adminId').focus()
 		   			} else {
-		   				location.href='../../admin'
+		   				location.href='/admin'
 		   			}
 			   	}
 	      	})
@@ -77,8 +77,8 @@ body{
 				<div class='form-group mt-3'>
 					<label for='pw'>비밀번호 </label>
 					<input id='pw' name='pw' type='password' class='form-control mb-2'  placeholder='••••'/>
+					<small id='errMsg' class='msg d-inline' style='color: red;'></small>
 				</div>
-				<small id='errMsg' class='msg d-inline' style='color: red;'></small>
 				<div class='form-group mt-4'>
 					<button id='loginBtn' type='button' class='btn border btn-block bg-success'>
 						<span class='h5'>로 그 인</span>

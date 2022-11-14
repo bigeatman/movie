@@ -242,7 +242,7 @@ public class UserController {
 	}
 	
 	@PatchMapping("fixPw")
-	public void fixPw(@RequestBody User fix) {
+	public void fixPw(@RequestBody UserDto fix) {
 		userService.fixPw(fix);
 	}
 }

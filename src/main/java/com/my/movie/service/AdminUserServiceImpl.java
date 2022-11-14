@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.my.movie.dao.AdminUserDao;
+import com.my.movie.domain.AdminCountList;
 import com.my.movie.domain.AdminUser;
 import com.my.movie.domain.AdminUserDto;
 
@@ -21,6 +22,11 @@ public class AdminUserServiceImpl implements AdminUserService {
 	@Override
 	public AdminUser getAdmin(AdminUser user) {
 		return adminUserDao.selectAdminUser(user);
+	}
+
+	@Override
+	public AdminCountList getCountList() {
+		return adminUserDao.selectCountList();
 	}
 
 	@Override

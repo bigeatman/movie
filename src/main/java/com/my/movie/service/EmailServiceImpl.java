@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class EmailServiceImpl implements EmailService {
     private final JavaMailSender javaMailSender;
-    private String id = "dlwodnjsdlek123@naver.com";
+    private String id = "commymovie@daum.net";
     private String code = createKey();
     
     // 4자리 인증코드
