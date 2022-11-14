@@ -16,7 +16,6 @@
 // 신고 상세페이지
 function clickDetails(inspectionNum, inspectionContentNum, inspectionContentName) {
 	$.get("/admin/inspections/" + inspectionNum + "/details", function(data, status) {
-		//console.log('get data', data);
 		$('#detailBody').empty();
 		data.map((detail) => {
 			$('#detailBody').append("<tr>"
@@ -29,6 +28,7 @@ function clickDetails(inspectionNum, inspectionContentNum, inspectionContentName
 				$('#reportModal').modal("show");
 		});
 	})
+/*
 	//신고된 컨텐츠 이동
 		var url = "";
 	
@@ -38,17 +38,19 @@ function clickDetails(inspectionNum, inspectionContentNum, inspectionContentName
 			url = "/communityReply/list/" + inspectionContentNum;
 		} else if(inspectionContentName === "리뷰") { //리뷰에서 해당게시물의 번호로 찾아간다.
 			url = "/review/" + inspectionContentNum;
+		} else(inspectionContentName === "리뷰댓글") { //리뷰댓글에서 해당게시물의 번호로 찾아간다.
 		} else if(inspectionContentName === "리뷰댓글") { //리뷰댓글에서 해당게시물의 번호로 찾아간다.
 			url = "/rev/morerev" + inspectionContentNum;
 		}
+	}
 		$('#inspectionMove').attr('href', url);
-
+*/
 //신고 반려
 	var today = new Date();
 	var year = today.getFullYear();
 	var month = ('0' + (today.getMonth() + 1)).slice(-2);
 	var day = ('0' + today.getDate()).slice(-2);
-	var dateString = year + '-' + month  + '-' + day;
+	var dataString = year + '-' + month + '-' + day;
 	
 	$('#returnbtn').click(() => {
 		$.ajax({
@@ -60,17 +62,14 @@ function clickDetails(inspectionNum, inspectionContentNum, inspectionContentName
 					"inspectionStatus" : "1"
 				}),
 				success: function(data) {
-					//console.log("반려 성공");
 					window.location.reload();
-					//$('#status'+inspectionNum).text('신고반려');
-					//$('#status'+inspectionNum).text('Date');
 				},
 				error: function(error, status){
-					console.log("error ", error);}
-		})
+					console.log("error ", error);}		
+			})
 	})
 
-	//신고 삭제
+//신고 삭제
 	$('#delbtn').click(() => {
 		$.ajax({
 				url: '/admin/inspection/status',
@@ -81,10 +80,7 @@ function clickDetails(inspectionNum, inspectionContentNum, inspectionContentName
 					"inspectionStatus" : "2"
 				}),
 				success: function(data) {
-					console.log("삭제 성공");
 					window.location.reload();
-					//$('#status'+inspectionNum).text('신고삭제');
-					//$('#status'+inspectionNum).text('Date');
 				},
 				error: function(error, status){
 					console.log("error ", error);
@@ -92,7 +88,7 @@ function clickDetails(inspectionNum, inspectionContentNum, inspectionContentName
 		})
 	})
 }
-
+	
 </script>
 <body>
 <div class='container'>
