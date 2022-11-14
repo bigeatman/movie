@@ -29,22 +29,50 @@ function clickDetails(inspectionNum, inspectionContentNum, inspectionContentName
 				$('#reportModal').modal("show");
 		});
 	})
-/*
-	//신고된 컨텐츠 이동
-		var url = "";
 	
-		if(inspectionContentName === "영화평") { //영화평에서 해당게시물의 번호로 찾아간다.
-			url = "/community/content/" + inspectionContentNum;
-		} else if(inspectionContentName === "영화평댓글") { //영화평댓글에서 해당게시물의 번호로 찾아간다.
-			url = "/communityReply/list/" + inspectionContentNum;
-		} else if(inspectionContentName === "리뷰") { //리뷰에서 해당게시물의 번호로 찾아간다.
-			url = "/review/" + inspectionContentNum;
-		} else(inspectionContentName === "리뷰댓글") { //리뷰댓글에서 해당게시물의 번호로 찾아간다.
-			url = "/rev/morerev" + inspectionContentNum;
-		}
-	}
-		$('#inspectionMove').attr('href', url);		
-	}); */
+	//신고반려	
+	var today = new Date();
+	var year = today.getFullYear();
+	var month = ('0' + (today.getMonth() + 1)).slice(-2);
+	var day = ('0' + today.getDate()).slice(-2);
+	var dataString = year + '-' + month + '-' + day;
+	
+	$('#returnbtn').click(() => {
+		$.ajax({
+			url: '/admin/inspection/status',
+			method: 'post',
+			contentType: 'application/json',
+			data: JSON.stringify({
+				"inspectionNum" : inspectionNum,
+				"inspectionStatus" : "1"
+			}),
+			success: function(data) {
+				window.location.reload();
+			},
+			error: function(error, status) {
+				console.log("error", error);
+			}
+		})
+	})
+	
+	//신고삭제
+	$('#delbtn').click(() => {
+		$.ajax({
+			url: '/admin/inspection/status',
+			method: 'post',
+			contentType: 'application/json',
+			data: JSON.stringify({
+				"inspectionNum" : inspectionNum,
+				"inspectionStatus" : "2"
+			}),
+			success: function(data) {
+				window.location.reload();
+			},
+			error: function(error, status) {
+				console.log("error", error);
+			}
+		})
+	})
 }
 
 </script>
@@ -73,7 +101,7 @@ function clickDetails(inspectionNum, inspectionContentNum, inspectionContentName
                                 <button type='button' class='btn btn-secondary'
                                     onclick='location.href="../admin/movie/listMovie" '>영 화</button>
                                 <button type='button' class='btn btn-secondary'
-                                	onclick='location.href="...." '>감독/배우</button> <!-- 이동불가능 -->
+                                	onclick='location.href="../admin/" '>감독/배우</button> <!-- 이동불가능 -->
                                 <button type='button' class='btn btn-secondary'
                                     onclick='location.href="../admin/inspection" '>신고 조회</button>
                             </div>

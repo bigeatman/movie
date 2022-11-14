@@ -76,6 +76,7 @@
 	<update id='updateStatus'>
 		update INSPECTIONS
 		set INSPECTION_STATUS = #{inspectionStatus}
+			, INSPECTIONS.RESULT_DATE = SYSDATE
 		where INSPECTION_NUM = #{inspectionNum}
 	</update>
 </mapper>

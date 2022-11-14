@@ -37,8 +37,9 @@ public class InspectionController {
 		return inspectionService.selectDetail(inspectionNum);
 	}
 	
+	@ResponseBody
 	@PostMapping("inspection/status")
 	public void fixStatus(@RequestBody Inspection inspection) {
-			inspectionService.fixStatus(inspection);
+		inspectionService.fixStatus(inspection);
 	}
 }
