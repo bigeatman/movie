@@ -99,22 +99,22 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public String selectId1(User user) {
-		return userMap.selectId1(user);
+	public String selectId(UserDto userDto) {
+		return userMap.selectId(userDto);
 	}
 	
 	@Override
-	public String selectPw1(User user) {
-		return userMap.selectPw1(user);
+	public String selectPw(UserDto userDto) {
+		return userMap.selectPw(userDto);
 	}
 	
 	@Override
-	public String selectPw1(String email, String userId) {
-		return userMap.selectPw1(email, userId);
+	public String selectPw(String email, String userId) {
+		return userMap.selectPw(email, userId);
 	}
 	
 	@Override
-	public void updatePw1(User user) {
-		userMap.updatePw1(user);
+	public void updatePw(User user) {
+		userMap.updatePw(user);
 	}
 }

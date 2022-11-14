@@ -99,22 +99,22 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public String findId1(User user) {
-		return userDao.selectId1(user);
+	public String findId(UserDto userDto) {
+		return userDao.selectId(userDto);
 	}
 	
 	@Override
-	public String findPw1(User user) {
-		return userDao.selectPw1(user);
+	public String findPw(UserDto userDto) {
+		return userDao.selectPw(userDto);
 	}
 	
 	@Override
-	public String findPw1(String email, String userId) {
-		return userDao.selectPw1(email, userId);
+	public String findPw(String email, String userId) {
+		return userDao.selectPw(email, userId);
 	}
 	
 	@Override
-	public void fixPw1(User user) {
-		userDao.updatePw1(user);
+	public void fixPw(User user) {
+		userDao.updatePw(user);
 	}
 }

@@ -23,8 +23,8 @@ public interface UserDao {
 	void insertWithDrawal(int userNum);
 	int updateUser(User userData);
 	void deleteUserGenre(int userNum);
-	String selectId1(User user);
-	String selectPw1(User user);
-	String selectPw1(String email, String userId);
-	void updatePw1(User user);
+	String selectId(UserDto userDto);
+	String selectPw(UserDto userDto);
+	String selectPw(String email, String userId);
+	void updatePw(User user);
 }

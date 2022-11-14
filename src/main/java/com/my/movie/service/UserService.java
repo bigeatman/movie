@@ -23,8 +23,8 @@ public interface UserService {
 	void addWithDrawal(int userNum);
 	int fixUser(User userData);
 	void delUserGenre(int userNum);
-	String findId1(User user);
-	String findPw1(User user);
-	String findPw1(String email, String userId);
-	void fixPw1(User user);
+	String findId(UserDto userDto);
+	String findPw(UserDto userDto);
+	String findPw(String email, String userId);
+	void fixPw(User user);
 }

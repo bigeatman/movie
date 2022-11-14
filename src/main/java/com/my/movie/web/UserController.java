@@ -183,8 +183,8 @@ public class UserController {
 	}
 
 	@PostMapping("findId")
-	public String findId(@RequestBody User find) {
-		return userService.findId1(find);
+	public String findId(@RequestBody UserDto find) {
+		return userService.findId(find);
 	}
 
 	@GetMapping("findIdResult/{userId}")
@@ -201,8 +201,8 @@ public class UserController {
 	}
 
 	@PostMapping("findPw")
-	public String findPw(@RequestBody User find) {
-		return userService.findPw1(find);
+	public String findPw(@RequestBody UserDto find) {
+		return userService.findPw(find);
 	}
 
 	@PostMapping("findPwCode")
@@ -210,9 +210,10 @@ public class UserController {
 			@RequestParam("inputId") String userId,
 			@RequestParam("inputEmail") String inputEmail, 
 			@RequestParam("domainTxt") String domainTxt
-			,String userNum) throws Exception {
+//			,String userNum
+			) throws Exception {
 		String email = inputEmail + "@" + domainTxt;
-		userService.findPw1(email, userId);
+		userService.findPw(email, userId);
 		mv.addObject("email", email);
 		mv.addObject("userId", userId);
 		mv.setViewName("user/findPwCode");
@@ -242,6 +243,6 @@ public class UserController {
 	
 	@PatchMapping("fixPw")
 	public void fixPw(@RequestBody User fix) {
-		userService.fixPw1(fix);
+		userService.fixPw(fix);
 	}
 }

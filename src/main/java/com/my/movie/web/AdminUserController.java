@@ -33,7 +33,10 @@ public class AdminUserController {
 	@PostMapping("login")
 	public AdminUser login(@RequestBody AdminUser adminLogin, HttpSession session) {
 		AdminUser user = adminUserService.loginValidate(adminLogin);
+		
+		if (user != null) {
 			session.setAttribute("userId", user.getUserId());
+		}
 		return user;
 	}
 	
@@ -44,29 +47,29 @@ public class AdminUserController {
 		return mv;
 	}
 	
-	@GetMapping("users")
+	@GetMapping
 	public ModelAndView users(ModelAndView mv) {
-		mv.setViewName("admin/user/users");
+		mv.setViewName("admin/user/listUser");
 		return mv;
 	}
 
-	@GetMapping("users/list")
+	@GetMapping("list")
 	public List<AdminUser> getUsers(){
 		return adminUserService.getUsers();
 	}
 	
-	@PostMapping("users/search")
+	@PostMapping("search")
 	@ResponseBody
 	public List<AdminUser> getSearchUsers(@RequestBody AdminUserDto userDto){
 		return adminUserService.getSearchUsers(userDto);
 	}
 	
-	@PatchMapping("users/fix")
+	@PatchMapping("fix")
 	public void fixUser(@RequestBody AdminUserDto adminUserDto) {
 		adminUserService.fixAdminUser(adminUserDto);
 	}
 	
-	@PostMapping("users/addWithDrawal")
+	@PostMapping("addWithDrawal")
 	public void addWithDrawal(@RequestBody AdminUserDto userNum) {
 		adminUserService.addWithDrawal(userNum.getUserNum());
 	}
