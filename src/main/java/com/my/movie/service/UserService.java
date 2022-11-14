@@ -26,5 +26,5 @@ public interface UserService {
 	String findId(UserDto userDto);
 	String findPw(UserDto userDto);
 	String findPw(String email, String userId);
-	void fixPw(User user);
+	void fixPw(UserDto userDto);
 }

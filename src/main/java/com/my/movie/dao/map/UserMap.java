@@ -29,5 +29,5 @@ public interface UserMap {
 	String selectPw(UserDto userDto);
 	String selectPw(@Param("email")String email,
 					@Param("userId")String userId);
-	void updatePw(User user);
+	void updatePw(UserDto userDto);
 }
