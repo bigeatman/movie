@@ -7,19 +7,20 @@ import org.springframework.stereotype.Repository;
 
 import com.my.movie.dao.map.CommunityMap;
 import com.my.movie.domain.Community;
+import com.my.movie.domain.CommunityList;
 
 @Repository
 public class CommunityDaoImpl implements CommunityDao {
 	@Autowired private CommunityMap communityMap;
 	
 	@Override
-	public List<Community> selectCommunities() {
+	public List<CommunityList> selectCommunities() {
 		return communityMap.selectCommunities();
 	}
 	
 	@Override
-	public Community selectCommunity(Community community) {
-		return communityMap.selectCommunity(community);
+	public CommunityList selectCommunity(int communityNum) {
+		return communityMap.selectCommunity(communityNum);
 	}
 	
 	@Override

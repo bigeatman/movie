@@ -3,13 +3,18 @@
 	'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
 <mapper namespace='com.my.movie.dao.map.CommunityMap'>
 
-	<select id='selectCommunities' resultType='community'>
-		select * from movie.communities order by COMMUNITY_NUM
+	<select id='selectCommunities' resultType='communityList'>
+		select c.community_num, c.community_title, c.community_date, u.nickname
+		from communities c
+		left join users u on c.user_num = u.user_num
+		order by c.community_num desc
 	</select>
 	
-	<select id='selectCommunity' resultType='community'>
-		select * from communities
-		order by communities desc
+	<select id='selectCommunity' resultType='communityList'>
+		select c.community_title, c.community_content, c.community_date, u.nickname
+		from communities c
+		left join users u on c.user_num = u.user_num
+		where c.community_num = #{communityNum}
 	</select>
 	
 	<resultMap id='communityMap' type='community'>
@@ -17,14 +22,14 @@
 		<result property='communityTitle' column='community_title'/>
 		<result property='communityContent' column='community_content'/>
 		<result property='communityDate' column='community_date'/>
-		<result property='communityImgfileName' column='community_imgfileName'/>
+		<!-- <result property='communityImgfileName' column='community_imgfileName'/> -->
 		<result property='userNum' column='user_num'/>
 	</resultMap>
 	
 	<insert id='insertCommunity'>
 		INSERT INTO movie.COMMUNITIES(community_num, community_title,
-		 community_content, community_date, community_imgfile_name, user_num)
-		values(community_num_seq.nextval, #{communityTitle}, #{communityContent}, #{communityDate}, #{communityImgfileName}, #{userNum})
+		 community_content, community_date, user_num)
+		values(community_num_seq.nextval, #{communityTitle}, #{communityContent}, sysdate, #{userNum})
 	</insert>
 	
 	<delete id='deleteCommunity'>
@@ -34,6 +39,6 @@
 	
 	<select id="content" resultType="com.my.movie.domain.Community">
 		select community_num, community_title,
-		 community_content, community_date, community_imgfile_name, user_num
+		 community_content, community_date, user_num
 	</select>
 </mapper>

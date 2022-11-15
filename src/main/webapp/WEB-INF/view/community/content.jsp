@@ -1,4 +1,5 @@
 <%@ page language='java' contentType='text/html; charset=utf-8' pageEncoding='utf-8'%>
+<%@ taglib prefix='c' uri='http://java.sun.com/jsp/jstl/core'%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -11,19 +12,6 @@
 <script src='https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js'></script>
 <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js'></script>
 <script src="https://kit.fontawesome.com/449f39a7b2.js" crossorigin="anonymous"></script>
-<script>
-function checkLogin() {
-<%
-	if(session.getAttribute("user") != null) {
-%>
-	$('#user').attr('href', '../user/mypage')
-	$('#loginSpan').text('프로필')
-<%
-	}
-%>
-}
-$(checkLogin)
-</script>
 <!-- 영화평/댓글 modal script -->
 <script>    
 function boardInit() {
@@ -125,38 +113,33 @@ function replyInit() {
         $('#replyModal').modal()
     })
 }
+
+function init() {
+<%
+	int num = Integer.parseInt(request.getParameter("num"));
+%>
+	$.ajax({
+		url: 'getContent',
+		method: 'post',
+		contentType: 'application/json',
+		data: JSON.stringify({
+			communityNum: <%= num %>}), 
+		success: content => {
+			console.log(content)
+			if(content) {
+				$('#title').text(content.communityTitle)
+				$('#content').text(content.communityContent)
+				$('#nickname').text(content.nickname)
+				$('#date').text(content.communityDate)
+			}
+		}
+	})
+}
 $(boardInit)
 $(replyInit)
-</script>
-<script>
-$(() => {
-	
-	$('#communityContainer').click(() => {
-		var regDate = getToday()
-		
-			$.ajax({
-				url: 'list',
-				method: 'get',
-				contentType: 'application/json',
-				data: JSON.stringify({
-					communityTitle: $('#communityTitle').val(),
-					communityContent: $('#communityContent').val(),
-					communityDate: regDate,
-					communityImgfileName: $('#communityImgfileName').val()
-					/* userNum: $('#userNum').val() */
-				}), 
-				success: function successWritePost() {
-					window.location.href = 'community/content'
-				}
-			})
- 
-	})	
-})
-$(CommunityList)
+$(init)
 </script>
 </head>
-
-
 <style>
 #delModal{
     text-align: center;
@@ -239,18 +222,30 @@ label {
 #boardModalBodyMsg{
     text-align: center;
 }
-
 </style>
-
 <body>
+<c:if test='${empty userId}'>
+	<div class='row' style='margin-top: 100px; text-align: center;'>
+        <div class='col'>
+            <span class='h4'>로그인을 하세요.</span>
+        </div>
+	</div>
+    <div class='row' style='margin-top: 150px; margin-left: 100px;'>
+        <div class='col'>
+            <button id='okBtn' type='button' class='btn btn-primary' onclick='location.href="../user/login"' style='margin-left: 30px;'>
+                <span class='h6'>로그인</span>
+            </button>
+        </div>
+    </div>
+</c:if>
+<c:if test='${not empty userId}'>
 <div class="container">
     <h2><strong><br><center>커뮤니티</center></strong></h2>
-
     <hr style="border: double 1px black;">
     <h3><em><u><center>영화평</center></u></em></h3>
     <table border="1">
         <tr>
-            <td width=1500 height=30>&nbsp;${community.title}</td>
+            <td width=1500 height=30 id='title'></td>
             <td width=200>
                 <div class='row border'>
                     <div class='col d-flex justify-content-center align-items-center'></div>
@@ -271,15 +266,22 @@ label {
     </table>
 
     <div class= "board-box" style="background-color: #dbe8fb; border: #79a5e4 1px solid; padding: 10px;">
-        <tr>	
-        	<td>&nbsp;${community.content}</td>
-        </tr>
+        <table>
+	        <tr>	
+	        	<td id='content'></td>
+	        </tr>
+	    </table>
     </div>
-    <table >
-    	<td>작성일:</td>
-    	<td><fmt:formatDate value="${data.date}" pattern="yyyy-MM-dd" />
-    	</td>
-    </table>
+    <div>
+     	<div class='row ml-1' >작성자:&nbsp;
+     		<div id='nickname'>
+     		</div>
+     	</div>
+    	<div class='row ml-1'>작성일:&nbsp;
+    		<div id='date'>
+    		</div>
+    	</div>
+    </div>
 
 <!-- 영화평 공감 버튼 -->
 <div class="container text-center">
@@ -300,12 +302,11 @@ label {
 <hr style="border: double 1px grey;">
 </div>
 
-
 <!-- 네비게이션 바 -->
 	<div id='navBar' class='container-fulid'>
        	<nav class='row fixed-bottom p-2'>
             <div class='col text-center'>
-               	<a id='goHome' href='..' class='ml-1'>
+               	<a id='goHome' href='/' class='ml-1'>
                   	<i class='fa-solid fa-house fa-xl'></i><br>
                   	<span class='iconfont mr-1'>홈</span>
                	</a>
@@ -317,15 +318,15 @@ label {
                	</a>
             </div>
             <div class='col text-center'>
-               	<a id='search' href='#' class='ml-1'>
+               	<a id='search' href='../movie/searchMovie' class='ml-1'>
                   	<i class='fa-solid fa-compass fa-xl'></i><br>
                   	<span class='iconfont'>탐색</span>
                	</a>
             </div>
             <div class='col text-center'>
-              	<a id='user' href='../user/login' class='ml-1'>
+              	<a id='user' href='../user/mypage' class='ml-1'>
                		<i class='fa-regular fa-user fa-xl'></i><br>
-               		<span id='loginSpan' class='iconfont'>로그인</span>
+               		<span id='loginSpan' class='iconfont'>프로필</span>
                	</a>
            	</div>
       	</nav>
@@ -390,6 +391,8 @@ label {
         </div>
     </div>
 </div>
+</div>
+</c:if>
 </body>
 
 <!-- 하단내비바에 안깔리게 하려고 넣어둔 거 -->
@@ -400,8 +403,6 @@ label {
         </div>
     </div>
 </footer>  
-
-
 
 <!-- 영화평 modal -->
 <div class='modal fade' tabindex='-1' id='boardModal'>
