@@ -23,9 +23,10 @@ function checkLogin() {
 	}
 	if(${empty userId}) {
 		$('button[name="page"]').attr("onclick", "location.href='admin/user/login'")
+	} else if(${userId ne "admin"}) {
+		location.href="../user/logout"
 	}
 }
-
 $(checkLogin)
 </script>
 <style>
@@ -52,12 +53,12 @@ $(checkLogin)
 	}
 </style>
 </head>
-<div class='container-fluid'>
+<div class='container'>
 	<div class='header'>
 		<div class='float-left mt-3'><h5>| 홈</h5></div>
-		<div id='btn_group' class='float-right mt-3'>
+		<div id='btn_group' class='float-right mt-3 '>
         		<span id='id'></span>&emsp;
-	         	<button id='loginBtn' type='button' class='btn btn-primary btn-block' onclick='location.href="admin/user/login"'>
+	         	<button id='loginBtn' type='button' class='btn btn-primary' onclick='location.href="admin/user/login"'>
 	         		<span id='loginSpan'>로그인</span>
 	         	</button>
 	    </div><br>
@@ -72,7 +73,7 @@ $(checkLogin)
 								<button type='button' class='btn btn-secondary' name='page' onclick='location.href="admin/genre/addGenre"'>장 르</button>
 								<button type='button' class='btn btn-secondary' name='page' onclick='location.href="admin/movie/listMovie"'>영 화</button>
 								<button type='button' class='btn btn-secondary' name='page' onclick='location.href="admin/cast"'>감독/배우</button>
-								<button type='button' class='btn btn-secondary' name='page' onclick='location.href="admin/inspection"'>신고 조회</button>
+								<button type='button' class='btn btn-secondary' name='page' onclick='location.href="admin/inspection/inspection"'>신고 조회</button>
 								</div>
 							</div>
 						</div>

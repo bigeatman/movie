@@ -76,7 +76,7 @@ body{
 				</div>
 				<div class='form-group mt-3'>
 					<label for='pw'>비밀번호 </label>
-					<input id='pw' name='pw' type='password' class='form-control mb-2'  placeholder='••••'/>
+					<input id='pw' name='pw' type='password' class='form-control mb-2'  placeholder='••••' autoComplete='off'/>
 					<small id='errMsg' class='msg d-inline' style='color: red;'></small>
 				</div>
 				<div class='form-group mt-4'>

@@ -1,5 +1,4 @@
 <%@ page language='java' contentType='text/html; charset=utf-8' pageEncoding='utf-8'%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <head>
     <title>회원</title>
     <meta charset='utf-8'>
@@ -15,48 +14,35 @@
 <script>
 //로그아웃상태에서 url로 강제 접근시 로그인페이지로 이동
 function checkLogin() {
-	if(${empty userId}) {
-		location.href="user/login"
-	} else console.log("${userId} 성공")
+	if(${empty userId}) {location.href="user/login"}
+	else if(${userId ne "admin"}) location.href="../user/logout"
 }
 $(checkLogin)
 
 const users =[]
 let user = 0
 
-function errModal(){
+function isErr(valOrText, field){
+    let isGood = false
+    let errMsg
+    $('modalMsg').text('')
+
+    switch(valOrText){
+	case "isVal":
+	 	if(!field.length) errMsg = '유저를 선택하세요'
+	   	else isGood = true
+	   	break;
+	case "isText":
+	   	if(!field.val()) errMsg = field.attr('placeholder') + ' 입력하세요.'
+	   	else isGood = true	    
+    }
+    
+    if (!isGood) {
+        $('#modalMsg').text(errMsg)
         $('#noBtn').text('확인')
         $('#yesFixBtn').hide()
         $('#yesDelBtn').hide()
         $('#modal').modal()
-}
-
-function isVal(field){
-    let isGood = false
-    let errMsg
-    $('#modalMsg').text('')
-
-    if (!field.length) errMsg = '유저를 선택하세요.'
-    else isGood = true
-
-    if (!isGood) {
-        $('#modalMsg').text(errMsg)
-    	errModal()
-    }
-    return isGood
-}
-
-function isText(field){
-    let isGood = false
-    let errMsg
-    $('#modalMsg').text('')
-
-    if(!field.val()) errMsg = field.attr('placeholder') + ' 입력하세요.'
-    else isGood = true
-
-    if (!isGood) {
-        $('#modalMsg').text(errMsg)
-    	errModal()
     }
     return isGood
 }
@@ -100,17 +86,17 @@ function searchUsers(){
 	$('input').not(':radio').val('')
     
 	$('#searchBtn').click(() => { 
-		$('#userList').empty()
-       	if(isText($('#search'))){ 
+		if(isErr("isText", $('#search'))){
+			$('#userList').empty()
 			$.ajax({
 	           	url: 'user/search',
 	        	method: 'Post',
 	        	contentType: 'application/json',	
 	        	data: JSON.stringify({keyword: $('#search').val()}),
-	        	success: searchUsers => {
-	    			if(searchUsers.length){
+	        	success: userList => {
+	    			if(userList.length){
 	    		        userArr = []
-	    		        searchUsers.forEach(user => {
+	    		        userList.forEach(user => {
 	    					userArr.push( 
 	    						`<tr>
 	                                <td><input type='radio' name='userNum' id='userNum'
@@ -143,9 +129,10 @@ function init() {
         $('#yesDelBtn').hide()
        	$('#fixMag').remove()
 
-       	if(isVal($('#userNum:checked'))){ 
-           	if (isText($('#fixNickname'))){
-           		$('#modalMsg').append('<h4 id ="fixMsg">','[' ,$('#userNum:checked').parent().next().next().next().next().text(),'] 을/를 <br> [' ,$('#fixNickname').val(), ']으로 수정하시겠습니까?</h4>')
+          if(isErr("isVal", $('#userNum:checked'))){ 
+       		if (isErr("isText", $('#fixNickname'))){	
+       			$('#modalMsg').text('')
+       			$('#modalMsg').append('<h4 id ="fixMsg">','[' ,$('#userNum:checked').parent().next().next().next().next().text(),'] 을/를 <br> [' ,$('#fixNickname').val(), ']으로 수정하시겠습니까?</h4>')
              	$('#noBtn').text('취소')
                 $('#yesFixBtn').show()
                 $('#modal').modal() 
@@ -170,7 +157,7 @@ function init() {
 
     // 유저 삭제
 	$('#delBtn').click(() => {
-	   	if(isVal($('#userNum:checked'))){ 
+        if(isErr("isVal", $('#userNum:checked'))){ 
 	        $('#modalMsg').text(`해당 회원을 삭제하시겠습니까?`)
 	        $('#yesFixBtn').hide()
 	        $('#yesDelBtn').show()
@@ -226,7 +213,7 @@ $(init)
 	}
 </style>
 <body>
-    <div class='container-fluid'>
+    <div class='container'>
         <div class='header'>
             <div class='float-left mt-3'><h5>| 회원</h5></div>
             <div id='btn_group' class='float-right mt-3'>
@@ -246,7 +233,7 @@ $(init)
 									<button type='button' class='btn btn-secondary' name='page' onclick='location.href="../admin/genre/addGenre"'>장 르</button>
 									<button type='button' class='btn btn-secondary' name='page' onclick='location.href="../admin/movie/listMovie"'>영 화</button>
 									<button type='button' class='btn btn-secondary' name='page' onclick='location.href="../admin/cast"'>감독/배우</button>
-									<button type='button' class='btn btn-secondary' name='page' onclick='location.href="../admin/inspection"'>신고 조회</button>    
+									<button type='button' class='btn btn-secondary' name='page' onclick='location.href="../admin/inspection/inspection"'>신고 조회</button>    
                                 </div>
                             </div>
                         </div>
