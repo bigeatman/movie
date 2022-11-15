@@ -249,7 +249,8 @@ nav a {
 				<span id="position"><c:if test="${review.casts[status.current].position eq 1 }">주연</c:if><c:if test="${review.casts[status.current].position eq 0 }">조연</c:if></span>
 			</span>
 		</c:forEach>
-		<span id="loginedUserNum">${user.userNum}</span>
+		<span id="loginedUserNum">${userNum}</span>
+		<span id="isReviewWritten">${review.reviewWriten}</span>
 	</div>
 	
 	<!-- HEADER !-->
@@ -261,7 +262,8 @@ nav a {
 			   <span class='ml-2 d-none d-md-inline'>검색:</span>
 			</button>
 		 </div>
-	  </form>
+ 	</form>
+	  
 	<!-- MAIN CONTENT !-->
 	<div class="container"><hr></div>
 	<div style="overflow:scroll; height:464px; overflow-x:hidden;">
@@ -347,22 +349,22 @@ nav a {
 							<div id="reviewWriter" class="review-id">${ rev.nickName }(${rev.userId })</div>
 							<div class="like-unlike-panel">
 								<button class="like-button"><i class="fa">&#xf087;</i></button>
-								<span class="like-button">128&nbsp&nbsp</span>
+								<span class="like-button">${rev.likeCount } &nbsp;&nbsp;</span>
 								<button class="like-button"><span class="fa fa-thumbs-down"></span></button>
 								<span class="like-button">Unlike</span>
-								<c:if test="${not empty user}">
-									<c:if test="${user.userNum eq rev.userNum }">
+								<c:if test="${not empty userNum}">
+									<c:if test="${userNum eq rev.userNum }">
 										<button class="like-button" type="button" data-toggle="modal" data-target='#dialogModal' onclick="removeReview(${rev.reviewNum})"> 
 											<i id="removeIcon" class="fa-solid fa-trash"></i>
 										</button>
 									</c:if>
-									<c:if test="${user.userNum ne rev.userNum }">
+									<c:if test="${userNum ne rev.userNum }">
 										<button class="like-button" type="button" data-toggle="modal" data-target='#dialogModal' onclick="reportReview(${rev.reviewNum})"> 
 											<i class="fa-solid fa-triangle-exclamation"></i>
 										</button>
 									</c:if>
 								</c:if>
-								<c:if test="${empty user}">
+								<c:if test="${empty userNum	}">
 									<button class="like-button" type="button" data-toggle="modal" data-target='#dialogModal' onclick="reportReview(${rev.reviewNum})"> 
 										<i class="fa-solid fa-triangle-exclamation"></i>
 									</button>
@@ -503,9 +505,6 @@ nav a {
 		clearDialog();
 		createDialog("사용자 평 삭제", 0x3132);
 		document.querySelector('#okButton').addEventListener('click', function() {
-			console.log("TEST");
-			$('#dialogModal').modal('hide');
-			
 			$.ajax({
 				url : "rev/remove",
 				method : "post",
@@ -514,7 +513,7 @@ nav a {
 					reviewId : reviewNum
 				}),
 				success : function(result) {
-					document.querySelector("#review_" + reviewNum).remove();
+					location.reload();
 				}
 			})
 		});
@@ -588,7 +587,7 @@ nav a {
 			    	console.log("에러");
 			    }
 			}).done(function() {
-				clearDialog();
+				location.reload();
 			});
 		});
 	}

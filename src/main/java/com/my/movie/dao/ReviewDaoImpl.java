@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.my.movie.dao.map.ReviewMap;
+import com.my.movie.dao.map.SympathMap;
 import com.my.movie.domain.Review;
 import com.my.movie.domain.request.CreateReviewRequest;
 
@@ -15,6 +16,9 @@ public class ReviewDaoImpl implements ReviewDao {
 	@Autowired
 	private ReviewMap reviewMap;
 
+	@Autowired
+	private SympathMap sympathMap;
+	
 	@Override
 	public void insertReview(CreateReviewRequest req) {
 		reviewMap.insertReview(req);
@@ -35,6 +39,7 @@ public class ReviewDaoImpl implements ReviewDao {
 				builder.append("*");
 			}
 			review.setUserId(builder.toString());
+			review.setLikeCount(sympathMap.getLikeCount(review.getReviewNum(), "리뷰"));
 		}
 		
 		return reviews;

@@ -13,7 +13,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.my.movie.domain.Review;
 import com.my.movie.domain.ReviewDto;
-import com.my.movie.domain.User;
 import com.my.movie.service.ReviewService;
 
 @Controller
@@ -26,8 +25,8 @@ public class ReviewController {
 	@PostMapping
 	public ModelAndView movieDetail(ModelAndView mv, @RequestParam(value = "movieNo") Integer movieNo, HttpSession session) {
 		ReviewDto dto = reivewService.getReviewDtoByMovieId(movieNo);
-		findLoginedUserReview(dto, (User) session.getAttribute("user"));
-
+		findLoginedUserReview(dto, (Integer) session.getAttribute("userNum"));
+		
 		if (dto.getMovie() == null) {
 			mv.setViewName("../main");
 		} else {
@@ -38,17 +37,20 @@ public class ReviewController {
 		return mv;
 	}
 
-	private void findLoginedUserReview(ReviewDto dto, User user) {
-		if(user == null) {
+	private void findLoginedUserReview(ReviewDto dto, Integer userNum) {
+		dto.setReviewWriten(false);
+		List<Review> reviews = dto.getReviews();
+		
+		if((userNum == null) || (reviews.size() == 0)) {
 			return;
 		}
 		
-		List<Review> reviews = dto.getReviews();
 		Review writeReview = null;
 
 		for (Review review : dto.getReviews()) {
-			if (user.getUserNum() == review.getUserNum()) {
+			if (userNum == review.getUserNum()) {
 				writeReview = review;
+				dto.setReviewWriten(true);
 				break;
 			}
 		}
