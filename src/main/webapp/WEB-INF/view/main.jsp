@@ -95,7 +95,6 @@ table {
                                  </div>
                                  <div class='carousel-item'>
                                  	<form action="review" method="post" id="movie_0">
-                                    <form action="review" method="post" id="movie_0">
 	                                 	<div id='movieImg2' onclick="coinfirmSubmitAction(0)">영화이미지</div>
 	                                    <div id='topMovie' onclick="coinfirmSubmitAction(0)">공조2: 인터내셔날</div>
 	                                    <input type="hidden" name="movieNo" value="0">
@@ -144,8 +143,10 @@ table {
                                    <div id='daysMovie'>정직한 후보2</div></a>
                                 </div>
                                 <div class='carousel-item'>
-                                   <div id='movieImg6'><a href='review/01.html'>영화이미지</div>
-                                   <div id='daysMovie'>귀못</div></a>
+                                   <a href='review/01.html'>
+                                   <div id='movieImg6'>영화이미지</div>
+                                   <div id='daysMovie'>귀못</div>
+                                   </a>
                                 </div>
                              </th>
                         </tr>

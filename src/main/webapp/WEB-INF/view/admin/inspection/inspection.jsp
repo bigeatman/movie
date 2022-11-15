@@ -13,6 +13,12 @@
 <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.6.3/css/all.css'/>
 </head>
 <script>
+function checkLogin() {
+	if(${empty userId}) {location.href="../user/login"}
+	else if(${userId ne "admin"}) location.href="../../user/logout"
+}
+$(checkLogin)
+
 // 신고 상세페이지
 function clickDetails(inspectionNum, inspectionContentNum, inspectionContentName) {
 	$.get("/admin/inspections/" + inspectionNum + "/details", function(data, status) {
@@ -90,6 +96,12 @@ function clickDetails(inspectionNum, inspectionContentNum, inspectionContentName
 }
 	
 </script>
+<style>
+#logoutBtn{
+	height: 1.5rem;
+	font-size: 14px;		
+}
+</style>
 <body>
 <div class='container'>
     <div class='header'>
@@ -97,28 +109,24 @@ function clickDetails(inspectionNum, inspectionContentNum, inspectionContentName
             <h5>| 신고조회</h5>
         </div>
         <div id='btn_group' class='float-right mt-3'>
-            <label style='font-size:13'>admin님</label>&emsp;
-            <a href='../user/login'><button style='font-size:13'>로그아웃</button></a>
-        </div><br>
+            <label style='font-size:13'>${userId}님</label>&emsp;
+			<button id='logoutBtn' type='button' class='btn btn-secondary' onclick='location.href="../user/logout"'>
+	        		<span id='logoutSpan'>로그아웃</span>
+	        </button>
+	  	</div><br>
         <div class='row mt-5'>
             <div class='col'>
                 <div class='container'>
                     <div class='row'>
                         <div class='col-12 text-center'>
                             <div class='btn-group btn-block'>
-                                <button type='button' class='btn btn-secondary'
-                                    onclick='location.href="../admin" '>홈</button> 
-                                <button type='button' class='btn btn-secondary'
-                                    onclick='location.href="../admin/user/list" '>회 원</button> <!-- 이동불가능 -->
-                                <button type='button' class='btn btn-secondary'
-                                	onclick='location.href="../admin/genre/addGenre" '>장 르</button>
-                                <button type='button' class='btn btn-secondary'
-                                    onclick='location.href="../admin/movie/listMovie" '>영 화</button>
-                                <button type='button' class='btn btn-secondary'
-                                	onclick='location.href="...." '>감독/배우</button> <!-- 이동불가능 -->
-                                <button type='button' class='btn btn-secondary'
-                                    onclick='location.href="../admin/inspection" '>신고 조회</button>
-                            </div>
+								<button type='button' class='btn btn-secondary' onclick='location.href="../../admin"'>홈</button>
+								<button type='button' class='btn btn-secondary' name='page' onclick='location.href="../user"'>회 원</button>
+								<button type='button' class='btn btn-secondary' name='page' onclick='location.href="../genre/addGenre"'>장 르</button>
+								<button type='button' class='btn btn-secondary' name='page' onclick='location.href="../movie/listMovie"'>영 화</button>
+								<button type='button' class='btn btn-secondary' name='page' onclick='location.href="../cast"'>감독/배우</button>
+								<button type='button' class='btn btn-primary' name='page' onclick='location.href="" disabled'>신고 조회</button>	
+							</div>
                         </div>
                     </div>
                 </div>

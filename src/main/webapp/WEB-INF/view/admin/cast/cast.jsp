@@ -11,7 +11,11 @@
 <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js'></script>
 <script src="https://kit.fontawesome.com/449f39a7b2.js" crossorigin="anonymous"></script>
 <script>
-	
+function checkLogin() {
+	if(${empty userId}) {location.href="user/login"}
+	else if(${userId ne "admin"}) location.href="../user/logout"
+}
+$(checkLogin)
 </script>
 <style>
 html, body {
@@ -63,16 +67,23 @@ html, body {
 #dialog {
 	height : 170px;
 }
+
+#logoutBtn{
+	height: 1.5rem;
+	font-size: 14px;		
+}
 </style>
 <body>
 	<div class='container-fluid'>
 		<div class='header'>
 			<div class='float-left mt-3'>
-				<h5>| 영화</h5>
+				<h5>| 감독/배우</h5>
 			</div>
 			<div id='btn_group' class='float-right mt-3'>
-				<label style='font-size: 13'>관리자님</label>&emsp; <span style='font-size: 12'>(08:23)</span>&emsp; <a href='../main.html'><button
-						style='font-size: 13'>로그아웃</button></a>
+				<label style='font-size: 13'>${userId}님</label>&emsp; 
+				<button id='logoutBtn' type='button' class='btn btn-secondary' onclick='location.href="user/logout"'>
+	        		<span id='logoutSpan'>로그아웃</span>
+	        	</button>
 			</div>
 			<br>
 			<div class='row mt-5'>
@@ -81,12 +92,12 @@ html, body {
 						<div class='row'>
 							<div class='col-12 text-center'>
 								<div class='btn-group btn-block'>
-									<button type='button' class='btn btn-secondary' onclick='location.href=".." '>홈</button>
-									<button type='button' class='btn btn-secondary' onclick='location.href="#" '>회 원</button>
-									<button type='button' class='btn btn-secondary' onclick='location.href="#" '>장 르</button>
-									<button type='button' class='btn btn-secondary' onclick='location.href="../movie/listMovie" '>영 화</button>
-									<button disabled type='button' class='btn btn-primary' onclick='location.href="#" '>감독/배우</button>
-									<button type='button' class='btn btn-secondary' onclick='location.href="#" '>신고 조회</button>
+									<button type='button' class='btn btn-secondary' onclick='location.href="../admin" '>홈</button>
+									<button type='button' class='btn btn-secondary' onclick='location.href="user" '>회 원</button>
+									<button type='button' class='btn btn-secondary' onclick='location.href="genre/addGenre" '>장 르</button>
+									<button type='button' class='btn btn-secondary' onclick='location.href="movie/listMovie" '>영 화</button>
+									<button disabled type='button' class='btn btn-primary' onclick='location.href="" '>감독/배우</button>
+									<button type='button' class='btn btn-secondary' onclick='location.href="inspection/inspection" '>신고 조회</button>
 								</div>
 							</div>
 						</div>
