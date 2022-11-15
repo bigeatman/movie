@@ -82,6 +82,11 @@ nav a {
 	text-decoration: none;
 	color: lightgray;
 }
+
+body {
+    justify-content: center;
+    align-items: center;
+}
 </style>
 </head>
 <body>
@@ -92,7 +97,7 @@ nav a {
 			</h5>
 		</div>
 	</header><hr>
-		<div class='col' style='text-align: center'>
+		<div class='col body' style='text-align: center'>
 			<form class='m-4'>
 				<div class='form-group'>
 					<label for='userId' class='d-flex'>아이디 </label>
@@ -100,7 +105,7 @@ nav a {
 				</div>
 				<div class='form-group'>
 					<label for='userPw' class='d-flex'>비밀번호 </label>
-					<input id='pw' name='pw' type='password' class='form-control mb-2'  placeholder='••••'/>
+					<input id='pw' name='pw' type='password' class='form-control mb-2'  placeholder='••••' autoComplete="off"/>
 				</div>
 				<small id='errMsg' class='msg d-inline' style='color: red;'></small>
 				<div class='d-flex justify-content-center mb-2'><a href='findId' id='findId'>아이디 찾기</a>&nbsp;/&nbsp;<a href='findPw' id='findPw'>비밀번호 찾기</a></div>

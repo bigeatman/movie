@@ -57,13 +57,6 @@ public class UserController {
 		mv.setViewName("redirect:/");
 		return mv;
 	}
-	
-	
-//	@GetMapping("searchMovie")
-//	public ModelAndView movie(ModelAndView mv) {
-//		mv.setViewName("movie/searchMovie");
-//		return mv;
-//	}
 
 	@GetMapping("mypage")
 	public ModelAndView mypage(ModelAndView mv, HttpSession session) {
