@@ -267,7 +267,7 @@ nav a {
 	<div style="overflow:scroll; height:464px; overflow-x:hidden;">
 		<div class="container center">
 			<div class="poster">
-				<img src="${review.movie.movieImgfileName }" style="object-fit: cover; width:100%; height:100%;">
+				<img src="img?fileName=${review.movie.movieImgfileName }" style="object-fit: cover; width:100%; height:100%;">
 			</div>
 			<div class="movieinfo">
 				<div class="menu">${review.movie.movieName }</div>
@@ -300,16 +300,16 @@ nav a {
 				<div class="menu">출연진</div>
 				<div class="container row movieinfo-actors">
 					<div class="movieinfo-actor">
-						<img src="${review.director.directorImgFileName}" alt="Avatar" class="w3-col s6 circle" style="border-radius:50%;">
+						<img src="img?fileName=${review.director.directorImgFileName}" alt="Avatar" class="w3-col s6 circle" style="border-radius:50%;">
 						<div class="movieinfo-actor-name">${review.director.directorName} (감독)</div>
 					</div>
 					<div class="movieinfo-actor">
-						<img src="${review.casts[0].castImgFileName}" alt="Avatar" class="w3-col s6 circle" style="border-radius:50%;">
-						<div class="movieinfo-actor-name">${review.casts[0].castName} (주연)</div>
+						<img id="mainActorImage1" alt="Avatar" class="w3-col s6 circle" style="border-radius:50%;">
+						<div id="mainActor1" class="movieinfo-actor-name"></div>
 					</div>
 					<div class="movieinfo-actor">
-						<img src="${review.casts[1].castImgFileName}" alt="Avatar" class="w3-col s6 circle" style="border-radius:50%;">
-						<div class="movieinfo-actor-name">${review.casts[1].castName} (주연)</div>
+						<img id="mainActorImage2" alt="Avatar" class="w3-col s6 circle" style="border-radius:50%;">
+						<div id="mainActor2" class="movieinfo-actor-name"></div>
 					</div>
 					<div class="movieinfo-actor">
 						<div id="circle" class="movieinfo-actor-more" onclick="createActorDetail()" type="button" data-toggle="modal" data-target='#dialogModal'><span>&#10097;&#10097;</span></div>
@@ -423,6 +423,27 @@ nav a {
 	</div>
 <script>
 	var currentReviews = 5;
+	
+	function findMainActor() {
+		var mainActors = [];
+		
+		for(var i = 0; i < ${fn:length(review.casts)}; i++) {
+			var actorElem = document.querySelector('#actor_' + i);
+			var position = actorElem.querySelector('#position').innerHTML;
+			
+			if(position == '주연') {
+				mainActors.push([
+					actorElem.querySelector('#imgUrl').innerHTML,
+					actorElem.querySelector('#name').innerHTML
+				])
+			}
+		}
+		
+		document.querySelector('#mainActorImage1').setAttribute('src', 'img?fileName=' + mainActors[0][0]);
+		document.querySelector('#mainActorImage2').setAttribute('src', 'img?fileName=' + mainActors[1][0]);
+		document.querySelector('#mainActor1').innerHTML = mainActors[0][1];
+		document.querySelector('#mainActor2').innerHTML = mainActors[1][1];
+	}
 	
 	function viewMoreReview() {
 		$.ajax({
@@ -756,7 +777,7 @@ nav a {
 	
 	function createDirectorDiv(imgUrl, name, position) {
 		var imageElem = document.createElement('img');
-		imageElem.setAttribute('src', imgUrl);
+		imageElem.setAttribute('src', 'img?fileName=' + imgUrl);
 		imageElem.setAttribute('alt', 'Avater');
 		imageElem.classList.add('w3-col');
 		imageElem.classList.add('s6');
@@ -874,6 +895,8 @@ nav a {
 		document.querySelector('#loginSpan').innerHTML = '프로필';
 		document.querySelector('#user').setAttribute('href', 'user/mypage');
 	}
+	
+	findMainActor();
 	
 </script>
 </body>
