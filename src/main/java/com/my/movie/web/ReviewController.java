@@ -55,7 +55,9 @@ public class ReviewController {
 			}
 		}
 		
-		reviews.remove(writeReview);
-		reviews.add(0, writeReview);
+		if(writeReview != null) {
+			reviews.remove(writeReview);
+			reviews.add(0, writeReview);	
+		}
 	}
 }

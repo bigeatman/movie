@@ -349,7 +349,7 @@ nav a {
 							<div id="reviewWriter" class="review-id">${ rev.nickName }(${rev.userId })</div>
 							<div class="like-unlike-panel">
 								<button class="like-button"><i class="fa">&#xf087;</i></button>
-								<span class="like-button">${rev.likeCount } &nbsp;&nbsp;</span>
+								<span class="like-button" onclick="addLike(${rev.reviewNum})">${rev.likeCount } &nbsp;&nbsp;</span>
 								<button class="like-button"><span class="fa fa-thumbs-down"></span></button>
 								<span class="like-button">Unlike</span>
 								<c:if test="${not empty userNum}">
