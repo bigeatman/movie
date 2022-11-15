@@ -9,6 +9,12 @@
 <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js'></script>
 <script src="https://kit.fontawesome.com/449f39a7b2.js" crossorigin="anonymous"></script>
 <script>
+function checkLogin() {
+	if(${empty userId}) {location.href="../user/login"}
+	else if(${userId ne "admin"}) location.href="../../user/logout"
+}
+$(checkLogin)
+
 function listMovies() {
 	$('#movies').empty()
 	
@@ -82,17 +88,23 @@ $(init)
     #addBoardBtn:hover,#searchMovieBtn:hover,#fixMovieBtn:hover,#delMovieBtn:hover,#addMovieBtn:hover{
         background-color: #5699f7;
     }
+    
+    #logoutBtn{
+		height: 1.5rem;
+		font-size: 14px;	
+	}
 </style>
 
 <body>
-	<div class='container-fluid'>
+	<div class='container'>
 		<div class='header'>
-            <div class='float-left mt-3'><h5>| 영화</h5></div>
-			 <div id='btn_group' class='float-right mt-3'>
-				  <label style='font-size:13'>관리자님</label>&emsp;
-                  <span style='font-size:12'>(08:23)</span>&emsp;
-				  <a href='#'><button style='font-size:13'>로그아웃</button></a>
-			  </div><br>
+			<div class='float-left mt-3'><h5>| 영화</h5></div>
+            <div id='btn_group' class='float-right mt-3'>
+                <span id='id'>${userId}님</span>&emsp;
+				<button id='logoutBtn' type='button' class='btn btn-secondary' onclick='location.href="../user/logout"'>
+	        		<span id='logoutSpan'>로그아웃</span>
+	        	</button>
+            </div><br>	 
 		  <div class='row mt-5'>
 			  <div class='col'>
 				 <div class='container'>
@@ -100,11 +112,11 @@ $(init)
 						 <div class='col-12 text-center'>
 							 <div class='btn-group btn-block'>
                                 <button type='button' class='btn btn-secondary' onclick='location.href="../../admin" '>홈</button>
-								 <button type='button' class='btn btn-secondary' onclick='location.href="#" '>회 원</button>
-								 <button type='button' class='btn btn-secondary' onclick='location.href="#" '>장 르</button>
-								 <button disabled type='button' class='btn btn-primary' onclick='location.href="#" '>영 화</button>
-								 <button type='button' class='btn btn-secondary' onclick='location.href="#" '>감독/출연진</button>
-								 <button type='button' class='btn btn-secondary' onclick='location.href="#" '>신고 조회</button>
+								 <button type='button' class='btn btn-secondary' onclick='location.href="../user" '>회 원</button>
+								 <button type='button' class='btn btn-secondary' onclick='location.href="../genre/addGenre" '>장 르</button>
+								 <button disabled type='button' class='btn btn-primary' onclick='location.href="" '>영 화</button>
+								 <button type='button' class='btn btn-secondary' onclick='location.href="../cast" '>감독/출연진</button>
+								 <button type='button' class='btn btn-secondary' onclick='location.href="../inspection/inspection" '>신고 조회</button>
 							 </div>
 						 </div>
 					 </div>

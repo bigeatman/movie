@@ -12,6 +12,12 @@
 <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js'></script>
 <script src="https://kit.fontawesome.com/449f39a7b2.js" crossorigin="anonymous"></script>
 <script>
+function checkLogin() {
+	if(${empty userId}) {location.href="../user/login"}
+	else if(${userId ne "admin"}) location.href="../../user/logout"
+}
+$(checkLogin)
+
 function isVal(field) {
     let isGood = false
     let errMsg
@@ -100,30 +106,22 @@ $(init)
 	width:25%;
 	text-align : left;
 }
+
+#logoutBtn{
+	height: 1.5rem;
+	font-size: 14px;		
+}
 </style>
 <body>
-<c:if test='${empty userId}'>
-<div class='row' style='margin-top: 100px; text-align: center;'>
-        <div class='col'>
-            <span class='h4'>로그인을 하세요.</span>
-        </div>
-    </div>
-    <div class='row' style='margin-top: 150px; margin-left: 100px;'>
-        <div class='col'>
-            <button id='okBtn' type='button' class='btn btn-primary' onclick='location.href="login"' style='margin-left: 30px;'>
-                <span class='h6'>로그인</span>
-            </button>
-        </div>
-    </div>
-</c:if>
-<c:if test='${not empty userId}'>
-	<div class='container-fluid'>
+	<div class='container'>
 		<div class='header'>
             <div class='float-left mt-3'><h5>| 장르</h5></div>
-			 <div id='btn_group' class='float-right mt-3'>
-				  <label style='font-size:13'>${user}</label>&emsp;
-				  <a href='<%= request.getContextPath() %>/admin/user/logout'><button style='font-size:13'>로그아웃</button></a>
-			  </div><br>
+            <div id='btn_group' class='float-right mt-3'>
+                <span id='id'>${userId}님</span>&emsp;
+				<button id='logoutBtn' type='button' class='btn btn-secondary' onclick='location.href="../user/logout"'>
+	        		<span id='logoutSpan'>로그아웃</span>
+	        	</button>
+            </div><br>	  
 		  <div class='row mt-5'>
 			  <div class='col'>
 				 <div class='container'>
@@ -236,6 +234,5 @@ $(init)
             </div>
         </div>
     </div>
-</c:if>
 </body>
 </html>
