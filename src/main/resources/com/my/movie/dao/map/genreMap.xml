@@ -48,7 +48,8 @@
 		from genre
 	</select>
 	
-	<insert id='insertGenre'>
+	<insert id='insertGenre' parameterType="com.my.movie.domain.Genre" useGeneratedKeys="true"
+		keyProperty="genreNum" keyColumn="genre_num">
 		insert into genre(genre_num, genre_name) values(genre_num_seq.nextval, '${genreName}')
 	</insert>
 

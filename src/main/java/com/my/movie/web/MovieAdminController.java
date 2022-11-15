@@ -9,11 +9,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.my.movie.domain.Movie;
+import com.my.movie.domain.request.CreateMovieRequest;
 import com.my.movie.service.GenreService;
 import com.my.movie.service.MovieService;
 
@@ -59,17 +61,7 @@ public class MovieAdminController {
 		movieService.delMovie(movieNum);
 	}
 	
-	@ResponseBody
-	@PostMapping("addMovie")
-	public ModelAndView addMovie(Movie movie, ModelAndView mv) throws IOException {
-		try {
-			movieService.addMovie(movie);
-		} catch (NullPointerException e) {
-			e.printStackTrace();
-		}
-		mv.setViewName("admin/movie/listMovie");
-		return mv;
-	}
+	
 
 //	@ResponseBody
 //	@PostMapping("/fix")

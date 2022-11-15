@@ -13,7 +13,8 @@ public interface GenreDao {
 	List<Genre> selectAll();
 	List<GenreDto> selectGenre();
 	List<String> selectCheckGenre();
-	void insertGenre(String genreName);
+	int insertGenre(String genreName);
 	void addUserGenre(User user, List<String> genres);
-	void addMovieGenre(Movie movie, List<String> genres);
+	void addMovieGenre(int movieNum, List<Integer> genreNum);
+	Integer selectedGenreByName(String genreName);
 }

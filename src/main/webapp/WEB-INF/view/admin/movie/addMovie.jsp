@@ -139,28 +139,78 @@ function init() {
 	}) */
 		
     $('#addMovieBtn').click(() => {
-    	if(isVal($('#movieName')) && isVal($('#movieReleasedate')) && isVal($('#movieCountry')) && isVal($('#movieRunningtime')) && isVal($('#movieStory')) && isVal($('#cumulativeAudience'))){
+    	
+    	if( (isVal($('#movieName')) && 
+    			isVal($('#movieReleasedate')) && 
+    			isVal($('#movieCountry')) && 
+    			isVal($('#movieRunningtime')) && 
+    			isVal($('#movieStory')) && 
+    			isVal($('#cumulativeAudience'))) == false) {
+    		return;
+    	}
+    	
+    	var selectedGenres = getSelectedGenrs();
+    	var selectedDirector = getSelectedDirector();
+    	var selectedCastStr = getSelectedCast();
+    	console.log(selectedCastStr);
+    	
+    	var formData = new FormData();
+    	formData.append('movieName', $('#movieName').val());
+    	formData.append('movieReleasedate', $('#movieReleasedate').val());
+    	formData.append('movieCountry', $('#movieCountry').val());
+    	formData.append('movieRunningtime', $('#movieRunningtime').val());
+    	formData.append('movieStory', $('#movieStory').val());
+    	formData.append('hashtag', $('#hashtag').val());
+    	formData.append('cumulativeAudience', $('#cumulativeAudience').val());
+    	formData.append('selectedGenres', selectedGenres);
+    	formData.append('selectedDirector', selectedDirector);
+    	formData.append('selectedCast', selectedCastStr);
+    	formData.append('img', document.querySelector('#movieImgfileName').files[0]);
     	
     	$.ajax({
- 			url: 'addMovie',
- 		    method:'post',
- 		    contentType: 'application/json',
- 		    data: JSON.stringify({
- 		    	movie: {
-		 		    movieName: $('#movieName').val(),
-		 		    moiveReleasedate: $('#movieReleasedate').val(),
-		 		    movieCountry: $('#movieCountry').val(),
-		 		    movieImgfileName: $('#movieImgfileName').val(),
-		 		    movieRunningtime: $('#movieRunningtime').val(),
-		 		    movieStory: $('#movieStory').val(),
-		 		    hashtag: $('#hashtag').val(),
-		 		    cumulativeAudience: $('#cumulativeAudience').val()
- 		    	},
- 		    	success: location.href='../movie/addMovie'
-	        })
-    	})}
+			url : '../mv/addMovie',
+			method : 'post',
+			processData : false,
+			contentType : false,
+			data : formData,
+			success : function(result) {
+				location.href = "addMovie";
+			}
+		});
     })
 }
+
+function getSelectedGenrs() {
+	var selectedGenre = '';
+	
+	document.getElementsByName('genreBox').forEach(function(element) {
+		if(element.checked) {
+			var id = element.getAttribute('id').replace('genre_', '');
+			selectedGenre += id + ",";
+		}
+	});
+	
+	return selectedGenre;
+}
+
+function getSelectedDirector() {
+	return selectedDirector.getAttribute('id').replace('p_', '');
+}
+
+function getSelectedCast() {
+	var selectedCastStr = '';
+	
+	for (var [key, value] of selectedCast) {
+		if(value != null) {
+			selectedCastStr += key + ',' + value[1] + '-';	
+		}
+	}
+	
+	console.log(selectedCastStr);
+	
+	return selectedCastStr;
+}
+
 $(init)
 
 </script>
@@ -247,7 +297,7 @@ $(init)
 	 </div>
 </div><hr>
 	<div class='col p-5'>
-		<form class=' form' method='post'>
+		
 			<div class='col'>
 				<h5 style='color:#0f56ba'><b>| 영화 추가</b></h5>
 				<hr>
@@ -266,22 +316,24 @@ $(init)
 				<span id='genreErrMsg'></span>
 				<div class='col'>
 						<table>
-							<c:forEach var="i" begin="0" end="${fn:length(genres) }" step="4">
-								<tr>
-									<c:if test="${not empty genres[i]}">
-										<td><label><input id="genre_${i }" onchange="genreSelection(${i })" type='checkbox'>${genres[i].genreName }</label></td>
-									</c:if>
-									<c:if test="${not empty genres[i + 1]}">
-										<td><label><input id="genre_${i + 1 }" onchange="genreSelection(${i + 1 })" type='checkbox'>${genres[i + 1].genreName }</label></td>
-									</c:if>
-									<c:if test="${not empty genres[i + 2]}">
-										<td><label><input id="genre_${i + 2 }" onchange="genreSelection(${i + 2 })" type='checkbox'>${genres[i + 2].genreName }</label></td>
-									</c:if>
-									<c:if test="${not empty genres[i + 3]}">
-										<td><label><input id="genre_${i + 3 }" onchange="genreSelection(${i + 3})" type='checkbox'>${genres[i + 3].genreName }</label></td>
-									</c:if>
-								</tr>
-							</c:forEach>
+							<tbody id="genreTableBody">
+								<c:forEach var="i" begin="0" end="${fn:length(genres) }" step="4">
+									<tr id="genre_line_${Integer.valueOf(i / 4)}">
+										<c:if test="${not empty genres[i]}">
+											<td><label><input id="genre_${i }" name="genreBox" onchange="genreSelection(${i })" type='checkbox'>${genres[i].genreName }</label></td>
+										</c:if>
+										<c:if test="${not empty genres[i + 1]}">
+											<td><label><input id="genre_${i + 1 }" name="genreBox" onchange="genreSelection(${i + 1 })" type='checkbox'>${genres[i + 1].genreName }</label></td>
+										</c:if>
+										<c:if test="${not empty genres[i + 2]}">
+											<td><label><input id="genre_${i + 2 }" name="genreBox" onchange="genreSelection(${i + 2 })" type='checkbox'>${genres[i + 2].genreName }</label></td>
+										</c:if>
+										<c:if test="${not empty genres[i + 3]}">
+											<td><label><input id="genre_${i + 3 }" name="genreBox" onchange="genreSelection(${i + 3})" type='checkbox'>${genres[i + 3].genreName }</label></td>
+										</c:if>
+									</tr>
+								</c:forEach>
+							</tbody>
 						</table>
                     </div>
                 </div>
@@ -329,10 +381,10 @@ $(init)
 				<button class='btn btn-secondary btn-block h-100 w-100 mr-5' onclick='location.href="../movie/listMovie"'>취소</button>
 				</div>
 				<div class='p-1'>
-				<button type='submit' class='btn btn-success btn-block h-100 w-100 mr-5' id='addMovieBtn'>추가</button>
+				<button class='btn btn-success btn-block h-100 w-100 mr-5' id='addMovieBtn'>추가</button>
 				</div>
 			</div>
-		</form>
+		
 	</div>
 	<div class='modal fade' tabindex='-1' id='dialogModal'>
 		<div id="modal-back" class='modal-dialog modal-lg'>
@@ -360,22 +412,37 @@ $(init)
 </table>
 <script>
 	
+	var totalGenreCount = ${fn:length(genres)};
 	var selectedDirector = null;
 	var selectedCast = new Map();
-	var castToAdd = []; 
+	var castToAdd; 
 	
 	function addCast() {
+		castToAdd = [];
 		setDialog(500, 250, true, "신규 배우 추가");
 		setAddCastTitle();
 		createAddCastBody();
 		createDoubleButton();
 		setAddCastOkEvent();
-		updateTable();
 	}
 	
 	function setAddCastOkEvent() {
 		document.querySelector('#okButton').addEventListener('click', function() {
-			updateCastNames();
+			for(var i = 0; i < castToAdd.length; i++) {
+				var formData = new FormData();
+				formData.append('castName', castToAdd[i][0]);
+				formData.append('img', castToAdd[i][1]);
+				formData.append('isDirector', 'false');
+				
+				$.ajax({
+					url : '../../cst/addcast',
+					method : 'post',
+					processData : false,
+					contentType : false,
+					data : formData,
+					type : 'post'
+				});
+			}
 			$('#dialogModal').modal('hide');
 		});
 	}
@@ -499,12 +566,12 @@ $(init)
 			});
 			
 			$('#dialogModal').modal('hide');
+			
 		});
 	}
 	
 	function setFileSelectButtonListener() {
 		document.querySelector("#fileSelector").onchange = () => {
-			console.log(document.querySelector("#fileSelector").files[0]);
 			document.querySelector('#imgName').value = document.querySelector("#fileSelector").files[0].name;
 			document.querySelector("#fileSelector").files.value = '';
 		};
@@ -578,10 +645,55 @@ $(init)
 	function createAddGenreDialog() {
 		setDialog(400, 100, false, "장르 추가");
 		createAddGenreBody();
+		document.querySelector('#addGenreBtn').addEventListener('click', function() {
+			var inputGenre = document.querySelector('#genreInput').value;
+			
+			$.ajax({
+				url: '/admin/gnr/add',
+				method: 'post',
+				data: {
+					genreName: inputGenre
+				},
+				success : function(result) {
+					addGenreElems(result, inputGenre);
+				},
+				error : function(error) {
+					console.log(error);
+				}
+			})
+		})
+	}
+	
+	// <input id="genre_0" onchange="genreSelection(0)" type="checkbox">
+	
+	function addGenreElems(genreId, inputGenre) {
+		var lineNum = parseInt(totalGenreCount++ / 4);
+		var lineElem = document.querySelector("#genre_line_" + lineNum);
+		
+		if(lineElem == null) {
+			lineElem = document.createElement('tr');
+			lineElem.setAttribute('id', 'genre_line_' + lineNum);
+			document.querySelector('#genreTableBody').appendChild(lineElem);
+		}
+		
+		var inputElem = document.createElement('input');
+		inputElem.setAttribute('id', 'gener_' + genreId);
+		inputElem.setAttribute('onchange', 'genreSelection(' + genreId + ')');
+		inputElem.setAttribute('type', 'checkbox');
+		
+		var labelElem = document.createElement('label');
+		var tdElem = document.createElement('td');
+		
+		document.querySelector('#genreTableBody').appendChild(lineElem);
+		lineElem.appendChild(tdElem);
+		tdElem.appendChild(labelElem);
+		labelElem.appendChild(inputElem);
+		
+		inputElem.outerHTML += inputGenre;
 	}
 	
 	function createAddGenreBody() {
-		var bodyDiv = createInputElems('추가');		
+		var bodyDiv = createInputElems('추가');
 		document.querySelector("#dialogBody").appendChild(bodyDiv);
 	}
 	
@@ -597,6 +709,7 @@ $(init)
 		button.classList.add('btn');
 		button.classList.add('btn-success');
 		button.style.setProperty('width', '20%')
+		button.setAttribute('id', 'addGenreBtn');
 		button.innerText = inputTitle;
 		
 		var bodyDiv = document.createElement('div');
@@ -642,12 +755,6 @@ $(init)
 				if(value != null) {
 					document.querySelector('#castName').value += value + ' ';	
 				}
-			}
-		}
-		
-		if(castToAdd.length != 0) {
-			for(var i = 0; i < castToAdd.length; i++) {
-				document.querySelector('#castName').value += castToAdd[i][0] + ' ';
 			}
 		}
 	}
@@ -779,15 +886,37 @@ $(init)
 		var imgElem = document.querySelector("#img_" + num);
 		var nameElem = document.querySelector("#name_" + num);
 		
-		if(selected == 'true') {
-			unSelect(imgDiv, nameElem, imgElem);
-			if(isDirector) {
+		if(isDirector) {
+			if(selected == 'true') {
+				unSelect(imgDiv, nameElem, imgElem);
 				selectedDirector = null;
+			} else if(selected == 'false'){
+				select(imgDiv, nameElem, imgElem);
+				checkIsDirector(imgDiv, nameElem, imgElem);
 			}
-		} else if(selected == 'false'){
-			select(imgDiv, nameElem, imgElem);
-			checkIsDirector(imgDiv, nameElem, imgElem);
+		} else {
+			if(selected == 'subActor') {
+				selectToMainActor(imgDiv, nameElem, imgElem);
+			} else if(selected == 'mainActor') {
+				unSelect(imgDiv, nameElem, imgElem);	
+			} else if(selected == 'false'){
+				selectToSubActor(imgDiv, nameElem, imgElem);	
+			}
 		}
+	}
+	
+	function selectToMainActor(imgDiv, nameElem, imgElem) {
+		imgDiv.setAttribute('selected', 'mainActor');
+		nameElem.style.setProperty('color', 'red');
+		imgElem.style.setProperty('border', '2px solid red');
+		addOrRemoveCasts(imgDiv, nameElem, imgElem, 'mainActor');
+	}
+	
+	function selectToSubActor(imgDiv, nameElem, imgElem) {
+		imgDiv.setAttribute('selected', 'subActor');
+		nameElem.style.setProperty('color', 'orange');
+		imgElem.style.setProperty('border', '2px solid orange');
+		addOrRemoveCasts(imgDiv, nameElem, imgElem, 'subActor');
 	}
 	
 	function unSelect(imgDiv, nameElem, imgElem) {
@@ -814,11 +943,15 @@ $(init)
 		var castNum = imgDiv.getAttribute('id').replace('p_', '');
 		var castName = nameElem.innerHTML;
 		
-		if(isAdd) {
-			selectedCast.set(castNum, castName);	
-		} else {
+		if(isAdd == true) {
+			selectedCast.set(castNum, castName);
+		} else if (isAdd == false) {
 			selectedCast.set(castNum, null);
-		}
+		} else if (isAdd == 'mainActor') {
+			selectedCast.set(castNum, [castName, 'mainActor']);
+		}  else if (isAdd == 'subActor') {
+			selectedCast.set(castNum, [castName, 'subActor']);
+		} 
 		
 		writeSelectdCastElem(selectedCastElem);
 	}
@@ -827,7 +960,7 @@ $(init)
 		selectedCastElem.value = '';
 		for (var [key, value] of selectedCast) {
 			if(value != null) {
-				selectedCastElem.value += value + ' ';	
+				selectedCastElem.value += value[0] + ' ';	
 			}
 		}
 	}
