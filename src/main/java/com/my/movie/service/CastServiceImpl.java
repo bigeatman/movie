@@ -34,4 +34,14 @@ public class CastServiceImpl implements CastService {
 			castDao.insertCast(request);
 		}
 	}
+
+	@Override
+	public void insertMovieDirector(int movieId, int directorId) {
+		castDao.insertMovieDirector(movieId, directorId);
+	}
+
+	@Override
+	public void insertMovieCast(int movieNum, List<Cast> casts) {
+		castDao.insertMovieCast(movieNum, casts);
+	}
 }

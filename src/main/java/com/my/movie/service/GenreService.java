@@ -7,7 +7,9 @@ import com.my.movie.domain.GenreDto;
 
 public interface GenreService {
 	List<Genre> getAll();
-	void addGenre(String genreName);
+	int addGenre(String genreName);
 	List<GenreDto> getGenre();
 	List<String> getCheckGenre();
+	int selectedGenreByName(String genreName);
+	void addMovieGenre(int movieNum, List<Integer> genreNum);
 }
