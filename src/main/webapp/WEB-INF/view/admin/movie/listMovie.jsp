@@ -16,8 +16,9 @@ function listMovies() {
 		method: 'post',
 		url: "<%=request.getContextPath() %>/admin/movie/listMovie"
 	}).done(movies => {
-		console.log(movies);
+		
 		if(movies.length) {
+			
 			const movieArr = []
 	
 			$.each(movies, (i, movie) => {
@@ -42,6 +43,23 @@ function listMovies() {
 	})
 }
 
+/* function filter() {
+	let movieSearch = document.getElementById('movieSearch').value.toLowerCase();
+	let movies = document.getElementsByClassName('movies');
+	
+	for (let i = 0; i < movies.length; i++) {
+		movieName = movies[i].getElementsByClassName('movieName');
+		movieCountry = movies[i].getElementsByClassName('movieCountry');
+		if (movieName[0].innerHTML.toLowerCase().includes(movieSearch) ||
+			movieCountry[0].innerHTML.toLowerCase().includes(movieSearch)	
+		) {
+			movies[i].style.display = 'flex'
+		} else {
+			movies[i].style.display = 'none'
+		}
+	}
+}
+$(filter) */
 
 function init() {
 	$(listMovies)
@@ -90,7 +108,6 @@ $(init)
             <div class='float-left mt-3'><h5>| 영화</h5></div>
 			 <div id='btn_group' class='float-right mt-3'>
 				  <label style='font-size:13'>관리자님</label>&emsp;
-                  <span style='font-size:12'>(08:23)</span>&emsp;
 				  <a href='#'><button style='font-size:13'>로그아웃</button></a>
 			  </div><br>
 		  <div class='row mt-5'>
@@ -118,11 +135,11 @@ $(init)
                 <form>
                     <div class='row mb-3'>
                         <div class='col'>
-                            <input type='text' class='form-control' name='boardTitle' id='boardTitle' placeholder='검색'/>
+                            <input type='text' class='form-control' name='movieSearch' id='movieSearch' placeholder='검색'/>
                         </div>
                         <div class='col d-flex'>
-                            <button type='button' class='btn flex-fill border' id='searchMovieBtn'>
-                                <span class='label  d-md-inline'>조회</span>
+                            <button type='button' class='btn flex-fill border' id='searchMovieBtn' name='searchMovieBtn'>
+                                <span class='label  d-md-inline'>검색</span>
                             </button>
                             <button type='button' class='btn flex-fill border' id='fixMovieBtn' onclick="location.href='fixMovie' ">
                                 <span class='label  d-md-inline'>수정</span>
@@ -141,9 +158,9 @@ $(init)
                     </div>
                     <div class='row'>
                         <div class='col'>
-                            <table class='table table-bordered' id='BoardTable'>
+                            <table class='table table-bordered' id='boardTable'>
                                 <thead><tr><th></th><th>NO</th><th>작품명</th><th>개봉일</th><th>상영시간</th><th>국가</th></tr></thead>
-                                <tbody id='movies'>
+                                <tbody id='movies' class='movies'>
                                 </tbody>
                             </table>
                         </div>

@@ -36,7 +36,6 @@
 		<div class='float-left mt-3'><h5>| 영화</h5></div>
 		 <div id='btn_group' class='float-right mt-3'>
 			  <label style='font-size:13'>관리자님</label>&emsp;
-			  <span style='font-size:12'>(08:23)</span>&emsp;
 			  <a href='#'><button style='font-size:13'>로그아웃</button></a>
 		  </div><br>
 	  <div class='row mt-5'>
