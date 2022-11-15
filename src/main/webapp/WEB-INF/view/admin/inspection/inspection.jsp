@@ -15,7 +15,7 @@
 <script>
 // 신고 상세페이지
 function clickDetails(inspectionNum, inspectionContentNum, inspectionContentName) {
-	$.get("/admin/inspections/" + inspectionNum + "/details", function(data, status) {
+	$.get("/admin/inspection/inspections/" + inspectionNum + "/details", function(data, status) {
 		$('#detailBody').empty();
 		data.map((detail) => {
 			$('#detailBody').append("<tr>"
@@ -24,27 +24,24 @@ function clickDetails(inspectionNum, inspectionContentNum, inspectionContentName
 					+ "<td>" + detail.inspectionContent + "</td>"
 					+ "</tr>"
 				)
-				
-				$('#reportModal').modal("show");
+			$('#reportModal').modal("show");
 		});
 	})
-/*
-	//신고된 컨텐츠 이동
-		var url = "";
 	
-		if(inspectionContentName === "영화평") { //영화평에서 해당게시물의 번호로 찾아간다.
-			url = "/community/content/" + inspectionContentNum;
+//신고된 컨텐츠 이동
+	var url = "";
+	
+	if(inspectionContentName === "영화평") { //영화평에서 해당게시물의 번호로 찾아간다.
+			url = "/community/content?num=" + inspectionContentNum;
 		} else if(inspectionContentName === "영화평댓글") { //영화평댓글에서 해당게시물의 번호로 찾아간다.
-			url = "/communityReply/list/" + inspectionContentNum;
+			url = "/communityReply/content?num=" + inspectionContentNum;
 		} else if(inspectionContentName === "리뷰") { //리뷰에서 해당게시물의 번호로 찾아간다.
-			url = "/review/" + inspectionContentNum;
-		} else(inspectionContentName === "리뷰댓글") { //리뷰댓글에서 해당게시물의 번호로 찾아간다.
+			url = "/review/content?num=" + inspectionContentNum;
 		} else if(inspectionContentName === "리뷰댓글") { //리뷰댓글에서 해당게시물의 번호로 찾아간다.
-			url = "/rev/morerev" + inspectionContentNum;
-		}
-	}
+			url = "/rev/morerev/content?num=" + inspectionContentNum;
+
 		$('#inspectionMove').attr('href', url);
-*/
+	}
 //신고 반려
 	var today = new Date();
 	var year = today.getFullYear();
@@ -54,41 +51,41 @@ function clickDetails(inspectionNum, inspectionContentNum, inspectionContentName
 	
 	$('#returnbtn').click(() => {
 		$.ajax({
-				url: '/admin/inspection/status',
-				method: 'post',
-				contentType: 'application/json',
-				data: JSON.stringify({
-					"inspectionNum" : inspectionNum,
-					"inspectionStatus" : "1"
-				}),
-				success: function(data) {
-					window.location.reload();
-				},
-				error: function(error, status){
-					console.log("error ", error);}		
-			})
+			url: '/admin/inspection/inspection/status',
+			method: 'post',
+			contentType: 'application/json',
+			data: JSON.stringify({
+				"inspectionNum" : inspectionNum,
+				"inspectionStatus" : "1"
+			}),
+			success: function(data) {
+				window.location.reload();
+			},
+			error: function(error, status) {
+				console.log("error ", error);
+			}		
+		})
 	})
 
 //신고 삭제
 	$('#delbtn').click(() => {
 		$.ajax({
-				url: '/admin/inspection/status',
-				method: 'post',
-				contentType: 'application/json',
-				data: JSON.stringify({
-					"inspectionNum" : inspectionNum,
-					"inspectionStatus" : "2"
-				}),
-				success: function(data) {
-					window.location.reload();
-				},
-				error: function(error, status){
-					console.log("error ", error);
-				}
+			url: '/admin/inspection/inspection/status',
+			method: 'post',
+			contentType: 'application/json',
+			data: JSON.stringify({
+				"inspectionNum" : inspectionNum,
+				"inspectionStatus" : "2"
+			}),
+			success: function(data) {
+				window.location.reload();
+			},
+			error: function(error, status) {
+				console.log("error ", error);
+			}
 		})
 	})
 }
-	
 </script>
 <body>
 <div class='container'>
@@ -97,7 +94,7 @@ function clickDetails(inspectionNum, inspectionContentNum, inspectionContentName
             <h5>| 신고조회</h5>
         </div>
         <div id='btn_group' class='float-right mt-3'>
-            <label style='font-size:13'>admin님</label>&emsp;
+            <label style='font-size:13'>admin님</label>
             <a href='../user/login'><button style='font-size:13'>로그아웃</button></a>
         </div><br>
         <div class='row mt-5'>
@@ -106,18 +103,12 @@ function clickDetails(inspectionNum, inspectionContentNum, inspectionContentName
                     <div class='row'>
                         <div class='col-12 text-center'>
                             <div class='btn-group btn-block'>
-                                <button type='button' class='btn btn-secondary'
-                                    onclick='location.href="../admin" '>홈</button> 
-                                <button type='button' class='btn btn-secondary'
-                                    onclick='location.href="../admin/user/list" '>회 원</button> <!-- 이동불가능 -->
-                                <button type='button' class='btn btn-secondary'
-                                	onclick='location.href="../admin/genre/addGenre" '>장 르</button>
-                                <button type='button' class='btn btn-secondary'
-                                    onclick='location.href="../admin/movie/listMovie" '>영 화</button>
-                                <button type='button' class='btn btn-secondary'
-                                	onclick='location.href="...." '>감독/배우</button> <!-- 이동불가능 -->
-                                <button type='button' class='btn btn-secondary'
-                                    onclick='location.href="../admin/inspection" '>신고 조회</button>
+                                <button type='button' class='btn btn-secondary' onclick='location.href="../admin" '>홈</button> 
+                                <button type='button' class='btn btn-secondary' onclick='location.href="../admin/user" '>회 원</button>
+                                <button type='button' class='btn btn-secondary'	onclick='location.href="../admin/genre/addGenre" '>장 르</button>
+                                <button type='button' class='btn btn-secondary' onclick='location.href="../admin/movie/listMovie" '>영 화</button>
+                                <button type='button' class='btn btn-secondary' onclick='location.href="../admin/cast" '>감독/배우</button>
+                                <button type='button' class='btn btn-primary' onclick='location.href="../admin/inspection" '>신고 조회</button>
                             </div>
                         </div>
                     </div>
@@ -138,7 +129,7 @@ function clickDetails(inspectionNum, inspectionContentNum, inspectionContentName
                     </thead>
                     <tbody style='text-align: center' id="inspectionTable">
                     <c:forEach items="${inspection}" var="inspection" varStatus="status">
-                        <tr>
+						<tr>
                             <td>${status.count}</td>
                             <td>${inspection.inspectionContentName}</td>
                             <td>${inspection.nickname}<br>(${inspection.userId})</td>
@@ -166,17 +157,16 @@ function clickDetails(inspectionNum, inspectionContentNum, inspectionContentName
         <div class='modal-content'>
             <div class='modal-body'><br>
                 <h3><b>신고 사유 상세</b></h3>
-                <a id='inspectionMove'>
-                	<p style='text-align: end; cursor: pointer;' data-dismiss='modal' a href=""><u><i>신고된 컨텐츠로 이동</i></u></p>
-                </a>
-                <div style='width:100%; height:400px; overflow:auto'>
-                <table class='table' width='100%' cellspacing='0' cellpadding='0'>
-                    <thead style='text-align: center'>
-                        <tr class="bg-light">
-                            <th width="5%">No.</th><th>신고자ID</th><th width="50%">신고사유</th>
-                        </tr>
-                    </thead>
-                    <tbody id='detailBody' style='text-align: center'>
+                	<div style='text-align : right;'>
+                		<a href="" id='inspectionMove' data-dismiss='modal'><u><i>신고된 컨텐츠로 이동</i></u></a>
+                		<div style='width:100%; height:400px; overflow:auto'>
+                		<table class='table' width='100%' cellspacing='0' cellpadding='0'>
+                    	<thead style='text-align: center'>
+                        	<tr class="bg-light">
+                            	<th width="5%">No.</th><th>	신고자ID</th><th width="50%">신고사유</th>
+                        	</tr>
+                    	</thead>
+                    	<tbody id='detailBody' style='text-align: center'>
 					</tbody>
                 </table>
             </div>
