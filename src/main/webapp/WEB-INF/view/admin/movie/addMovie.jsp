@@ -753,7 +753,7 @@ $(init)
 		if(selectedCast != null) {
 			for (var [key, value] of selectedCast) {
 				if(value != null) {
-					document.querySelector('#castName').value += value + ' ';	
+					document.querySelector('#castName').value += value[0] + ' ';	
 				}
 			}
 		}
