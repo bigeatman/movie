@@ -27,4 +27,12 @@
 	<insert id="insertCast">
 		INSERT INTO CAST VALUES(CAST_NUM_SEQ.NEXTVAL, '${castName}', '${targetImageFileName}')
 	</insert>
+	
+	<insert id="insertMovieDirector">
+		INSERT INTO MOVIE_DIRECTORS VALUES(${movieId}, ${directorId})
+	</insert>
+	
+	<insert id="insertMovieCast">
+		INSERT INTO MOVIE_CAST VALUES(${movieId}, ${castId}, ${position})
+	</insert>
 </mapper>

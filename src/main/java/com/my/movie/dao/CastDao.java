@@ -17,5 +17,9 @@ public interface CastDao {
 	void insertDirector(CreateCastRequest request);
 
 	void insertCast(CreateCastRequest request);
+
+	void insertMovieDirector(int movieId, int directorId);
+
+	void insertMovieCast(int movieNum, List<Cast> casts);
 	
 }

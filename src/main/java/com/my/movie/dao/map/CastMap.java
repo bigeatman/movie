@@ -17,4 +17,8 @@ public interface CastMap {
 	void insertDirector(CreateCastRequest req);
 	
 	void insertCast(CreateCastRequest req);
+
+	void insertMovieDirector(int movieId, int directorId);
+
+	void insertMovieCast(int movieId, int castId, int position);
 }

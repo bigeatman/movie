@@ -14,4 +14,7 @@ public interface CastService {
 
 	void insert(CreateCastRequest request);
 	
+	void insertMovieDirector(int movieId, int directorId);
+
+	void insertMovieCast(int movieNum, List<Cast> casts);
 }

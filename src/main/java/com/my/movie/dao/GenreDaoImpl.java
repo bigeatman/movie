@@ -40,8 +40,12 @@ public class GenreDaoImpl implements GenreDao {
 	}
 
 	@Override
-	public void insertGenre(String genreName) {
-		genreMap.insertGenre(genreName);
+	public int insertGenre(String genreName) {
+		Genre genre = new Genre();
+		genre.setGenreName(genreName);
+		genreMap.insertGenre(genre);
+		
+		return genre.getGenreNum();
 	}
 
 	@Override
@@ -53,10 +57,14 @@ public class GenreDaoImpl implements GenreDao {
 	}
 
 	@Override
-	public void addMovieGenre(Movie movie, List<String> genres) {
-		for (String genre : genres) {
-			int genreNum = genreMap.getGenreId(genre);
-			genreMap.insertMovieGenre(movie.getMovieNum(), genreNum);
+	public void addMovieGenre(int movieNum, List<Integer> genres) {
+		for (int genre : genres) {
+			genreMap.insertMovieGenre(movieNum, genre);
 		}
+	}
+
+	@Override
+	public Integer selectedGenreByName(String genreName) {
+		return genreMap.getGenreId(genreName);
 	}
 }

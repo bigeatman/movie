@@ -40,4 +40,16 @@ public class CastDaoImpl implements CastDao {
 	public void insertCast(CreateCastRequest request) {
 		castMap.insertCast(request);
 	}
+
+	@Override
+	public void insertMovieDirector(int movieId, int directorId) {
+		castMap.insertMovieDirector(movieId, directorId);
+	}
+
+	@Override
+	public void insertMovieCast(int movieNum, List<Cast> casts) {
+		for(Cast cast : casts) {
+			castMap.insertMovieCast(movieNum, cast.getCastNum(), cast.getPosition());
+		}
+	}
 }

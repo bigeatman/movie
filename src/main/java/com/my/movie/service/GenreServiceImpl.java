@@ -19,8 +19,8 @@ public class GenreServiceImpl implements GenreService {
 	}
 
 	@Override
-	public void addGenre(String genreName) {
-		genreDao.insertGenre(genreName);
+	public int addGenre(String genreName) {
+		return genreDao.insertGenre(genreName);
 	}
 
 	@Override
@@ -31,5 +31,15 @@ public class GenreServiceImpl implements GenreService {
 	@Override
 	public List<String> getCheckGenre() {
 		return genreDao.selectCheckGenre();
+	}
+	
+	@Override
+	public int selectedGenreByName(String genreName) {
+		return genreDao.selectedGenreByName(genreName);
+	}
+
+	@Override
+	public void addMovieGenre(int movieNum, List<Integer> genreNum) {
+		genreDao.addMovieGenre(movieNum, genreNum);
 	}
 }
