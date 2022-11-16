@@ -19,8 +19,7 @@ function checkLogin() {
 }
 $(checkLogin)
 
-// 신고 상세페이지
-function clickDetails(inspectionNum, inspectionContentNum, inspectionContentName) {
+// 신고 상세페이지function clickDetails(inspectionNum, inspectionContentNum, inspectionContentName) {
 	$.get("/admin/inspection/inspections/" + inspectionNum + "/details", function(data, status) {
 		$('#detailBody').empty();
 		data.map((detail) => {
@@ -37,17 +36,17 @@ function clickDetails(inspectionNum, inspectionContentNum, inspectionContentName
 //신고된 컨텐츠 이동
 	var url = "";
 	
-	if(inspectionContentName === "영화평") { //영화평에서 해당게시물의 번호로 찾아간다.
+	if(inspectionContentName === "영화평") { 							//영화평에서 신고된 해당게시물의 번호로 찾아간다.
 			url = "/community/content?num=" + inspectionContentNum;
-		} else if(inspectionContentName === "영화평댓글") { //영화평댓글에서 해당게시물의 번호로 찾아간다.
+		} else if(inspectionContentName === "영화평댓글") { 			//영화평댓글에서 신고된 해당게시물의 번호로 찾아간다.
 			url = "/communityReply/content?num=" + inspectionContentNum;
-		} else if(inspectionContentName === "리뷰") { //리뷰에서 해당게시물의 번호로 찾아간다.
+		} else if(inspectionContentName === "리뷰") { 				//리뷰에서 신고된 해당게시물의 번호로 찾아간다.
 			url = "/review/content?num=" + inspectionContentNum;
-		} else if(inspectionContentName === "리뷰댓글") { //리뷰댓글에서 해당게시물의 번호로 찾아간다.
+		} else if(inspectionContentName === "리뷰댓글") { 				//리뷰댓글에서 신고된 해당게시물의 번호로 찾아간다.
 			url = "/rev/morerev/content?num=" + inspectionContentNum;
-
+		}
 		$('#inspectionMove').attr('href', url);
-	}
+
 //신고 반려
 	var today = new Date();
 	var year = today.getFullYear();
@@ -110,20 +109,20 @@ function clickDetails(inspectionNum, inspectionContentNum, inspectionContentName
 			<button id='logoutBtn' type='button' class='btn btn-secondary' onclick='location.href="../user/logout"'>
 	        		<span id='logoutSpan'>로그아웃</span>
 	        </button>
-	  	</div><br>        <div class='row mt-5'>
-            <div class='col'>
+	  	</div><br>        
+		<div class='row mt-5'>            <div class='col'>
                 <div class='container'>
                     <div class='row'>
                         <div class='col-12 text-center'>
                             <div class='btn-group btn-block'>
-								<button type='button' class='btn btn-secondary' onclick='location.href="../../admin"'>홈</button>
+                                <button type='button' class='btn btn-secondary' onclick='location.href="../../admin"'>홈</button>
 								<button type='button' class='btn btn-secondary' name='page' onclick='location.href="../user"'>회 원</button>
 								<button type='button' class='btn btn-secondary' name='page' onclick='location.href="../genre/addGenre"'>장 르</button>
 								<button type='button' class='btn btn-secondary' name='page' onclick='location.href="../movie/listMovie"'>영 화</button>
 								<button type='button' class='btn btn-secondary' name='page' onclick='location.href="../cast"'>감독/배우</button>
 								<button type='button' class='btn btn-primary' name='page' onclick='location.href="" disabled'>신고 조회</button>	
-							</div>                        </div>
-                    </div>
+							</div>
+                        </div>                    </div>
                 </div>
             </div>
         </div>
@@ -163,7 +162,6 @@ function clickDetails(inspectionNum, inspectionContentNum, inspectionContentName
             </div>
         </div>
     </div>
-</div>
 <div class='modal fade' tabindex='-1' id='reportModal'>
     <div class='modal-dialog modal-lg'>
         <div class='modal-content'>
@@ -172,23 +170,24 @@ function clickDetails(inspectionNum, inspectionContentNum, inspectionContentName
                 	<div style='text-align : right;'>
                 		<a href="" id='inspectionMove' data-dismiss='modal'><u><i>신고된 컨텐츠로 이동</i></u></a>
                 		<div style='width:100%; height:400px; overflow:auto'>
-                		<table class='table' width='100%' cellspacing='0' cellpadding='0'>
-                    	<thead style='text-align: center'>
-                        	<tr class="bg-light">
-                            	<th width="5%">No.</th><th>	신고자ID</th><th width="50%">신고사유</th>
-                        	</tr>
-                    	</thead>
-                    	<tbody id='detailBody' style='text-align: center'>
-					</tbody>
-                </table>
-            </div>
-        </div>
-            <div class='modal-footer'>
-                <button id='returnbtn'type='button' class='btn btn-secondary' data-dismiss='modal'>신고 반려</button>
-                <button id='delbtn' type='button' class='btn btn-primary' data-dismiss='modal'>컨텐츠 삭제</button>
-            </div>
-        </div>
-    </div>
-</div>
+	                		<table class='table' width='100%' cellspacing='0' cellpadding='0'>
+			                    	<thead style='text-align: center'>
+			                        	<tr class="bg-light">
+			                            	<th width="5%">No.</th><th>	신고자ID</th><th width="50%">신고사유</th>
+			                        	</tr>
+			                    	</thead>
+		                    	<tbody id='detailBody' style='text-align: center'>
+								</tbody>
+	                		</table>
+                		</div>
+            		</div>
+        		</div>
+            	<div class='modal-footer'>
+	                <button id='returnbtn'type='button' class='btn btn-secondary' data-dismiss='modal'>신고 반려</button>
+	                <button id='delbtn' type='button' class='btn btn-primary' data-dismiss='modal'>컨텐츠 삭제</button>
+            	</div>
+        	</div>
+    	</div>
+	</div>
 </body>
 </html>
