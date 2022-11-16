@@ -63,12 +63,15 @@ function isVal(field) {
 }
 
 function isGenreSelected() {
-	for(var i = 0; i < ${fn:length(genres)}; i++) {
-		var checkBox = document.querySelector('#genre_' + i);
+	var checkBoxList = document.getElementsByName('genreBox');
+	
+	for(var i = 0; i < checkBoxList.length; i++) {
+		var checkBox = checkBoxList[i];
 		
 		if(checkBox.checked) {
 			return true;
 		}
+	
 	}
 	
 	return false;
@@ -320,16 +323,16 @@ $(init)
 								<c:forEach var="i" begin="0" end="${fn:length(genres) }" step="4">
 									<tr id="genre_line_${Integer.valueOf(i / 4)}">
 										<c:if test="${not empty genres[i]}">
-											<td><label><input id="genre_${genres[i].generNum }" name="genreBox" onchange="genreSelection(${genres[i].generNum })" type='checkbox'>${genres[i].genreName }</label></td>
+											<td><label><input id="genre_${genres[i].genreNum }" name="genreBox" onchange="genreSelection(${genres[i].genreNum })" type='checkbox'>${genres[i].genreName }</label></td>
 										</c:if>
 										<c:if test="${not empty genres[i + 1]}">
-											<td><label><input id="genre_${genres[i + 1].generNum }" name="genreBox" onchange="genreSelection(${genres[i + 1].generNum })" type='checkbox'>${genres[i + 1].genreName }</label></td>
+											<td><label><input id="genre_${genres[i + 1].genreNum }" name="genreBox" onchange="genreSelection(${genres[i + 1].genreNum })" type='checkbox'>${genres[i + 1].genreName }</label></td>
 										</c:if>
 										<c:if test="${not empty genres[i + 2]}">
-											<td><label><input id="genre_${genres[i + 2].generNum }" name="genreBox" onchange="genreSelection(${genres[i + 2].generNum })" type='checkbox'>${genres[i + 2].genreName }</label></td>
+											<td><label><input id="genre_${genres[i + 2].genreNum }" name="genreBox" onchange="genreSelection(${genres[i + 2].genreNum })" type='checkbox'>${genres[i + 2].genreName }</label></td>
 										</c:if>
 										<c:if test="${not empty genres[i + 3]}">
-											<td><label><input id="genre_${genres[i + 3].generNum }" name="genreBox" onchange="genreSelection(${genres[i + 3].generNum})" type='checkbox'>${genres[i + 3].genreName }</label></td>
+											<td><label><input id="genre_${genres[i + 3].genreNum }" name="genreBox" onchange="genreSelection(${genres[i + 3].genreNum})" type='checkbox'>${genres[i + 3].genreName }</label></td>
 										</c:if>
 									</tr>
 								</c:forEach>
