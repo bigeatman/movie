@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -35,18 +34,18 @@ public class ReviewRestController {
 		try {
 			reviewDao.deleteReview(request.getReviewId());
 			return true;
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
 		}
 	}
-	
+
 	@PostMapping("morerev")
 	public String viewMoreReview(@RequestBody ViewMoreReviewRequest request) {
 		int movieId = request.getMovieId();
 		int startIndex = request.getStartIndex();
 		int rowCount = request.getRowCount();
-		
+
 		try {
 			List<Review> reviews = reviewDao.selectReviewByMovieId(movieId, startIndex, rowCount);
 			ObjectMapper mapper = new ObjectMapper();
@@ -57,4 +56,5 @@ public class ReviewRestController {
 			return "ERROR";
 		}
 	}
+
 }
