@@ -72,6 +72,8 @@ function listUsers(){
                         </tr>`
 			        )
 				})	
+		        console.log(user)
+		        console.log(userArr)
     			$('#userList').empty()
 		        $('#userList').append(userArr.join(''))
 		    } else $('#userList').append(

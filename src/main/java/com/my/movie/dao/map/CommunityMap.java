@@ -4,9 +4,10 @@ import java.util.List;
 
 import com.my.movie.domain.Community;
 
-public interface CommunityMap2 {
+public interface CommunityMap {
 	List<Community> selectCommunities();
-	Community selectCommunity1(Community community);
+	List<Community> selectCommunity1(Community community);
+	Community selectCommunity2(Community community);
 	Community selectCommunity(Community community);
 	void insertCommunity(Community community);
 	void deleteCommunity(int communityNum);

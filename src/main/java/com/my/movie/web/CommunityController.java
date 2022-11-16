@@ -40,11 +40,10 @@ public class CommunityController {
 		mv.setViewName("community/content");
 		return mv;
 	}
-	
+	 
 	@PostMapping("content/{communityNum}")
-	public void getCommunity(@RequestBody Community community) {
-		communityService.getCommunity1(community);
-		System.out.print(community);
+	public Community getCommunity(@RequestBody Community community) {
+		return communityService.getCommunity2(community);
 	}
 
 	@GetMapping("write")
@@ -63,7 +62,6 @@ public class CommunityController {
 	@PostMapping("add")
 	public void addCommunity(@RequestBody Community community) {
 		communityService.addCommunity(community);
-		System.out.println('1');
 	}
 	
 	@DeleteMapping("del/{communityNum}")

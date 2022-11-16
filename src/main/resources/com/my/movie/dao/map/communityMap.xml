@@ -23,6 +23,13 @@
 		where communities.community_num = #{communityNum}
 	</select>
 	
+	<select id='selectCommunity2' resultType='community'>
+		select communities.*, users.nickname
+		from communities full outer join users
+        on communities.user_num = users.user_num
+		where communities.community_num = #{communityNum}
+	</select>
+	
 	<insert id='insertCommunity'>
 		insert into communities(community_num, community_title, community_content, community_date, user_num)
 		values(community_num_seq.nextval, #{communityTitle}, #{communityContent}, #{communityDate}, #{userNum})
