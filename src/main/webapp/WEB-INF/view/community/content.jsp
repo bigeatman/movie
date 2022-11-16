@@ -120,8 +120,6 @@ function replyInit() {
         $('#replyModal').modal()
     })
 }
-let content = 0
-
 function init() {
 	$.ajax({
 		url: '../content/' + ${communityNum},
@@ -130,26 +128,15 @@ function init() {
 		data: JSON.stringify({
 			communityNum: ${communityNum}
 		}),
-		success: contentList => {
-			contentArr = []
-			contentList.forEach(content => {
-				contentArr.push(
-						`<tr>
-							<td>\$('communityTitle')</td>
-						</tr>`
-						)
-			})
-				$('#title').append(communityArr.join(''))
-
-				$('#title').text($('communityTitle'))
-				$('#content').text(content.communityContent)
-				$('#nickname').text(content.nickname)
-				$('#date').text(content.communityDate)
+		success: content => {
+				\$('#title').text(content.communityTitle)
+				\$('#content').text(content.communityContent)
+				\$('#nickname').text(content.nickname)
+				\$('#date').text(content.communityDate)			
 		}
 	})
 }
-console.log($('communityTitle'))
-console.log($('communities.communityTitle'))
+
 
 $(boardInit)
 $(replyInit)
