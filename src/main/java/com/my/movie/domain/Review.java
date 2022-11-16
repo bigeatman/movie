@@ -21,4 +21,6 @@ public class Review {
 	
 	private String nickName;
 	
-}
+	private int likeCount;
+	
+}	

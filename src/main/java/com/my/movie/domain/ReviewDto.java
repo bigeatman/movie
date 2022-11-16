@@ -19,5 +19,6 @@ public class ReviewDto {
 	
 	private List<Review> reviews;
 	
+	private boolean isReviewWriten;
 }
   

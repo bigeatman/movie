@@ -249,7 +249,8 @@ nav a {
 				<span id="position"><c:if test="${review.casts[status.current].position eq 1 }">주연</c:if><c:if test="${review.casts[status.current].position eq 0 }">조연</c:if></span>
 			</span>
 		</c:forEach>
-		<span id="loginedUserNum">${user.userNum}</span>
+		<span id="loginedUserNum">${userNum}</span>
+		<span id="isReviewWritten">${review.reviewWriten}</span>
 	</div>
 	
 	<!-- HEADER !-->
@@ -261,13 +262,14 @@ nav a {
 			   <span class='ml-2 d-none d-md-inline'>검색:</span>
 			</button>
 		 </div>
-	  </form>
+ 	</form>
+	  
 	<!-- MAIN CONTENT !-->
 	<div class="container"><hr></div>
 	<div style="overflow:scroll; height:464px; overflow-x:hidden;">
 		<div class="container center">
 			<div class="poster">
-				<img src="${review.movie.movieImgfileName }" style="object-fit: cover; width:100%; height:100%;">
+				<img src="img?fileName=${review.movie.movieImgfileName }" style="object-fit: cover; width:100%; height:100%;">
 			</div>
 			<div class="movieinfo">
 				<div class="menu">${review.movie.movieName }</div>
@@ -300,16 +302,16 @@ nav a {
 				<div class="menu">출연진</div>
 				<div class="container row movieinfo-actors">
 					<div class="movieinfo-actor">
-						<img src="${review.director.directorImgFileName}" alt="Avatar" class="w3-col s6 circle" style="border-radius:50%;">
+						<img src="img?fileName=${review.director.directorImgFileName}" alt="Avatar" class="w3-col s6 circle" style="border-radius:50%;">
 						<div class="movieinfo-actor-name">${review.director.directorName} (감독)</div>
 					</div>
 					<div class="movieinfo-actor">
-						<img src="${review.casts[0].castImgFileName}" alt="Avatar" class="w3-col s6 circle" style="border-radius:50%;">
-						<div class="movieinfo-actor-name">${review.casts[0].castName} (주연)</div>
+						<img id="mainActorImage1" alt="Avatar" class="w3-col s6 circle" style="border-radius:50%;">
+						<div id="mainActor1" class="movieinfo-actor-name"></div>
 					</div>
 					<div class="movieinfo-actor">
-						<img src="${review.casts[1].castImgFileName}" alt="Avatar" class="w3-col s6 circle" style="border-radius:50%;">
-						<div class="movieinfo-actor-name">${review.casts[1].castName} (주연)</div>
+						<img id="mainActorImage2" alt="Avatar" class="w3-col s6 circle" style="border-radius:50%;">
+						<div id="mainActor2" class="movieinfo-actor-name"></div>
 					</div>
 					<div class="movieinfo-actor">
 						<div id="circle" class="movieinfo-actor-more" onclick="createActorDetail()" type="button" data-toggle="modal" data-target='#dialogModal'><span>&#10097;&#10097;</span></div>
@@ -347,22 +349,22 @@ nav a {
 							<div id="reviewWriter" class="review-id">${ rev.nickName }(${rev.userId })</div>
 							<div class="like-unlike-panel">
 								<button class="like-button"><i class="fa">&#xf087;</i></button>
-								<span class="like-button">128&nbsp&nbsp</span>
+								<span class="like-button" onclick="addLike(${rev.reviewNum})">${rev.likeCount } &nbsp;&nbsp;</span>
 								<button class="like-button"><span class="fa fa-thumbs-down"></span></button>
 								<span class="like-button">Unlike</span>
-								<c:if test="${not empty user}">
-									<c:if test="${user.userNum eq rev.userNum }">
+								<c:if test="${not empty userNum}">
+									<c:if test="${userNum eq rev.userNum }">
 										<button class="like-button" type="button" data-toggle="modal" data-target='#dialogModal' onclick="removeReview(${rev.reviewNum})"> 
 											<i id="removeIcon" class="fa-solid fa-trash"></i>
 										</button>
 									</c:if>
-									<c:if test="${user.userNum ne rev.userNum }">
+									<c:if test="${userNum ne rev.userNum }">
 										<button class="like-button" type="button" data-toggle="modal" data-target='#dialogModal' onclick="reportReview(${rev.reviewNum})"> 
 											<i class="fa-solid fa-triangle-exclamation"></i>
 										</button>
 									</c:if>
 								</c:if>
-								<c:if test="${empty user}">
+								<c:if test="${empty userNum	}">
 									<button class="like-button" type="button" data-toggle="modal" data-target='#dialogModal' onclick="reportReview(${rev.reviewNum})"> 
 										<i class="fa-solid fa-triangle-exclamation"></i>
 									</button>
@@ -424,6 +426,27 @@ nav a {
 <script>
 	var currentReviews = 5;
 	
+	function findMainActor() {
+		var mainActors = [];
+		
+		for(var i = 0; i < ${fn:length(review.casts)}; i++) {
+			var actorElem = document.querySelector('#actor_' + i);
+			var position = actorElem.querySelector('#position').innerHTML;
+			
+			if(position == '주연') {
+				mainActors.push([
+					actorElem.querySelector('#imgUrl').innerHTML,
+					actorElem.querySelector('#name').innerHTML
+				])
+			}
+		}
+		
+		document.querySelector('#mainActorImage1').setAttribute('src', 'img?fileName=' + mainActors[0][0]);
+		document.querySelector('#mainActorImage2').setAttribute('src', 'img?fileName=' + mainActors[1][0]);
+		document.querySelector('#mainActor1').innerHTML = mainActors[0][1];
+		document.querySelector('#mainActor2').innerHTML = mainActors[1][1];
+	}
+	
 	function viewMoreReview() {
 		$.ajax({
 			url : 'rev/morerev',
@@ -482,9 +505,6 @@ nav a {
 		clearDialog();
 		createDialog("사용자 평 삭제", 0x3132);
 		document.querySelector('#okButton').addEventListener('click', function() {
-			console.log("TEST");
-			$('#dialogModal').modal('hide');
-			
 			$.ajax({
 				url : "rev/remove",
 				method : "post",
@@ -493,7 +513,7 @@ nav a {
 					reviewId : reviewNum
 				}),
 				success : function(result) {
-					document.querySelector("#review_" + reviewNum).remove();
+					location.reload();
 				}
 			})
 		});
@@ -567,7 +587,7 @@ nav a {
 			    	console.log("에러");
 			    }
 			}).done(function() {
-				clearDialog();
+				location.reload();
 			});
 		});
 	}
@@ -756,7 +776,7 @@ nav a {
 	
 	function createDirectorDiv(imgUrl, name, position) {
 		var imageElem = document.createElement('img');
-		imageElem.setAttribute('src', imgUrl);
+		imageElem.setAttribute('src', 'img?fileName=' + imgUrl);
 		imageElem.setAttribute('alt', 'Avater');
 		imageElem.classList.add('w3-col');
 		imageElem.classList.add('s6');
@@ -874,6 +894,8 @@ nav a {
 		document.querySelector('#loginSpan').innerHTML = '프로필';
 		document.querySelector('#user').setAttribute('href', 'user/mypage');
 	}
+	
+	findMainActor();
 	
 </script>
 </body>

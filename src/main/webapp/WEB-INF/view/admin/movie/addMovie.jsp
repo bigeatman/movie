@@ -320,16 +320,16 @@ $(init)
 								<c:forEach var="i" begin="0" end="${fn:length(genres) }" step="4">
 									<tr id="genre_line_${Integer.valueOf(i / 4)}">
 										<c:if test="${not empty genres[i]}">
-											<td><label><input id="genre_${i }" name="genreBox" onchange="genreSelection(${i })" type='checkbox'>${genres[i].genreName }</label></td>
+											<td><label><input id="genre_${genres[i].generNum }" name="genreBox" onchange="genreSelection(${genres[i].generNum })" type='checkbox'>${genres[i].genreName }</label></td>
 										</c:if>
 										<c:if test="${not empty genres[i + 1]}">
-											<td><label><input id="genre_${i + 1 }" name="genreBox" onchange="genreSelection(${i + 1 })" type='checkbox'>${genres[i + 1].genreName }</label></td>
+											<td><label><input id="genre_${genres[i + 1].generNum }" name="genreBox" onchange="genreSelection(${genres[i + 1].generNum })" type='checkbox'>${genres[i + 1].genreName }</label></td>
 										</c:if>
 										<c:if test="${not empty genres[i + 2]}">
-											<td><label><input id="genre_${i + 2 }" name="genreBox" onchange="genreSelection(${i + 2 })" type='checkbox'>${genres[i + 2].genreName }</label></td>
+											<td><label><input id="genre_${genres[i + 2].generNum }" name="genreBox" onchange="genreSelection(${genres[i + 2].generNum })" type='checkbox'>${genres[i + 2].genreName }</label></td>
 										</c:if>
 										<c:if test="${not empty genres[i + 3]}">
-											<td><label><input id="genre_${i + 3 }" name="genreBox" onchange="genreSelection(${i + 3})" type='checkbox'>${genres[i + 3].genreName }</label></td>
+											<td><label><input id="genre_${genres[i + 3].generNum }" name="genreBox" onchange="genreSelection(${genres[i + 3].generNum})" type='checkbox'>${genres[i + 3].genreName }</label></td>
 										</c:if>
 									</tr>
 								</c:forEach>
@@ -663,8 +663,6 @@ $(init)
 			})
 		})
 	}
-	
-	// <input id="genre_0" onchange="genreSelection(0)" type="checkbox">
 	
 	function addGenreElems(genreId, inputGenre) {
 		var lineNum = parseInt(totalGenreCount++ / 4);
