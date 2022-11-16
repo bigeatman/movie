@@ -13,7 +13,13 @@
 <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.6.3/css/all.css'/>
 </head>
 <script>
-//신고 상세페이지
+function checkLogin() {
+	if(${empty userId}) {location.href="../user/login"}
+	else if(${userId ne "admin"}) location.href="../../user/logout"
+}
+$(checkLogin)
+
+// 신고 상세페이지
 function clickDetails(inspectionNum, inspectionContentNum, inspectionContentName) {
 	$.get("/admin/inspection/inspections/" + inspectionNum + "/details", function(data, status) {
 		$('#detailBody').empty();
