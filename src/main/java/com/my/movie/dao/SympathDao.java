@@ -1,11 +1,9 @@
-package com.my.movie.dao.map;
+package com.my.movie.dao;
 
-public interface SympathMap {
-	
-	Integer getLikeCount(int contentNum, String contentName);
+public interface SympathDao {
 
 	Integer isContentLiked(int contentNum, String contentName, int userNum);
-
+	
 	void addContentLiked(int contentNum, String contentName, int userNum, int isLike);
 	
 }
