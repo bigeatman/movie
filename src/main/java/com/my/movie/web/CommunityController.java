@@ -28,33 +28,42 @@ public class CommunityController {
 		return mv;
 	}
 	
-	@PostMapping
+	@PostMapping("list")
 	public List<Community> communityList() {
 		return communityService.getCommunities();
 	}
 	
-	@GetMapping("content")
-	public ModelAndView content(ModelAndView mv) {
+	@GetMapping("content/{communityNum}")
+	public ModelAndView findIdResult(ModelAndView mv,
+			@PathVariable int communityNum) {
+		mv.addObject("communityNum", communityNum);
 		mv.setViewName("community/content");
 		return mv;
+	}
+	
+	@PostMapping("content/{communityNum}")
+	public void getCommunity(@RequestBody Community community) {
+		communityService.getCommunity1(community);
+		System.out.print(community);
 	}
 
 	@GetMapping("write")
 	public ModelAndView write(ModelAndView mv, HttpSession session) {
 		String userId = (String) session.getAttribute("userId");
-		if(userId == null) {
+		if(userId != null) {
 			mv.setViewName("community/write");
 		} else {			
 			mv.addObject("userId", userId);
 			mv.setViewName("redirect:../user/login");
 		}
-		
+
 		return mv;
 	}
 	
 	@PostMapping("add")
 	public void addCommunity(@RequestBody Community community) {
 		communityService.addCommunity(community);
+		System.out.println('1');
 	}
 	
 	@DeleteMapping("del/{communityNum}")

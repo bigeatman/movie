@@ -13,5 +13,5 @@ public interface AdminUserMap {
 	List<AdminUser> selectUsers();
 	List<AdminUser> selectSearchUsers(AdminUserDto adminUserDto);
 	void updateAdminUser(AdminUserDto adminUserDto);
-	void insertWithDrawal(int adminUserDto);
+	void insertWithDrawal(int userNum);
 }

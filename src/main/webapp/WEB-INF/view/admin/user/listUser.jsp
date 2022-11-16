@@ -19,7 +19,7 @@ function checkLogin() {
 }
 $(checkLogin)
 
-const users =[]
+// const users =[]
 let user = 0
 
 function isErr(valOrText, field){

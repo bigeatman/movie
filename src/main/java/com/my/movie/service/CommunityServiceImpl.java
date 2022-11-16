@@ -33,6 +33,10 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 	
 	@Override
+	public void getCommunity1(Community community) {
+		communityDao.selectCommunity1(community);
+	}
+	@Override
 	public void addCommunity(Community community) {
 		communityDao.insertCommunity(community);
 	}
