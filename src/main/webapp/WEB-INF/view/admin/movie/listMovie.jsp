@@ -28,10 +28,10 @@ function listMovies() {
 							<input type='radio' value='\${movie.movieNum}' name='movieNum' id='movieNum'/>
 						</td>
 						<td>\${movie.movieNum}</td>
-						<td>\${movie.movieName}</td>
+						<td class='movieName'>\${movie.movieName}</td>
 						<td>\${movie.movieReleasedate}</td>
 						<td>\${movie.movieRunningtime}분</td>
-						<td>\${movie.movieCountry}</td>
+						<td class='movieCountry'>\${movie.movieCountry}</td>
 					</tr>`
 				);
 			})
@@ -43,7 +43,7 @@ function listMovies() {
 	})
 }
 
-/* function filter() {
+ function filter() {
 	let movieSearch = document.getElementById('movieSearch').value.toLowerCase();
 	let movies = document.getElementsByClassName('movies');
 	
@@ -59,7 +59,7 @@ function listMovies() {
 		}
 	}
 }
-$(filter) */
+$(filter)
 
 function init() {
 	$(listMovies)

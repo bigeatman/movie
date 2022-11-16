@@ -22,7 +22,10 @@ function isVal(field) {
 	if(!field.val() && !$('#movieReleasedate').val()) {
 		$('#relErrMsg').css('color', 'red').text('개봉일은 필수 입력 사항 입니다.')
 		isGood = false
-	} else isGood = true
+		
+	} else 
+		$('#relErrMsg').text('')
+		isGood = true
 	
 	if(isGenreSelected() == false) {
 		$('#genreErrMsg').css('color', 'red').text('장르는 필수 선택 사항 입니다.')
@@ -34,15 +37,17 @@ function isVal(field) {
 		isGood = false
 	} else isGood = true
 	
-/* 	if(!field.val() && !$('#directorName').val()) {
+ 	if(!field.val() && !$('#directorName').val()) {
 		$('#directErrMsg').css('color', 'red').text('감독명은 필수 입력 사항 입니다.')
 		isGood = false
-	} else isGood = true
+	} else $('#directErrMsg').text('')
+		isGood = true
 	
 	if(!field.val() && !$('#castName').val()) {
 		$('#castErrMsg').css('color', 'red').text('출연진명은 필수 입력 사항 입니다.')
 		isGood = false
-	} else isGood = true */
+	} else $('#castErrMsg').text('')
+		isGood = true
 	
 	if(!field.val() && !$('#movieRunningtime').val()) {
 		$('#timeErrMsg').css('color', 'red').text('상영시간은 필수 입력 사항 입니다.')
@@ -85,21 +90,33 @@ function init() {
 	$('#movieName').keyup(function() {
 		let movieName =/^[가-힣a-zA-Z0-9]{2,20}$/;
 		if(!(movieName.test($('#movieName').val()))) {
-			$('#nameErrMsg').css('color', 'red').text('작품명을 2자 이상 20자 이하로 입력하세요.')
+			$('#nameErrMsg').css('color', 'red').text('작품명을 2자 이상 20자 이하로 한글,영어,숫자로 입력하세요.')
 		} else {
 			$('#nameErrMsg').text('')
 		}
 	})
 	
-	//개봉일부분 미완성
-/* 	$('#movieReleasedate').keyup(function() {
-		let movieReleasedate = false;
-		if(!(movieReleasedate.test($('#movieReleasedate').val()))) {
+  	$('#movieReleasedate').keyup(function() {
+		let movieReleasedate = /^[0-9.]{1,20}$/;
+		if((movieReleasedate.test($('#movieReleasedate').val()))) {
 			$('#relErrMsg').css('color', 'red').text('개봉일을 입력하세요.')
 		} else {
 			$('#relErrMsg').text('')
 		}
-	}) */
+	})
+	
+	$('#movieReleasedate').on('change', function(){
+		$('#relErrMsg').text('')
+	})
+	
+/* 	$('#castName').on('change', function(){
+		$('#castErrMsg').text('')
+	})
+	
+  	$(document).ready(function(){
+		if($('#castName').val() == true) 
+			$('#castErrMsg').text('');
+	})  */
 	
 	$('#movieCountry').keyup(function() {
 		let movieCountry =/^[가-힣a-zA-Z0-9]{1,20}$/;
@@ -128,16 +145,15 @@ function init() {
 		}
 	})
 	
-	//스토리 수정중
-/* 	$('#movieStory').keyup(function() {
+ 	$('#movieStory').keyup(function() {
 		let movieStory =/^[ㄱ-ㅎ가-힣a-zA-Z0-9/[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(]{2,2000}$/;
 		if(!(movieStory.test($('#movieStory').val()))) {
-			$('#storyErrMsg').css('color', 'red').text('줄거리를 2자 이상 20자 이하로 입력하세요.')
+			$('#storyErrMsg').css('color', 'red').text('줄거리를 2자 이상 2000자 이하로 입력하세요.')
 		} else {
 			$('#storyErrMsg').text('')
 		}
-	}) */
-		
+	})
+	
     $('#addMovieBtn').click(() => {
     	
     	if( (isVal($('#movieName')) && 
@@ -737,7 +753,24 @@ $(init)
 		okBtn.addEventListener('click', function() {
 			updateCastNames();
 			$('#dialogModal').modal('hide');
-		})
+			
+			var inputedCast = document.querySelector("#castName").value;
+			
+			
+	        if((inputedCast == null) || (inputedCast == '')) {
+	            
+	        } else {
+	            $('#castErrMsg').text('')
+	        }
+	        
+	        var inputedDirector = document.querySelector("#directorName").value; 
+	        
+	        if((inputedDirector == null) || (inputedDirector == '')) {
+	            
+	        } else {
+	            $('#directErrMsg').text('')
+	        }
+	   })
 	}
 	
 	function updateCastNames() {
