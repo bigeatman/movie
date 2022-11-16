@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+	'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+<mapper namespace='com.my.movie.dao.map.CommunityMap'>
+	
+	<select id='selectCommunities' resultType='community'>
+		select *
+		from communities
+		order by community_num DESC
+	</select>
+	
+	<select id='selectCommunity' resultType='community'>
+		select communities.*
+		from communities , users
+		where users.user_num = #{userNum}
+        order by communities.community_num DESC
+	</select>
+	
+	<select id='selectCommunity1' resultType='community'>
+		select communities.*, users.nickname
+		from communities full outer join users
+        on communities.user_num = users.user_num
+		where communities.community_num = #{communityNum}
+	</select>
+	
+	<insert id='insertCommunity'>
+		insert into communities(community_num, community_title, community_content, community_date, user_num)
+		values(community_num_seq.nextval, #{communityTitle}, #{communityContent}, #{communityDate}, #{userNum})
+	</insert>
+	
+	<delete id='deleteCommunity'>
+		delete from communities
+		where community_Num = ${communityNum} 
+	</delete>
+	
+	<!-- inspectionCommunity -->
+</mapper>

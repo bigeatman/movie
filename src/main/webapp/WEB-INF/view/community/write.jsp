@@ -6,41 +6,46 @@
 <meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'>
 <link rel='stylesheet' href='http://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css'/>
-<link rel='stylesheet' href='../res/style.css'>
+<!-- 에러뜸 link rel='stylesheet' href='../res/style.css' -->
 <script src='https://code.jquery.com/jquery-3.6.0.min.js'></script>
 <script src='https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js'></script>
 <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js'></script>
 <script src="https://kit.fontawesome.com/449f39a7b2.js" crossorigin="anonymous"></script>
 <script>
 function checkLogin() {
-<%
-	if(session.getAttribute("user") != null) {
-%>
-	$('#user').attr('href', '../user/mypage')
-	$('#loginSpan').text('프로필')
-<%
-	}
-%>
+	${userId}
+
 }
 $(checkLogin)
 
+let today = new Date()
+let year = today.getFullYear() 
+let month = today.getMonth() + 1
+let date = today.getDate()
+let communityDate = (year + '-' + month + '-' + date);
+
+function isVal(field) {
+}
+
 $(() => {
 	$('#writePostBtn').click(() => {
-		if(isVal($('#title')) && isVal($('#contents'))) {
+//		if(isVal($('#title')) && isVal($('#contents'))) {
 			$.ajax({
 				url: 'add',
 				method: 'post',
 				contentType: 'application/json',
 				data: JSON.stringify({
-					userId: '${userId}',
-					title: $('#title').val(),
-					content: $('#content').val(),
-					date: $('#communityDate').val())
-				})
-			}).done(function() {
-				location.href='/list'
+					userNum: '${userNum}',
+					communityTitle: $('#title').val(),
+					communityContent: $('#content').val(),
+					communityDate: communityDate
+				}),
+				success: data => {
+					console.log('123')
+					location.href="list"}
+				
 			})
-		}
+//		}
 	})
 })
 
@@ -111,7 +116,7 @@ label {
     <label for="input-file"></label>
       <input type="file" id="input-file"/></label>
       <div class='row mt-3 p-3 border-top'>
-        <button id='writePostBtn' type='button' class='btn btn-success border btn-block' onclick='location.href="list"'>추가</button>
+        <button id='writePostBtn' type='button' class='btn btn-success border btn-block'>추가</button>
       </div>
   </div>
 
@@ -148,7 +153,7 @@ label {
 </div>
 </div>
 </body>
-</html></html>
+</html>
 
 <!-- 하단내비바에 안깔리게 하려고 넣어둔 거 -->
 <footer class='container-fulid border mt-5 p-3 '>

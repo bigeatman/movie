@@ -120,28 +120,37 @@ function replyInit() {
         $('#replyModal').modal()
     })
 }
+let content = 0
 
 function init() {
-<%
-	int num = Integer.parseInt(request.getParameter("num"));
-%>
 	$.ajax({
-		url: 'getContent',
-		method: 'post',
+		url: '../content/' + ${communityNum},
+		method: 'Post',
 		contentType: 'application/json',
 		data: JSON.stringify({
-			communityNum: <%= num %>}), 
-		success: content => {
-			console.log(content)
-			if(content) {
-				$('#title').text(content.communityTitle)
+			communityNum: ${communityNum}
+		}),
+		success: contentList => {
+			contentArr = []
+			contentList.forEach(content => {
+				contentArr.push(
+						`<tr>
+							<td>\$('communityTitle')</td>
+						</tr>`
+						)
+			})
+				$('#title').append(communityArr.join(''))
+
+				$('#title').text($('communityTitle'))
 				$('#content').text(content.communityContent)
 				$('#nickname').text(content.nickname)
 				$('#date').text(content.communityDate)
-			}
 		}
 	})
 }
+console.log($('communityTitle'))
+console.log($('communities.communityTitle'))
+
 $(boardInit)
 $(replyInit)
 $(init)

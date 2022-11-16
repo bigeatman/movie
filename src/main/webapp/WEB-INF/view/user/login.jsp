@@ -82,11 +82,6 @@ nav a {
 	text-decoration: none;
 	color: lightgray;
 }
-
-body {
-    justify-content: center;
-    align-items: center;
-}
 </style>
 </head>
 <body>
