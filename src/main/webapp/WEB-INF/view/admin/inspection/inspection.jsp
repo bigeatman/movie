@@ -19,7 +19,8 @@ function checkLogin() {
 }
 $(checkLogin)
 
-// 신고 상세페이지function clickDetails(inspectionNum, inspectionContentNum, inspectionContentName) {
+// 신고 상세페이지
+function clickDetails(inspectionNum, inspectionContentNum, inspectionContentName) {
 	$.get("/admin/inspection/inspections/" + inspectionNum + "/details", function(data, status) {
 		$('#detailBody').empty();
 		data.map((detail) => {
