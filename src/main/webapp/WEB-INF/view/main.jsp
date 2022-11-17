@@ -168,8 +168,11 @@ table {
                         <tr>
                            <th>
                               <div class='carousel-item active'>
-                                   <div id='movieImg4'><a href='review/01.html'>영화이미지</div>
-                                   <div id='daysMovie'>오펀:천사의 탄생</div></a>
+                                   <form action="review" method="post" id="movie_1">
+	                                 	<div id='movieImg2' onclick="coinfirmSubmitAction(1)">영화이미지</div>
+	                                    <div id='topMovie' onclick="coinfirmSubmitAction(1)">공조2: 인터내셔날</div>
+	                                    <input type="hidden" name="movieNo" value="1">
+                                 	</form>
                                 </div>
                                 <div class='carousel-item'>
                                    <div id='movieImg5'><a href='review/01.html'>영화이미지</div>

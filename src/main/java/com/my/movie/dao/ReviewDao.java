@@ -9,7 +9,7 @@ public interface ReviewDao {
 	
 	void insertReview(CreateReviewRequest req);
 	
-	List<Review> selectReviewByMovieId(int movieId, int startIndex, int rowCount);
+	List<Review> selectReviewByMovieId(int movieId, int startIndex, int rowCount, Integer userId);
 
 	void deleteReview(int reviewId);
 	

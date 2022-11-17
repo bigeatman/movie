@@ -25,11 +25,11 @@ public class ReviewDaoImpl implements ReviewDao {
 	}
 
 	@Override
-	public List<Review> selectReviewByMovieId(int movieId, int startIndex, int rowCount) {
-		return toAnonymousUserId(reviewMap.selectReviewByMovieId(movieId, startIndex, rowCount));
+	public List<Review> selectReviewByMovieId(int movieId, int startIndex, int rowCount, Integer userId) {
+		return toAnonymousUserId(reviewMap.selectReviewByMovieId(movieId, startIndex, rowCount), userId);
 	}
 	
-	private List<Review> toAnonymousUserId(List<Review> reviews) {
+	private List<Review> toAnonymousUserId(List<Review> reviews, Integer loginedUserId) {
 		for (Review review : reviews) {
 			String userId = review.getUserId();
 			StringBuilder builder = new StringBuilder();
@@ -40,6 +40,16 @@ public class ReviewDaoImpl implements ReviewDao {
 			}
 			review.setUserId(builder.toString());
 			review.setLikeCount(sympathMap.getLikeCount(review.getReviewNum(), "리뷰"));
+			review.setDisLikeCount(sympathMap.getDisLikeCount(review.getReviewNum(), "리뷰"));
+			
+			if(loginedUserId != null) {
+				Integer loginedUserLiked = sympathMap.isContentLiked(review.getReviewNum(), "리뷰", loginedUserId);
+				if(loginedUserLiked != null) {
+					review.setCurrentUserSympaths(loginedUserLiked);
+				} else {
+					review.setCurrentUserSympaths(0);
+				}
+			}
 		}
 		
 		return reviews;

@@ -4,5 +4,5 @@ import com.my.movie.domain.ReviewDto;
 
 public interface ReviewService {
 
-	ReviewDto getReviewDtoByMovieId(int movieId);
+	ReviewDto getReviewDtoByMovieId(int movieId, Integer userId);
 }

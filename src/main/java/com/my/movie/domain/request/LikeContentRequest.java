@@ -11,4 +11,5 @@ public class LikeContentRequest {
 	
 	private int userNum;
 	
+	private int value;
 }

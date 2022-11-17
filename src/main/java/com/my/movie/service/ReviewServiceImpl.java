@@ -36,7 +36,7 @@ public class ReviewServiceImpl implements ReviewService {
 	private static final DecimalFormat formatter = new DecimalFormat("###,###");
 
 	@Override
-	public ReviewDto getReviewDtoByMovieId(int movieId) {
+	public ReviewDto getReviewDtoByMovieId(int movieId, Integer userId) {
 		Movie movie = movieDao.selectById(movieId);
 
 		ReviewDto dto = new ReviewDto();
@@ -45,7 +45,7 @@ public class ReviewServiceImpl implements ReviewService {
 		dto.setAudienceString(formatter.format(movie.getCumulativeAudience()));
 		dto.setDirector(directorDao.findDirectorByMovieId(movieId));
 		dto.setCasts(castDao.selectByMoveId(movieId));
-		dto.setReviews(reviewDao.selectReviewByMovieId(movieId, 0, 5));
+		dto.setReviews(reviewDao.selectReviewByMovieId(movieId, 0, 5, userId));
 		
 		return dto;
 	}

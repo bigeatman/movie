@@ -23,4 +23,8 @@ public class Review {
 	
 	private int likeCount;
 	
+	private int disLikeCount;
+	
+	private int currentUserSympaths;
+	
 }	
