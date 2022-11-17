@@ -29,7 +29,8 @@
 		where movie_num = #{movieNum}	
 	</select>
 	
-	<insert id='insertMovie'>
+	<insert id='insertMovie' parameterType="com.my.movie.domain.Movie" useGeneratedKeys="true"
+		keyProperty="movieNum" keyColumn="movie_num">
 		insert into movies(movie_num, movie_name, movie_releasedate, movie_runningtime, movie_country, movie_story, hashtag, cumulative_audience, movie_imgfile_name)
 		values(MOVIE_NUM_SEQ.nextval, #{movieName}, #{movieReleasedate}, #{movieRunningtime}, #{movieCountry}, #{movieStory}, #{hashtag}, #{cumulativeAudience}, #{movieImgfileName})	
 	</insert>

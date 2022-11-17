@@ -9,4 +9,15 @@
 		S.sympathy_content_num='${contentNum}' AND
 		S.sympathy_record = 1
 	</select>
+	
+	<select id="isContentLiked" resultType="Integer">
+		SELECT s.sympathy_record FROM sympathys s where 
+			s.sympathy_content_num = ${contentNum} AND
+			s.sympathy_content_name = '${contentName}' AND
+			s.user_num = ${userNum}
+	</select>
+ 
+	<insert id="addContentLiked">
+		INSERT INTO SYMPATHYS VALUES(${contentNum}, ${contentName}, ${userNum}, ${isLike})
+	</insert> 
 </mapper>
