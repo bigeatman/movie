@@ -14,12 +14,13 @@
 </head>
 <script>
 function checkLogin() {
-	if(${empty userId}) {location.href="../user/login"}
-	else if(${userId ne "admin"}) location.href="../../user/logout"
+	if(${empty userId}) {
+		location.href="../user/login"
+		} else if(${userId ne "admin"}) location.href="../../user/logout"
 }
 $(checkLogin)
 
-// 신고 상세페이지
+//신고 상세페이지
 function clickDetails(inspectionNum, inspectionContentNum, inspectionContentName) {
 	$.get("/admin/inspection/inspections/" + inspectionNum + "/details", function(data, status) {
 		$('#detailBody').empty();
@@ -108,10 +109,11 @@ function clickDetails(inspectionNum, inspectionContentNum, inspectionContentName
         <div id='btn_group' class='float-right mt-3'>
             <label style='font-size:13'>${userId}님</label>&emsp;
 			<button id='logoutBtn' type='button' class='btn btn-secondary' onclick='location.href="../user/logout"'>
-	        		<span id='logoutSpan'>로그아웃</span>
+	        	<span id='logoutSpan'>로그아웃</span>
 	        </button>
 	  	</div><br>        
-		<div class='row mt-5'>            <div class='col'>
+		<div class='row mt-5'>
+            <div class='col'>
                 <div class='container'>
                     <div class='row'>
                         <div class='col-12 text-center'>
@@ -123,7 +125,8 @@ function clickDetails(inspectionNum, inspectionContentNum, inspectionContentName
 								<button type='button' class='btn btn-secondary' name='page' onclick='location.href="../cast"'>감독/배우</button>
 								<button type='button' class='btn btn-primary' name='page' onclick='location.href="" disabled'>신고 조회</button>	
 							</div>
-                        </div>                    </div>
+                        </div>
+					</div>
                 </div>
             </div>
         </div>
@@ -169,7 +172,7 @@ function clickDetails(inspectionNum, inspectionContentNum, inspectionContentName
             <div class='modal-body'><br>
                 <h3><b>신고 사유 상세</b></h3>
                 	<div style='text-align : right;'>
-                		<a href="" id='inspectionMove' data-dismiss='modal'><u><i>신고된 컨텐츠로 이동</i></u></a>
+                		<a id='inspectionMove' data-dismiss='modal'><u><i>신고된 컨텐츠로 이동</i></u></a>
                 		<div style='width:100%; height:400px; overflow:auto'>
 	                		<table class='table' width='100%' cellspacing='0' cellpadding='0'>
 			                    	<thead style='text-align: center'>
