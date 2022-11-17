@@ -23,6 +23,11 @@ public class MovieServiceImpl implements MovieService{
 	}
 	
 	@Override
+	public List<Movie> getMovieTop() {
+		return movieDao.selectMovieTop();
+	}
+
+	@Override
 	public List<Movie> getAdminMovies() {
 		return movieDao.selectAdminMovies();	
 	}

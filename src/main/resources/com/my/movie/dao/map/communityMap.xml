@@ -2,43 +2,43 @@
 <!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
 	'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
 <mapper namespace='com.my.movie.dao.map.CommunityMap'>
-	
-	<select id='selectCommunities' resultType='community'>
-		select *
-		from communities
-		order by community_num DESC
+
+	<select id='selectCommunities' resultType='communityList'>
+		select c.community_num, c.community_title, c.community_date, u.nickname
+		from communities c
+		left join users u on c.user_num = u.user_num
+		order by c.community_num desc
 	</select>
 	
-	<select id='selectCommunity' resultType='community'>
-		select communities.*
-		from communities , users
-		where users.user_num = #{userNum}
-        order by communities.community_num DESC
+	<select id='selectCommunity' resultType='communityList'>
+		select c.community_title, c.community_content, c.community_date, u.nickname
+		from communities c
+		left join users u on c.user_num = u.user_num
+		where c.community_num = #{communityNum}
 	</select>
 	
-	<select id='selectCommunity1' resultType='community'>
-		select communities.*, users.nickname
-		from communities full outer join users
-        on communities.user_num = users.user_num
-		where communities.community_num = #{communityNum}
-	</select>
-	
-	<select id='selectCommunity2' resultType='community'>
-		select communities.*, users.nickname
-		from communities full outer join users
-        on communities.user_num = users.user_num
-		where communities.community_num = #{communityNum}
-	</select>
+	<resultMap id='communityMap' type='community'>
+		<id property='communityNum' column='community_num'/>
+		<result property='communityTitle' column='community_title'/>
+		<result property='communityContent' column='community_content'/>
+		<result property='communityDate' column='community_date'/>
+		<!-- <result property='communityImgfileName' column='community_imgfileName'/> -->
+		<result property='userNum' column='user_num'/>
+	</resultMap>
 	
 	<insert id='insertCommunity'>
-		insert into communities(community_num, community_title, community_content, community_date, user_num)
-		values(community_num_seq.nextval, #{communityTitle}, #{communityContent}, #{communityDate}, #{userNum})
+		INSERT INTO movie.COMMUNITIES(community_num, community_title,
+		 community_content, community_date, user_num)
+		values(community_num_seq.nextval, #{communityTitle}, #{communityContent}, sysdate, #{userNum})
 	</insert>
 	
 	<delete id='deleteCommunity'>
-		delete from communities
-		where community_Num = ${communityNum} 
+		delete communities
+		where community_num = #{communityNum}
 	</delete>
 	
-	<!-- inspectionCommunity -->
+	<select id="content" resultType="com.my.movie.domain.Community">
+		select community_num, community_title,
+		 community_content, community_date, user_num
+	</select>
 </mapper>

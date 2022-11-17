@@ -2,8 +2,6 @@ package com.my.movie.web;
 
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.my.movie.domain.Community;
+import com.my.movie.domain.CommunityList;
 import com.my.movie.service.CommunityService;
 
 @RestController
@@ -22,46 +21,37 @@ import com.my.movie.service.CommunityService;
 public class CommunityController {
 	@Autowired private CommunityService communityService;
 	
-	@RequestMapping("list")
+	@GetMapping("list")
 	public ModelAndView communities(ModelAndView mv) {
 		mv.setViewName("community/list");
 		return mv;
 	}
 	
-	@PostMapping("list")
-	public List<Community> communityList() {
+	@GetMapping("getCommunities")
+	public List<CommunityList> communities() {
 		return communityService.getCommunities();
 	}
 	
-	@GetMapping("content/{communityNum}")
-	public ModelAndView findIdResult(ModelAndView mv,
-			@PathVariable int communityNum) {
-		mv.addObject("communityNum", communityNum);
+	@GetMapping("content")
+	public ModelAndView content(ModelAndView mv) {
 		mv.setViewName("community/content");
 		return mv;
 	}
-	 
-	@PostMapping("content/{communityNum}")
-	public Community getCommunity(@RequestBody Community community) {
-		return communityService.getCommunity2(community);
+	
+	@PostMapping("getContent")
+	public CommunityList getContent(@RequestBody Community communityNum) {
+		return communityService.getCommunity(communityNum.getCommunityNum());
 	}
-
+	
 	@GetMapping("write")
-	public ModelAndView write(ModelAndView mv, HttpSession session) {
-		String userId = (String) session.getAttribute("userId");
-		if(userId != null) {
-			mv.setViewName("community/write");
-		} else {			
-			mv.addObject("userId", userId);
-			mv.setViewName("redirect:../user/login");
-		}
-
+	public ModelAndView write(ModelAndView mv) {
+		mv.setViewName("community/write");
 		return mv;
 	}
 	
-	@PostMapping("add")
-	public void addCommunity(@RequestBody Community community) {
-		communityService.addCommunity(community);
+	@PostMapping("write")
+	public void addWrite(@RequestBody Community community) {
+	    communityService.addCommunity(community);
 	}
 	
 	@DeleteMapping("del/{communityNum}")

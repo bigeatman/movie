@@ -1,5 +1,4 @@
 <%@ page language='java' contentType='text/html; charset=utf-8' pageEncoding='utf-8'%>
-<%@ taglib prefix='c' uri='http://java.sun.com/jsp/jstl/core'%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -15,7 +14,7 @@
 <!-- 영화평/댓글 modal script -->
 <script>    
 function boardInit() {
-    $('#communityNum:checked').click(() => {
+    $('#delBoardBtn').click(() => {
         $('#boardModalHeadMsg').text('영화평 삭제')
 
         $('#boardModalBodyMsg').text("삭제 하시겠습니까?")
@@ -30,13 +29,6 @@ function boardInit() {
 
         $('#boardModal').modal()
     })
-    	$('#delBoardYesBtn').click(() => {
-		$('#boardModal').modal('hide')
-			$.ajax({
-				url: 'del/' + $('#communityNum:checked').val(),
-				method: 'delete'
-			}).done(communityList)
-	})
 
     $('#inspectionBoardBtn').click(() => {
         $('#boardModalHeadMsg').text('영화평 신고')
@@ -120,24 +112,28 @@ function replyInit() {
         $('#replyModal').modal()
     })
 }
+
 function init() {
+<%
+	int num = Integer.parseInt(request.getParameter("num"));
+%>
 	$.ajax({
-		url: '../content/' + ${communityNum},
-		method: 'Post',
+		url: 'getContent',
+		method: 'post',
 		contentType: 'application/json',
 		data: JSON.stringify({
-			communityNum: ${communityNum}
-		}),
+			communityNum: <%= num %>}), 
 		success: content => {
-				\$('#title').text(content.communityTitle)
-				\$('#content').text(content.communityContent)
-				\$('#nickname').text(content.nickname)
-				\$('#date').text(content.communityDate)			
+			console.log(content)
+			if(content) {
+				$('#title').text(content.communityTitle)
+				$('#content').text(content.communityContent)
+				$('#nickname').text(content.nickname)
+				$('#date').text(content.communityDate)
+			}
 		}
 	})
 }
-
-
 $(boardInit)
 $(replyInit)
 $(init)
@@ -227,21 +223,6 @@ label {
 }
 </style>
 <body>
-<c:if test='${empty userId}'>
-	<div class='row' style='margin-top: 100px; text-align: center;'>
-        <div class='col'>
-            <span class='h4'>로그인을 하세요.</span>
-        </div>
-	</div>
-    <div class='row' style='margin-top: 150px; margin-left: 100px;'>
-        <div class='col'>
-            <button id='okBtn' type='button' class='btn btn-primary' onclick='location.href="../user/login"' style='margin-left: 30px;'>
-                <span class='h6'>로그인</span>
-            </button>
-        </div>
-    </div>
-</c:if>
-<c:if test='${not empty userId}'>
 <div class="container">
     <h2><strong><br><center>커뮤니티</center></strong></h2>
     <hr style="border: double 1px black;">
@@ -258,7 +239,7 @@ label {
                         </button>
                             
                         <div class='dropdown-menu'>
-                            <a class='dropdown-item' id='delBoardBtn' data-target='#boardModal'>삭제</a>
+                            <a class='dropdown-item' id='delBoardBtn'>삭제</a>
                             <div class='dropdown-divider'></div>
                             <a class='dropdown-item' id='inspectionBoardBtn'>신고</a>
                         </div>
@@ -395,7 +376,6 @@ label {
     </div>
 </div>
 </div>
-</c:if>
 </body>
 
 <!-- 하단내비바에 안깔리게 하려고 넣어둔 거 -->
@@ -423,7 +403,7 @@ label {
                     <button type='button' class='btn btn-secondary btn-block' data-dismiss='modal'>취소</button>
                 </div>
                 <div class='col' id='delBoardYesBtn'>
-                    <button type='button' id='delBoardYesBtn' class='btn btn-primary btn-block' data-dismiss='modal' onclick='location.href="list"'>확인</button>
+                    <button type='button' id='delBoardYesBtn' class='btn btn-primary btn-block' onclick='location.href="list"'>확인</button>
                 </div>                
                 <div class='col' id='boardInspectionCancelBtn'> 
                     <button type='button' class='btn btn-secondary btn-block' data-dismiss='modal'>취소</button>

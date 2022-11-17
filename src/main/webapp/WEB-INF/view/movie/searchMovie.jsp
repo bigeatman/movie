@@ -1,7 +1,6 @@
 <%@ page language='java' contentType='text/html; charset=utf-8' pageEncoding='utf-8'%>
-<!DOCTYPE html>
-<html lang="ko">
-<head>
+<%@ taglib prefix='c' uri='http://java.sun.com/jsp/jstl/core'%>
+<!DOCTYPE HTML>
 <title>searchMovie</title>
 <meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'>
@@ -11,9 +10,49 @@
 <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js'></script>
 <script src="https://kit.fontawesome.com/449f39a7b2.js" crossorigin="anonymous"></script>
 <script>
+function getMovies() {
+	$.ajax({
+    	url: 'getMovies',
+    	dataType: 'json',
+    	success: movies => {
+    	    if(movies.length) {
+    	        const movieArr = []
+    	        $.each(movies, (i, movie) => {
+    	            movieArr.push(
+                			`<div id='mo'>
+	                			 <div id='m'>
+	                   				<div id='movie\${movie.movieNum}'>
+	                   					<a href='#'>
+	                   						<img src='<c:url value="/attach/\${movie.movieImgfileName}"/>'/>
+	                   					</a>
+	                   				</div>
+		                         </div>
+		                         <div id='mName'><small>\${movie.movieName}</small></div>
+	                         </div>`
+    	            )
+    	        })
+    	        $('#getList').append(movieArr.join(''))
+    	    } else $('#getList').append(
+    	        '<div style="text-align: center">등록된 영화가 없습니다.</div>')
+    	}
+    })
+}
 
+function init() {
+	getMovies()
+	
+	if(${not empty userId}) {
+		$('#user').attr('href', '../user/mypage')
+		$('#loginSpan').text('프로필')
+	}
+}
+$(init)
 </script>
 <style>
+html {
+	padding-bottom: 75px;
+}
+
 nav {
    background-color: rgb(19, 19, 29);
 }
@@ -33,19 +72,35 @@ nav a {
 	color: white;
 }
 
-[id*='movie']{
-   width: 90px;
-   height: 80px;
-   border: 2px solid lightgrey;
-   text-align: center;
-   margin: auto;
+#navBar {
+	position: fixed;
+	bottom: 0;
+	width: 100%;
 }
 
+#mo {
+	float: left;
+	margin-left: 20px;
+	margin-right: 20px;
+	margin-top: 20px;
+	margin-bottom: 5px;
+}
+
+#m {
+   width: 120px;
+   height: 120px;
+   border: 2px solid lightgrey;
+   text-align: center;
+}
+
+#mName {
+	width: 120px;
+	text-align: center;
+}
 </style>
-</head>
 <body>
-	<header class='container-fulid'>
-        <form class='mt-3'>
+	<div>
+		<form class='mt-3'>
 			<div class='col form-group d-flex justify-content-center align-items-center'>
 				<input  class='form-control w-75' type='text' placeholder='검색'/>
 				<button class=" btn ml-3 border">
@@ -54,120 +109,38 @@ nav a {
 				</button>
 			</div>
 		</form>
-	</header>
-	
-	<div class='container-fluid'>
 		<hr>
-		<div class='ml-2'>검색결과</div>
-		<div class='row'>
-			<div class='col mt-4 text-center'>
-				<a href='#'>
-					<div id='movie1' class='p-0 border justify-content-center'>
-						<br>영화이미지
-					</div>
-					<div>영화이름</div>
-				</a>
-			</div>
-			<div class='col mt-4 text-center'>
-				<a href='#'>
-					<div id='movie2' class='p-0 border justify-content-center'>
-						<br>영화이미지
-					</div>
-					<div>영화이름</div>
-				</a>
-			</div>
-			<div class='col mt-4 text-center'>
-				<a href='#'>
-					<div id='movie3' class='p-0 border justify-content-center'>
-						<br>영화이미지
-					</div>
-					<div>영화이름</div>
-				</a>
-			</div>
-        </div>
-		<div class='ml-1'></div>
-		<div class='row'>
-			<div class='col mt-4 text-center'>
-				<a href='#'>
-					<div id='movie4' class='p-0 border justify-content-center'>
-						<br>영화이미지
-					</div>
-					<div>영화이름</div>
-				</a>
-			</div>
-			<div class='col mt-4 text-center'>
-				<a href='#'>
-					<div id='movie5' class='p-0 border justify-content-center'>
-						<br>영화이미지
-					</div>
-					<div>영화이름</div>
-				</a>
-			</div>
-			<div class='col mt-4 text-center'>
-				<a href='#'>
-					<div id='movie6' class='p-0 border justify-content-center'>
-						<br>영화이미지
-					</div>
-					<div>영화이름</div>
-				</a>
-			</div>
-        </div>
-		<div class='ml-2'></div>
-		<div class='row'>
-			<div class='col mt-4 text-center'>
-				<a href='#'>
-					<div id='movie7' class='p-0 border justify-content-center'>
-						<br>영화이미지
-					</div>
-					<div>영화이름</div>
-				</a>
-			</div>
-			<div class='col mt-4 text-center'>
-				<a href='#'>
-					<div id='movie8' class='p-0 border justify-content-center'>
-						<br>영화이미지
-					</div>
-					<div>영화이름</div>
-				</a>
-			</div>
-			<div class='col mt-4 text-center'>
-				<a href='#'>
-					<div id='movie9' class='p-0 border justify-content-center'>
-						<br>영화이미지
-					</div>
-					<div>영화이름</div>
-				</a>
-			</div>
-        </div>
+		<div style='margin-left: 10px;'>영화</div>
+		<div class='container-fluid' style='padding-bottom: 50px;'>
+			<div id='getList'></div>
+		</div>
+		<div id='navBar'>
+	       	<nav class='row' style='padding-top: 0.5rem;'>
+	            <div class='col text-center'>
+	               	<a id='goHome' href='/' class='ml-1'>
+	                  	<i class='fa-solid fa-house fa-xl'></i><br>
+	                  	<span class='iconfont mr-1'>홈</span>
+	               	</a>
+	            </div>
+	            <div class='col text-center'>
+	               	<a id='community' href='../community/list' class='ml-1'>
+	                  	<i class='fa-regular fa-comments fa-xl'></i><br>
+	                  	<span class='iconfont'>커뮤니티</span>
+	               	</a>
+	            </div>
+	            <div class='col text-center'>
+	               	<a id='search' href='#' class='ml-1'>
+	                  	<i class='fa-solid fa-compass fa-xl'></i><br>
+	                  	<span class='iconfont'>탐색</span>
+	               	</a>
+	            </div>
+	            <div class='col text-center'>
+	              	<a id='user' href='../user/login' class='ml-1'>
+	               		<i class='fa-regular fa-user fa-xl'></i><br>
+	               		<span id='loginSpan' class='iconfont'>로그인</span>
+	               	</a>
+	           	</div>
+	      	</nav>
+	   	</div>
 	</div>
-
-   	<div id='navBar' class='container-fulid'>
-       	<nav class='row fixed-bottom p-2'>
-            <div class='col text-center'>
-               	<a id='goHome' href='..' class='ml-1'>
-                  	<i class='fa-solid fa-house fa-xl'></i><br>
-                  	<span class='iconfont mr-1'>홈</span>
-               	</a>
-            </div>
-            <div class='col text-center'>
-               	<a id='community' href='#' class='ml-1'>
-                  	<i class='fa-regular fa-comments fa-xl'></i><br>
-                  	<span class='iconfont'>커뮤니티</span>
-               	</a>
-            </div>
-            <div class='col text-center'>
-               	<a id='search' href='#' class='ml-1'>
-                  	<i class='fa-solid fa-compass fa-xl'></i><br>
-                  	<span class='iconfont'>탐색</span>
-               	</a>
-            </div>
-            <div class='col text-center'>
-              	<a id='user' href='#' class='ml-1'>
-               		<i class='fa-regular fa-user fa-xl'></i><br>
-               		<span id='loginSpan' class='iconfont'>로그인</span>
-               	</a>
-           	</div>
-      	</nav>
-   	</div>
 </body>
-</html>
