@@ -12,5 +12,8 @@ public interface ReviewMap {
 	List<Review> selectReviewByMovieId(int movieId, int startIndex, int rowCount);
 
 	void deleteReview(int reviewId);
+
+	Integer getCommentCount(int reviewNum);
+	
 }
 

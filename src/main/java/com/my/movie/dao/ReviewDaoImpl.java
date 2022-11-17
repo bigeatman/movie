@@ -41,6 +41,7 @@ public class ReviewDaoImpl implements ReviewDao {
 			review.setUserId(builder.toString());
 			review.setLikeCount(sympathMap.getLikeCount(review.getReviewNum(), "리뷰"));
 			review.setDisLikeCount(sympathMap.getDisLikeCount(review.getReviewNum(), "리뷰"));
+			review.setCommentCount(reviewMap.getCommentCount(review.getReviewNum()));
 			
 			if(loginedUserId != null) {
 				Integer loginedUserLiked = sympathMap.isContentLiked(review.getReviewNum(), "리뷰", loginedUserId);

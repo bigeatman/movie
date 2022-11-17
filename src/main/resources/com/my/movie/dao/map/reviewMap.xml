@@ -25,4 +25,9 @@
 	<delete id="deleteReview">
 		DELETE FROM REVIEWS WHERE REVIEW_NUM = ${reviewId}
 	</delete>
+	
+	<select id="getCommentCount" resultType="Integer">
+		SELECT COUNT(*) FROM REVIEW_REPLIES
+		WHERE REVIEW_REPLY_NUM = ${reviewNum}
+	</select>
 </mapper>

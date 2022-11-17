@@ -391,7 +391,7 @@ nav a {
 						</div>
 						<div class="row container" style="margin:0px; padding:0px;">
 							<span id="reviewContent" class="review-content">${rev.reviewContent }</span>
-							<button class="comment-panel btn-secondary">댓글 22</button>
+							<button class="comment-panel btn-secondary">댓글 ${rev.commentCount }</button>
 						</div>
 					</div>
 				</c:forEach>

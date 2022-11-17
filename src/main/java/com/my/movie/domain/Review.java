@@ -27,4 +27,6 @@ public class Review {
 	
 	private int currentUserSympaths;
 	
+	private int commentCount;
+	
 }	
