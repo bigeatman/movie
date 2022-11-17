@@ -18,7 +18,63 @@ function coinfirmSubmitAction(movieNum) {
 	document.querySelector("#movie_" + movieNum).submit();
 }
 
+function getMovieTop() {
+	$.ajax({
+    	url: 'movie/getMovieTop',
+    	dataType: 'json',
+    	success: movieTop => {
+    	    if(movieTop.length) {
+    	        const movieArr = []
+    	        $.each(movieTop, (i, movie) => {
+    	            movieArr.push(
+                			`<div class='carousel-item'>
+                           		<div id='movieImg\${movie.movieNum}'>
+                           			<a href='#'>
+                           				<img src='<c:url value="/attach/\${movie.movieImgfileName}"/>'/>
+                           			</a>
+                           		</div>
+                               	<div>\${movie.movieName}</div>
+                             </div>`
+    	            )
+    	        })
+    	        $('#movies').append(movieArr.join(''))
+    	        $('#movies').children(':eq(0)').addClass('active')
+    	    } else $('#movies').append(
+    	        '<div style="text-align: center"><small>등록된 영화가 없습니다.</small></div>')
+    	}
+    })
+}
+
+function getMovieTop() {
+	$.ajax({
+    	url: 'movie/getMovieAudiencesTop',
+    	dataType: 'json',
+    	success: movieTop => {
+    	    if(movieTop.length) {
+    	        const movieArr = []
+    	        $.each(movieTop, (i, movie) => {
+    	            movieArr.push(
+                			`<div class='carousel-item'>
+                           		<div id='movieImg\${movie.movieNum}'>
+                           			<a href='#'>
+                           				<img src='<c:url value="/attach/\${movie.movieImgfileName}"/>'/>
+                           			</a>
+                           		</div>
+                               	<div>\${movie.movieName}</div>
+                             </div>`
+    	            )
+    	        })
+    	        $('#movies').append(movieArr.join(''))
+    	        $('#movies').children(':eq(1)').addClass('active')
+    	    } else $('#movies').append(
+    	        '<div style="text-align: center"><small>등록된 영화가 없습니다.</small></div>')
+    	}
+    })
+}
+
 function init() {
+	getMovieTop()
+	
 	if(${not empty userId}) {
 		$('#user').attr('href', 'user/mypage')
 		$('#loginSpan').text('프로필')
@@ -88,30 +144,7 @@ table {
                      <table class = 'table table-borderless' id='topMv'>
                         <tbody>
                            <tr>
-                              <th>
-                                 <div class='carousel-item active'>
-                                    <div id='movieImg1'><a href='review/01.html'>영화이미지</div>
-                                    <div id='topMovie'>블랙 아담</div></a>
-                                 </div>
-                                 <div class='carousel-item'>
-                                 	<form action="review" method="post" id="movie_1">
-	                                 	<div id='movieImg2' onclick="coinfirmSubmitAction(1))">영화이미지</div>
-	                                    <div id='topMovie' onclick="coinfirmSubmitAction(1)">공조2: 인터내셔날</div>
-	                                    <input type="hidden" name="movieNo" value="1">
-                                 	</form>
-                                 </div>
-                                 <div class='carousel-item'>
-                                    <div id='movieImg3'><a href='review/01.html'>영화이미지</div>
-                                    <div id='topMovie'>인생은 아름다워</div></a>
-                                 </div>
-                                 <div class='carousel-item'>
-                                    <div id='movieImg4'><a href='review/01.html'>영화이미지</div>
-                                    <div id='topMovie'>스파이더맨</div></a>
-                                 </div>
-                                 <div class='carousel-item'>
-                                    <div id='movieImg5'><a href='review/01.html'>영화이미지</div>
-                                    <div id='topMovie'>어벤저스</div></a>
-                                 </div>
+                              <th id='movies'>
                               </th>
                            </tr>
                         </tbody>
@@ -143,10 +176,8 @@ table {
                                    <div id='daysMovie'>정직한 후보2</div></a>
                                 </div>
                                 <div class='carousel-item'>
-                                   <a href='review/01.html'>
-                                   <div id='movieImg6'>영화이미지</div>
-                                   <div id='daysMovie'>귀못</div>
-                                   </a>
+                                   <div id='movieImg6'><a href='review/01.html'>영화이미지</div>
+                                   <div id='daysMovie'>귀못</div></a>
                                 </div>
                              </th>
                         </tr>
@@ -199,7 +230,7 @@ table {
    	<div id='navBar' class='container-fulid'>
        	<nav class='row fixed-bottom p-2'>
             <div class='col text-center'>
-               	<a id='goHome' href='#' class='ml-1'>
+               	<a id='goHome' href='/' class='ml-1'>
                   	<i class='fa-solid fa-house fa-xl'></i><br>
                   	<span class='iconfont mr-1'>홈</span>
                	</a>

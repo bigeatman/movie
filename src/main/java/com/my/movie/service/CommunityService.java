@@ -2,18 +2,12 @@ package com.my.movie.service;
 
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
-import org.springframework.web.servlet.ModelAndView;
-
 import com.my.movie.domain.Community;
+import com.my.movie.domain.CommunityList;
 
 public interface CommunityService {
-	List<Community> getCommunities();
-	ModelAndView getCommunity(Community community, ModelAndView mv, HttpSession session);
-	Community getCommunity2(Community community);
-
-	List<Community> getCommunity1(Community community);
+	List<CommunityList> getCommunities();
+	CommunityList getCommunity(int communityNum);
 	void addCommunity(Community community);
 	void delCommunity(int communityNum);
 	void inspectionCommunity(int communityNum);

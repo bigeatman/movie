@@ -16,18 +16,28 @@ import com.my.movie.service.MovieService;
 public class MovieController {
 	@Autowired private MovieService movieService;
 	
+	@GetMapping("searchMovie")
+	public ModelAndView movie(ModelAndView mv) {
+		mv.setViewName("movie/searchMovie");
+		return mv;
+	}
+	
+	@GetMapping("getMovies")
+	public List<Movie> getMovies() {
+		return movieService.getMovies();
+	}
+	
+	@GetMapping("getMovieTop")
+	public List<Movie> getMovieTop() {
+		return movieService.getMovieTop();
+	}
+	
 //	@Value("${attachPath}") private String attachPath;
 	
 //	@RequestMapping("searchMovie")
 //	public String searchMovie() {
 //		return "/movie/searchMovie";
 //	}
-	
-	@GetMapping("searchMovie")
-	public ModelAndView movie(ModelAndView mv) {
-		mv.setViewName("movie/searchMovie");
-		return mv;
-	}
 	
 //	@ResponseBody
 //	@PostMapping("/saveHashtag")

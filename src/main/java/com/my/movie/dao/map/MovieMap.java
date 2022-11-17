@@ -9,6 +9,8 @@ import com.my.movie.domain.Movie;
 public interface MovieMap {
 	List<Movie> selectMovies();
 	List<Movie> searchHashtag(@Param("hashtag") String hashtag);
+	List<Movie> selectMovieTop();
+	List<Movie> selectMovie();
 	List<Movie> selectAdminMovies();
 	Movie searchMovie(String movieName);
 	void insertMovie(Movie movie);

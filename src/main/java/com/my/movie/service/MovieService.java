@@ -8,6 +8,7 @@ import com.my.movie.domain.Movie;
 public interface MovieService {
 	List<Movie> getMovies();
 	List<Movie> searchHashtag(String hashtag);
+	List<Movie> getMovieTop();
 	List<Movie> getAdminMovies();
 	Movie findMovies(String movieName);
 	void addMovie(Movie movie);
