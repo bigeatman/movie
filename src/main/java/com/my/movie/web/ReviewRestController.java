@@ -2,6 +2,8 @@ package com.my.movie.web;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -41,13 +43,15 @@ public class ReviewRestController {
 	}
 
 	@PostMapping("morerev")
-	public String viewMoreReview(@RequestBody ViewMoreReviewRequest request) {
+	public String viewMoreReview(@RequestBody ViewMoreReviewRequest request, HttpSession session) {
+		Integer userId = (Integer) session.getAttribute("userNum");
+		
 		int movieId = request.getMovieId();
 		int startIndex = request.getStartIndex();
 		int rowCount = request.getRowCount();
 
 		try {
-			List<Review> reviews = reviewDao.selectReviewByMovieId(movieId, startIndex, rowCount);
+			List<Review> reviews = reviewDao.selectReviewByMovieId(movieId, startIndex, rowCount, userId);
 			ObjectMapper mapper = new ObjectMapper();
 			mapper.registerModule(new JavaTimeModule());
 			return mapper.writeValueAsString(reviews);

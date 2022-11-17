@@ -348,10 +348,28 @@ nav a {
 						<div class="row container" style="margin:0px; padding:0px;">
 							<div id="reviewWriter" class="review-id">${ rev.nickName }(${rev.userId })</div>
 							<div class="like-unlike-panel">
-								<button class="like-button" onclick="addLike(${rev.reviewNum})"><i class="fa">&#xf087;</i></button>
-								<span class="like-button" >${rev.likeCount } &nbsp;&nbsp;</span>
-								<button class="like-button"><span class="fa fa-thumbs-down"></span></button>
-								<span class="like-button">Unlike</span>
+								<button class="like-button" onclick="addLike(${rev.reviewNum}, 1)">
+									<c:choose>
+										<c:when test="${rev.currentUserSympaths eq 1}">
+											<i id="revIcon_like_${rev.reviewNum }_1" class="fa fa-thumbs-up"></i>
+										</c:when>
+										<c:otherwise>
+											<i id="revIcon_like_${rev.reviewNum }_1" class="far fa-thumbs-up"></i>
+										</c:otherwise>
+									</c:choose>
+								</button>
+								<span class="like-button"  id="rev_${rev.reviewNum }_1">${rev.likeCount }</span>
+								<button class="like-button" onclick="addLike(${rev.reviewNum}, -1)">
+									<c:choose>
+										<c:when test="${rev.currentUserSympaths eq -1}">
+											<i id="revIcon_like_${rev.reviewNum }_-1" id="rev_like_${rev.reviewNum }"class="fa fa-thumbs-down"></i>
+										</c:when>
+										<c:otherwise>
+											<i id="revIcon_like_${rev.reviewNum }_-1"class="far fa-thumbs-down"></i>
+										</c:otherwise>
+									</c:choose>
+								</button>		
+								<span class="like-button" id="rev_${rev.reviewNum }_-1">${rev.disLikeCount }</span>
 								<c:if test="${not empty userNum}">
 									<c:if test="${userNum eq rev.userNum }">
 										<button class="like-button" type="button" data-toggle="modal" data-target='#dialogModal' onclick="removeReview(${rev.reviewNum})"> 
@@ -423,10 +441,20 @@ nav a {
 			</div>
 		</div>
 	</div>
+	
+	<!-- BUTTON FOR DIALOG -->
+	<button hidden='true' id="dialogButton" type="button" data-toggle="modal" data-target='#dialogModal'></button>
 <script>
 	var currentReviews = 5;
 	
-	function addLike(reviewNum) {
+	function addLike(reviewNum, isLiked) {
+		var userNum = document.querySelector('#loginedUserNum').innerHTML;
+		
+		if((userNum == null) || (userNum == '')) {
+			document.querySelector("#writereviewBtn").click();
+			return;
+		}
+		
 		$.ajax({
 			url : '../sym/revlike',
 			method: 'post',
@@ -434,15 +462,44 @@ nav a {
 			data : JSON.stringify({
 				contentNum: reviewNum,
 				contentName: '리뷰',
-				userNum: document.querySelector('#loginedUserNum').innerHTML
+				userNum: userNum,
+				value: isLiked
 			}),
 			success: function(result) {
-				console.log(result);
+				applySympathResult(result, reviewNum, isLiked);
 			},
 			error: function(error) {
 				console.log(error);
 			}
 		})
+	}
+	
+	function applySympathResult(result, reviewNum, isLiked) {
+		var targetLikeButton = document.querySelector('#revIcon_like_' + reviewNum + "_" + isLiked);
+		var targetContent = document.querySelector('#rev_' + reviewNum + "_" + isLiked);
+		var targetContentValue = parseInt(targetContent.innerHTML);
+		
+		var targetReverseButton = document.querySelector('#revIcon_like_' + reviewNum + "_" + (isLiked * -1))
+		var targetReverseContent = document.querySelector('#rev_' + reviewNum + "_" + (isLiked * -1));
+		var targetReverseContentValue = parseInt(targetReverseContent.innerHTML);
+		
+		var reverseChecked = targetReverseButton.classList.contains('fa');
+		
+		targetContent.innerHTML = (targetContentValue + parseInt(result));
+		
+		if(result == 1) {
+			targetLikeButton.classList.remove('far');
+			targetLikeButton.classList.add('fa');	
+		} else {
+			targetLikeButton.classList.remove('fa');
+			targetLikeButton.classList.add('far');
+		}
+			
+		if(reverseChecked) {
+			targetReverseButton.classList.remove('fa');
+			targetReverseButton.classList.add('far');
+			targetReverseContent.innerHTML = (targetReverseContentValue - parseInt(result));
+		}
 	}
 	
 	function findMainActor() {
@@ -462,8 +519,8 @@ nav a {
 		
 		document.querySelector('#mainActorImage1').setAttribute('src', 'img?fileName=' + mainActors[0][0]);
 		document.querySelector('#mainActorImage2').setAttribute('src', 'img?fileName=' + mainActors[1][0]);
-		document.querySelector('#mainActor1').innerHTML = mainActors[0][1];
-		document.querySelector('#mainActor2').innerHTML = mainActors[1][1];
+		document.querySelector('#mainActor1').innerHTML = mainActors[0][1] + '<br />(주연)';
+		document.querySelector('#mainActor2').innerHTML = mainActors[1][1] + '<br />(주연)';
 	}
 	
 	function viewMoreReview() {
@@ -854,7 +911,6 @@ nav a {
 	
 	function createButtons(dialog, code) {
 		var buttonDiv = document.createElement('div');
-		buttonDiv.setAttribute('id', 'okButton');
 		buttonDiv.style.setProperty('height', '50px');
 		buttonDiv.style.setProperty('padding-top', '5px');
 		buttonDiv.style.setProperty('padding-bottom', '10px');

@@ -20,11 +20,15 @@ public class SympathsRestController {
 	public String likeReview(@RequestBody LikeContentRequest req) {
 		Integer liked = sympathService.isContentLiked(req.getContentNum(), req.getContentName(), req.getUserNum());
 		
-		if((liked == null) || (liked == 0)) {
-			sympathService.addContentLiked(req.getContentNum(), req.getContentName(), req.getUserNum(), 1);
-			return "SUCCESS";
+		if (liked == null) {
+			sympathService.addContentLiked(req.getContentNum(), req.getContentName(), req.getUserNum(), req.getValue());
+			return "1";
+		} else if(liked == req.getValue()){
+			sympathService.modifyContentLiked(req.getContentNum(), req.getContentName(), req.getUserNum(), 0);
+			return "-1";
 		} else {
-			return "Already liked";
+			sympathService.modifyContentLiked(req.getContentNum(), req.getContentName(), req.getUserNum(), req.getValue());
+			return "1";
 		}
 	}
 }

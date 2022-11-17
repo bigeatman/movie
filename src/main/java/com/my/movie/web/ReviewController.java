@@ -24,8 +24,10 @@ public class ReviewController {
 
 	@PostMapping
 	public ModelAndView movieDetail(ModelAndView mv, @RequestParam(value = "movieNo") Integer movieNo, HttpSession session) {
-		ReviewDto dto = reivewService.getReviewDtoByMovieId(movieNo);
-		findLoginedUserReview(dto, (Integer) session.getAttribute("userNum"));
+		Integer userId = (Integer) session.getAttribute("userNum");
+		
+		ReviewDto dto = reivewService.getReviewDtoByMovieId(movieNo, userId);
+		findLoginedUserReview(dto, userId);
 		
 		if (dto.getMovie() == null) {
 			mv.setViewName("../main");

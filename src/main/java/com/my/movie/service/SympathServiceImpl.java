@@ -21,4 +21,8 @@ public class SympathServiceImpl implements SympathService{
 		sympathDao.addContentLiked(contentNum, contentName, userNum, isLike);
 	}
 
+	@Override
+	public void modifyContentLiked(int contentNum, String contentName, int userNum, int value) {
+		sympathDao.modifyContentLiked(contentNum, contentName, userNum, value);
+	}
 }

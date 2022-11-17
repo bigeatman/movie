@@ -20,4 +20,10 @@ public class SympathDaoimpl implements SympathDao {
 	public void addContentLiked(int contentNum, String contentName, int userNum, int isLike) {
 		sympathMap.addContentLiked(contentNum, contentName, userNum, isLike);
 	}
+
+	@Override
+	public void modifyContentLiked(int contentNum, String contentName, int userNum, int value) {
+		sympathMap.modifyContentLiked(contentNum, contentName, userNum, value);
+	}
 }
+	
