@@ -39,13 +39,13 @@ function clickDetails(inspectionNum, inspectionContentNum, inspectionContentName
 	var url = "";
 	
 	if(inspectionContentName === "영화평") { 							//영화평에서 신고된 해당게시물의 번호로 찾아간다.
-			url = "/community/content?num=" + inspectionContentNum;
+			url = "http://192.168.0.107/community/content?communityNum=" + inspectionContentNum;
 		} else if(inspectionContentName === "영화평댓글") { 			//영화평댓글에서 신고된 해당게시물의 번호로 찾아간다.
-			url = "/communityReply/content?num=" + inspectionContentNum;
+			url = "http://192.168.0.107/communityReply/content?replyNum=" + inspectionContentNum;
 		} else if(inspectionContentName === "리뷰") { 				//리뷰에서 신고된 해당게시물의 번호로 찾아간다.
-			url = "/review/content?num=" + inspectionContentNum;
+			url = "http://192.168.0.107/review/content?reviewNum=" + inspectionContentNum;
 		} else if(inspectionContentName === "리뷰댓글") { 				//리뷰댓글에서 신고된 해당게시물의 번호로 찾아간다.
-			url = "/rev/morerev/content?num=" + inspectionContentNum;
+			url = "http://192.168.0.107/rev/morerev/content?rev/removeNum=" + inspectionContentNum;
 		}
 		$('#inspectionMove').attr('href', url);
 
@@ -172,18 +172,18 @@ function clickDetails(inspectionNum, inspectionContentNum, inspectionContentName
             <div class='modal-body'><br>
                 <h3><b>신고 사유 상세</b></h3>
                 	<div style='text-align : right;'>
-                		<a id='inspectionMove' data-dismiss='modal'><u><i>신고된 컨텐츠로 이동</i></u></a>
-                		<div style='width:100%; height:400px; overflow:auto'>
-	                		<table class='table' width='100%' cellspacing='0' cellpadding='0'>
-			                    	<thead style='text-align: center'>
-			                        	<tr class="bg-light">
-			                            	<th width="5%">No.</th><th>	신고자ID</th><th width="50%">신고사유</th>
-			                        	</tr>
-			                    	</thead>
-		                    	<tbody id='detailBody' style='text-align: center'>
+                		<a href='#' target='_blank' id='inspectionMove'><u><i>신고된 컨텐츠로 이동</i></u></a>
+	                	<div style='width:100%; height:400px; overflow:auto'>
+		                	<table class='table' width='100%' cellspacing='0' cellpadding='0'>
+				                   	<thead style='text-align: center'>
+				                       	<tr class="bg-light">
+				                           	<th width="5%">No.</th><th>	신고자ID</th><th width="50%">신고사유</th>
+				                       	</tr>
+				                   	</thead>
+			                   	<tbody id='detailBody' style='text-align: center'>
 								</tbody>
-	                		</table>
-                		</div>
+		                	</table>
+	                	</div>
             		</div>
         		</div>
             	<div class='modal-footer'>
