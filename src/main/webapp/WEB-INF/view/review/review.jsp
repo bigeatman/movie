@@ -348,8 +348,8 @@ nav a {
 						<div class="row container" style="margin:0px; padding:0px;">
 							<div id="reviewWriter" class="review-id">${ rev.nickName }(${rev.userId })</div>
 							<div class="like-unlike-panel">
-								<button class="like-button"><i class="fa">&#xf087;</i></button>
-								<span class="like-button" onclick="addLike(${rev.reviewNum})">${rev.likeCount } &nbsp;&nbsp;</span>
+								<button class="like-button" onclick="addLike(${rev.reviewNum})"><i class="fa">&#xf087;</i></button>
+								<span class="like-button" >${rev.likeCount } &nbsp;&nbsp;</span>
 								<button class="like-button"><span class="fa fa-thumbs-down"></span></button>
 								<span class="like-button">Unlike</span>
 								<c:if test="${not empty userNum}">
@@ -425,6 +425,25 @@ nav a {
 	</div>
 <script>
 	var currentReviews = 5;
+	
+	function addLike(reviewNum) {
+		$.ajax({
+			url : '../sym/revlike',
+			method: 'post',
+			contentType: 'application/json',
+			data : JSON.stringify({
+				contentNum: reviewNum,
+				contentName: '리뷰',
+				userNum: document.querySelector('#loginedUserNum').innerHTML
+			}),
+			success: function(result) {
+				console.log(result);
+			},
+			error: function(error) {
+				console.log(error);
+			}
+		})
+	}
 	
 	function findMainActor() {
 		var mainActors = [];
