@@ -385,13 +385,13 @@ nav a {
 								<c:if test="${empty userNum	}">
 									<button class="like-button" type="button" data-toggle="modal" data-target='#dialogModal' onclick="reportReview(${rev.reviewNum})"> 
 										<i class="fa-solid fa-triangle-exclamation"></i>
-									</button>
+								</button>
 								</c:if>
 							</div>
 						</div>
 						<div class="row container" style="margin:0px; padding:0px;">
 							<span id="reviewContent" class="review-content">${rev.reviewContent }</span>
-							<button class="comment-panel btn-secondary">댓글 ${rev.commentCount }</button>
+							<button id="testId" class="comment-panel btn-secondary" onclick="viewComment(${rev.reviewNum})">댓글 ${rev.commentCount }</button>
 						</div>
 					</div>
 				</c:forEach>
@@ -446,6 +446,25 @@ nav a {
 	<button hidden='true' id="dialogButton" type="button" data-toggle="modal" data-target='#dialogModal'></button>
 <script>
 	var currentReviews = 5;
+	
+	function viewComment(reviewNum) {
+		console.log(reviewNum);
+		
+		$.ajax({
+			url: "rev/viewcomment",
+			method: 'post',
+			data: {
+				revNum: reviewNum
+			},
+			success: function(result) {
+				viewCommentElements(result);
+			}
+		})
+	}
+	
+	function viewCommentElements(result) {
+		console.log(result);
+	}
 	
 	function addLike(reviewNum, isLiked) {
 		var userNum = document.querySelector('#loginedUserNum').innerHTML;
@@ -928,6 +947,7 @@ nav a {
 	
 	function createSingleButton(buttonDiv) {
 		var button = createButton('100%', '확인','#007bff' );
+		button.setAttribute('id', 'okButton');
 		buttonDiv.appendChild(button);
 	}
 	

@@ -28,6 +28,16 @@
 	
 	<select id="getCommentCount" resultType="Integer">
 		SELECT COUNT(*) FROM REVIEW_REPLIES
-		WHERE REVIEW_REPLY_NUM = ${reviewNum}
+		WHERE REVIEW_NUM = ${reviewNum}
+	</select>
+	
+	<select id="selectReviewReplay" resultType="ReviewReply">
+		SELECT * FROM REVIEW_REPLIES RP
+		JOIN USERS U ON RP.USER_NUM = U.USER_NUM
+		WHERE REVIEW_NUM = ${reviewNum}
+		
+		SELECT * FROM  REVIEW_REPLIES RP 
+		JOIN USERS U ON RP.USER_NUM = U.USER_NUM
+		WHERE REVIEW_NUM = 2
 	</select>
 </mapper>

@@ -14,6 +14,8 @@ import com.my.movie.dao.ReviewDao;
 import com.my.movie.domain.Movie;
 import com.my.movie.domain.Review;
 import com.my.movie.domain.ReviewDto;
+import com.my.movie.domain.ReviewReply;
+import com.my.movie.domain.request.CreateReviewRequest;
 
 @Repository
 public class ReviewServiceImpl implements ReviewService {
@@ -64,6 +66,26 @@ public class ReviewServiceImpl implements ReviewService {
 
 		builder.setLength(builder.length() - 2);
 		return builder.toString();
+	}
+
+	@Override
+	public void insertReview(CreateReviewRequest request) {
+		reviewDao.insertReview(request);
+	}
+
+	@Override
+	public void deleteReview(int reviewId) {
+		reviewDao.deleteReview(reviewId);
+	}
+
+	@Override
+	public List<Review> selectReviewByMovieId(int movieId, int startIndex, int rowCount, Integer userId) {
+		return reviewDao.selectReviewByMovieId(movieId, startIndex, rowCount, userId);
+	}
+
+	@Override
+	public List<ReviewReply> getReviewReplay(int reviewNum) {
+		return reviewDao.selectReviewReplay(reviewNum);
 	}
 
 }
