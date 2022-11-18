@@ -53,7 +53,7 @@ public class EmailServiceImpl implements EmailService {
         msg += "</td></tr></tbody></table></div>";
 
         message.setText(msg, "utf-8", "html");
-        message.setFrom(new InternetAddress(id,"prac_Admin"));
+        message.setFrom(new InternetAddress(id,"movie_Admin"));
 
         return message;
     }
