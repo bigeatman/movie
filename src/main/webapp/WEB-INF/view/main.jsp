@@ -45,32 +45,6 @@ function getMovieTop() {
     })
 }
 
-function getMovieTop() {
-	$.ajax({
-    	url: 'movie/getMovieAudiencesTop',
-    	dataType: 'json',
-    	success: movieTop => {
-    	    if(movieTop.length) {
-    	        const movieArr = []
-    	        $.each(movieTop, (i, movie) => {
-    	            movieArr.push(
-                			`<div class='carousel-item'>
-                           		<div id='movieImg\${movie.movieNum}'>
-                           			<a href='#'>
-                           				<img src='<c:url value="/attach/\${movie.movieImgfileName}"/>'/>
-                           			</a>
-                           		</div>
-                               	<div>\${movie.movieName}</div>
-                             </div>`
-    	            )
-    	        })
-    	        $('#movies').append(movieArr.join(''))
-    	        $('#movies').children(':eq(1)').addClass('active')
-    	    } else $('#movies').append(
-    	        '<div style="text-align: center"><small>등록된 영화가 없습니다.</small></div>')
-    	}
-    })
-}
 
 function init() {
 	getMovieTop()
