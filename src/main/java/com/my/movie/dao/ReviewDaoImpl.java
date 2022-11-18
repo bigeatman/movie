@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.my.movie.dao.map.ReviewMap;
 import com.my.movie.dao.map.SympathMap;
 import com.my.movie.domain.Review;
+import com.my.movie.domain.ReviewReply;
 import com.my.movie.domain.request.CreateReviewRequest;
 
 @Repository
@@ -38,9 +39,11 @@ public class ReviewDaoImpl implements ReviewDao {
 			for (int i = 0; i < userId.length() - 3; i++) {
 				builder.append("*");
 			}
+			
 			review.setUserId(builder.toString());
 			review.setLikeCount(sympathMap.getLikeCount(review.getReviewNum(), "리뷰"));
 			review.setDisLikeCount(sympathMap.getDisLikeCount(review.getReviewNum(), "리뷰"));
+			review.setCommentCount(reviewMap.getCommentCount(review.getReviewNum()));
 			
 			if(loginedUserId != null) {
 				Integer loginedUserLiked = sympathMap.isContentLiked(review.getReviewNum(), "리뷰", loginedUserId);
@@ -58,5 +61,10 @@ public class ReviewDaoImpl implements ReviewDao {
 	@Override
 	public void deleteReview(int reviewId) {
 		reviewMap.deleteReview(reviewId);
+	}
+
+	@Override
+	public List<ReviewReply> selectReviewReplay(int reviewNum) {
+		return reviewMap.selectReviewReplay(reviewNum);
 	}
 }

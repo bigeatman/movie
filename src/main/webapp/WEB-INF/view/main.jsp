@@ -142,10 +142,10 @@ table {
                         <tr>
                            <th>
                               <div class='carousel-item active'>
-                                   <form action="review" method="post" id="movie_1">
-	                                 	<div id='movieImg2' onclick="coinfirmSubmitAction(1)">영화이미지</div>
-	                                    <div id='topMovie' onclick="coinfirmSubmitAction(1)">공조2: 인터내셔날</div>
-	                                    <input type="hidden" name="movieNo" value="1">
+                                   <form action="review" method="post" id="movie_1002">
+	                                 	<div id='movieImg2' onclick="coinfirmSubmitAction(1002)">영화이미지</div>
+	                                    <div id='topMovie' onclick="coinfirmSubmitAction(1002)">공조2: 인터내셔날</div>
+	                                    <input type="hidden" name="movieNo" value="1002">
                                  	</form>
                                 </div>
                                 <div class='carousel-item'>
